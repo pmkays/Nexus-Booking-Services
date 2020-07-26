@@ -3,15 +3,15 @@
 # Group 00
 
 ## Members
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
+* Nguyen, Ian (S3788210)
+* Miranda, Josiah (S3782051)
+* Rahman, Aqram (S3547091)
+* Kiork, Taouit (S3815539)
+* Kurniawan, Paua (S3782041)
 
 ## Records
 
-* Github repository : https://github.com/RMIT-SEPT/MajorProject/Groupx
+* Github repository : https://github.com/RMIT-SEPT/majorproject-3-thurs-10-30-7
 * ClickUp Workspace : https://app.clickup.com/xxxx/yyyy
 
 
