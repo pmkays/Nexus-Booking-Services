@@ -53,11 +53,11 @@ CREATE TABLE `security_user` (
 --
 
 INSERT INTO `account` VALUES 
-    (1,'Leslie','Andrews','leslie@luv2code.com', 0410101010, '4 Poornima Road'),
-    (2,'Emma','Baumgarten','emma@luv2code.com', 0423101563, '3 Buttersworth Street'),
-    (3,'Avani','Gupta','avani@luv2code.com', 0445231020, '9 King Court'),
-    (4,'Yuri','Petrov','yuri@luv2code.com', 0410164823, '2 Salamander Way'),
-    (5,'Juan','Vega','juan@luv2code.com', 0410567343, '1 Digger Road');
+    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road'),
+    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street'),
+    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court'),
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way'),
+    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road');
     
 --
 -- Data for table `security_role`
