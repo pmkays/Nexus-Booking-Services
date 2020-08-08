@@ -7,23 +7,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import SEPT.Team.Seven.model.Role;
-import SEPT.Team.Seven.security.JwtFilter;
 import SEPT.Team.Seven.security.JwtProvider;
 import io.jsonwebtoken.JwtException;
 
+//@TestPropertySource("classpath:application.properties")
 @SpringBootTest
 public class JwtProviderTests 
 {
@@ -34,13 +31,18 @@ public class JwtProviderTests
 	
 	static List<Role> roles;
 	static JwtProvider provider;
+//	@Value("${security.jwt.token.secret-key}")
+//	String key;
+//	@Value("${security.jwt.token.expiration}")
+//	long duration;
+	
 	@BeforeAll
-	static void initialiseRoles()
-	{
+	static void initialiseRoles(){
 		roles = new ArrayList<Role>();		
 		roles.add(new Role("ADMIN", "Admin role"));
 		provider = new JwtProvider("paulahasajob",600000);
 	}
+	
 	
 	@Test
 	void isValidToken_ValidJwtToken_ReturnsTrue() {
