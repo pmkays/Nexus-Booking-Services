@@ -53,7 +53,7 @@ public class JwtFilter extends GenericFilterBean {
 	}
 
 	//Extract the jwt token from the "Bearer <jwt>" header value if it exists.
-	private Optional<String> getBearerToken(String headerVal) {
+	public Optional<String> getBearerToken(String headerVal) {
 		if (headerVal != null && headerVal.startsWith(bearer)) {
 			return Optional.of(headerVal.replace(bearer, "").trim());
 		}
