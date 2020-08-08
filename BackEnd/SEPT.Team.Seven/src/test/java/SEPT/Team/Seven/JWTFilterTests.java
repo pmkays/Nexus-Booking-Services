@@ -7,6 +7,7 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -33,7 +34,6 @@ class JWTFilterTests {
 	static MockHttpServletRequest request;
 	
 	static MockHttpServletResponse response;
-//	static MockFilterChain chain;
 	
 	@BeforeAll
 	public static void initialiseMock()
@@ -41,7 +41,6 @@ class JWTFilterTests {
 		service = mock(SecurityUserDetailsService.class);		
 		request = new MockHttpServletRequest();
 		response =  new MockHttpServletResponse();
-//		chain = new MockFilterChain();
 	}
 	
 	
@@ -124,8 +123,18 @@ class JWTFilterTests {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		assertEquals(((UserDetails)auth.getPrincipal()).getUsername(), "admin");	
 		assertEquals(((UserDetails)auth.getPrincipal()).getPassword(), "abc123");
-		//this is assuming that each user can only be assigned 1 role
-		auth.getAuthorities().forEach(role->assertEquals(role.getAuthority(), "ADMIN"));
+//		auth.getAuthorities().forEach(role->assertEquals(role.getAuthority(), "ADMIN"));
+
+		boolean roleIsAdmin = false;
+		for(GrantedAuthority role : auth.getAuthorities())
+		{
+			if(role.getAuthority().contentEquals("ADMIN"))
+			{
+				roleIsAdmin = true;
+			}
+		}
+		
+		assertTrue(roleIsAdmin);
 	}
 	
 	@Test

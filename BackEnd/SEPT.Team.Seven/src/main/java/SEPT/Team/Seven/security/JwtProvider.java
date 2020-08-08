@@ -66,12 +66,12 @@ public class JwtProvider {
 	}
 
 	//Get the username from the token string
-	public String getUsername(String token) {
+	public String getUsername(String token) throws JwtException, IllegalArgumentException {
 		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 	}
 
 	//Get the roles from the token string - as we may implement users with multiple roles
-	public List<GrantedAuthority> getRoles(String token) {
+	public List<GrantedAuthority> getRoles(String token) throws JwtException, IllegalArgumentException{
 		
 		List<Map<String, String>> roleClaims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody()
 				.get(roleKey, List.class);
