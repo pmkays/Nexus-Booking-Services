@@ -1,0 +1,44 @@
+@import '../../assets/styles/responsive';
+
+body {
+  overflow-x: hidden;
+}
+.appbar {
+  margin-bottom: 40px;
+}
+.nav-wrapper {
+  justify-content: space-between;
+  @include mobile() {
+    width: 100vw;
+  }
+  > div {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+  }
+}
+.mobileMenuIcon {
+  display: none;
+  @include mobile() {
+    display: block;
+  }
+}
+.closeMobileMenuButton {
+  justify-content: flex-end !important;
+}
+ul.menuMain {
+  display: flex;
+  @include mobile() {
+    display: none;
+  }
+}
+.menuMobile {
+  width: 200px;
+  color: #8495a0;
+}
+.menuMobile > div:hover {
+  color: #ffffff;
+}
+.menuMobileClose {
+  justify-content: flex-end;
+}
