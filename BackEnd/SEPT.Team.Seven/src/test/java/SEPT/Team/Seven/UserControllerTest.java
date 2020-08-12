@@ -72,7 +72,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	public void login_WrongPassword_ThrowsHttpServerException() throws Exception
+	public void login_NonExistentUser_ThrowsHttpServerException() throws Exception
 	{
 		//Arrange
 		JSONObject json = new JSONObject(); 
@@ -91,9 +91,22 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	public void login_WrongUsername_ThrowsHttpServerException() throws Exception
+	public void login_WrongPassword_ThrowsHttpServerException() throws Exception
 	{
-		//TODO Aqram
+		//Arrange
+		JSONObject json = new JSONObject(); 
+		json.put("password", "abc126");
+		json.put("username", "admin");
+		
+		//Act and Assert
+		when(service.signin("admin", "abc126")).thenReturn(Optional.empty());
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .post("/users/signin")
+			      .content(json.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+				  .andExpect(MockMvcResultMatchers.content().string("403 Username or password is incorrect."));
 	}
 	
 	
