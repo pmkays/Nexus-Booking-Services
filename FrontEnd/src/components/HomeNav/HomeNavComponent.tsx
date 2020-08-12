@@ -1,7 +1,6 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { hot } from 'react-hot-loader';
-import { NavLink } from 'react-router-dom';
 import { enUS } from '../../locales/en-US';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
