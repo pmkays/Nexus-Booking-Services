@@ -18,3 +18,11 @@
 ## Code documentation
 
 [Quick Start](/docs/README.md) in `docs` folder
+
+## How to run FrontEnd
+
+```bash
+cd FrontEnd/
+npm install
+npm run start
+```
