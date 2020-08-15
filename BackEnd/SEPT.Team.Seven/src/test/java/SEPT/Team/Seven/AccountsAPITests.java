@@ -16,7 +16,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @SpringBootTest
 public class AccountsAPITests 
@@ -76,16 +79,25 @@ public class AccountsAPITests
 	@WithMockUser(username="admin",roles={"ADMIN"})
 	public void getSpecificAccount_AuthorisedUser_ReturnsJsonOfAccounts() throws Exception
 	{
-		//TODO Aqram: the url will be "api/accounts/1"
-
-		//Arrange and Act
-
+		//Arrange and Act		
+		String result = this.mockMvc.perform(MockMvcRequestBuilders
+			      .get("/api/accounts/1")
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().isOk())
+				  .andReturn()
+				  .getResponse()
+				  .getContentAsString();
+		
+		JSONObject json = new JSONObject(result);
+		String firstName = (String) json.get("firstName");
+		String lastName = (String) json.get("lastName");
+		String email = (String) json.get("email");
 		
 		//Assert
-		//assert first name is "Leslie"
-		//assert last name is "Uzumaki"
-		//assert email is "leslie@hotmail.com"
-
+		assertEquals(firstName, "Leslie");
+		assertEquals(lastName, "Uzumaki");
+		assertEquals(email, "leslie@hotmail.com");
 	}
 	
 	
@@ -94,8 +106,12 @@ public class AccountsAPITests
 	@WithAnonymousUser
 	public void getSpecificAccount_AnonymousUser_AccessDenied() throws Exception
 	{	
-		//TODO Aqram: the url will be "api/accounts/1"
-		
 		//Arrange Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .get("/api/accounts/1")
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+				  .andExpect(MockMvcResultMatchers.status().reason("Access Denied"));
 	}
 }
