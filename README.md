@@ -1,6 +1,6 @@
 # RMIT SEPT 2020 Major Project
 
-# Group 7
+# Group: SEPT 3. THURS-10.30-7
 
 ## Members
 * Nguyen, Ian (S3788210)
@@ -13,16 +13,9 @@
 
 * Github repository : https://github.com/RMIT-SEPT/majorproject-3-thurs-10-30-7
 * Trello Board/Workspace : https://trello.com/b/W1EKuEZ6
-
+* Google Drive folder with ALL documentation: https://drive.google.com/drive/folders/1cklphZt4S_oX1kbOpaKISPzBxNlitVgx?usp=sharing
 
 ## Code documentation
 
-[Quick Start](/docs/README.md) in `docs` folder
+If not referring to linked Google Drive folder above, please check the docs folder. 
 
-## How to run FrontEnd
-
-```bash
-cd FrontEnd/
-npm install
-npm run start
-```
