@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import Profile from "../Profile/Profile"
 
 class Login extends Component {
   state = {
@@ -47,22 +48,33 @@ class Login extends Component {
   };
 
   render() {
+
+    let profile = null;
+
+    if (this.state.account) {
+      profile = <Profile account = {this.state.account}/>
+    }
+
     return (
-      <form onSubmit={this.loginHandler}>
-        <input
-          type="text"
-          value={this.state.username}
-          placeholder="Enter your username"
-          onChange={(event) => this.usernameTypedHandler(event)}
-        />
-        <input
-          type="password"
-          value={this.state.password}
-          placeholder="Enter your password"
-          onChange={(event) => this.passwordTypedHandler(event)}
-        />
-        <button>Log In</button>
-      </form>
+      <React.Fragment>
+        <form onSubmit={this.loginHandler}>
+          <input
+            type="text"
+            value={this.state.username}
+            placeholder="Enter your username"
+            onChange={(event) => this.usernameTypedHandler(event)}
+          />
+          <input
+            type="password"
+            value={this.state.password}
+            placeholder="Enter your password"
+            onChange={(event) => this.passwordTypedHandler(event)}
+          />
+          <button>Log In</button>
+        </form>
+
+        {profile}
+      </React.Fragment>
     );
   }
 }
