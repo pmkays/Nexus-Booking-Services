@@ -58,7 +58,7 @@ public class UserService {
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 				List<Role> roles = new ArrayList<>();
 				roles.add(user.get().getRole());
-				token = Optional.of(jwtProvider.createToken(username, roles));
+				token = Optional.of(jwtProvider.createToken(username, roles, user.get().getAccount().getId()));
 			} catch (AuthenticationException e) {
 				LOGGER.info("Log in failed.");
 			}
