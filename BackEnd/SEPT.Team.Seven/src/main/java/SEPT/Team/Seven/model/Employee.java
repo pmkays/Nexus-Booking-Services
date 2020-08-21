@@ -9,4 +9,6 @@ public class Employee extends Account {
 	public Employee(String firstName, String lastName, String email, String phoneNo, String address) {
 		super(firstName,lastName,email,phoneNo, address);
 	}
+	
+	public Employee() {};
 }

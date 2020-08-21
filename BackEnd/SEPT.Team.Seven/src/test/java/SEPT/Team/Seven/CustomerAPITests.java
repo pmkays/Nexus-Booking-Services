@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-public class CustomersAPITests 
+public class CustomerAPITests 
 {
 	private MockMvc mockMvc;
 	
@@ -39,7 +39,7 @@ public class CustomersAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getAllAccounts_AuthorisedUser_ReturnsJsonOfAccounts() throws Exception
+	public void getAllCustomers_AuthorisedUser_ReturnsJsonOfCustomers() throws Exception
 	{
 
 		//Arrange and Act
@@ -64,7 +64,7 @@ public class CustomersAPITests
 	
 	@Test
 	@WithAnonymousUser
-	public void getAllAccounts_AnonymousUser_AccessDenied() throws Exception
+	public void getAllCustomers_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
@@ -77,7 +77,7 @@ public class CustomersAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getSpecificAccount_AuthorisedUser_ReturnsJsonOfAccounts() throws Exception
+	public void getSpecificCustomer_AuthorisedUser_ReturnsJsonOfCustomer() throws Exception
 	{
 		//Arrange and Act		
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
@@ -104,7 +104,7 @@ public class CustomersAPITests
 	
 	@Test
 	@WithAnonymousUser
-	public void getSpecificAccount_AnonymousUser_AccessDenied() throws Exception
+	public void getSpecificCustomer_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders

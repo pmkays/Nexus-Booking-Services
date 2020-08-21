@@ -9,5 +9,7 @@ public class Admin extends Account {
 	public Admin(String firstName, String lastName, String email, String phoneNo, String address) {
 		super(firstName,lastName,email,phoneNo, address);
 	}
+	
+	public Admin() {};
 }
 
