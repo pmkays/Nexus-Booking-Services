@@ -9,4 +9,6 @@ public class Customer extends Account {
 	public Customer(String firstName, String lastName, String email, String phoneNo, String address) {
 		super(firstName,lastName,email,phoneNo, address);
 	}
+	
+	public Customer() {};
 }

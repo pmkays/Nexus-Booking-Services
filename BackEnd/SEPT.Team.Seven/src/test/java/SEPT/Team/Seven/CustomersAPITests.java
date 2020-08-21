@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-public class AccountsAPITests 
+public class CustomersAPITests 
 {
 	private MockMvc mockMvc;
 	
@@ -45,7 +45,7 @@ public class AccountsAPITests
 		//Arrange and Act
 		//we want to get the body so we can analyse the JSON returned
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts")
+			      .get("/api/customers")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -57,7 +57,7 @@ public class AccountsAPITests
 		JSONObject json = new JSONObject(result);	
 		//the json returns in an object called "_embedded", which then has an array of accounts
 		JSONObject embedded =  (JSONObject) json.get("_embedded");
-		JSONArray accounts = embedded.getJSONArray("accounts");
+		JSONArray accounts = embedded.getJSONArray("customers");
 		assertTrue(accounts.length() > 0);
 		
 	}
@@ -68,7 +68,7 @@ public class AccountsAPITests
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts")
+			      .get("/api/customers")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
@@ -81,7 +81,7 @@ public class AccountsAPITests
 	{
 		//Arrange and Act		
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts/1")
+			      .get("/api/customers/1")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -108,7 +108,7 @@ public class AccountsAPITests
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts/1")
+			      .get("/api/customers/1")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())

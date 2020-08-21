@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()
-                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
                 .antMatchers("/users/signin").permitAll()
                 .anyRequest().authenticated();
 
