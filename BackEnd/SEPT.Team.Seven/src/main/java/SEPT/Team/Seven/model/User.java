@@ -26,8 +26,16 @@ public class User {
 	private String password;
 
 	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="account_id")
-	private Account account;
+	@JoinColumn(name="customer_id")
+	private Customer customer;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="employee_id")
+	private Employee employee;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="admin_id")
+	private Admin admin;
 
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="role_id")
@@ -35,10 +43,12 @@ public class User {
 	
 	public User() {}
 
-	public User(String username, String password, Account account, Role role) {
+	public User(String username, String password, Customer customer, Employee employee, Admin admin, Role role) {
 		this.username = username;
 		this.password = password;
-		this.account = account;
+		this.customer = customer;
+		this.employee = employee;
+		this.admin = admin;
 		this.role = role;
 	}
 
@@ -66,12 +76,28 @@ public class User {
 		this.password = password;
 	}
 
-	public Account getAccount() {
-		return account;
+	public Customer getCustomer() {
+		return customer;
+	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+	
+	public Admin getAdmin() {
+		return admin;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+	
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 
 	public Role getRole() {

@@ -58,7 +58,15 @@ public class UserService {
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 				List<Role> roles = new ArrayList<>();
 				roles.add(user.get().getRole());
-				token = Optional.of(jwtProvider.createToken(username, roles));
+				if (user.get().getRole().getRoleName().equals("ROLE_CUSTOMER")) {
+					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getCustomer().getId()));
+				} else if (user.get().getRole().getRoleName().equals("ROLE_EMPLOYEE")) {
+					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getEmployee().getId()));
+				} else if (user.get().getRole().getRoleName().equals("ROLE_ADMIN")){
+					System.out.println("User Role: " + user.get().getRole().getRoleName());
+					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getAdmin().getId()));
+				}
+				
 			} catch (AuthenticationException e) {
 				LOGGER.info("Log in failed.");
 			}

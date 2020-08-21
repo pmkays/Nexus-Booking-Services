@@ -10,11 +10,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.test.context.TestPropertySource;
 
 import SEPT.Team.Seven.model.Role;
 import SEPT.Team.Seven.security.JwtProvider;
@@ -47,7 +45,7 @@ public class JwtProviderTests
 	@Test
 	void isValidToken_ValidJwtToken_ReturnsTrue() {
 		//Arrange
-		String token = provider.createToken("admin", roles);
+		String token = provider.createToken("admin", roles, 1337);
 		
 		//Act and Assert
 		assertTrue(provider.isValidToken(token));	
@@ -69,7 +67,7 @@ public class JwtProviderTests
 	@Test
 	void getUsername_ValidJwtToken_ReturnsUsernameOfAdmin() {		
 		//Arrange
-		String token = provider.createToken("admin", roles);
+		String token = provider.createToken("admin", roles, 1337);
 		
 		//Act and Assert
 		assertEquals(provider.getUsername(token), "admin");				
@@ -96,7 +94,7 @@ public class JwtProviderTests
 	@Test
 	void getRoles_ValidJwtToken_ReturnsRoleAsADMIN() {		
 		//Arrange
-		String token = provider.createToken("admin", roles);
+		String token = provider.createToken("admin", roles, 1337);
 		List<GrantedAuthority> roles = AuthorityUtils.createAuthorityList("ADMIN");
 
 		assertEquals(provider.getRoles(token), roles);				

@@ -1,5 +1,13 @@
 package SEPT.Team.Seven;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -9,20 +17,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import SEPT.Team.Seven.model.Account;
+import SEPT.Team.Seven.model.Admin;
 import SEPT.Team.Seven.model.Role;
 import SEPT.Team.Seven.model.User;
 import SEPT.Team.Seven.repo.UserRepository;
 import SEPT.Team.Seven.security.JwtProvider;
 import SEPT.Team.Seven.security.SecurityUserDetailsService;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
 
 @SpringBootTest
 public class SecurityUserDetailsServiceTests {
@@ -44,9 +44,9 @@ public class SecurityUserDetailsServiceTests {
 		
 		provider = mock(JwtProvider.class);
 		
-		Account account = new Account("Juan","Yega","juan@hotmail.com", "410567343","1 Digger Road");
+		Admin admin = new Admin("Juan","Yega","juan@hotmail.com", "410567343","1 Digger Road");
 		Role role = new Role("ROLE_ADMIN", "Admin role");
-		validUser = new User("admin", "$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa", account, role);
+		validUser = new User("admin", "$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa", null, null, admin, role);
 		
 		
 	}
