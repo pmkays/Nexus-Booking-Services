@@ -1,5 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `appointment_system`;
+CREATE DATABASE IF NOT EXISTS `appointment_system`;
 USE `appointment_system`;
+
+DROP TABLE IF EXISTS `booking`;
+DROP TABLE IF EXISTS `availability`;
+DROP TABLE IF EXISTS `working_time`;
+DROP TABLE IF EXISTS `security_user`;
 
 --
 -- Table structure for table `security_role`
@@ -16,12 +21,44 @@ CREATE TABLE `security_role` (
 
 
 --
--- Table structure for table `account`
+-- Table structure for table `customer`
 --
 
-DROP TABLE IF EXISTS `account`;
+DROP TABLE IF EXISTS `customer`;
 
-CREATE TABLE `account` (
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `phone_no` varchar(11) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+
+CREATE TABLE `employee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `phone_no` varchar(11) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+
+CREATE TABLE `admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) DEFAULT NULL,
   `last_name` varchar(45) DEFAULT NULL,
@@ -41,22 +78,80 @@ CREATE TABLE `security_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) DEFAULT NULL,
   `password` varchar(68) DEFAULT NULL,
-  `account_id` int(11) NOT NULL,
-  `role_id` int(11) DEFAULT NULL,
+  `customer_id` int(11),
+  `employee_id` int(11),
+  `admin_id` int(11),
+  `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
+  CONSTRAINT `fk_account_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_account_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
+  CONSTRAINT `fk_account_admin` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`),
   CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `security_role` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
--- Data for table `account`
+-- Table structure for table `booking`
 --
 
-INSERT INTO `account` VALUES
+DROP TABLE IF EXISTS `booking`;
+
+CREATE TABLE `booking` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, 
+  `customer_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `startTime` datetime NOT NULL,
+  `endTime` datetime NOT NULL,
+  `status` varchar(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `availability`
+--
+
+DROP TABLE IF EXISTS `availability`;
+
+CREATE TABLE `availability` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `startTime` datetime NOT NULL,
+  `endTime` datetime NOT NULL,
+  CONSTRAINT `fk_employee_id_availaibility` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `working_time`
+--
+
+DROP TABLE IF EXISTS `working_time`;
+
+CREATE TABLE `working_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `startTime` datetime NOT NULL,
+  `endTime` datetime NOT NULL,
+  CONSTRAINT `fk_employee_id_working_time` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--
+-- Data for table `customer`
+--
+
+INSERT INTO `customer` VALUES
     (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road'),
     (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street'),
     (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court'),
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way'),
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way');
+    
+--
+-- Data for table `admin`
+--
+
+INSERT INTO `admin` VALUES
     (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road');
 
 --
@@ -74,8 +169,8 @@ INSERT INTO `security_role` VALUES
 --
 
 INSERT INTO `security_user` VALUES
-    (1,'sasuke1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 1, 1),
-    (2,'sakura1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 2, 1),
-    (3,'naruto1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 3, 1),
-    (4,'kakashi1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 4, 1),
-    (5,'admin', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 5, 3);
+    (1,'sasuke1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 1, null, null, 1),
+    (2,'sakura1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 2, null, null, 1),
+    (3,'naruto1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 3, null, null, 1),
+    (4,'kakashi1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 4, null, null, 1),
+    (5,'admin', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, null, 5, 3);
