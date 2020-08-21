@@ -1,4 +1,4 @@
-package SEPT.Team.Seven;
+package SEPT.Team.Seven.apiTests;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,8 +57,8 @@ public class AdminAPITests
 		JSONObject json = new JSONObject(result);	
 		//the json returns in an object called "_embedded", which then has an array of accounts
 		JSONObject embedded =  (JSONObject) json.get("_embedded");
-		JSONArray accounts = embedded.getJSONArray("admins");
-		assertTrue(accounts.length() > 0);
+		JSONArray admins = embedded.getJSONArray("admins");
+		assertTrue(admins.length() > 0);
 		
 	}
 	

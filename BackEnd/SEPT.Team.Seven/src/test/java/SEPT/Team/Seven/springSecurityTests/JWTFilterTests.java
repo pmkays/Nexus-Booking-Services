@@ -1,4 +1,4 @@
-package SEPT.Team.Seven;
+package SEPT.Team.Seven.springSecurityTests;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

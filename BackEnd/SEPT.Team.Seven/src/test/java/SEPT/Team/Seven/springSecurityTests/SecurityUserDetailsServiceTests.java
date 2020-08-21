@@ -1,4 +1,4 @@
-package SEPT.Team.Seven;
+package SEPT.Team.Seven.springSecurityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

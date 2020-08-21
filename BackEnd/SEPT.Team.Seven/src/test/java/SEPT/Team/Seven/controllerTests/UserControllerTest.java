@@ -1,4 +1,4 @@
-package SEPT.Team.Seven;
+package SEPT.Team.Seven.controllerTests;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
