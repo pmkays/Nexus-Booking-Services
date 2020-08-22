@@ -1,4 +1,4 @@
-package SEPT.Team.Seven;
+package SEPT.Team.Seven.apiTests;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-public class AccountsAPITests 
+public class CustomerAPITests 
 {
 	private MockMvc mockMvc;
 	
@@ -39,13 +39,13 @@ public class AccountsAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getAllAccounts_AuthorisedUser_ReturnsJsonOfAccounts() throws Exception
+	public void getAllCustomers_AuthorisedUser_ReturnsJsonOfCustomers() throws Exception
 	{
 
 		//Arrange and Act
 		//we want to get the body so we can analyse the JSON returned
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts")
+			      .get("/api/customers")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -57,18 +57,18 @@ public class AccountsAPITests
 		JSONObject json = new JSONObject(result);	
 		//the json returns in an object called "_embedded", which then has an array of accounts
 		JSONObject embedded =  (JSONObject) json.get("_embedded");
-		JSONArray accounts = embedded.getJSONArray("accounts");
-		assertTrue(accounts.length() > 0);
+		JSONArray customers = embedded.getJSONArray("customers");
+		assertTrue(customers.length() > 0);
 		
 	}
 	
 	@Test
 	@WithAnonymousUser
-	public void getAllAccounts_AnonymousUser_AccessDenied() throws Exception
+	public void getAllCustomers_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts")
+			      .get("/api/customers")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
@@ -77,11 +77,11 @@ public class AccountsAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getSpecificAccount_AuthorisedUser_ReturnsJsonOfAccounts() throws Exception
+	public void getSpecificCustomer_AuthorisedUser_ReturnsJsonOfCustomer() throws Exception
 	{
 		//Arrange and Act		
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts/1")
+			      .get("/api/customers/1")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -104,11 +104,11 @@ public class AccountsAPITests
 	
 	@Test
 	@WithAnonymousUser
-	public void getSpecificAccount_AnonymousUser_AccessDenied() throws Exception
+	public void getSpecificCustomer_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/accounts/1")
+			      .get("/api/customers/1")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())

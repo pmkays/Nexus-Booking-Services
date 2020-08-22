@@ -39,13 +39,13 @@ public class JwtProvider {
 	}
 
 	//Create JWT string given username and roles.
-	public String createToken(String username, List<Role> roles) {
+	public String createToken(String username, List<Role> roles, int userId) {
 		// Username is the subject
 		Claims claims = Jwts.claims().setSubject(username);
 		// Convert roles to Spring Security SimpleGrantedAuthority objects,
 		// Add to Simple Granted Authority objects to claims
 
-		//claims.put("role", role);
+		claims.put("userId", userId);
 		claims.put(roleKey, roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName()))
 				.filter(Objects::nonNull).collect(Collectors.toList()));
 		// Build the Token

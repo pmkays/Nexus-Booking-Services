@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()
-                //.antMatchers("/api/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
                 .antMatchers("/users/signin").permitAll()
                 .anyRequest().authenticated();
 
@@ -36,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
         http.addFilterBefore(new JwtFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
+        
+        http.cors();
 
     }
 
