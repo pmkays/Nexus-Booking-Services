@@ -19,7 +19,7 @@ export class Profile extends Component {
       profile = (
         <React.Fragment>
           <h2>My Profile</h2>
-          <p>Edit Profile | Change Password</p>
+          <p><NavLink to="/editprofile">Edit Profile</NavLink></p>
           <hr />
           <dl className="row">
             <dt className="col-sm-2">First Name</dt>
@@ -41,9 +41,7 @@ export class Profile extends Component {
       profile = this.props.error;
     }
 
-    return <div>{profile}
-    <NavLink to="/editprofile">Edit Profile</NavLink>
-    </div>;
+    return <div>{profile}</div>;
   }
 }
 

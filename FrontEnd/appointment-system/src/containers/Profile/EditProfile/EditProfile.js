@@ -6,6 +6,7 @@ import * as actions from "../../../store/actions/actions";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
+import {checkValidity} from "../../../utility/utility"
 
 class EditProfile extends Component{
     state = {
@@ -17,13 +18,12 @@ class EditProfile extends Component{
               type: "text",
               placeholder: "Firstname",
             },
-            value: "",
-            // validation: {
-            //   required: true,
-            //   minLength: 3,
-            // },
-            // valid: false,
-            // touched: false,
+            value: this.props.profileDetails == null ? "" : this.props.profileDetails.firstName,
+            validation: {
+              required: true,
+            },
+            valid: true,
+            touched: false,
           },
           lastName: {
             labelName: "Last Name",
@@ -35,9 +35,8 @@ class EditProfile extends Component{
             value: this.props.profileDetails == null ? "" : this.props.profileDetails.lastName,
             validation: {
               required: true,
-              minLength: 6,
             },
-            valid: false,
+            valid: true,
             touched: false,
           },
           email: {
@@ -48,12 +47,12 @@ class EditProfile extends Component{
               placeholder: "Email",
             },
             value: this.props.profileDetails == null ? "" : this.props.profileDetails.email,
-            // validation: {
-            //   required: true,
-            //   minLength: 6,
-            // },
-            // valid: false,
-            // touched: false,
+            validation: {
+              required: true,
+              isEmail: true
+            },
+            valid: true,
+            touched: false,
           },
           address: {
             labelName: "Address",
@@ -63,12 +62,11 @@ class EditProfile extends Component{
               placeholder: "Address",
             },
             value: this.props.profileDetails == null ? "" : this.props.profileDetails.address,
-            // validation: {
-            //   required: true,
-            //   minLength: 6,
-            // },
-            // valid: false,
-            // touched: false,
+            validation: {
+              required: true,
+            },
+            valid: true,
+            touched: false,
           },
           phoneNumber: {
             labelName: "Phone number",
@@ -78,70 +76,47 @@ class EditProfile extends Component{
               placeholder: "Phonenumber",
             },
             value: this.props.profileDetails == null ? "" : this.props.profileDetails.phoneNo,
-            // validation: {
-            //   required: true,
-            //   minLength: 6,
-            // },
-            // valid: false,
-            // touched: false,
+            validation: {
+              required: true,
+              isNumeric: true
+            },
+            valid: true,
+            touched: false,
           },
-        }
+        },
+        isFormValid:true
     }
     
     componentDidMount(){
-        this.f1();
+        this.props.onFetchProfile(this.props.token);
     }
-
-    // fillInValue(){
-    //     this.props.onFetchProfile(this.props.token);
-    // }
-
-    async f1(){
-        await this.props.onFetchProfile(this.props.token);
-        await this.getValue();
-    }
-
-    getValue = () => {
-        const updatedControls = {
-            ...this.state.controls,
-            firstName: {
-                ...this.state.controls.firstName,
-                value: this.props.profileDetails == null ? "" : this.props.profileDetails.firstName
-            }
-        };
-
-        this.setState({
-            controls: updatedControls
-        });
-    }
-
 
 
     // Checks validity of user input
-//   checkValidity(value, rules) {
-//     let isValid = true;
+  checkValidity(value, rules) {
+    let isValid = true;
 
-//     if (rules.required) {
-//       isValid = value.trim() !== "" && isValid;
-//     }
-//     if (rules.minLength) {
-//       isValid = value.length >= rules.minLength && isValid;
-//     }
-//     if (rules.maxLength) {
-//       isValid = value.length <= rules.maxLength && isValid;
-//     }
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
 
-//     if (rules.isEmail) {
-//       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-//       isValid = pattern.test(value) && isValid;
-//     }
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
 
-//     if (rules.isNumeric) {
-//       const pattern = /^\d+$/;
-//       isValid = pattern.test(value) && isValid;
-//     }
-//     return isValid;
-//   }
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+    return isValid;
+  }
 
   // Updates value and validity of input in state when interacted with by the user
   inputChangedHandler = (event, controlName) => {
@@ -150,17 +125,28 @@ class EditProfile extends Component{
       [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
-        // valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
-        // touched: true,
-      },
+        valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
+        touched: true,
+      }
     };
 
-    this.setState({ controls: updatedControls });
+    let formIsValid = true;
+    for (let identifier in updatedControls) {
+      formIsValid = updatedControls[identifier].valid && formIsValid;
+    }
+
+    this.setState({isFormValid: formIsValid, controls:updatedControls });
+
+
   };
 
   // Runs when submitted and calls the redux action
   editProfileHandler = (event) => {
     event.preventDefault();
+
+    if(!this.state.isFormValid){
+        return false;
+    }
 
     let formData = {
         firstName: this.state.controls.firstName.value,
@@ -170,7 +156,7 @@ class EditProfile extends Component{
         address: this.state.controls.address.value
     }
     
-    this.props.onEditProfile(formData, this.props.token);
+    this.props.onEditProfile(formData, this.props.token, this.props.history);
   };
 
   render() {
@@ -191,9 +177,9 @@ class EditProfile extends Component{
         elementConfig={formElement.config.elementConfig}
         value={formElement.config.value}
         changed={(event) => this.inputChangedHandler(event, formElement.id)}
-        // invalid={!formElement.config.valid}
-        // shouldValidate={formElement.config.validation}
-        // touched={formElement.config.touched}
+        invalid={!formElement.config.valid}
+        shouldValidate={formElement.config.validation}
+        touched={formElement.config.touched}
       />
     ));
 
@@ -214,6 +200,11 @@ class EditProfile extends Component{
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
+    let errorMsg  = null;
+    if(!this.state.isFormValid){    
+        errorMsg =  <span>Please make sure all fields are valid.</span>;
+    }
+
     return (
       <div>
         {authRedirect}
@@ -221,7 +212,8 @@ class EditProfile extends Component{
           <div class="form-group">
             {form}
             {errorMessage}
-            <Button classes="btn btn-primary">SUBMIT</Button>
+            <Button disabled = {!this.state.isFormValid} classes="btn btn-primary">Submit</Button>
+            {errorMsg}
           </div>
         </form>
         <span>{this.props.profileDetails == null ? "" : this.props.profileDetails.firstName}</span>
@@ -241,7 +233,7 @@ const mapStateToProps = (state) => {
   
 const mapDispatchToProps = (dispatch) => {
   return {
-    onEditProfile: (formData, token) => dispatch(actions.editProfile(formData, token)),
+    onEditProfile: (formData, token, history) => dispatch(actions.editProfile(formData, token, history)),
     onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
   };
 };

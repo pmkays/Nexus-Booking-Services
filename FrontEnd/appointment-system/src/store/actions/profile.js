@@ -79,7 +79,7 @@ export const editProfileSuccess = () => {
   };
 };
 
-export const editProfile = (formData, token) => {
+export const editProfile = (formData, token, history) => {
   return (dispatch) => {
     let decodedJwt = jwtDecode(token);
 
@@ -103,7 +103,7 @@ export const editProfile = (formData, token) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        'Access-Control-Request-Headers': '*'
+        // 'Access-Control-Request-Headers': '*'
       },
     };
 
@@ -112,6 +112,8 @@ export const editProfile = (formData, token) => {
       .then((response) => {
         console.log(response);
         dispatch(editProfileSuccess(response.data));
+      }).then(() =>{
+        history.push("/profile");
       })
       .catch((error) => {
         dispatch(editProfileFail("Error reaching server. Please try again later."));
