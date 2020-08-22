@@ -3,9 +3,9 @@ import NavigationItems from "./NavigationItems/NavigationItems";
 
 const navigationBar = (props) => {
   return (
-    <header>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <NavigationItems />
-    </header>
+    </nav>
   );
 };
 

@@ -71,29 +71,6 @@ export const auth = (username, password, isSignUp) => {
 
         dispatch(authSuccess(response.data, userId));
         dispatch(checkAuthTimeout(secondsToExpire));
-
-        let url = "";
-        switch (decodedJwt.roles[0].authority) {
-          case "ROLE_ADMIN":
-            url = "admins";
-            break;
-          case "ROLE_EMPLOYEE":
-            url = "employees";
-            break;
-          case "ROLE_CUSTOMER":
-            url = "customers";
-            break;
-          default:
-            return "";
-        }
-
-        const config = {
-          headers: {
-            Authorization: "Bearer " + authCode,
-          },
-        };
-
-        axios.get("http://localhost:8080/api/" + url + "/" + userId, config).then((response) => console.log(response));
       })
       .catch((error) => {
         dispatch(authFail("Username or password is incorrect."));

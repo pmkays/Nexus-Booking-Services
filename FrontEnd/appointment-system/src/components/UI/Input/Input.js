@@ -14,12 +14,7 @@ const input = (props) => {
   switch (props.elementType) {
     case "input":
       inputElement = (
-        <input
-          {...props.elementConfig}
-          className={inputClasses.join(" ")}
-          value={props.value}
-          onChange={props.changed}
-        />
+        <input {...props.elementConfig} className="form-control" value={props.value} onChange={props.changed} />
       );
       break;
     case "textarea":
@@ -54,7 +49,7 @@ const input = (props) => {
       );
   }
   return (
-    <div className={classes.Input}>
+    <div className="form-group">
       <label className={classes.Label}>{props.label}</label>
       {inputElement}
     </div>

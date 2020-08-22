@@ -1,21 +1,23 @@
 import React from "react";
 import NavigationItem from "./NavigationItem/NavigationItem";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 const navigationItems = (props) => {
   let navItems = null;
   if (props.isAuthenticated) {
     navItems = (
-      <ul>
+      <ul className="navbar-nav ml-auto">
         <NavigationItem link="/" exact>
           Home
         </NavigationItem>
+        <NavigationItem link="/profile">Profile</NavigationItem>
         <NavigationItem link="/logout">Log Out</NavigationItem>
       </ul>
     );
   } else {
     navItems = (
-      <ul>
+      <ul className="navbar-nav ml-auto">
         <NavigationItem link="/" exact>
           Home
         </NavigationItem>
@@ -24,7 +26,27 @@ const navigationItems = (props) => {
     );
   }
 
-  return navItems;
+  return (
+    <React.Fragment>
+      <NavLink className="navbar-brand" to="/" exact>
+        NEXUS
+      </NavLink>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        {navItems}
+      </div>
+    </React.Fragment>
+  );
 };
 
 const mapStateToProps = (state) => {

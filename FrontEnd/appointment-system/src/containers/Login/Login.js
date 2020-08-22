@@ -11,6 +11,7 @@ class Login extends Component {
   state = {
     controls: {
       username: {
+        labelName: "Username",
         elementType: "input",
         elementConfig: {
           type: "text",
@@ -25,6 +26,7 @@ class Login extends Component {
         touched: false,
       },
       password: {
+        labelName: "Password",
         elementType: "input",
         elementConfig: {
           type: "password",
@@ -108,6 +110,7 @@ class Login extends Component {
     let form = formElementsArray.map((formElement) => (
       <Input
         key={formElement.id}
+        label={formElement.config.labelName}
         elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
         value={formElement.config.value}
@@ -139,9 +142,11 @@ class Login extends Component {
       <div>
         {authRedirect}
         <form onSubmit={this.loginHandler}>
-          {form}
-          {errorMessage}
-          <Button btnType="Success">SUBMIT</Button>
+          <div class="form-group">
+            {form}
+            {errorMessage}
+            <Button classes="btn btn-primary">SUBMIT</Button>
+          </div>
         </form>
       </div>
     );

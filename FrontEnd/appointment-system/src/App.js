@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Layout from "./containers/Layout/Layout";
+import Profile from "./containers/Profile/Profile";
 import * as actions from "./store/actions/actions";
 
 class App extends Component {
@@ -14,15 +15,26 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <Layout>
+    let routes = null;
+    if (this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/" render={() => <h1>Welcome to the Paula Has a Job System</h1>} />
+        </Switch>
+      );
+    } else {
+      routes = (
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
-          <Route path="/" render={() => <p>hello world</p>} />
+          <Route path="/" render={() => <h1>Welcome to the Paula Has a Job System</h1>} />
         </Switch>
-      </Layout>
-    );
+      );
+    }
+    return <Layout>{routes}</Layout>;
   }
 }
 
