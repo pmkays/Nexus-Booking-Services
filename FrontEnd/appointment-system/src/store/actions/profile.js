@@ -60,3 +60,62 @@ export const fetchProfile = (token) => {
       });
   };
 };
+
+export const editProfileStart = () => {
+  return {
+    type: actionTypes.EDIT_PROFILE_START
+  };
+};
+
+export const editProfileFail = () => {
+  return {
+    type: actionTypes.EDIT_PROFILE_FAIL
+  };
+};
+
+export const editProfileSuccess = () => {
+  return {
+    type: actionTypes.EDIT_PROFILE_SUCCESS
+  };
+};
+
+export const editProfile = (formData, token) => {
+  return (dispatch) => {
+    let decodedJwt = jwtDecode(token);
+
+    let url = "";
+    switch (decodedJwt.roles[0].authority) {
+      case "ROLE_ADMIN":
+        url = "admins";
+        break;
+      case "ROLE_EMPLOYEE":
+        url = "employees";
+        break;
+      case "ROLE_CUSTOMER":
+        url = "customers";
+        break;
+      default:
+        return "";
+    }
+
+    const userId = decodedJwt.userId;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+        'Access-Control-Request-Headers': '*'
+      },
+    };
+
+    axios
+      .put("http://localhost:8080/api/" + url + "/" + userId, formData, config)
+      .then((response) => {
+        console.log(response);
+        dispatch(editProfileSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(editProfileFail("Error reaching server. Please try again later."));
+      });
+  };
+};
+

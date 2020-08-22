@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/actions";
+import {NavLink} from "react-router-dom";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
 
@@ -40,7 +41,9 @@ export class Profile extends Component {
       profile = this.props.error;
     }
 
-    return <div>{profile}</div>;
+    return <div>{profile}
+    <NavLink to="/editprofile">Edit Profile</NavLink>
+    </div>;
   }
 }
 
