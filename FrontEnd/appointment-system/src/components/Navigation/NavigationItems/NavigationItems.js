@@ -3,7 +3,7 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-const navigationItems = (props) => {
+export const NavigationItems = (props) => {
   let navItems = null;
   if (props.isAuthenticated) {
     navItems = (
@@ -55,4 +55,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(navigationItems);
+export default connect(mapStateToProps)(NavigationItems);

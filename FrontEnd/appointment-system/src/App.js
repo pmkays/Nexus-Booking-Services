@@ -22,7 +22,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
           <Route path="/logout" component={Logout} />
-          <Route path="/" render={() => <h1>Welcome to the Paula Has a Job System</h1>} />
+          <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
       );
     } else {
@@ -30,7 +30,7 @@ class App extends Component {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
-          <Route path="/" render={() => <h1>Welcome to the Paula Has a Job System</h1>} />
+          <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
       );
     }

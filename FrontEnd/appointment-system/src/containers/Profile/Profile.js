@@ -4,7 +4,7 @@ import * as actions from "../../store/actions/actions";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
 
-class Profile extends Component {
+export class Profile extends Component {
   //As soon as this component loads it will attempt to grab the current profile
   componentDidMount() {
     this.props.onFetchProfile(this.props.token);
@@ -20,17 +20,17 @@ class Profile extends Component {
           <h2>My Profile</h2>
           <p>Edit Profile | Change Password</p>
           <hr />
-          <dl class="row">
-            <dt class="col-sm-2">First Name</dt>
-            <dd class="col-sm-10">{this.props.profileDetails.firstName}</dd>
-            <dt class="col-sm-2">Last Name</dt>
-            <dd class="col-sm-10">{this.props.profileDetails.lastName}</dd>
-            <dt class="col-sm-2">Address</dt>
-            <dd class="col-sm-10">{this.props.profileDetails.address}</dd>
-            <dt class="col-sm-2">Email</dt>
-            <dd class="col-sm-10">{this.props.profileDetails.email}</dd>
-            <dt class="col-sm-2">Phone Number</dt>
-            <dd class="col-sm-10">{this.props.profileDetails.phoneNo}</dd>
+          <dl className="row">
+            <dt className="col-sm-2">First Name</dt>
+            <dd className="col-sm-10">{this.props.profileDetails.firstName}</dd>
+            <dt className="col-sm-2">Last Name</dt>
+            <dd className="col-sm-10">{this.props.profileDetails.lastName}</dd>
+            <dt className="col-sm-2">Address</dt>
+            <dd className="col-sm-10">{this.props.profileDetails.address}</dd>
+            <dt className="col-sm-2">Email</dt>
+            <dd className="col-sm-10">{this.props.profileDetails.email}</dd>
+            <dt className="col-sm-2">Phone Number</dt>
+            <dd className="col-sm-10">{this.props.profileDetails.phoneNo}</dd>
           </dl>
         </React.Fragment>
       );
