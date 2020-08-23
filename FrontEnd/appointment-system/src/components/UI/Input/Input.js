@@ -40,6 +40,13 @@ const input = (props) => {
         </select>
       );
       break;
+    case "small":
+      inputElement = (
+        <small className = "text-danger col-sm-3">
+            {props.errorMessage}
+        </small>
+      );
+      break;
     default:
       inputElement = (
         <input

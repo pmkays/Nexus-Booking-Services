@@ -67,15 +67,17 @@ export const editProfileStart = () => {
   };
 };
 
-export const editProfileFail = () => {
+export const editProfileFail = (error) => {
   return {
-    type: actionTypes.EDIT_PROFILE_FAIL
+    type: actionTypes.EDIT_PROFILE_FAIL,
+    error: error
   };
 };
 
-export const editProfileSuccess = () => {
+export const editProfileSuccess = (profileDetails) => {
   return {
-    type: actionTypes.EDIT_PROFILE_SUCCESS
+    type: actionTypes.EDIT_PROFILE_SUCCESS,
+    profileDetails: profileDetails
   };
 };
 
@@ -103,7 +105,6 @@ export const editProfile = (formData, token, history) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        // 'Access-Control-Request-Headers': '*'
       },
     };
 
@@ -113,6 +114,7 @@ export const editProfile = (formData, token, history) => {
         console.log(response);
         dispatch(editProfileSuccess(response.data));
       }).then(() =>{
+        //link them back to profile page
         history.push("/profile");
       })
       .catch((error) => {

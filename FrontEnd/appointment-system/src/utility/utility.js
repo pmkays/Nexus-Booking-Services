@@ -18,6 +18,10 @@ export const checkValidity = (value, rules) => {
     isValid = value.length <= rules.maxLength && isValid;
   }
 
+  if (rules.exactLength) {
+    isValid = value.length === rules.exactLength && isValid;
+  }
+
   if (rules.isEmail) {
     const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     isValid = pattern.test(value) && isValid;
@@ -27,7 +31,23 @@ export const checkValidity = (value, rules) => {
     const pattern = /^\d+$/;
     isValid = pattern.test(value) && isValid;
   }
-
-  console.log(isValid,"Checking checkValidty");
   return isValid;
+}
+
+
+export const errorMessageToDisplay = (formField) => {
+  switch (formField){
+      case "firstName":
+          return "Required";
+      case "lastName":
+          return "Required";
+      case "email":
+          return "Invalid email";
+      case "phoneNumber":
+          return "Must be 10 digits";
+      case "address":
+          return "Required";
+      default:
+          return "";
+  }
 }

@@ -6,7 +6,8 @@ import * as actions from "../../../store/actions/actions";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
-import {checkValidity} from "../../../utility/utility"
+import ErrorMessage from "../../../components/UI/Input/ErrorMessage";
+import {checkValidity, errorMessageToDisplay} from "../../../utility/utility"
 
 class EditProfile extends Component{
     state = {
@@ -78,7 +79,8 @@ class EditProfile extends Component{
             value: this.props.profileDetails == null ? "" : this.props.profileDetails.phoneNo,
             validation: {
               required: true,
-              isNumeric: true
+              isNumeric: true,
+              exactLength: 10
             },
             valid: true,
             touched: false,
@@ -90,33 +92,6 @@ class EditProfile extends Component{
     componentDidMount(){
         this.props.onFetchProfile(this.props.token);
     }
-
-
-    // Checks validity of user input
-  checkValidity(value, rules) {
-    let isValid = true;
-
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-    return isValid;
-  }
 
   // Updates value and validity of input in state when interacted with by the user
   inputChangedHandler = (event, controlName) => {
@@ -170,17 +145,20 @@ class EditProfile extends Component{
 
     // Creates an input element with configurations from state
     let form = formElementsArray.map((formElement) => (
-      <Input
-        key={formElement.id}
-        label={formElement.config.labelName}
-        elementType={formElement.config.elementType}
-        elementConfig={formElement.config.elementConfig}
-        value={formElement.config.value}
-        changed={(event) => this.inputChangedHandler(event, formElement.id)}
-        invalid={!formElement.config.valid}
-        shouldValidate={formElement.config.validation}
-        touched={formElement.config.touched}
-      />
+        <React.Fragment>
+            <Input
+            key={formElement.id}
+            label={formElement.config.labelName}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
+            invalid={!formElement.config.valid}
+            shouldValidate={formElement.config.validation}
+            touched={formElement.config.touched}
+            />
+            {formElement.config.valid ? null : <ErrorMessage key = {formElement.id +"Error"} message={errorMessageToDisplay(formElement.id)}/>}
+        </React.Fragment>  
     ));
 
     // Renders a spinning icon if loading
@@ -200,23 +178,23 @@ class EditProfile extends Component{
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
+    //displays error message beneath the submit button
     let errorMsg  = null;
     if(!this.state.isFormValid){    
-        errorMsg =  <span>Please make sure all fields are valid.</span>;
+        errorMsg =  <p className = "text-danger">Please make sure all fields are filled and valid.</p>;
     }
 
     return (
       <div>
         {authRedirect}
         <form onSubmit={this.editProfileHandler}>
-          <div class="form-group">
+          <div className="form-group">
             {form}
             {errorMessage}
             <Button disabled = {!this.state.isFormValid} classes="btn btn-primary">Submit</Button>
             {errorMsg}
           </div>
         </form>
-        <span>{this.props.profileDetails == null ? "" : this.props.profileDetails.firstName}</span>
       </div>
     );
   };
@@ -237,6 +215,7 @@ const mapDispatchToProps = (dispatch) => {
     onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
   };
 };
+
 
   
 

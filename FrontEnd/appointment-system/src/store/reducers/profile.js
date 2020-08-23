@@ -43,7 +43,7 @@ const reducer = (state = initialState, action) => {
       return editProfileStart(state, action);
     case actionTypes.EDIT_PROFILE_FAIL:
       return editProfileFail(state, action);
-    case actionTypes.FETCH_PROFILE_SUCCESS:
+    case actionTypes.EDIT_PROFILE_SUCCESS:
       return editProfileSuccess(state, action);
     default:
       return state;
