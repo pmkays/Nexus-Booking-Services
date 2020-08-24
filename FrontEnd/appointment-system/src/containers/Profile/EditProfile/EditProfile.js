@@ -9,7 +9,7 @@ import Input from "../../../components/UI/Input/Input";
 import ErrorMessage from "../../../components/UI/Input/ErrorMessage";
 import {checkValidity, errorMessageToDisplay} from "../../../utility/utility"
 
-class EditProfile extends Component{
+export class EditProfile extends Component{
     state = {
         controls: {
           firstName: {
@@ -145,7 +145,7 @@ class EditProfile extends Component{
 
     // Creates an input element with configurations from state
     let form = formElementsArray.map((formElement) => (
-        <React.Fragment>
+        <React.Fragment key={formElement.id}>
             <Input
             key={formElement.id}
             label={formElement.config.labelName}

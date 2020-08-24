@@ -116,7 +116,7 @@ class Login extends Component {
       <div>
         {authRedirect}
         <form onSubmit={this.loginHandler}>
-          <div class="form-group">
+          <div className="form-group">
             {form}
             {errorMessage}
             <Button classes="btn btn-primary">SUBMIT</Button>
