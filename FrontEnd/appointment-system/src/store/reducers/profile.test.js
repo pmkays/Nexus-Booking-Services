@@ -29,4 +29,22 @@ describe("profile reducer", () => {
       })
     ).toEqual({ ...initialState, error: "My error message." });
   });
+
+  it("should store profile details if successfully found user", () => {
+    expect(
+      reducer(initialState, {
+        type: actionTypes.EDIT_PROFILE_SUCCESS,
+        profileDetails: "My profile details.",
+      })
+    ).toEqual({ ...initialState, profileDetails: "My profile details." });
+  });
+
+  it("should be error if failed to fetch profile", () => {
+    expect(
+      reducer(initialState, {
+        type: actionTypes.EDIT_PROFILE_FAIL,
+        error: "My error message.",
+      })
+    ).toEqual({ ...initialState, error: "My error message." });
+  });
 });

@@ -9,12 +9,14 @@ const input = (props) => {
     inputClasses.push(classes.Invalid);
   }
 
+  inputClasses.push("form-control");
+
   // inputtype is lowercase because in the html element we are spreading the props to it
   // You cannot use camelcaase in the HTML elements. eg. <input inputType="input"... is wrong
   switch (props.elementType) {
     case "input":
       inputElement = (
-        <input {...props.elementConfig} className="form-control" value={props.value} onChange={props.changed} />
+        <input {...props.elementConfig} className={inputClasses.join(" ")} value={props.value} onChange={props.changed} />
       );
       break;
     case "textarea":
@@ -36,6 +38,13 @@ const input = (props) => {
             </option>
           ))}
         </select>
+      );
+      break;
+    case "small":
+      inputElement = (
+        <small className = "text-danger col-sm-3">
+            {props.errorMessage}
+        </small>
       );
       break;
     default:

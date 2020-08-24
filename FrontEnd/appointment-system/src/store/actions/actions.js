@@ -1,2 +1,2 @@
 export { auth, logout, setAuthRedirectPath, authCheckState } from "./auth";
-export { fetchProfile } from "./profile";
+export { fetchProfile, editProfile } from "./profile";

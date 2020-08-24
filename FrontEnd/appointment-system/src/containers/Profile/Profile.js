@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/actions";
+import {NavLink} from "react-router-dom";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
 
@@ -18,7 +19,7 @@ export class Profile extends Component {
       profile = (
         <React.Fragment>
           <h2>My Profile</h2>
-          <p>Edit Profile | Change Password</p>
+          <p><NavLink to="/editprofile">Edit Profile</NavLink></p>
           <hr />
           <dl className="row">
             <dt className="col-sm-2">First Name</dt>

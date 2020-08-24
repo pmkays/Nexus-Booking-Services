@@ -6,6 +6,7 @@ import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Layout from "./containers/Layout/Layout";
 import Profile from "./containers/Profile/Profile";
+import EditProfile from "./containers/Profile/EditProfile/EditProfile";
 import * as actions from "./store/actions/actions";
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
+          <Route path="/editProfile" component={EditProfile} />
           <Route path="/logout" component={Logout} />
           <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
