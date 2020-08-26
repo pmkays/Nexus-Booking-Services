@@ -7,7 +7,10 @@ import Logout from "./containers/Login/Logout/Logout";
 import Layout from "./containers/Layout/Layout";
 import Profile from "./containers/Profile/Profile";
 import EditProfile from "./containers/Profile/EditProfile/EditProfile";
+import AboutUs from "./components/AboutUs/AboutUs";
+import ContactUs from "./components/ContactUs/ContactUs";
 import * as actions from "./store/actions/actions";
+
 
 class App extends Component {
   // Upon loading the app check if local storage has user details
@@ -24,6 +27,8 @@ class App extends Component {
           <Route path="/profile" component={Profile} />
           <Route path="/editProfile" component={EditProfile} />
           <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/contact" component={ContactUs} />
           <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
       );
@@ -32,6 +37,8 @@ class App extends Component {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/contact" component={ContactUs} />
           <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
       );
