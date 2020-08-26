@@ -10,6 +10,7 @@ import EditProfile from "./containers/Profile/EditProfile/EditProfile";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUs/ContactUs";
 import * as actions from "./store/actions/actions";
+import HowItWorks from "./components/HowItWorks/HowItWorks";
 
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
+          <Route path="/howitworks" component={HowItWorks} />
           <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
       );
@@ -39,6 +41,7 @@ class App extends Component {
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
+          <Route path="/howitworks" component={HowItWorks} />
           <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
       );
