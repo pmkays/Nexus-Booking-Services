@@ -26,7 +26,7 @@ public class WorkingTime {
 	
 	@ManyToOne
 	@JoinColumn(name="employee_id", nullable=false)
-	private int employeeId;
+	private Employee employee;
 	
 	@NotNull
 	@Future
@@ -40,9 +40,9 @@ public class WorkingTime {
 	@Column(name="end_time")
 	private Date endTime;
 	
-	public WorkingTime(int id, int employeeId, Date startTime, Date endTime) {
+	public WorkingTime(int id, Employee employee, Date startTime, Date endTime) {
 		this.id = id;
-		this.employeeId = employeeId;
+		this.employee = employee;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
@@ -55,12 +55,12 @@ public class WorkingTime {
 		this.id = id;
 	}
 
-	public int getEmployeeId() {
-		return employeeId;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public Date getStartTime() {
