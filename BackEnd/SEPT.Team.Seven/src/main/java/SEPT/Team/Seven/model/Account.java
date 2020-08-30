@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @MappedSuperclass
 public abstract class Account {
@@ -14,18 +17,28 @@ public abstract class Account {
 	@Column(name="id")
 	private int id;
 	
+	@NotNull
+	@NotEmpty
 	@Column(name="first_name")
 	private String firstName;
 	
+	@NotNull
+	@NotEmpty
 	@Column(name="last_name")
 	private String lastName;
 	
+	@NotNull
+	@NotEmpty
 	@Column(name="email")
 	private String email;
 	
+	@NotNull
+	@Size(min = 10, max = 10)
 	@Column(name="phoneNo")
 	private String phoneNo;
 	
+	@NotNull
+	@NotEmpty
 	@Column(name="address")
 	private String address;
 	
