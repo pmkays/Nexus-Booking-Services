@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 
 class Logout extends Component {
   componentDidMount() {
+    this.props.clearProfile();
     this.props.onLogout();
   }
 
@@ -16,6 +17,7 @@ class Logout extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogout: () => dispatch(actions.logout()),
+    clearProfile: () => dispatch(actions.clearProfileUponLogout()),
   };
 };
 

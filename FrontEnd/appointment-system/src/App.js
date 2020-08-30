@@ -7,11 +7,12 @@ import Logout from "./containers/Login/Logout/Logout";
 import Layout from "./containers/Layout/Layout";
 import Profile from "./containers/Profile/Profile";
 import EditProfile from "./containers/Profile/EditProfile/EditProfile";
-import AboutUs from "./components/AboutUs/AboutUs";
+import RegisterProfile from "./containers/Register/Register";
+
+import AboutUs from "./containers/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUs/ContactUs";
 import * as actions from "./store/actions/actions";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
-
 
 class App extends Component {
   // Upon loading the app check if local storage has user details
@@ -38,6 +39,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/register" component={RegisterProfile} />
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />

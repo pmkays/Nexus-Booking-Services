@@ -2,6 +2,12 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+export const clearProfileUponLogout = () => {
+  return {
+    type: actionTypes.CLEAR_PROFILE,
+  };
+};
+
 export const fetchProfileStart = () => {
   return {
     type: actionTypes.FETCH_PROFILE_START,
@@ -63,21 +69,21 @@ export const fetchProfile = (token) => {
 
 export const editProfileStart = () => {
   return {
-    type: actionTypes.EDIT_PROFILE_START
+    type: actionTypes.EDIT_PROFILE_START,
   };
 };
 
 export const editProfileFail = (error) => {
   return {
     type: actionTypes.EDIT_PROFILE_FAIL,
-    error: error
+    error: error,
   };
 };
 
 export const editProfileSuccess = (profileDetails) => {
   return {
     type: actionTypes.EDIT_PROFILE_SUCCESS,
-    profileDetails: profileDetails
+    profileDetails: profileDetails,
   };
 };
 
@@ -113,7 +119,8 @@ export const editProfile = (formData, token, history) => {
       .then((response) => {
         console.log(response);
         dispatch(editProfileSuccess(response.data));
-      }).then(() =>{
+      })
+      .then(() => {
         //link them back to profile page
         history.push("/profile");
       })
@@ -123,3 +130,89 @@ export const editProfile = (formData, token, history) => {
   };
 };
 
+//
+
+export const addProfileStart = () => {
+  return {
+    type: actionTypes.ADD_PROFILE_START,
+  };
+};
+
+export const addProfileFail = (error) => {
+  return {
+    type: actionTypes.ADD_PROFILE_FAIL,
+    error: error,
+  };
+};
+
+export const addProfileSuccess = (profileDetails) => {
+  return {
+    type: actionTypes.ADD_PROFILE_SUCCESS,
+    profileDetails: profileDetails,
+  };
+};
+
+export const addProfile = (formData, history) => {
+  return (dispatch) => {
+    let userData = {
+      username: formData.username,
+      password: formData.password,
+    };
+
+    axios
+      .post("http://localhost:8080/users/signup", userData)
+      .then((response) => {
+        console.log(response);
+        dispatch(fetchAccountNo(formData, history));
+      })
+      .catch((error) => {
+        dispatch(addProfileFail("Error reaching server. Please try again later."));
+      });
+  };
+};
+
+export const fetchAccountNo = (formData, history) => {
+  return (dispatch) => {
+    let profileData = {
+      username: formData.username,
+    };
+
+    axios
+      .post("http://localhost:8080/users/accountno", profileData)
+      .then((response) => {
+        console.log(response);
+        let updatedProfileData = { ...formData, accountNo: response.data };
+        dispatch(addProfileDetailsToUser(updatedProfileData, history));
+      })
+      .catch((error) => {
+        dispatch(addProfileFail("Error reaching server. Please try again later."));
+      });
+  };
+};
+
+export const addProfileDetailsToUser = (formData, history) => {
+  return (dispatch) => {
+    let profileData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phoneNo: formData.phoneNo,
+      address: formData.address,
+    };
+
+    console.log(profileData);
+
+    axios
+      .put("http://localhost:8080/api/customers/" + formData.accountNo, profileData)
+      .then((response) => {
+        console.log(response);
+        dispatch(addProfileSuccess(response.data));
+      })
+      .then(() => {
+        history.push("/login");
+      })
+      .catch((error) => {
+        dispatch(addProfileFail("Error reaching server. Please try again later."));
+      });
+  };
+};

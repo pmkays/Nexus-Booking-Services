@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -30,11 +31,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()
+				.antMatchers(HttpMethod.POST, "/users/accountno").permitAll()
+				.antMatchers(HttpMethod.POST, "/users/signup").permitAll()
+        		.antMatchers(HttpMethod.POST, "/api/customers").permitAll()
+        		.antMatchers(HttpMethod.PUT, "/api/customers/**").permitAll()
 //                .antMatchers("/api/**").permitAll()
                 .antMatchers("/users/signin").permitAll()
                 .anyRequest().authenticated();
 
-        //Dsiable csrf
+        //Disable csrf
         http.csrf().disable();
 
         // No session will be made

@@ -14,13 +14,13 @@ describe("<NavigationItems/>", () => {
   });
 
   it("should render 2 navigation items if not authenticated", () => {
-    expect(wrapper.find(NavigationItem)).toHaveLength(2);
+    expect(wrapper.find(NavigationItem)).toHaveLength(6);
   });
 
   it("should render 3 navigation items if authenticated", () => {
     //wrapper = shallow(<NavigationItems isAuthenticated/>);
     wrapper.setProps({ isAuthenticated: true });
-    expect(wrapper.find(NavigationItem)).toHaveLength(3);
+    expect(wrapper.find(NavigationItem)).toHaveLength(6);
   });
 
   it("should render exact logout link if authenticated", () => {
