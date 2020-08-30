@@ -35,6 +35,27 @@ public class UserController {
        return userService.signin(loginDto.getUsername(), loginDto.getPassword()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Username or password is incorrect."));
     }
+    
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/signup")
+    public User signup(@RequestBody LoginDto loginDto) {
+       return userService.signup(loginDto.getUsername(), loginDto.getPassword()).orElseThrow(()->
+       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error processing registration."));
+    }
+    
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/accountno")
+    public Integer getUserAccountNo(@RequestBody LoginDto loginDto) {
+    	
+    	int accountNo = userService.getUserAccountNo(loginDto.getUsername());
+    	
+    	if(accountNo == 0) {
+    		throw new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error processing registration.");
+    	}
+    	
+       return accountNo;
+      
+    }
 
     // Test method for testing authority
     @CrossOrigin(origins = "http://localhost:3000")
