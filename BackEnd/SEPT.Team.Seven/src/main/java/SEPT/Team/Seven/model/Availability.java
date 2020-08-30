@@ -2,6 +2,7 @@ package SEPT.Team.Seven.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 @Table(name="availability")
@@ -25,24 +28,27 @@ public class Availability {
 	@Column(name="id")
 	private int id;
 	
-	@ManyToOne
+	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="employee_id", nullable=false)
 	private Employee employee;
 	
 	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="start_time")
 	private Date startTime;
 	
 	@NotNull
 	@Future
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="end_time")
 	private Date endTime;
 	
-	public Availability(int id, Employee employee, Date startTime, Date endTime) {
-		this.id = id;
+	public Availability() {}
+	
+	public Availability(Employee employee, Date startTime, Date endTime) {
 		this.employee = employee;
 		this.startTime = startTime;
 		this.endTime = endTime;
