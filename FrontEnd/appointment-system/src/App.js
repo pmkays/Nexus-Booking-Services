@@ -10,9 +10,9 @@ import EditProfile from "./containers/Profile/EditProfile/EditProfile";
 import RegisterProfile from "./containers/Register/Register";
 
 import AboutUs from "./containers/AboutUs/AboutUs";
-import ContactUs from "./components/ContactUs/ContactUs";
+import ContactUs from "./containers/ContactUs/ContactUs";
 import * as actions from "./store/actions/actions";
-import HowItWorks from "./components/HowItWorks/HowItWorks";
+import HowItWorks from "./containers/HowItWorks/HowItWorks";
 
 class App extends Component {
   // Upon loading the app check if local storage has user details
