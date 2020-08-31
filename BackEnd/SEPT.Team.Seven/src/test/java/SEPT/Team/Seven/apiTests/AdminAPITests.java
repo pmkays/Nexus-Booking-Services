@@ -18,6 +18,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -113,5 +117,47 @@ public class AdminAPITests
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
 				  .andExpect(MockMvcResultMatchers.status().reason("Access Denied"));
+	}
+	
+	@Test
+	@WithMockUser(username="admin",roles={"ADMIN"})
+	public void updateAdmin_ValidData_ReturnsNothing() throws Exception
+	{
+		//Arrange
+		JSONObject requestBody = new JSONObject(); 
+		requestBody.put("firstName", "Juan");
+		requestBody.put("lastName", "Yega");
+		requestBody.put("email", "juan@hotmail.com");
+		requestBody.put("phoneNo", "1234567891");
+		requestBody.put("address", "updated address");
+		
+		//Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .put("/api/admins/5")
+			      .content(requestBody.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+	}
+	
+	@Test
+	@WithMockUser(username="admin",roles={"ADMIN"})
+	public void updateAdmin_InvalidData_ThrowsError() throws Exception
+	{
+		//Arrange
+		JSONObject requestBody = new JSONObject(); 
+		requestBody.put("firstName", "Juan");
+		requestBody.put("lastName", "Yega");
+		requestBody.put("email", "juan@hotmail.com");
+		requestBody.put("phoneNo", "1234abc");
+		requestBody.put("address", "updated addressss");
+		
+		//Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .put("/api/admins/5")
+			      .content(requestBody.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
 	}
 }

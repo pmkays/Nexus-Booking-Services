@@ -114,4 +114,46 @@ public class EmployeeAPITests
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
 				  .andExpect(MockMvcResultMatchers.status().reason("Access Denied"));
 	}
+	
+	@Test
+	@WithMockUser(username="admin",roles={"ADMIN"})
+	public void updateEmployee_ValidData_ReturnsNothing() throws Exception
+	{
+		//Arrange
+		JSONObject requestBody = new JSONObject(); 
+		requestBody.put("firstName", "Yuri");
+		requestBody.put("lastName", "Detrov");
+		requestBody.put("email", "yuri@gmail.com");
+		requestBody.put("phoneNo", "1234567891");
+		requestBody.put("address", "updated address");
+		
+		//Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .put("/api/employees/4")
+			      .content(requestBody.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+	}
+	
+	@Test
+	@WithMockUser(username="admin",roles={"ADMIN"})
+	public void updateCustomer_InvalidData_ThrowsError() throws Exception
+	{
+		//Arrange
+		JSONObject requestBody = new JSONObject(); 
+		requestBody.put("firstName", "Yuri");
+		requestBody.put("lastName", "Detrov");
+		requestBody.put("email", "yuri@gmail.com");
+		requestBody.put("phoneNo", "1234abc");
+		requestBody.put("address", "updated address");
+		
+		//Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .put("/api/employees/4")
+			      .content(requestBody.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
+	}
 }
