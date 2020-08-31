@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @MappedSuperclass
@@ -17,28 +19,32 @@ public abstract class Account {
 	@Column(name="id")
 	private int id;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="First name must not be null")
+	@NotEmpty(message="First name must not be empty")
+	@Pattern(regexp="^[a-zA-Z]+$", message="First name must only contain letters")
 	@Column(name="first_name")
 	private String firstName;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="Last name must not be null")
+	@NotEmpty(message="Last name must not be empty")
+	@Pattern(regexp="^[a-zA-Z]+$", message="Last name must only contain letters")
 	@Column(name="last_name")
 	private String lastName;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="Email must not be null")
+	@NotEmpty(message="Email must not be empty")
+	@Email(message="Email must be valid")
 	@Column(name="email")
 	private String email;
 	
-	@NotNull
-	@Size(min = 10, max = 10)
+	@NotNull(message="Phone number must not be null")
+	@Size(min = 10, max = 10, message = "Phone number must be 10 digits")
+	@Pattern(regexp="^[0-9]+$", message="Phone number must only contain numbers")
 	@Column(name="phoneNo")
 	private String phoneNo;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull (message="Address must not be null")
+	@NotEmpty (message="Address must not be empty")
 	@Column(name="address")
 	private String address;
 	

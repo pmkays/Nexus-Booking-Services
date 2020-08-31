@@ -35,7 +35,7 @@ public class JwtProviderTests
 //	long duration;
 	
 	@BeforeAll
-	static void initialiseRoles(){
+	static void setUp(){
 		roles = new ArrayList<Role>();		
 		roles.add(new Role("ADMIN", "Admin role"));
 		provider = new JwtProvider("paulahasajob",600000);

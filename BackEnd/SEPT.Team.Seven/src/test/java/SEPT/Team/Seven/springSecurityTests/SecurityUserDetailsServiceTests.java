@@ -37,7 +37,7 @@ public class SecurityUserDetailsServiceTests {
 
 	
 	@BeforeAll
-	static void initialiseMock() {
+	static void setUp() {
 		userRepository = mock(UserRepository.class);
 		
 		service = new SecurityUserDetailsService();

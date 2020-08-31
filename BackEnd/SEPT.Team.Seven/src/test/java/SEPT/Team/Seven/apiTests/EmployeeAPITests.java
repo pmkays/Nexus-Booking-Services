@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-public class AdminAPITests 
+public class EmployeeAPITests 
 {
 	private MockMvc mockMvc;
 	
@@ -39,13 +39,13 @@ public class AdminAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getAllAdmins_AuthorisedUser_ReturnsJsonOfAdmins() throws Exception
+	public void getAllEmployees_AuthorisedUser_ReturnsJsonOfEmployees() throws Exception
 	{
 
 		//Arrange and Act
 		//we want to get the body so we can analyse the JSON returned
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/admins")
+			      .get("/api/employees")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -57,18 +57,18 @@ public class AdminAPITests
 		JSONObject json = new JSONObject(result);	
 		//the json returns in an object called "_embedded", which then has an array of accounts
 		JSONObject embedded =  (JSONObject) json.get("_embedded");
-		JSONArray admins = embedded.getJSONArray("admins");
-		assertTrue(admins.length() > 0);
+		JSONArray employees = embedded.getJSONArray("employees");
+		assertTrue(employees.length() > 0);
 		
 	}
 	
 	@Test
 	@WithAnonymousUser
-	public void getAllAdmins_AnonymousUser_AccessDenied() throws Exception
+	public void getAllEmployees_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/admins")
+			      .get("/api/employees")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
@@ -77,11 +77,11 @@ public class AdminAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getSpecificAdmin_AuthorisedUser_ReturnsJsonOfAdmin() throws Exception
+	public void getSpecificEmployee_AuthorisedUser_ReturnsJsonOfEmployee() throws Exception
 	{
 		//Arrange and Act		
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/admins/5")
+			      .get("/api/employees/4")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -95,20 +95,20 @@ public class AdminAPITests
 		String email = (String) json.get("email");
 		
 		//Assert
-		assertEquals(firstName, "Juan");
-		assertEquals(lastName, "Yega");
-		assertEquals(email, "juan@hotmail.com");
+		assertEquals(firstName, "Yuri");
+		assertEquals(lastName, "Detrov");
+		assertEquals(email, "yuri@gmail.com");
 	}
 	
 	
 	
 	@Test
 	@WithAnonymousUser
-	public void getSpecificAdmin_AnonymousUser_AccessDenied() throws Exception
+	public void getSpecificEmployee_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/admins/5")
+			      .get("/api/employees/4")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())

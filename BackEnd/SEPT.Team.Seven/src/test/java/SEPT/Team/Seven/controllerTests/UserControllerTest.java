@@ -42,7 +42,7 @@ public class UserControllerTest {
 	
 	
 	@BeforeAll
-	public static void initialise()
+	public static void setUp()
 	{
 		
 		sampleJwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
