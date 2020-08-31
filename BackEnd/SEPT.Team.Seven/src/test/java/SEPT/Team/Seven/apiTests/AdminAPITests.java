@@ -30,7 +30,7 @@ public class AdminAPITests
 	private WebApplicationContext webApplicationContext;
 	 
 	@BeforeEach
-	public void initialise()
+	public void setUp()
 	{
 		mockMvc =  MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())

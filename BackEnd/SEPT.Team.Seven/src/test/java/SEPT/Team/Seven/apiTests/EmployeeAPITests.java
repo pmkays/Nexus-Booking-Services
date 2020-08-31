@@ -30,7 +30,7 @@ public class EmployeeAPITests
 	private WebApplicationContext webApplicationContext;
 	 
 	@BeforeEach
-	public void initialise()
+	public void setUp()
 	{
 		mockMvc =  MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
@@ -77,7 +77,7 @@ public class EmployeeAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getSpecificCustomer_AuthorisedUser_ReturnsJsonOfCustomer() throws Exception
+	public void getSpecificEmployee_AuthorisedUser_ReturnsJsonOfEmployee() throws Exception
 	{
 		//Arrange and Act		
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
@@ -104,7 +104,7 @@ public class EmployeeAPITests
 	
 	@Test
 	@WithAnonymousUser
-	public void getSpecificCustomer_AnonymousUser_AccessDenied() throws Exception
+	public void getSpecificEmployee_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
