@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @MappedSuperclass
@@ -19,21 +21,25 @@ public abstract class Account {
 	
 	@NotNull
 	@NotEmpty
+	@Pattern(regexp="^[a-zA-Z]+$") //must only be alpha
 	@Column(name="first_name")
 	private String firstName;
 	
 	@NotNull
 	@NotEmpty
+	@Pattern(regexp="^[a-zA-Z]+$") //must only be alpha
 	@Column(name="last_name")
 	private String lastName;
 	
 	@NotNull
 	@NotEmpty
+	@Email
 	@Column(name="email")
 	private String email;
 	
 	@NotNull
 	@Size(min = 10, max = 10)
+	@Pattern(regexp="^[0-9]+$") //must only be numeric
 	@Column(name="phoneNo")
 	private String phoneNo;
 	
