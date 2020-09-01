@@ -28,18 +28,18 @@ public class WorkingTime {
 	private int id;
 	
 	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name="employee_id", nullable=false)
+	@JoinColumn(name="employee_id")
 	private Employee employee;
 	
-	@NotNull
-	@Future
+	@NotNull(message="Start Time must not be null.")
+	@Future(message="Start Time must be in the future.")
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="start_time")
 	private Date startTime;
 	
-	@NotNull
-	@Future
+	@NotNull(message="End Time must not be null.")
+	@Future(message="End Time must be in the future.")
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="end_time")

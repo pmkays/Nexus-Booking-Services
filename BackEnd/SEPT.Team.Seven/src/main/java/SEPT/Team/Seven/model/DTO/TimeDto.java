@@ -7,22 +7,22 @@ import SEPT.Team.Seven.model.Employee;
 public class TimeDto {
 	
 
-	private Employee employee;
+	private int employeeId;
 	private Date startTime;
 	private Date endTime;
 	
-	public TimeDto(Employee employee, Date startTime, Date endTime) {
-		this.employee = employee;
+	public TimeDto(int employeeId, Date startTime, Date endTime) {
+		this.employeeId = employeeId;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public Date getStartTime() {

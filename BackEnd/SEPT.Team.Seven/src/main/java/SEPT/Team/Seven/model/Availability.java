@@ -29,7 +29,7 @@ public class Availability {
 	private int id;
 	
 	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name="employee_id", nullable=false)
+	@JoinColumn(name="employee_id")
 	private Employee employee;
 	
 	@NotNull

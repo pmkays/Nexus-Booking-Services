@@ -1,11 +1,16 @@
 package SEPT.Team.Seven.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.User;
 import SEPT.Team.Seven.model.WorkingTime;
@@ -25,12 +30,19 @@ public class WorkingTimeService {
 		this.employeeRepository = employeeRepository;
 	}
 	
-	public Optional<WorkingTime> addWorkingTime(Employee employee, Date startTime, Date endTime) {
-//		if (workingTimeRepository.findByEmployeeId(employee.getId()).isPresent()) {
-//			System.out.println("yeet");
-//		}
-		return Optional.of(workingTimeRepository.save
-                (new WorkingTime(employee, startTime, endTime)));
+	public List<WorkingTime> getWorkingTimesForEmployee(int employeeId) {
+		List<WorkingTime> workingTimes = workingTimeRepository.findAllByEmployeeId(employeeId);
+		return workingTimes;
+	}
+	
+	public Optional<WorkingTime> addWorkingTime(int employeeId, Date startTime, Date endTime) {
+		if (employeeRepository.findById(employeeId).isPresent()) {
+			if (startTime.before(endTime)) {
+				return Optional.of(workingTimeRepository.save
+		                (new WorkingTime(employeeRepository.findById(employeeId).get(), startTime, endTime)));
+			}
+		}
+		return Optional.empty();
 	}
 
 }
