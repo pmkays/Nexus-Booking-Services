@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import axios from "axios";
+
+import Spinner from "../../../components/UI/Spinner/Spinner";
 
 export class Employees extends Component {
   state = {
     employees: null,
+    loading: false,
+    error: null,
   };
 
   componentDidMount() {
@@ -14,17 +19,23 @@ export class Employees extends Component {
       },
     };
 
+    this.setState({ ...this.state, loading: true });
+
     axios
       .get("http://localhost:8080/api/employees/", config)
       .then((response) => {
-        console.log(response.data._embedded.employees);
         this.setState({
           ...this.state,
           employees: response.data._embedded.employees,
+          loading: false,
         });
       })
       .catch((error) => {
-        console.log("Error poop");
+        this.setState({
+          ...this.state,
+          error: "Error retrieving employees.",
+          loading: false,
+        });
       });
   }
 
@@ -32,7 +43,6 @@ export class Employees extends Component {
     let employees = null;
 
     if (this.state.employees !== null) {
-      console.log("lol");
       employees = this.state.employees.map((employee) => {
         return (
           <tr key={employee.id}>
@@ -47,10 +57,22 @@ export class Employees extends Component {
       });
     }
 
+    if (this.state.loading) {
+      employees = <Spinner />;
+    }
+
+    if (this.state.error) {
+      employees = this.state.error;
+    }
+
     return (
       <React.Fragment>
         <br />
         <h3>Employees</h3>
+        <Link className="btn btn-secondary btn-sm" to="/addemployee">
+          Add Employee
+        </Link>
+        <br />
         <br />
         <table className="table">
           <thead>
