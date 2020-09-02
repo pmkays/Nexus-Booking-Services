@@ -4,6 +4,7 @@ import { updateObject } from "../../utility/utility";
 const initialState = {
   token: null,
   userId: null,
+  role: null,
   error: null,
   loading: false,
   authRedirect: "/",

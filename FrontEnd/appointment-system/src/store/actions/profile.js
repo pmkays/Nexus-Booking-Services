@@ -152,18 +152,29 @@ export const addProfileSuccess = (profileDetails) => {
   };
 };
 
-export const addProfile = (formData, history) => {
+export const addProfile = (formData, history, type) => {
   return (dispatch) => {
-    let userData = {
-      username: formData.username,
-      password: formData.password,
-    };
+    let userData = null;
+
+    if (type === "customers") {
+      userData = {
+        username: formData.username,
+        password: formData.password,
+        type: type,
+      };
+    } else {
+      userData = {
+        username: formData.username,
+        password: "abc123",
+        type: type,
+      };
+    }
 
     axios
       .post("http://localhost:8080/users/signup", userData)
       .then((response) => {
         console.log(response);
-        dispatch(fetchAccountNo(formData, history));
+        dispatch(fetchAccountNo(formData, history, type));
       })
       .catch((error) => {
         dispatch(addProfileFail("Error reaching server. Please try again later."));
@@ -171,7 +182,7 @@ export const addProfile = (formData, history) => {
   };
 };
 
-export const fetchAccountNo = (formData, history) => {
+export const fetchAccountNo = (formData, history, type) => {
   return (dispatch) => {
     let profileData = {
       username: formData.username,
@@ -182,7 +193,7 @@ export const fetchAccountNo = (formData, history) => {
       .then((response) => {
         console.log(response);
         let updatedProfileData = { ...formData, accountNo: response.data };
-        dispatch(addProfileDetailsToUser(updatedProfileData, history));
+        dispatch(addProfileDetailsToUser(updatedProfileData, history, type));
       })
       .catch((error) => {
         dispatch(addProfileFail("Error reaching server. Please try again later."));
@@ -190,7 +201,7 @@ export const fetchAccountNo = (formData, history) => {
   };
 };
 
-export const addProfileDetailsToUser = (formData, history) => {
+export const addProfileDetailsToUser = (formData, history, type) => {
   return (dispatch) => {
     let profileData = {
       firstName: formData.firstName,
@@ -203,7 +214,7 @@ export const addProfileDetailsToUser = (formData, history) => {
     console.log(profileData);
 
     axios
-      .put("http://localhost:8080/api/customers/" + formData.accountNo, profileData)
+      .put("http://localhost:8080/api/" + type + "/" + formData.accountNo, profileData)
       .then((response) => {
         console.log(response);
         dispatch(addProfileSuccess(response.data));

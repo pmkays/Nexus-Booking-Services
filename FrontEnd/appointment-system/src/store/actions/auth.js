@@ -64,7 +64,7 @@ export const auth = (username, password, isSignUp) => {
         const secondsToExpire = decodedJwt.exp - decodedJwt.iat;
         expirationDate.setMinutes(expirationDate.getMinutes() + secondsToExpire / 60);
 
-        console.log(expirationDate);
+        console.log(decodedJwt);
         localStorage.setItem("token", response.data);
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("userId", decodedJwt.userId);

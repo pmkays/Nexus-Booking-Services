@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import * as actions from "../../store/actions/actions";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
-import Input from "../../components/UI/Input/Input";
-import ErrorMessage from "../../components/UI/Input/ErrorMessage";
-import { checkValidity, errorMessageToDisplay } from "../../utility/utility";
+import * as actions from "../../../store/actions/actions";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Button from "../../../components/UI/Button/Button";
+import Input from "../../../components/UI/Input/Input";
+import ErrorMessage from "../../../components/UI/Input/ErrorMessage";
+import { checkValidity, errorMessageToDisplay } from "../../../utility/utility";
 
-export class Register extends Component {
+export class AddEmployee extends Component {
   state = {
     controls: {
       username: {
@@ -18,34 +18,6 @@ export class Register extends Component {
         elementConfig: {
           type: "text",
           placeholder: "Username",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: true,
-        touched: false,
-      },
-      password: {
-        labelName: "Password",
-        elementType: "input",
-        elementConfig: {
-          type: "password",
-          placeholder: "Password",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: true,
-        touched: false,
-      },
-      passwordAgain: {
-        labelName: "Retype-Password",
-        elementType: "input",
-        elementConfig: {
-          type: "password",
-          placeholder: "Password",
         },
         value: "",
         validation: {
@@ -284,8 +256,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddNewProfile: (formData, history) => dispatch(actions.addProfile(formData, history, "customers")),
+    onAddNewProfile: (formData, history) => dispatch(actions.addProfile(formData, history, "employees")),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEmployee);
