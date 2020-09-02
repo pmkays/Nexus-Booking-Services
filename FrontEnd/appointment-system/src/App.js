@@ -8,6 +8,7 @@ import Layout from "./containers/Layout/Layout";
 import Profile from "./containers/Profile/Profile";
 import EditProfile from "./containers/Profile/EditProfile/EditProfile";
 import RegisterProfile from "./containers/Register/Register";
+import Employees from "./containers/Admin/Employees/Employees";
 import AddEmployee from "./containers/Admin/AddEmployee/AddEmployee";
 
 import AboutUs from "./containers/AboutUs/AboutUs";
@@ -27,6 +28,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/employees" component={Employees} />
           <Route path="/addEmployee" component={AddEmployee} />
           <Route path="/profile" component={Profile} />
           <Route path="/editProfile" component={EditProfile} />
