@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 
-class Employees extends Component {
+export class Employees extends Component {
   state = {
     employees: null,
   };
