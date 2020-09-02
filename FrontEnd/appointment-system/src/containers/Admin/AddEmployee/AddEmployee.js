@@ -33,7 +33,7 @@ export class AddEmployee extends Component {
           type: "text",
           placeholder: "Firstname",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.firstName,
+        value: "",
         validation: {
           required: true,
         },
@@ -47,7 +47,7 @@ export class AddEmployee extends Component {
           type: "text",
           placeholder: "Lastname",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.lastName,
+        value: "",
         validation: {
           required: true,
         },
@@ -61,7 +61,7 @@ export class AddEmployee extends Component {
           type: "email",
           placeholder: "Email",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.email,
+        value: "",
         validation: {
           required: true,
           isEmail: true,
@@ -76,7 +76,7 @@ export class AddEmployee extends Component {
           type: "text",
           placeholder: "Address",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.address,
+        value: "",
         validation: {
           required: true,
         },
@@ -90,7 +90,7 @@ export class AddEmployee extends Component {
           type: "text",
           placeholder: "Phonenumber",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.phoneNo,
+        value: "",
         validation: {
           required: true,
           isNumeric: true,
@@ -165,7 +165,7 @@ export class AddEmployee extends Component {
 
     let formData = {
       username: this.state.controls.username.value,
-      password: this.state.controls.password.value,
+      password: "abc123",
       firstName: this.state.controls.firstName.value,
       lastName: this.state.controls.lastName.value,
       email: this.state.controls.email.value,
@@ -173,7 +173,9 @@ export class AddEmployee extends Component {
       address: this.state.controls.address.value,
     };
 
-    this.props.onAddNewProfile(formData, this.props.history);
+    console.log("Printing token", this.props.token);
+
+    this.props.onAddNewProfile(formData, this.props.history, this.props.token);
   };
 
   render() {
@@ -251,12 +253,13 @@ const mapStateToProps = (state) => {
     loading: state.profile.loading,
     error: state.profile.error,
     profileDetails: state.profile.profileDetails,
+    token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddNewProfile: (formData, history) => dispatch(actions.addProfile(formData, history, "employees")),
+    onAddNewProfile: (formData, history, token) => dispatch(actions.addProfile(formData, history, "employees", token)),
   };
 };
 

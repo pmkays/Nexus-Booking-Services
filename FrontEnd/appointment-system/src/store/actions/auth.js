@@ -8,11 +8,12 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, authority) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token,
     userId: userId,
+    authority: authority,
   };
 };
 
@@ -27,6 +28,7 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("expirationDate");
+  localStorage.removeItem("authority");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -60,16 +62,17 @@ export const auth = (username, password, isSignUp) => {
         let decodedJwt = jwtDecode(authCode);
 
         const userId = decodedJwt.userId;
+        const authority = decodedJwt.roles[0].authority;
         const expirationDate = new Date();
         const secondsToExpire = decodedJwt.exp - decodedJwt.iat;
         expirationDate.setMinutes(expirationDate.getMinutes() + secondsToExpire / 60);
 
-        console.log(decodedJwt);
         localStorage.setItem("token", response.data);
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("userId", decodedJwt.userId);
+        localStorage.setItem("authority", authority);
 
-        dispatch(authSuccess(response.data, userId));
+        dispatch(authSuccess(response.data, userId, authority));
         dispatch(checkAuthTimeout(secondsToExpire));
       })
       .catch((error) => {
@@ -96,7 +99,8 @@ export const authCheckState = () => {
         dispatch(logout());
       } else {
         const userId = localStorage.getItem("userId");
-        dispatch(authSuccess(token, userId));
+        const authority = localStorage.getItem("authority");
+        dispatch(authSuccess(token, userId, authority));
         // Expiry in seconds by taking the difference
         dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
       }
