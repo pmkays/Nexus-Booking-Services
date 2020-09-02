@@ -13,4 +13,5 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Inte
 	Optional<Availability> findByEmployeeId(int employeeId);
 	
 	List<Availability> findAllByEmployeeId(int employeeId);
+	
 }

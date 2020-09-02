@@ -1,6 +1,6 @@
 package SEPT.Team.Seven.service;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import SEPT.Team.Seven.model.Availability;
-import SEPT.Team.Seven.model.Employee;
-import SEPT.Team.Seven.model.WorkingTime;
 import SEPT.Team.Seven.repo.AvailabilityRepository;
 import SEPT.Team.Seven.repo.EmployeeRepository;
 
@@ -27,9 +25,26 @@ public class AvailabilityService {
 		this.employeeRepository = employeeRepository;
 	}
 	
-	public Optional<Availability> addAvailability(int employeeId, Date startTime, Date endTime) {
-		System.out.println("error");
+	public Optional<Availability> addAvailability(int employeeId, Date startTime, Date endTime){
+
 		if (employeeRepository.findById(employeeId).isPresent()) {
+			
+			List<Availability> employeesAvailabilities = availabilityRepository.findAllByEmployeeId(employeeId);
+			Calendar newStartCalendar = Calendar.getInstance();
+			newStartCalendar.setTime(startTime);			
+			
+			for (Availability availability : employeesAvailabilities) {
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(availability.getStartTime());	
+				
+				// The employee already has a shift on this day
+				if (cal.get(Calendar.DATE) == newStartCalendar.get(Calendar.DATE) &&
+						cal.get(Calendar.MONTH) == newStartCalendar.get(Calendar.MONTH) &&
+						cal.get(Calendar.YEAR) == newStartCalendar.get(Calendar.YEAR)) {
+					return Optional.empty();
+				}
+			}
 			if (startTime.before(endTime)) {
 				return Optional.of(availabilityRepository.save
 		                (new Availability(employeeRepository.findById(employeeId).get(), startTime, endTime)));

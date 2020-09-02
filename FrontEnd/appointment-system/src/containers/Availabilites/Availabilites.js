@@ -9,33 +9,34 @@ class Availabilites extends Component {
     time: moment(),
     day: null,
     startTime: {
-      0: null,
-      1: null,
-      2: null,
-      3: null,
-      4: null,
-      5: null,
-      6: null,
+      0: 'Not Available',
+      1: 'Not Available',
+      2: 'Not Available',
+      3: 'Not Available',
+      4: 'Not Available',
+      5: 'Not Available',
+      6: 'Not Available',
     },
     endTime: {
-      0: null,
-      1: null,
-      2: null,
-      3: null,
-      4: null,
-      5: null,
-      6: null,
+      0: 'Not Available',
+      1: 'Not Available',
+      2: 'Not Available',
+      3: 'Not Available',
+      4: 'Not Available',
+      5: 'Not Available',
+      6: 'Not Available',
     },
   };
 
   render() {
     const shiftTimes = () => {
       const times = [];
+      times.push('Not Available');
       for (let i = 0; i <= 24; i++) { times.push(i); }
-      return times.map((time) => <option value={time} key={time}>{time}:00</option>);
+      return times.map((time) => <option value={time} key={time}>{time}{time === 'Not Available' ? '':':00'}</option>);
     };
     const shifts = () => {
-      return [[0,'Sunday'],[1,'Monday'],[2,'Tuesday'],[3,'Wednesday'],[4,'Thursday'],[5,'Friday'],[6,'Saturday']].map((day) => (
+      return [[0,'Monday'],[1,'Tuesday'],[2,'Wednesday'],[3,'Thursday'],[4,'Friday'],[5,'Saturday'], [6,'Sunday']].map((day) => (
       <tr key={day[1]}>
         <th scope="row">{day[1]}</th>
         <td><select className="custom-select" id="startTime" data-index={day[0]} onChange={setTime}>{shiftTimes()}</select></td>
@@ -67,10 +68,22 @@ class Availabilites extends Component {
       for (let i = 0; i < 7; i++) {
         if (this.state.startTime[i] !== null && this.state.endTime[i] !== null) {
           console.log(i);
+          let startTimeText = this.state.startTime[i];
+          let endTimeText = this.state.endTime[i];
+          if (startTimeText < 10) {
+            startTimeText = `0${this.state.startTime[i]}`;
+          }
+          if (endTimeText < 10) {
+            endTimeText = `0${this.state.endTime[i]}`;
+          }
           const baseTime = moment(this.state.time).startOf('isoWeek').add(i, 'days').format('YYYY-MM-DD');
-          const startTime = `${baseTime}T${this.state.startTime[i]}:00:00`;
-          const endTime = `${baseTime}T${this.state.endTime[i]}:00:00`;
-          addAvailabilitiesPromise.push(this.props.addAvailabilities(startTime, endTime, this.props.token));
+          const startTime = `${baseTime}T${startTimeText}:00:00`;
+          const endTime = `${baseTime}T${endTimeText}:00:00`;
+
+          if (!(startTimeText === 'Not Available' || endTimeText === 'Not Available')) {
+            console.log("adding availability");
+            addAvailabilitiesPromise.push(this.props.addAvailabilities(startTime, endTime, this.props.token));
+          }
         }
       }
       return Promise.all(addAvailabilitiesPromise);
