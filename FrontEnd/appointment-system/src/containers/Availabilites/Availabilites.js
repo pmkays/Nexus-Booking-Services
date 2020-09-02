@@ -67,7 +67,7 @@ class Availabilites extends Component {
       for (let i = 0; i < 7; i++) {
         if (this.state.startTime[i] !== null && this.state.endTime[i] !== null) {
           console.log(i);
-          const baseTime = moment(this.state.time).startOf('week').add(i, 'days').format('YYYY-MM-DD');
+          const baseTime = moment(this.state.time).startOf('isoWeek').add(i, 'days').format('YYYY-MM-DD');
           const startTime = `${baseTime}T${this.state.startTime[i]}:00:00`;
           const endTime = `${baseTime}T${this.state.endTime[i]}:00:00`;
           addAvailabilitiesPromise.push(this.props.addAvailabilities(startTime, endTime, this.props.token));
@@ -80,7 +80,7 @@ class Availabilites extends Component {
         <h2 className="text-center">Add Availabilites</h2>
         <div className="text-center">
           <i className="fas fa-arrow-left btn" onClick={previousWeek}></i>
-          From Monday {this.state.time.startOf('week').format('DD/MM/YYYY')} to Sunday {this.state.time.endOf('week').format('DD/MM/YYYY')}
+          From Monday {this.state.time.startOf('isoWeek').format('DD/MM/YYYY')} to Sunday {this.state.time.endOf('isoWeek').format('DD/MM/YYYY')}
           <i className="fas fa-arrow-right btn" onClick={nextWeek}></i>
         </div>
         <table className="table">

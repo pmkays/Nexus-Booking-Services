@@ -30,7 +30,7 @@ describe("<Availabilites/>", () => {
     );
   });
 
-  it("should render contact us page", () => {
+  it("should render availabilities page", () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
