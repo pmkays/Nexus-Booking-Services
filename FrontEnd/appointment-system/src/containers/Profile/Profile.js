@@ -7,9 +7,9 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 
 export class Profile extends Component {
   //As soon as this component loads it will attempt to grab the current profile
-  componentDidMount() {
-    this.props.onFetchProfile(this.props.token);
-  }
+    componentDidMount() {
+      this.props.onFetchProfile(this.props.token);
+    }
 
   render() {
     let profile = <Spinner />;

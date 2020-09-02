@@ -1,5 +1,4 @@
 import React from "react";
-import { redirect } from "../../utility/history";
 
 const HowItWorks = (props) => {
   return (

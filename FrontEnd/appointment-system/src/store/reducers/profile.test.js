@@ -5,6 +5,8 @@ const initialState = {
   profileDetails: null,
   error: null,
   loading: false,
+  availabilities: null,
+  workingTime: null,
 };
 
 describe("profile reducer", () => {
@@ -43,6 +45,42 @@ describe("profile reducer", () => {
     expect(
       reducer(initialState, {
         type: actionTypes.EDIT_PROFILE_FAIL,
+        error: "My error message.",
+      })
+    ).toEqual({ ...initialState, error: "My error message." });
+  });
+
+  it("should store availabilities if request was successfully", () => {
+    expect(
+      reducer(initialState, {
+        type: actionTypes.FETCH_AVAILABILITIES_SUCCESS,
+        availabilities: "test",
+      })
+    ).toEqual({ ...initialState, availabilities: "test" });
+  });
+  
+  it("should be error if failed to fetch availabilities", () => {
+    expect(
+      reducer(initialState, {
+        type: actionTypes.FETCH_AVAILABILITIES_FAIL,
+        error: "My error message.",
+      })
+    ).toEqual({ ...initialState, error: "My error message." });
+  });
+
+  it("should store availabilities if request was successfully", () => {
+    expect(
+      reducer(initialState, {
+        type: actionTypes.ADD_AVAILABILITIES_SUCCESS,
+        availabilities: "test",
+      })
+    ).toEqual({ ...initialState, availabilities: "test" });
+  });
+  
+  it("should be error if failed to add availabilities", () => {
+    expect(
+      reducer(initialState, {
+        type: actionTypes.ADD_AVAILABILITIES_FAIL,
         error: "My error message.",
       })
     ).toEqual({ ...initialState, error: "My error message." });

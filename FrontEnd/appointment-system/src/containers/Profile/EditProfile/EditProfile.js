@@ -201,14 +201,14 @@ export class EditProfile extends Component{
 }
 
 const mapStateToProps = (state) => {
-    return {
-      loading: state.profile.loading,
-      error: state.profile.error,
-      profileDetails: state.profile.profileDetails,
-      token: state.auth.token
-    };
+  return {
+    loading: state.profile.loading,
+    error: state.profile.error,
+    profileDetails: state.profile.profileDetails,
+    token: state.auth.token
   };
-  
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onEditProfile: (formData, token, history) => dispatch(actions.editProfile(formData, token, history)),
