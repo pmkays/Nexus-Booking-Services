@@ -36,7 +36,7 @@ class JWTFilterTests {
 	static MockHttpServletResponse response;
 	
 	@BeforeAll
-	public static void initialiseMock()
+	public static void setUp()
 	{
 		service = mock(SecurityUserDetailsService.class);		
 		request = new MockHttpServletRequest();

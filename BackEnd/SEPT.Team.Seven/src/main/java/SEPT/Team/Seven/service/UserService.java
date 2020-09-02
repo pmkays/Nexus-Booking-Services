@@ -89,7 +89,7 @@ public class UserService {
         System.out.println("Troo");
         if (!userRepository.findByUsername(username).isPresent()) {
             Optional<Role> role = roleRepository.findByRoleName("ROLE_CUSTOMER");
-            Customer customer = customerRepository.save(new Customer("","","","",""));
+            Customer customer = customerRepository.save(new Customer("placeholder","placeholder","placeholder","0123456789","placeholder"));
             return Optional.of(userRepository.save
                     (new User(username, this.passwordEncoder.encode(password), customer,null,null,role.get())));
         }
