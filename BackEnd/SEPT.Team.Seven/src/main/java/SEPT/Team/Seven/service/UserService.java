@@ -13,11 +13,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import SEPT.Team.Seven.model.Account;
 import SEPT.Team.Seven.model.Customer;
+import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.Role;
 import SEPT.Team.Seven.model.User;
 import SEPT.Team.Seven.repo.CustomerRepository;
+import SEPT.Team.Seven.repo.EmployeeRepository;
 import SEPT.Team.Seven.repo.RoleRepository;
 import SEPT.Team.Seven.repo.UserRepository;
 import SEPT.Team.Seven.security.JwtFilter;
@@ -29,8 +30,10 @@ public class UserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
 
 	private UserRepository userRepository;
-	
+
 	private CustomerRepository customerRepository;
+
+	private EmployeeRepository employeeRepository;
 
 	private AuthenticationManager authenticationManager;
 
@@ -41,11 +44,12 @@ public class UserService {
 	private JwtProvider jwtProvider;
 
 	@Autowired
-	public UserService(UserRepository userRepository, CustomerRepository customerRepository, 
-			AuthenticationManager authenticationManager, RoleRepository roleRepository, 
-			PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
+	public UserService(UserRepository userRepository, CustomerRepository customerRepository,
+			EmployeeRepository employeeRepository, AuthenticationManager authenticationManager,
+			RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
 		this.userRepository = userRepository;
 		this.customerRepository = customerRepository;
+		this.employeeRepository = employeeRepository;
 		this.authenticationManager = authenticationManager;
 		this.roleRepository = roleRepository;
 		this.passwordEncoder = passwordEncoder;
@@ -69,11 +73,11 @@ public class UserService {
 					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getCustomer().getId()));
 				} else if (user.get().getRole().getRoleName().equals("ROLE_EMPLOYEE")) {
 					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getEmployee().getId()));
-				} else if (user.get().getRole().getRoleName().equals("ROLE_ADMIN")){
+				} else if (user.get().getRole().getRoleName().equals("ROLE_ADMIN")) {
 					System.out.println("User Role: " + user.get().getRole().getRoleName());
 					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getAdmin().getId()));
 				}
-				
+
 			} catch (AuthenticationException e) {
 				LOGGER.info("Log in failed.");
 			}
@@ -82,29 +86,46 @@ public class UserService {
 
 	}
 
-	
-	// User(String username, String password, Customer customer, Employee employee, Admin admin, Role role)
-	//public Customer(String firstName, String lastName, String email, String phoneNo, String address)
-    public Optional<User> signup(String username, String password) {
-        System.out.println("Troo");
-        if (!userRepository.findByUsername(username).isPresent()) {
-            Optional<Role> role = roleRepository.findByRoleName("ROLE_CUSTOMER");
-            Customer customer = customerRepository.save(new Customer("","","","",""));
-            return Optional.of(userRepository.save
-                    (new User(username, this.passwordEncoder.encode(password), customer,null,null,role.get())));
-        }
-        return Optional.empty();
-    }
-    
-    public Integer getUserAccountNo(String username) {
-        System.out.println(username);
-        if (userRepository.findByUsername(username).isPresent()) {
-            Optional<User> user = userRepository.findByUsername(username);
-            System.out.println(user.get().getCustomer().getId());
-            return user.get().getCustomer().getId();
-        }
-        return 0;
-    }
+	// String firstName, String lastName, String email, String phoneNo, String
+	// address
+	// User(String username, String password, Customer customer, Employee employee,
+	// Admin admin, Role role)
+	// public Customer(String firstName, String lastName, String email, String
+	// phoneNo, String address)
+	public Optional<User> signup(String username, String password, String type) {
+		if (!userRepository.findByUsername(username).isPresent()) {
+			Optional<Role> role = null;
+			if (type.equals("customers")) {
+				role = roleRepository.findByRoleName("ROLE_CUSTOMER");
+				Customer customer = customerRepository.save(new Customer("", "", "", "", ""));
+				return Optional.of(userRepository
+						.save(new User(username, this.passwordEncoder.encode(password), customer, null, null, role.get())));
+			}
+			if (type.equals("employees")) {
+				role = roleRepository.findByRoleName("ROLE_EMPLOYEE");
+				Employee employee = employeeRepository.save(new Employee("", "", "", "", ""));
+				return Optional.of(userRepository
+						.save(new User(username, this.passwordEncoder.encode(password), null, employee, null, role.get())));
+			}
+
+			
+		}
+		return Optional.empty();
+	}
+
+	public Integer getUserAccountNo(String username) {
+		if (userRepository.findByUsername(username).isPresent()) {
+			Optional<User> user = userRepository.findByUsername(username);
+
+			if (user.get().getCustomer() != null)
+				return user.get().getCustomer().getId();
+			if (user.get().getEmployee() != null)
+				return user.get().getEmployee().getId();
+			if (user.get().getAdmin() != null)
+				return user.get().getAdmin().getId();
+		}
+		return 0;
+	}
 
 	public List<User> getAll() {
 		return userRepository.findAll();

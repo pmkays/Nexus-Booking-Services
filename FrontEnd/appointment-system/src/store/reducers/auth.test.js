@@ -4,6 +4,7 @@ import reducer from "../reducers/auth";
 const initialState = {
   token: null,
   userId: null,
+  authority: null,
   error: null,
   loading: false,
   authRedirect: "/",
@@ -20,8 +21,9 @@ describe("auth reducer", () => {
         type: actionTypes.AUTH_SUCCESS,
         token: "myToken",
         userId: "myUserId",
+        authority: "user",
       })
-    ).toEqual({ ...initialState, token: "myToken", userId: "myUserId" });
+    ).toEqual({ ...initialState, token: "myToken", userId: "myUserId", authority: "user" });
   });
 
   it("should be error if failed to log in", () => {

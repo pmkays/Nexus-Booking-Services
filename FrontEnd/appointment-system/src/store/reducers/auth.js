@@ -4,6 +4,7 @@ import { updateObject } from "../../utility/utility";
 const initialState = {
   token: null,
   userId: null,
+  authority: null,
   error: null,
   loading: false,
   authRedirect: "/",
@@ -14,7 +15,13 @@ const authStart = (state, action) => {
 };
 
 const authSuccess = (state, action) => {
-  return updateObject(state, { token: action.token, userId: action.userId, error: null, loading: false });
+  return updateObject(state, {
+    token: action.token,
+    userId: action.userId,
+    authority: action.authority,
+    error: null,
+    loading: false,
+  });
 };
 
 const authFail = (state, action) => {
