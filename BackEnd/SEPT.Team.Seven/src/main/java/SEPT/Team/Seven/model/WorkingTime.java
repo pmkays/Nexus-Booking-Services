@@ -31,15 +31,15 @@ public class WorkingTime {
 	@JoinColumn(name="employee_id")
 	private Employee employee;
 	
-	@NotNull(message="Start Time must not be null.")
-	@Future(message="Start Time must be in the future.")
+	@NotNull(message="Start time must not be null")
+	@Future(message="Start time must not be in the past")
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="start_time")
 	private Date startTime;
 	
-	@NotNull(message="End Time must not be null.")
-	@Future(message="End Time must be in the future.")
+	@NotNull(message="End time must not be null")
+	@Future(message="End time must not be in the past")
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="end_time")
