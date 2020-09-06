@@ -34,9 +34,6 @@ public abstract class Account {
 	@NotNull(message="Email must not be null")
 	@NotEmpty(message="Email must not be empty")
 	@Email(message="Email must be valid")
-	
-	@Pattern(regexp="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",
-	message="Email must be valid")
 	@Column(name="email")
 	private String email;
 	
