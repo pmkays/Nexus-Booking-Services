@@ -45,7 +45,7 @@ public class AvailabilityTest {
 		assertEquals(constraintViolations.size(), 1);
 
 		assertTrue(constraintViolations.stream().anyMatch
-				(c-> c.getMessage().equals("Start time cannot be in the past")));
+				(c-> c.getMessage().equals("Start time must not be in the past")));
 	
 	}
 	
@@ -60,7 +60,7 @@ public class AvailabilityTest {
 		assertEquals(constraintViolations.size(), 1);
 
 		assertTrue(constraintViolations.stream().anyMatch
-				(c-> c.getMessage().equals("Start time cannot be null")));
+				(c-> c.getMessage().equals("Start time must not be null")));
 	
 	}
 	
@@ -97,7 +97,7 @@ public class AvailabilityTest {
 		assertEquals(constraintViolations.size(), 1);
 
 		assertTrue(constraintViolations.stream().anyMatch
-				(c-> c.getMessage().equals("End time cannot be in the past")));
+				(c-> c.getMessage().equals("End time must not be in the past")));
 	
 	}
 	
@@ -112,7 +112,7 @@ public class AvailabilityTest {
 		assertEquals(constraintViolations.size(), 1);
 
 		assertTrue(constraintViolations.stream().anyMatch
-				(c-> c.getMessage().equals("End time cannot be null")));
+				(c-> c.getMessage().equals("End time must not be null")));
 	
 	}
 	

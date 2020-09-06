@@ -26,7 +26,11 @@ public class AvailabilityService {
 	}
 	
 	public Optional<Availability> addAvailability(int employeeId, Date startTime, Date endTime){
-
+		
+		if (startTime == null || endTime == null) {
+			return Optional.empty();
+		}
+		
 		if (employeeRepository.findById(employeeId).isPresent()) {
 			
 			List<Availability> employeesAvailabilities = availabilityRepository.findAllByEmployeeId(employeeId);
@@ -57,5 +61,6 @@ public class AvailabilityService {
 		List<Availability> availabilities = availabilityRepository.findAllByEmployeeId(employeeId);
 		return availabilities;
 	}
+	
 
 }

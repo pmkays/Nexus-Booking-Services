@@ -160,4 +160,25 @@ public class AdminAPITests
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
 	}
+	
+//	@Test
+//	@WithMockUser(username="admin",roles={"ADMIN"})
+//	public void addAdmin_ValidData_ReturnsNewAdmin() throws Exception
+//	{
+//		//Arrange
+//		JSONObject requestBody = new JSONObject(); 
+//		requestBody.put("firstName", "Admin");
+//		requestBody.put("lastName", "Admin");
+//		requestBody.put("email", "admin@hotmail.com");
+//		requestBody.put("phoneNo", "1234567890");
+//		requestBody.put("address", "1 Admin St");
+//		
+//		//Act and Assert
+//		this.mockMvc.perform(MockMvcRequestBuilders
+//			      .post("/api/admins/")
+//			      .content(requestBody.toString())
+//			      .contentType(MediaType.APPLICATION_JSON))
+//				  .andDo(MockMvcResultHandlers.print())
+//				  .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+//	}
 }

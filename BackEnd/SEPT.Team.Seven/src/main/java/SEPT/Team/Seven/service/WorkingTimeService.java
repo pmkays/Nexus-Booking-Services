@@ -36,6 +36,10 @@ public class WorkingTimeService {
 	}
 	
 	public Optional<WorkingTime> addWorkingTime(int employeeId, Date startTime, Date endTime) {
+		if (startTime == null || endTime == null) {
+			return Optional.empty();
+		}
+		
 		if (employeeRepository.findById(employeeId).isPresent()) {
 			if (startTime.before(endTime)) {
 				return Optional.of(workingTimeRepository.save
