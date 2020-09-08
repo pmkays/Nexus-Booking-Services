@@ -39,7 +39,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signup")
     public User signup(@RequestBody LoginDto loginDto) {
-       return userService.signup(loginDto.getUsername(), loginDto.getPassword()).orElseThrow(()->
+       return userService.signup(loginDto.getUsername(), loginDto.getPassword(), loginDto.getType()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error processing registration."));
     }
     
