@@ -15,6 +15,7 @@ import AboutUs from "./containers/AboutUs/AboutUs";
 import ContactUs from "./containers/ContactUs/ContactUs";
 import * as actions from "./store/actions/actions";
 import HowItWorks from "./containers/HowItWorks/HowItWorks";
+import Availabilites from "./containers/Availabilites/Availabilites";
 
 class App extends Component {
   // Upon loading the app check if local storage has user details
@@ -49,6 +50,7 @@ class App extends Component {
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
           <Route path="/howitworks" component={HowItWorks} />
+          <Route path="/availabilities" component={Availabilites} />
           <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
         </Switch>
       );

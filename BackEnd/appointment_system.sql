@@ -99,8 +99,8 @@ CREATE TABLE `booking` (
   `id` int(11) NOT NULL AUTO_INCREMENT, 
   `customer_id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
   `status` varchar(11) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
@@ -116,8 +116,8 @@ DROP TABLE IF EXISTS `availability`;
 CREATE TABLE `availability` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
   CONSTRAINT `fk_employee_id_availaibility` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -131,8 +131,8 @@ DROP TABLE IF EXISTS `working_time`;
 CREATE TABLE `working_time` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
-  `startTime` datetime NOT NULL,
-  `endTime` datetime NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
   CONSTRAINT `fk_employee_id_working_time` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -144,7 +144,13 @@ CREATE TABLE `working_time` (
 INSERT INTO `customer` VALUES
     (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road'),
     (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street'),
-    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court'),
+    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court');
+    
+--
+-- Data for table `employee`
+--
+
+INSERT INTO `employee` VALUES
     (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way');
     
 --
@@ -172,5 +178,28 @@ INSERT INTO `security_user` VALUES
     (1,'sasuke1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 1, null, null, 1),
     (2,'sakura1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 2, null, null, 1),
     (3,'naruto1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 3, null, null, 1),
-    (4,'kakashi1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 4, null, null, 1),
+    (4,'employee1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, 4, null, 2),
     (5,'admin', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, null, 5, 3);
+    
+    
+--
+-- Data for table `availability`
+--
+
+INSERT INTO `availability` VALUES
+	(1, 4, '2020-09-028 00:00:00', '2020-09-28 9:00:00'),
+    (2, 4, '2020-09-28 9:00:00', '2020-09-28 17:00:00'),
+    (3, 4, '2020-09-28 17:00:00', '2020-09-29 00:00:00'),
+	(4, 4, '2020-09-29 00:00:00', '2020-09-29 9:00:00'),
+    (5, 4, '2020-09-29 9:00:00', '2020-09-29 17:00:00'),
+    (6, 4, '2020-09-29 17:00:00', '2020-09-30 00:00:00');
+
+    
+--
+-- Data for table `working_time`
+--
+
+INSERT INTO `working_time` VALUES
+	(1, 4, '2020-09-28 12:00:00', '2020-09-28 17:00:00'),
+    (2, 4, '2020-09-29 12:00:00', '2020-09-29 17:00:00');
+

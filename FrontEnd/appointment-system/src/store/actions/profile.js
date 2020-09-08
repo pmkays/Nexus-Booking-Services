@@ -234,3 +234,187 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
       });
   };
 };
+
+export const fetchAvailabilitiesStart = () => {
+  return {
+    type: actionTypes.FETCH_AVAILABILITIES_START,
+  };
+};
+
+export const fetchAvailabilitiesSuccess = (availabilities) => {
+  return {
+    type: actionTypes.FETCH_AVAILABILITIES_SUCCESS,
+    availabilities: availabilities,
+  };
+};
+
+export const fetchAvailabilitiesFail = (error) => {
+  return {
+    type: actionTypes.FETCH_AVAILABILITIES_FAIL,
+    error: error,
+  };
+};
+
+export const fetchAvailabilities = (token) => {
+  return (dispatch) => {
+    let decodedJwt = jwtDecode(token);
+
+    const userId = decodedJwt.userId;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .get("http://localhost:8080/api/availability/employee/" + userId, config)
+      .then((response) => {
+        console.log(response);
+        dispatch(fetchAvailabilitiesSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(fetchAvailabilitiesFail("Error reaching server. Please try again later."));
+      });
+  };
+};
+
+export const addAvailabilitiesStart = () => {
+  return {
+    type: actionTypes.ADD_AVAILABILITIES_START,
+  };
+};
+
+export const addAvailabilitiesSuccess = (availabilities) => {
+  return {
+    type: actionTypes.ADD_AVAILABILITIES_SUCCESS,
+    availabilities: availabilities,
+  };
+};
+
+export const addAvailabilitiesFail = (error) => {
+  return {
+    type: actionTypes.ADD_AVAILABILITIES_FAIL,
+    error: error,
+  };
+};
+
+export const addAvailabilities = (startTime, endTime, token) => {
+  return (dispatch) => {
+    let decodedJwt = jwtDecode(token);
+
+    const data = {
+      employeeId: decodedJwt.userId,
+      startTime,
+      endTime,
+    }
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .post("http://localhost:8080/api/availability", data, config)
+      .then((response) => {
+        console.log(response);
+        dispatch(addAvailabilitiesSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addAvailabilitiesFail("Error reaching server. Please try again later."));
+      });
+  };
+};
+
+export const fetchWorkingTimeStart = () => {
+  return {
+    type: actionTypes.FETCH_WORKING_TIME_START,
+  };
+};
+
+export const fetchWorkingTimeSuccess = (workingTime) => {
+  return {
+    type: actionTypes.FETCH_WORKING_TIME_SUCCESS,
+    workingTime: workingTime,
+  };
+};
+
+export const fetchWorkingTimeFail = (error) => {
+  return {
+    type: actionTypes.FETCH_WORKING_TIME_FAIL,
+    error: error,
+  };
+};
+
+export const fetchWorkingTime = (startTime, endTime, token) => {
+  return (dispatch) => {
+    let decodedJwt = jwtDecode(token);
+
+    const userId = decodedJwt.userId;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .get("http://localhost:8080/api/workingTIme/employee/" + userId, config)
+      .then((response) => {
+        console.log(response);
+        dispatch(fetchWorkingTimeSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(fetchWorkingTimeFail("Error reaching server. Please try again later."));
+      });
+  };
+};
+
+export const addWorkingTimeStart = () => {
+  return {
+    type: actionTypes.ADD_WORKING_TIME_START,
+  };
+};
+
+export const addWorkingTimeSuccess = (availabilities) => {
+  return {
+    type: actionTypes.ADD_WORKING_TIME_SUCCESS,
+    availabilities: availabilities,
+  };
+};
+
+export const addWorkingTimeFail = (error) => {
+  return {
+    type: actionTypes.ADD_WORKING_TIME_FAIL,
+    error: error,
+  };
+};
+
+export const addWorkingTime = (startTime, endTime, token) => {
+  return (dispatch) => {
+    let decodedJwt = jwtDecode(token);
+
+    const data = {
+      employeeId: decodedJwt.userId,
+      startTime,
+      endTime,
+    }
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .post("http://localhost:8080/api/workingTime", data, config)
+      .then((response) => {
+        console.log(response);
+        dispatch(addWorkingTimeSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addWorkingTimeFail("Error reaching server. Please try again later."));
+      });
+  };
+};

@@ -26,6 +26,11 @@ export const checkValidity = (value, rules) => {
     const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     isValid = pattern.test(value) && isValid;
   }
+  
+  if(rules.isLetters){
+    const pattern = /^[a-zA-Z]+$/;
+    isValid = pattern.test(value) && isValid;
+  }
 
   if (rules.isNumeric) {
     const pattern = /^\d+$/;
@@ -38,9 +43,9 @@ export const checkValidity = (value, rules) => {
 export const errorMessageToDisplay = (formField) => {
   switch (formField){
       case "firstName":
-          return "Required";
+          return "Required, must only use letters";
       case "lastName":
-          return "Required";
+          return "Required, must only use letters";
       case "email":
           return "Invalid email";
       case "phoneNumber":

@@ -22,6 +22,7 @@ export class EditProfile extends Component{
             value: this.props.profileDetails == null ? "" : this.props.profileDetails.firstName,
             validation: {
               required: true,
+              isLetters: true
             },
             valid: true,
             touched: false,
@@ -36,6 +37,7 @@ export class EditProfile extends Component{
             value: this.props.profileDetails == null ? "" : this.props.profileDetails.lastName,
             validation: {
               required: true,
+              isLetters: true
             },
             valid: true,
             touched: false,
@@ -201,14 +203,14 @@ export class EditProfile extends Component{
 }
 
 const mapStateToProps = (state) => {
-    return {
-      loading: state.profile.loading,
-      error: state.profile.error,
-      profileDetails: state.profile.profileDetails,
-      token: state.auth.token
-    };
+  return {
+    loading: state.profile.loading,
+    error: state.profile.error,
+    profileDetails: state.profile.profileDetails,
+    token: state.auth.token
   };
-  
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onEditProfile: (formData, token, history) => dispatch(actions.editProfile(formData, token, history)),

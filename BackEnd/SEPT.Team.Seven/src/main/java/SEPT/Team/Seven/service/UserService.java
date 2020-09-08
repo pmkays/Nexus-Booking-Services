@@ -85,7 +85,6 @@ public class UserService {
 		return token;
 
 	}
-
 	// String firstName, String lastName, String email, String phoneNo, String
 	// address
 	// User(String username, String password, Customer customer, Employee employee,
@@ -97,13 +96,13 @@ public class UserService {
 			Optional<Role> role = null;
 			if (type.equals("customers")) {
 				role = roleRepository.findByRoleName("ROLE_CUSTOMER");
-				Customer customer = customerRepository.save(new Customer("", "", "", "", ""));
+				Customer customer = customerRepository.save(new Customer("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder"));
 				return Optional.of(userRepository
 						.save(new User(username, this.passwordEncoder.encode(password), customer, null, null, role.get())));
 			}
 			if (type.equals("employees")) {
 				role = roleRepository.findByRoleName("ROLE_EMPLOYEE");
-				Employee employee = employeeRepository.save(new Employee("", "", "", "", ""));
+				Employee employee = employeeRepository.save(new Employee("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder"));
 				return Optional.of(userRepository
 						.save(new User(username, this.passwordEncoder.encode(password), null, employee, null, role.get())));
 			}

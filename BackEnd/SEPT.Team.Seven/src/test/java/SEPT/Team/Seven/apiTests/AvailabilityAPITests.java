@@ -1,5 +1,7 @@
 package SEPT.Team.Seven.apiTests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,13 +19,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
 @SpringBootTest
-public class CustomerAPITests 
-{
+public class AvailabilityAPITests {
+	
 	private MockMvc mockMvc;
 	
 	 @Autowired
@@ -33,19 +31,19 @@ public class CustomerAPITests
 	public void setUp()
 	{
 		mockMvc =  MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(SecurityMockMvcConfigurers.springSecurity())
-                .build();
+               .apply(SecurityMockMvcConfigurers.springSecurity())
+               .build();
 	}
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getAllCustomers_AuthorisedUser_ReturnsJsonOfCustomers() throws Exception
+	public void getAllAvailabilities_AuthorisedUser_ReturnsJsonOfAvailabilities() throws Exception
 	{
 
 		//Arrange and Act
 		//we want to get the body so we can analyse the JSON returned
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/customers")
+			      .get("/api/availabilities")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -57,18 +55,18 @@ public class CustomerAPITests
 		JSONObject json = new JSONObject(result);	
 		//the json returns in an object called "_embedded", which then has an array of accounts
 		JSONObject embedded =  (JSONObject) json.get("_embedded");
-		JSONArray customers = embedded.getJSONArray("customers");
-		assertTrue(customers.length() > 0);
+		JSONArray avails = embedded.getJSONArray("availabilities");
+		assertTrue(avails.length() > 0);
 		
 	}
 	
 	@Test
 	@WithAnonymousUser
-	public void getAllCustomers_AnonymousUser_AccessDenied() throws Exception
+	public void getAllAvailabilities_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/customers")
+			      .get("/api/availabilities")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
@@ -77,11 +75,11 @@ public class CustomerAPITests
 	
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void getSpecificCustomer_AuthorisedUser_ReturnsJsonOfCustomer() throws Exception
+	public void getSpecificAvailability_AuthorisedUser_ReturnsJsonOfAvailability() throws Exception
 	{
 		//Arrange and Act		
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/customers/1")
+			      .get("/api/availabilities/1")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().isOk())
@@ -89,72 +87,22 @@ public class CustomerAPITests
 				  .getResponse()
 				  .getContentAsString();
 		
-		JSONObject json = new JSONObject(result);
-		String firstName = (String) json.get("firstName");
-		String lastName = (String) json.get("lastName");
-		String email = (String) json.get("email");
-		
-		//Assert
-		assertEquals(firstName, "Leslie");
-		assertEquals(lastName, "Uzumaki");
-		assertEquals(email, "leslie@hotmail.com");
+		assertTrue(!result.isEmpty());
 	}
 	
 	
 	
 	@Test
 	@WithAnonymousUser
-	public void getSpecificCustomer_AnonymousUser_AccessDenied() throws Exception
+	public void getSpecificAvailability_AnonymousUser_AccessDenied() throws Exception
 	{	
 		//Arrange Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
-			      .get("/api/customers/1")
+			      .get("/api/availabilities/1")
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
 				  .andExpect(MockMvcResultMatchers.status().reason("Access Denied"));
 	}
-	
-	@Test
-	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void updateCustomer_ValidData_ReturnsNothing() throws Exception
-	{
-		//Arrange
-		JSONObject requestBody = new JSONObject(); 
-		requestBody.put("firstName", "Leslie");
-		requestBody.put("lastName", "Uzumaki");
-		requestBody.put("email", "leslie@hotmail.com");
-		requestBody.put("phoneNo", "1234567891");
-		requestBody.put("address", "updated address");
-		
-		//Act and Assert
-		this.mockMvc.perform(MockMvcRequestBuilders
-			      .put("/api/customers/1")
-			      .content(requestBody.toString())
-			      .contentType(MediaType.APPLICATION_JSON))
-				  .andDo(MockMvcResultHandlers.print())
-				  .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-	}
-	
-	@Test
-	@WithMockUser(username="admin",roles={"ADMIN"})
-	public void updateCustomer_InvalidData_ThrowsError() throws Exception
-	{
-		//Arrange
-		JSONObject requestBody = new JSONObject(); 
-		requestBody.put("firstName", "Leslie");
-		requestBody.put("lastName", "Uzumaki");
-		requestBody.put("email", "leslie@hotmail.com");
-		requestBody.put("phoneNo", "1234abc");
-		requestBody.put("address", "updated address");
-		
-		//Act and Assert
-		this.mockMvc.perform(MockMvcRequestBuilders
-			      .put("/api/customers/1")
-			      .content(requestBody.toString())
-			      .contentType(MediaType.APPLICATION_JSON))
-				  .andDo(MockMvcResultHandlers.print())
-				  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
-	}
-	
+
 }

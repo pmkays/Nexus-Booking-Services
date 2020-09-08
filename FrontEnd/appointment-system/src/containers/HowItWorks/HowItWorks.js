@@ -1,6 +1,10 @@
 import React from "react";
 
 const HowItWorks = (props) => {
+   const redirectRegister = () => {
+    props.history.push("/register");
+  };
+
   return (
     <div>
       <br />
@@ -33,6 +37,11 @@ const HowItWorks = (props) => {
             </p>
           </div>
         </div>
+      </div>
+    <div className="d-flex justify-content-center">
+        <button className="btn btn-link text-center" onClick={redirectRegister}>
+         Sign Up
+        </button>
       </div>
     </div>
   );
