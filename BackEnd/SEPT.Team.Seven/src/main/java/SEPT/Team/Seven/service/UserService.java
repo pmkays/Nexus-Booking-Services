@@ -52,12 +52,13 @@ public class UserService {
 		this.jwtProvider = jwtProvider;
 	}
 
-//    public Authentication signin(String username, String password) {
-//        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-//    }
-
 	public Optional<String> signin(String username, String password) {
 		LOGGER.info("Using logging in");
+		
+		if(isNullOrEmpty(username) || isNullOrEmpty(password)) {
+			return Optional.empty();
+		}
+		
 		Optional<String> token = Optional.empty();
 		Optional<User> user = userRepository.findByUsername(username);
 		if (user.isPresent()) {
@@ -86,6 +87,11 @@ public class UserService {
 	// User(String username, String password, Customer customer, Employee employee, Admin admin, Role role)
 	//public Customer(String firstName, String lastName, String email, String phoneNo, String address)
     public Optional<User> signup(String username, String password) {
+    	
+    	if(isNullOrEmpty(username) || isNullOrEmpty(password)) {
+			return Optional.empty();
+		}
+    	
         if (!userRepository.findByUsername(username).isPresent()) {
             Optional<Role> role = roleRepository.findByRoleName("ROLE_CUSTOMER");
             Customer customer = customerRepository.save(new Customer("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder"));
@@ -96,9 +102,14 @@ public class UserService {
     }
     
     public Integer getUserAccountNo(String username) {
+    	if(isNullOrEmpty(username)) {
+			return 0;
+		}
+    	
         System.out.println(username);
-        if (userRepository.findByUsername(username).isPresent()) {
-            Optional<User> user = userRepository.findByUsername(username);
+        
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
             System.out.println(user.get().getCustomer().getId());
             return user.get().getCustomer().getId();
         }
@@ -107,5 +118,9 @@ public class UserService {
 
 	public List<User> getAll() {
 		return userRepository.findAll();
+	}
+	
+	private boolean isNullOrEmpty(String value) {
+		return (value == null || value.isEmpty());
 	}
 }

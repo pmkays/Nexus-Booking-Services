@@ -51,12 +51,17 @@ public class WorkingTimeServiceTest {
 		Calendar startNextMonth = Calendar.getInstance();
 		Calendar endNextMonth = Calendar.getInstance(); 
 		startNextMonth.add(Calendar.DATE, 15);
+		startNextMonth.add(Calendar.HOUR, 1);
 		endNextMonth.add(Calendar.DATE, 16);
+		endNextMonth.add(Calendar.HOUR, -1);
+
 		
 		Calendar startAvail2 = Calendar.getInstance();
 		Calendar endAvail2 = Calendar.getInstance(); 
 		startAvail2.add(Calendar.DATE, 17);
+		startAvail2.add(Calendar.HOUR, 1);
 		endAvail2.add(Calendar.DATE, 18);
+		endAvail2.add(Calendar.HOUR, -1);
 		
 		employee = new Employee(); 
 		
@@ -91,6 +96,7 @@ public class WorkingTimeServiceTest {
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
 		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 		//Act
@@ -115,6 +121,7 @@ public class WorkingTimeServiceTest {
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
 		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 
@@ -138,6 +145,7 @@ public class WorkingTimeServiceTest {
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
 		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 
@@ -156,11 +164,12 @@ public class WorkingTimeServiceTest {
 		//Arrange
 		Calendar start = Calendar.getInstance(); 
 		Calendar end = Calendar.getInstance(); 
-		start.add(Calendar.DATE, 17);
-		end.add(Calendar.DATE, 18);
+		start.add(Calendar.DATE, 15);
+		end.add(Calendar.DATE, 16);
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
 		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 
