@@ -1,5 +1,6 @@
 package SEPT.Team.Seven.serviceTests;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.WorkingTime;
+import SEPT.Team.Seven.repo.AvailabilityRepository;
 import SEPT.Team.Seven.repo.EmployeeRepository;
 import SEPT.Team.Seven.repo.WorkingTimeRepository;
 import SEPT.Team.Seven.service.WorkingTimeService;
@@ -31,6 +33,9 @@ public class WorkingTimeServiceTest {
 	
 	@Mock
 	private WorkingTimeRepository workingTimeRepository;
+	
+	@Mock
+	private AvailabilityRepository availabilityRepository;
 	
 	@InjectMocks
 	private WorkingTimeService service; 
@@ -48,12 +53,17 @@ public class WorkingTimeServiceTest {
 		Calendar startNextMonth = Calendar.getInstance();
 		Calendar endNextMonth = Calendar.getInstance(); 
 		startNextMonth.add(Calendar.DATE, 15);
+		startNextMonth.add(Calendar.HOUR, 1);
 		endNextMonth.add(Calendar.DATE, 16);
+		endNextMonth.add(Calendar.HOUR, -1);
+
 		
 		Calendar startAvail2 = Calendar.getInstance();
 		Calendar endAvail2 = Calendar.getInstance(); 
 		startAvail2.add(Calendar.DATE, 17);
+		startAvail2.add(Calendar.HOUR, 1);
 		endAvail2.add(Calendar.DATE, 18);
+		endAvail2.add(Calendar.HOUR, -1);
 		
 		employee = new Employee(); 
 		
@@ -69,23 +79,28 @@ public class WorkingTimeServiceTest {
 		WorkingTime wtPresent = new WorkingTime(employee, startNextMonth.getTime(), endNextMonth.getTime());
 		workingTimes.add(wtPresent);
 		
-//		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 	}
 	
 	@Test
 	public void addWorkingTime_ValidDates_ReturnsTheWorkingTime()
-	{
-		
+	{	
 		//Arrange
+		
+		//start in 17 days, 2 hrs after midnight
 		Calendar start = Calendar.getInstance(); 
-		Calendar end = Calendar.getInstance(); 
 		start.add(Calendar.DATE, 17);
+		start.add(Calendar.HOUR, 2);
+		
+		//end 5 hours before the midnight the next day, i.e. 17 hr shift
+		Calendar end = Calendar.getInstance(); 
 		end.add(Calendar.DATE, 18);
+		end.add(Calendar.HOUR, -5);
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
-
+		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 		//Act
 		Optional<WorkingTime> result = service.addWorkingTime(4, start.getTime(), end.getTime());
 		
@@ -103,20 +118,23 @@ public class WorkingTimeServiceTest {
 		Calendar end = Calendar.getInstance(); 
 		start.add(Calendar.DATE, 18);
 		end.add(Calendar.DATE, 17);
+		
+		//start time can't be after end time
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
+		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 
 		//Act
 		Optional<WorkingTime> result = service.addWorkingTime(4, start.getTime(), end.getTime());
 		
 		//Assert
-		assertTrue(!result.isPresent()); 
+		assertFalse(result.isPresent()); 
 		
 	}
 	
-	@Disabled
 	@Test
 	public void addWorkingTime_WorkingTimeOutsideOfAvailability_WorkingTimeNotPresent()
 	{
@@ -129,17 +147,18 @@ public class WorkingTimeServiceTest {
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
+		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 
 		//Act
 		Optional<WorkingTime> result = service.addWorkingTime(4, start.getTime(), end.getTime());
 		
 		//Assert
-		assertTrue(!result.isPresent()); 
+		assertFalse(result.isPresent()); 
 		
 	}
 	
-	@Disabled
 	@Test
 	public void addWorkingTime_WorkingTimeAlreadyExists_WorkingTimeNotPresent()
 	{
@@ -147,18 +166,20 @@ public class WorkingTimeServiceTest {
 		//Arrange
 		Calendar start = Calendar.getInstance(); 
 		Calendar end = Calendar.getInstance(); 
-		start.add(Calendar.DATE, 17);
-		end.add(Calendar.DATE, 18);
+		start.add(Calendar.DATE, 15);
+		end.add(Calendar.DATE, 16);
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(workingTimes);
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
+		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
 
 		//Act
 		Optional<WorkingTime> result = service.addWorkingTime(4, start.getTime(), end.getTime());
 		
 		//Assert
-		assertTrue(!result.isPresent()); 
+		assertFalse(result.isPresent()); 
 		
 	}
 	

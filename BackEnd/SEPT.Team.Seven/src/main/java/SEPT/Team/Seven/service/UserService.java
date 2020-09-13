@@ -56,12 +56,13 @@ public class UserService {
 		this.jwtProvider = jwtProvider;
 	}
 
-//    public Authentication signin(String username, String password) {
-//        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-//    }
-
 	public Optional<String> signin(String username, String password) {
 		LOGGER.info("Using logging in");
+		
+		if(isNullOrEmpty(username) || isNullOrEmpty(password)) {
+			return Optional.empty();
+		}
+		
 		Optional<String> token = Optional.empty();
 		Optional<User> user = userRepository.findByUsername(username);
 		if (user.isPresent()) {
@@ -106,8 +107,7 @@ public class UserService {
 				return Optional.of(userRepository
 						.save(new User(username, this.passwordEncoder.encode(password), null, employee, null, role.get())));
 			}
-
-			
+      
 		}
 		return Optional.empty();
 	}
@@ -128,5 +128,9 @@ public class UserService {
 
 	public List<User> getAll() {
 		return userRepository.findAll();
+	}
+	
+	private boolean isNullOrEmpty(String value) {
+		return (value == null || value.isEmpty());
 	}
 }
