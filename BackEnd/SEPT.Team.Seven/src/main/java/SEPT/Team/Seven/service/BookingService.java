@@ -34,6 +34,7 @@ public class BookingService {
 		this.employeeRepository = employeeRepository;
 		this.customerRepository = customerRepository;
 		this.serviceRepository = serviceRepository;
+		this.bookingRepository = bookingRepository;
 	}
 
 	public List<Booking> getBookingsForCustomer(int customerId) {

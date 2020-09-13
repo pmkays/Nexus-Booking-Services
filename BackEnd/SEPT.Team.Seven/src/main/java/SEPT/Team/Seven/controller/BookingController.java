@@ -25,14 +25,14 @@ public class BookingController {
 	private BookingService bookingService;
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping("?customer={id}")
+	@GetMapping("/customer/{id}")
 	public List<Booking> getBookingsForCustomer(@PathVariable("id") int id) {
 		List<Booking> bookings = bookingService.getBookingsForCustomer(id);
 		return bookings;
 	}
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping("?employee={id}")
+	@GetMapping("/employee/{id}")
 	public List<Booking> getBookingsForEmployee(@PathVariable("id") int id) {
 		List<Booking> bookings = bookingService.getBookingsForEmployee(id);
 		return bookings;

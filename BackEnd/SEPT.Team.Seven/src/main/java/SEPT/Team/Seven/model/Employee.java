@@ -3,11 +3,14 @@ package SEPT.Team.Seven.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="employee")
@@ -22,7 +25,7 @@ public class Employee extends Account {
 	@OneToMany(mappedBy="employee")
 	private List<Booking> bookings;
 	
-	@ManyToMany
+	@ManyToMany()
 	@JoinTable(
 			name = "employee_service",
 			joinColumns = @JoinColumn(name = "employee_id"),
@@ -34,18 +37,6 @@ public class Employee extends Account {
 	
 	public Employee(String firstName, String lastName, String email, String phoneNo, String address) {
 		super(firstName,lastName,email,phoneNo, address);
-	}
-	
-	public List<WorkingTime> getWorkingTimes() {
-		return workingTimes;
-	}
-
-	public List<Availability> getAvailabilities() {
-		return availabilities;
-	}
-
-	public List<Service> getServices() {
-		return services;
 	}
 	
 	public void addToServices(Service service) {
@@ -63,4 +54,5 @@ public class Employee extends Account {
 	public void addToBookings(Booking booking) {
 		bookings.add(booking);
 	}
+	
 }
