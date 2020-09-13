@@ -1,70 +1,77 @@
-import React from "react";
-import NavigationItem from "./NavigationItem/NavigationItem";
-import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import NavigationItem from './NavigationItem/NavigationItem';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import classes from './NavigationItems.module.css';
 
 export const NavigationItems = (props) => {
   let navItems = null;
   if (props.isAdmin && props.isAuthenticated) {
     navItems = (
-      <ul className="navbar-nav ml-auto">
-        <NavigationItem link="/" exact>
-          Home
+      <ul className='navbar-nav ml-auto'>
+        <NavigationItem link='/' exact>
+          HOME
         </NavigationItem>
-        <NavigationItem link="/about">About</NavigationItem>
-        <NavigationItem link="/howitworks">How It Works</NavigationItem>
-        <NavigationItem link="/contact">Contact</NavigationItem>
-        <NavigationItem link="/employees">Employees</NavigationItem>
-        <NavigationItem link="/profile">Profile</NavigationItem>
-        <NavigationItem link="/logout">Log Out</NavigationItem>
+        <NavigationItem link='/about'>ABOUT</NavigationItem>
+        <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
+        <NavigationItem link='/contact'>CONTACT</NavigationItem>
+        <NavigationItem link='/employees'>EMPLOYEES</NavigationItem>
+        <NavigationItem link='/profile'>PROFILE</NavigationItem>
+        <NavigationItem link='/logout'>LOG OUT</NavigationItem>
       </ul>
     );
   } else if (props.isAuthenticated) {
     navItems = (
-      <ul className="navbar-nav ml-auto">
-        <NavigationItem link="/" exact>
-          Home
+      <ul className='navbar-nav ml-auto'>
+        <NavigationItem link='/' exact>
+          HOME
         </NavigationItem>
-        <NavigationItem link="/about">About</NavigationItem>
-        <NavigationItem link="/howitworks">How It Works</NavigationItem>
-        <NavigationItem link="/contact">Contact</NavigationItem>
-        <NavigationItem link="/availabilities">Availabilities</NavigationItem>
-        <NavigationItem link="/profile">Profile</NavigationItem>
-        <NavigationItem link="/logout">Log Out</NavigationItem>
+        <NavigationItem link='/about'>ABOUT</NavigationItem>
+        <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
+        <NavigationItem link='/contact'>CONTACT</NavigationItem>
+        <NavigationItem link='/availabilities'>Availabilities</NavigationItem>
+        <NavigationItem link='/profile'>PROFILE</NavigationItem>
+        <NavigationItem link='/logout'>LOG OUT</NavigationItem>
       </ul>
     );
   } else {
     navItems = (
-      <ul className="navbar-nav ml-auto">
-        <NavigationItem link="/" exact>
-          Home
+      <ul className='navbar-nav ml-auto'>
+        <NavigationItem link='/' exact>
+          HOME
         </NavigationItem>
-        <NavigationItem link="/about">About</NavigationItem>
-        <NavigationItem link="/howitworks">How It Works</NavigationItem>
-        <NavigationItem link="/contact">Contact</NavigationItem>
-        <NavigationItem link="/login">Login</NavigationItem>
-        <NavigationItem link="/register">Register</NavigationItem>
+        <NavigationItem link='/about'>ABOUT</NavigationItem>
+        <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
+        <NavigationItem link='/contact'>CONTACT</NavigationItem>
+        <NavigationItem link='/login'>LOGIN</NavigationItem>
+        <NavigationItem link='/register'>REGISTER</NavigationItem>
       </ul>
     );
   }
 
   return (
     <React.Fragment>
-      <NavLink className="navbar-brand" to="/" exact>
-        NEXUS
+      <NavLink className='navbar-brand' to='/' exact>
+        <div>
+          <span className={classes.NavLogo}>
+            NE<span className={classes.Blue}>X</span>US
+          </span>
+          <br />
+          <span className={classes.Slogan}>BOOKING - SYSTEM</span>
+        </div>
       </NavLink>
       <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
+        className='navbar-toggler'
+        type='button'
+        data-toggle='collapse'
+        data-target='#navbarNav'
+        aria-controls='navbarNav'
+        aria-expanded='false'
+        aria-label='Toggle navigation'
       >
-        <span className="navbar-toggler-icon"></span>
+        <span className='navbar-toggler-icon'></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
+      <div className='collapse navbar-collapse' id='navbarNav'>
         {navItems}
       </div>
     </React.Fragment>
@@ -74,7 +81,7 @@ export const NavigationItems = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    isAdmin: state.auth.authority === "ROLE_ADMIN",
+    isAdmin: state.auth.authority === 'ROLE_ADMIN',
   };
 };
 

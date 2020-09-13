@@ -1,13 +1,15 @@
-import React, { Component } from "react";
-import NavigationBar from "../../components/Navigation/NavigationBar";
+import React, { Component } from 'react';
+import NavigationBar from '../../components/Navigation/NavigationBar';
+import classes from './Layout.module.css';
 
 class Layout extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className={classes.Background}>
         <NavigationBar />
-        <main className="container">{this.props.children}</main>
-      </React.Fragment>
+        <main className='container-fluid'>{this.props.children}</main>
+        <footer className={classes.Foot}>Copyright © 2020 Ian Nguyen</footer>
+      </div>
     );
   }
 }
