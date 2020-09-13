@@ -31,6 +31,9 @@ public class AvailabilityService {
 			return Optional.empty();
 		}
 		
+		System.out.println(startTime);
+		System.out.println(endTime);
+		
 		if (employeeRepository.findById(employeeId).isPresent()) {
 			
 			List<Availability> employeesAvailabilities = availabilityRepository.findAllByEmployeeId(employeeId);
@@ -50,8 +53,13 @@ public class AvailabilityService {
 				}
 			}
 			if (startTime.before(endTime)) {
-				return Optional.of(availabilityRepository.save
-		                (new Availability(employeeRepository.findById(employeeId).get(), startTime, endTime)));
+				Calendar after24Hours = newStartCalendar;
+				after24Hours.add(Calendar.DAY_OF_MONTH, 1);
+				// ensures that the endTime is within a day of the start time.
+				if (endTime.compareTo(after24Hours.getTime()) <= 0) {
+					return Optional.of(availabilityRepository.save
+			                (new Availability(employeeRepository.findById(employeeId).get(), startTime, endTime)));
+				}
 			}
 		}
 		return Optional.empty();
