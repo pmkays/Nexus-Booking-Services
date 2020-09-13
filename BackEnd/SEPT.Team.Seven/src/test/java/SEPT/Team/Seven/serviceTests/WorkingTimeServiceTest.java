@@ -1,5 +1,6 @@
 package SEPT.Team.Seven.serviceTests;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -130,11 +131,10 @@ public class WorkingTimeServiceTest {
 		Optional<WorkingTime> result = service.addWorkingTime(4, start.getTime(), end.getTime());
 		
 		//Assert
-		assertTrue(!result.isPresent()); 
+		assertFalse(result.isPresent()); 
 		
 	}
 	
-	@Disabled
 	@Test
 	public void addWorkingTime_WorkingTimeOutsideOfAvailability_WorkingTimeNotPresent()
 	{
@@ -155,11 +155,10 @@ public class WorkingTimeServiceTest {
 		Optional<WorkingTime> result = service.addWorkingTime(4, start.getTime(), end.getTime());
 		
 		//Assert
-		assertTrue(!result.isPresent()); 
+		assertFalse(result.isPresent()); 
 		
 	}
 	
-	@Disabled
 	@Test
 	public void addWorkingTime_WorkingTimeAlreadyExists_WorkingTimeNotPresent()
 	{
@@ -180,7 +179,7 @@ public class WorkingTimeServiceTest {
 		Optional<WorkingTime> result = service.addWorkingTime(4, start.getTime(), end.getTime());
 		
 		//Assert
-		assertTrue(!result.isPresent()); 
+		assertFalse(result.isPresent()); 
 		
 	}
 	
