@@ -8,6 +8,8 @@ import Layout from "./containers/Layout/Layout";
 import Profile from "./containers/Profile/Profile";
 import EditProfile from "./containers/Profile/EditProfile/EditProfile";
 import RegisterProfile from "./containers/Register/Register";
+import Employees from "./containers/Admin/Employees/Employees";
+import AddEmployee from "./containers/Admin/AddEmployee/AddEmployee";
 
 import AboutUs from "./containers/AboutUs/AboutUs";
 import ContactUs from "./containers/ContactUs/ContactUs";
@@ -23,7 +25,22 @@ class App extends Component {
 
   render() {
     let routes = null;
-    if (this.props.isAuthenticated) {
+    if (this.props.isAdmin && this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/employees" component={Employees} />
+          <Route path="/addEmployee" component={AddEmployee} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/editProfile" component={EditProfile} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/contact" component={ContactUs} />
+          <Route path="/howitworks" component={HowItWorks} />
+          <Route path="/" render={() => <h1>Welcome to the Nexus Appointment System</h1>} />
+        </Switch>
+      );
+    } else if (this.props.isAuthenticated) {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
@@ -57,6 +74,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
+    isAdmin: state.auth.authority === "ROLE_ADMIN",
   };
 };
 

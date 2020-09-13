@@ -1,6 +1,7 @@
 package SEPT.Team.Seven.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +40,15 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signup")
     public User signup(@RequestBody LoginDto loginDto) {
-       return userService.signup(loginDto.getUsername(), loginDto.getPassword()).orElseThrow(()->
-       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error processing registration."));
+    	
+    	Optional<User> user = userService.signup(loginDto.getUsername(), loginDto.getPassword(), loginDto.getType());
+    	if (!user.isPresent()) {
+    		throw new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error processing registration.");
+    	}
+    	
+    	return user.get();
+//       return userService.signup(loginDto.getUsername(), loginDto.getPassword(), loginDto.getType()).orElseThrow(()->
+//       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error processing registration."));
     }
     
     @CrossOrigin(origins = "http://localhost:3000")

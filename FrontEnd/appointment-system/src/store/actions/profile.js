@@ -145,25 +145,32 @@ export const addProfileFail = (error) => {
   };
 };
 
-export const addProfileSuccess = (profileDetails) => {
+export const addProfileSuccess = (profileDetails, type) => {
+  if (type === "employees") {
+    return {
+      type: actionTypes.ADD_PROFILE_SUCCESS,
+      profileDetails: null,
+    };
+  }
   return {
     type: actionTypes.ADD_PROFILE_SUCCESS,
     profileDetails: profileDetails,
   };
 };
 
-export const addProfile = (formData, history) => {
+export const addProfile = (formData, history, type, token) => {
   return (dispatch) => {
     let userData = {
       username: formData.username,
       password: formData.password,
+      type: type,
     };
 
     axios
       .post("http://localhost:8080/users/signup", userData)
       .then((response) => {
         console.log(response);
-        dispatch(fetchAccountNo(formData, history));
+        dispatch(fetchAccountNo(formData, history, type, token));
       })
       .catch((error) => {
         dispatch(addProfileFail("Error reaching server. Please try again later."));
@@ -171,7 +178,7 @@ export const addProfile = (formData, history) => {
   };
 };
 
-export const fetchAccountNo = (formData, history) => {
+export const fetchAccountNo = (formData, history, type, token) => {
   return (dispatch) => {
     let profileData = {
       username: formData.username,
@@ -182,7 +189,7 @@ export const fetchAccountNo = (formData, history) => {
       .then((response) => {
         console.log(response);
         let updatedProfileData = { ...formData, accountNo: response.data };
-        dispatch(addProfileDetailsToUser(updatedProfileData, history));
+        dispatch(addProfileDetailsToUser(updatedProfileData, history, type, token));
       })
       .catch((error) => {
         dispatch(addProfileFail("Error reaching server. Please try again later."));
@@ -190,7 +197,7 @@ export const fetchAccountNo = (formData, history) => {
   };
 };
 
-export const addProfileDetailsToUser = (formData, history) => {
+export const addProfileDetailsToUser = (formData, history, type, token) => {
   return (dispatch) => {
     let profileData = {
       firstName: formData.firstName,
@@ -202,11 +209,22 @@ export const addProfileDetailsToUser = (formData, history) => {
 
     console.log(profileData);
 
+    let config = null;
+
+    if (type === "employees") {
+      console.log("Employee adding...", token);
+      config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+    }
+
     axios
-      .put("http://localhost:8080/api/customers/" + formData.accountNo, profileData)
+      .put("http://localhost:8080/api/" + type + "/" + formData.accountNo, profileData, config)
       .then((response) => {
         console.log(response);
-        dispatch(addProfileSuccess(response.data));
+        dispatch(addProfileSuccess(response.data, type));
       })
       .then(() => {
         history.push("/login");

@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import * as actions from "../../store/actions/actions";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
-import Input from "../../components/UI/Input/Input";
-import ErrorMessage from "../../components/UI/Input/ErrorMessage";
-import { checkValidity, errorMessageToDisplay } from "../../utility/utility";
+import * as actions from "../../../store/actions/actions";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Button from "../../../components/UI/Button/Button";
+import Input from "../../../components/UI/Input/Input";
+import ErrorMessage from "../../../components/UI/Input/ErrorMessage";
+import { checkValidity, errorMessageToDisplay } from "../../../utility/utility";
 
-export class Register extends Component {
+export class AddEmployee extends Component {
   state = {
     controls: {
       username: {
@@ -26,34 +26,6 @@ export class Register extends Component {
         valid: true,
         touched: false,
       },
-      password: {
-        labelName: "Password",
-        elementType: "input",
-        elementConfig: {
-          type: "password",
-          placeholder: "Password",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: true,
-        touched: false,
-      },
-      passwordAgain: {
-        labelName: "Retype-Password",
-        elementType: "input",
-        elementConfig: {
-          type: "password",
-          placeholder: "Password",
-        },
-        value: "",
-        validation: {
-          required: true,
-        },
-        valid: true,
-        touched: false,
-      },
       firstName: {
         labelName: "First Name",
         elementType: "input",
@@ -61,7 +33,7 @@ export class Register extends Component {
           type: "text",
           placeholder: "Firstname",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.firstName,
+        value: "",
         validation: {
           required: true,
         },
@@ -75,7 +47,7 @@ export class Register extends Component {
           type: "text",
           placeholder: "Lastname",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.lastName,
+        value: "",
         validation: {
           required: true,
         },
@@ -89,7 +61,7 @@ export class Register extends Component {
           type: "email",
           placeholder: "Email",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.email,
+        value: "",
         validation: {
           required: true,
           isEmail: true,
@@ -104,7 +76,7 @@ export class Register extends Component {
           type: "text",
           placeholder: "Address",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.address,
+        value: "",
         validation: {
           required: true,
         },
@@ -118,7 +90,7 @@ export class Register extends Component {
           type: "text",
           placeholder: "Phonenumber",
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.phoneNo,
+        value: "",
         validation: {
           required: true,
           isNumeric: true,
@@ -193,7 +165,7 @@ export class Register extends Component {
 
     let formData = {
       username: this.state.controls.username.value,
-      password: this.state.controls.password.value,
+      password: "abc123",
       firstName: this.state.controls.firstName.value,
       lastName: this.state.controls.lastName.value,
       email: this.state.controls.email.value,
@@ -201,7 +173,9 @@ export class Register extends Component {
       address: this.state.controls.address.value,
     };
 
-    this.props.onAddNewProfile(formData, this.props.history);
+    console.log("Printing token", this.props.token);
+
+    this.props.onAddNewProfile(formData, this.props.history, this.props.token);
   };
 
   render() {
@@ -279,13 +253,14 @@ const mapStateToProps = (state) => {
     loading: state.profile.loading,
     error: state.profile.error,
     profileDetails: state.profile.profileDetails,
+    token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddNewProfile: (formData, history) => dispatch(actions.addProfile(formData, history, "customers")),
+    onAddNewProfile: (formData, history, token) => dispatch(actions.addProfile(formData, history, "employees", token)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEmployee);

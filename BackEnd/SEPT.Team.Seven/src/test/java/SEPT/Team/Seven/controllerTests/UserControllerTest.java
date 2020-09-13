@@ -1,5 +1,10 @@
 package SEPT.Team.Seven.controllerTests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,14 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import SEPT.Team.Seven.controller.UserController;
 import SEPT.Team.Seven.model.Customer;
@@ -119,13 +118,14 @@ public class UserControllerTest {
 		JSONObject json = new JSONObject();
 		json.put("password", "abc123");
 		json.put("username", "david");
+		json.put("type", "customers");
 		
 		Role role = new Role("ROLE_CUSTOMER", "Customer role.");
-		Customer customer = new Customer("","","","","");
+		Customer customer = new Customer("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder");
 		User user = new User("david", "$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa",customer,null,null,role);
 		
 		//Act and Assert
-		when(service.signup("david","abc123")).thenReturn(Optional.of(user));
+		when(service.signup("david","abc123", "customers")).thenReturn(Optional.of(user));
 		this.mockMvc.perform(MockMvcRequestBuilders
 				  .post("/users/signup")
 			      .content(json.toString())
@@ -135,7 +135,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	public void signup_InvalidUsername_ThrowException() throws Exception
+	public void signup_InvalidUsernameForCustomer_ThrowException() throws Exception
 	{
 		//Arrange
 		JSONObject json = new JSONObject(); 
@@ -143,7 +143,7 @@ public class UserControllerTest {
 		json.put("username", "admin");
 		
 		//Act and Assert
-		when(service.signup("admin", "abc123")).thenReturn(Optional.empty());
+		when(service.signup("admin", "abc123", "customers")).thenReturn(Optional.empty());
 		this.mockMvc.perform(MockMvcRequestBuilders
 			      .post("/users/signup")
 			      .content(json.toString())

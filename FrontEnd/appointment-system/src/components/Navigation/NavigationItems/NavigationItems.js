@@ -5,7 +5,21 @@ import { NavLink } from "react-router-dom";
 
 export const NavigationItems = (props) => {
   let navItems = null;
-  if (props.isAuthenticated) {
+  if (props.isAdmin && props.isAuthenticated) {
+    navItems = (
+      <ul className="navbar-nav ml-auto">
+        <NavigationItem link="/" exact>
+          Home
+        </NavigationItem>
+        <NavigationItem link="/about">About</NavigationItem>
+        <NavigationItem link="/howitworks">How It Works</NavigationItem>
+        <NavigationItem link="/contact">Contact</NavigationItem>
+        <NavigationItem link="/employees">Employees</NavigationItem>
+        <NavigationItem link="/profile">Profile</NavigationItem>
+        <NavigationItem link="/logout">Log Out</NavigationItem>
+      </ul>
+    );
+  } else if (props.isAuthenticated) {
     navItems = (
       <ul className="navbar-nav ml-auto">
         <NavigationItem link="/" exact>
@@ -60,6 +74,7 @@ export const NavigationItems = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
+    isAdmin: state.auth.authority === "ROLE_ADMIN",
   };
 };
 
