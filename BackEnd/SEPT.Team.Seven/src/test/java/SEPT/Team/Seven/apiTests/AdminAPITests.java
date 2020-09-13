@@ -15,11 +15,15 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import SEPT.Team.Seven.advice.ConstraintViolationHandler;
+import SEPT.Team.Seven.repo.AdminRepository;
 
 
 @SpringBootTest
@@ -151,32 +155,12 @@ public class AdminAPITests
 		requestBody.put("address", "updated addressss");
 		
 		//Act and Assert
-		this.mockMvc.perform(MockMvcRequestBuilders
+		MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders
 			      .put("/api/admins/5")
 			      .content(requestBody.toString())
 			      .contentType(MediaType.APPLICATION_JSON))
 				  .andDo(MockMvcResultHandlers.print())
-				  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
+				  .andExpect(MockMvcResultMatchers.status().is5xxServerError()).andReturn();
 	}
 	
-//	@Test
-//	@WithMockUser(username="admin",roles={"ADMIN"})
-//	public void addAdmin_ValidData_ReturnsNewAdmin() throws Exception
-//	{
-//		//Arrange
-//		JSONObject requestBody = new JSONObject(); 
-//		requestBody.put("firstName", "Admin");
-//		requestBody.put("lastName", "Admin");
-//		requestBody.put("email", "admin@hotmail.com");
-//		requestBody.put("phoneNo", "1234567890");
-//		requestBody.put("address", "1 Admin St");
-//		
-//		//Act and Assert
-//		this.mockMvc.perform(MockMvcRequestBuilders
-//			      .post("/api/admins/")
-//			      .content(requestBody.toString())
-//			      .contentType(MediaType.APPLICATION_JSON))
-//				  .andDo(MockMvcResultHandlers.print())
-//				  .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-//	}
 }
