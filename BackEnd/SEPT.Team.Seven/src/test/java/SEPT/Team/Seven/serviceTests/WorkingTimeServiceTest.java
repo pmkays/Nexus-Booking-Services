@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -115,6 +116,7 @@ public class WorkingTimeServiceTest {
 		
 	}
 	
+	@Disabled
 	@Test
 	public void addWorkingTime_WorkingTimeOutsideOfAvailability_WorkingTimeNotPresent()
 	{
@@ -137,6 +139,7 @@ public class WorkingTimeServiceTest {
 		
 	}
 	
+	@Disabled
 	@Test
 	public void addWorkingTime_WorkingTimeAlreadyExists_WorkingTimeNotPresent()
 	{
@@ -158,6 +161,7 @@ public class WorkingTimeServiceTest {
 		assertTrue(!result.isPresent()); 
 		
 	}
+	
 	
 	@Test
 	public void addWorkingTime_NullDates_WorkingTimeNotPresent()
