@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-import Spinner from "../../../components/UI/Spinner/Spinner";
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 export class Employees extends Component {
   state = {
@@ -15,14 +15,14 @@ export class Employees extends Component {
   componentDidMount() {
     const config = {
       headers: {
-        Authorization: "Bearer " + this.props.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     };
 
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get("http://localhost:8080/api/employees/", config)
+      .get('http://localhost:8080/api/employees/', config)
       .then((response) => {
         this.setState({
           ...this.state,
@@ -33,7 +33,7 @@ export class Employees extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving employees.",
+          error: 'Error retrieving employees.',
           loading: false,
         });
       });
@@ -66,15 +66,15 @@ export class Employees extends Component {
     }
 
     return (
-      <React.Fragment>
+      <div className='container'>
         <br />
         <h3>Employees</h3>
-        <Link className="btn btn-secondary btn-sm" to="/addemployee">
+        <Link className='btn btn-secondary btn-sm' to='/addemployee'>
           Add Employee
         </Link>
         <br />
         <br />
-        <table className="table">
+        <table className='table'>
           <thead>
             <tr>
               <th>ID</th>
@@ -88,7 +88,7 @@ export class Employees extends Component {
           </thead>
           <tbody>{employees}</tbody>
         </table>
-      </React.Fragment>
+      </div>
     );
   }
 }

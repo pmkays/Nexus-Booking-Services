@@ -44,7 +44,11 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
         <NavigationItem link='/login'>LOGIN</NavigationItem>
-        <NavigationItem link='/register'>REGISTER</NavigationItem>
+        <NavigationItem link='/register'>
+          <div className={classes.Register}>
+            <span className={classes.RegisterText}>REGISTER</span>
+          </div>
+        </NavigationItem>
       </ul>
     );
   }

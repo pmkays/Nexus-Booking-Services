@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import * as actions from "../../store/actions/actions";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import * as actions from '../../store/actions/actions';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-import { checkValidity } from "../../utility/utility";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
-import Input from "../../components/UI/Input/Input";
+import { checkValidity } from '../../utility/utility';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
 
 class Login extends Component {
   state = {
     controls: {
       username: {
-        labelName: "Username",
-        elementType: "input",
+        labelName: 'Username',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Username",
+          type: 'text',
+          placeholder: 'Username',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           minLength: 3,
@@ -27,13 +27,13 @@ class Login extends Component {
         touched: false,
       },
       password: {
-        labelName: "Password",
-        elementType: "input",
+        labelName: 'Password',
+        elementType: 'input',
         elementConfig: {
-          type: "password",
-          placeholder: "Password",
+          type: 'password',
+          placeholder: 'Password',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           minLength: 6,
@@ -52,7 +52,10 @@ class Login extends Component {
       [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
-        valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
+        valid: checkValidity(
+          event.target.value,
+          this.state.controls[controlName].validation
+        ),
         touched: true,
       },
     };
@@ -63,7 +66,10 @@ class Login extends Component {
   // Runs when submitted and calls the redux action
   loginHandler = (event) => {
     event.preventDefault();
-    console.log(this.state.controls.username.value, this.state.controls.password.value);
+    console.log(
+      this.state.controls.username.value,
+      this.state.controls.password.value
+    );
     this.props.onAuthentication(
       this.state.controls.username.value,
       this.state.controls.password.value,
@@ -116,10 +122,10 @@ class Login extends Component {
       <div>
         {authRedirect}
         <form onSubmit={this.loginHandler}>
-          <div className="form-group">
+          <div className='form-group container'>
             {form}
             {errorMessage}
-            <Button classes="btn btn-primary">SUBMIT</Button>
+            <Button classes='btn btn-primary'>SUBMIT</Button>
           </div>
         </form>
       </div>
@@ -138,8 +144,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuthentication: (username, password, isSignUp) => dispatch(actions.auth(username, password, isSignUp)),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/")),
+    onAuthentication: (username, password, isSignUp) =>
+      dispatch(actions.auth(username, password, isSignUp)),
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
   };
 };
 

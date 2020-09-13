@@ -12,3 +12,15 @@
   position: relative;
   bottom: 30px;
 }
+
+.Register {
+  background-color: #45cdd6;
+  height: 3.5vh;
+  border-radius: 5px;
+  width: 6vw;
+  text-align: center;
+  color: white;
+  position: relative;
+  bottom: 5px;
+  padding-top: 4px;
+}
