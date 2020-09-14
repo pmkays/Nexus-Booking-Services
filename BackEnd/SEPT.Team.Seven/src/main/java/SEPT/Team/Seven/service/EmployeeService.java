@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.repo.AvailabilityRepository;
 import SEPT.Team.Seven.repo.EmployeeRepository;
+import SEPT.Team.Seven.repo.ServiceRepository;
 
 @Service
 public class EmployeeService {
@@ -16,7 +17,8 @@ public class EmployeeService {
 	private EmployeeRepository employeeRepository;
 	private AvailabilityRepository availabilityRepository;
 	
-	public EmployeeService(EmployeeRepository employeeRepository, AvailabilityRepository availabilityRepository) {
+	public EmployeeService(EmployeeRepository employeeRepository, AvailabilityRepository availabilityRepository,
+			ServiceRepository serviceRepository) {
 		this.employeeRepository = employeeRepository;
 		this.availabilityRepository = availabilityRepository;
 	}

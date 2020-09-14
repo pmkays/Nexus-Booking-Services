@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="service")
 public class Service {
@@ -19,6 +21,8 @@ public class Service {
 	@Column(name="id")
 	private int id;
 	
+	// used to fix infinite recursion issue
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "services")
 	private List<Employee> employees;
 	
@@ -29,6 +33,10 @@ public class Service {
 	
 	public Service(String name) {
 		this.name = name;
+	}
+	
+	public List<Employee> getEmployees() {
+		return employees;
 	}
 	
 	public int getId() {

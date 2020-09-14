@@ -7,5 +7,5 @@ import SEPT.Team.Seven.model.Employee;
 
 @CrossOrigin(origins = "http://localhost:3000")
 public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
-
+	
 }

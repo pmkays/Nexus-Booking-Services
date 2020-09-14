@@ -20,7 +20,7 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping("/availability/{id}")
+	@GetMapping("/next7DaysAvai/{id}")
 	public List<Availability> getNext7DaysAvailabilitiesById(@PathVariable("id") int id) {
 		List<Availability> availabilities = employeeService.getNext7DaysAvailabilitiesById(id);
 		return availabilities;

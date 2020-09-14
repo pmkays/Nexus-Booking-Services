@@ -3,14 +3,13 @@ package SEPT.Team.Seven.model;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="employee")
@@ -25,6 +24,8 @@ public class Employee extends Account {
 	@OneToMany(mappedBy="employee")
 	private List<Booking> bookings;
 	
+	// used to fix infinite recursion issue
+	@JsonBackReference
 	@ManyToMany()
 	@JoinTable(
 			name = "employee_service",
@@ -39,6 +40,10 @@ public class Employee extends Account {
 		super(firstName,lastName,email,phoneNo, address);
 	}
 	
+	public List<Service> getServices() {
+		return services;
+	}
+
 	public void addToServices(Service service) {
 		services.add(service);
 	}
