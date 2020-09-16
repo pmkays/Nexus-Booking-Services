@@ -35,7 +35,8 @@ public class EmployeeService {
 			
 			// Check each availability and if before a week from now add to toReturn list.
 			for (Availability availability : availabilities) {
-				if (availability.getStartTime().compareTo(weekInFuture.getTime()) <= 0) {
+				int timediff = availability.getStartTime().compareTo(weekInFuture.getTime());
+				if (timediff <= 0) {
 					toReturn.add(availability);
 				}
 			}
