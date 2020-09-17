@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
-import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.WorkingTime;
 import SEPT.Team.Seven.model.DTO.TimeDto;
 import SEPT.Team.Seven.service.WorkingTimeService;

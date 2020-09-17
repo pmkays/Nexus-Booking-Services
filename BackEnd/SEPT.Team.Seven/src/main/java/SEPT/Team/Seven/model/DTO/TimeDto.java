@@ -2,8 +2,6 @@ package SEPT.Team.Seven.model.DTO;
 
 import java.util.Date;
 
-import SEPT.Team.Seven.model.Employee;
-
 public class TimeDto {
 	
 
