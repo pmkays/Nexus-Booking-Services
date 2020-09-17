@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import SEPT.Team.Seven.model.Booking;
 import SEPT.Team.Seven.model.WorkingTime;
-import SEPT.Team.Seven.repo.AvailabilityRepository;
 import SEPT.Team.Seven.repo.BookingRepository;
 import SEPT.Team.Seven.repo.CustomerRepository;
 import SEPT.Team.Seven.repo.EmployeeRepository;
@@ -21,16 +20,14 @@ public class BookingService {
 
 	private BookingRepository bookingRepository;
 	private WorkingTimeRepository workingTimeRepository;
-	private AvailabilityRepository availabilityRepository;
 	private EmployeeRepository employeeRepository;
 	private CustomerRepository customerRepository;
 	private ServiceRepository serviceRepository;
 
 	public BookingService(BookingRepository bookingRepository, WorkingTimeRepository workingTimeRepository, 
-			AvailabilityRepository availabilityRepository, EmployeeRepository employeeRepository,
-			CustomerRepository customerRepository, ServiceRepository serviceRepository) {
+			EmployeeRepository employeeRepository, CustomerRepository customerRepository, 
+			ServiceRepository serviceRepository) {
 		this.workingTimeRepository = workingTimeRepository;
-		this.availabilityRepository = availabilityRepository;
 		this.employeeRepository = employeeRepository;
 		this.customerRepository = customerRepository;
 		this.serviceRepository = serviceRepository;
@@ -62,8 +59,7 @@ public class BookingService {
 		if (employeeRepository.findById(employeeId).isPresent() &&
 				customerRepository.findById(customerId).isPresent()) {
 			
-			// now check that a customer doesn't have a booking on that day already
-			
+			// now check that a customer doesn't have a booking on that day already			
 			List<Booking> customersBookings = bookingRepository.findAllByCustomerId(customerId);
 			Calendar newStartCal = Calendar.getInstance();
 			newStartCal.setTime(startTime);

@@ -61,9 +61,9 @@ public class WorkingTimeServiceTest {
 		Calendar startAvail2 = Calendar.getInstance();
 		Calendar endAvail2 = Calendar.getInstance(); 
 		startAvail2.add(Calendar.DATE, 17);
-		startAvail2.add(Calendar.HOUR, 1);
+		startAvail2.add(Calendar.MINUTE, 1);
 		endAvail2.add(Calendar.DATE, 18);
-		endAvail2.add(Calendar.HOUR, -1);
+		endAvail2.add(Calendar.MINUTE, -1);
 		
 		employee = new Employee(); 
 		
@@ -89,12 +89,12 @@ public class WorkingTimeServiceTest {
 		//start in 17 days, 2 hrs after midnight
 		Calendar start = Calendar.getInstance(); 
 		start.add(Calendar.DATE, 17);
-		start.add(Calendar.HOUR, 2);
+		start.add(Calendar.MINUTE, 2);
 		
 		//end 5 hours before the midnight the next day, i.e. 17 hr shift
 		Calendar end = Calendar.getInstance(); 
 		end.add(Calendar.DATE, 18);
-		end.add(Calendar.HOUR, -5);
+		end.add(Calendar.MINUTE, -2);
 		WorkingTime workingTimeToAdd = new WorkingTime(employee, start.getTime(), end.getTime());
 		
 		when(workingTimeRepository.save(any(WorkingTime.class))).thenReturn(workingTimeToAdd);
