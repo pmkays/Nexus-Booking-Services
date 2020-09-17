@@ -157,8 +157,9 @@ public class AvailabilityControllerTest {
 		
 	}
 	
+	//availability already exists on this day
 	@Test
-	public void addAvailability_AvailabilityAlreadyExists_ReturnsError() throws Exception
+	public void addAvailability_InvalidAvailability_ReturnsError() throws Exception
 	{
 		//Arrange
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  

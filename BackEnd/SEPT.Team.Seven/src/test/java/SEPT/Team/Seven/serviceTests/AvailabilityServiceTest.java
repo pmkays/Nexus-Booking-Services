@@ -55,8 +55,7 @@ public class AvailabilityServiceTest {
 	
 	@Test
 	public void addAvailability_ValidDates_ReturnsTheNewAvailability()
-	{
-		
+	{	
 		//Arrange
 		Calendar start = Calendar.getInstance(); 
 		Calendar end = Calendar.getInstance(); 
@@ -125,7 +124,7 @@ public class AvailabilityServiceTest {
 	@Test
 	public void addAvailability_NullDates_AvailabilityNotPresent()
 	{
-		//Arrange & //Act
+		//Arrange & Act
 		Optional<Availability> result = service.addAvailability(4, null, null);
 		
 		//Assert
