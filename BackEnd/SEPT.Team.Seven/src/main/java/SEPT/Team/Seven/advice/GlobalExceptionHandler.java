@@ -14,15 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.util.NestedServletException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	
+  private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @ExceptionHandler(NestedServletException.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ResponseBody
   public ResponseEntity<Object> handleNestedServletException(NestedServletException ex) {
-      System.out.println(ex.getMessage());
+	  LOGGER.error("Unable to complete transaction", ex);
       return new ResponseEntity<Object>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
   }
   
@@ -30,16 +33,17 @@ public class GlobalExceptionHandler {
   @ResponseStatus(HttpStatus.FORBIDDEN)
   @ExceptionHandler(HttpServerErrorException.class)
   public ResponseEntity<Object> handleServerException(HttpServerErrorException ex) {
-      System.out.println(ex.getMessage());
+	  LOGGER.error("Unable to complete transaction", ex);
       return new ResponseEntity<Object>(ex.getMessage(),HttpStatus.FORBIDDEN);
   }
   
-  //deal with the constraint violations and any other error that might come up
+  //deal with the constraint violations and any exceptions that might come up
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(RollbackException.class)
-  public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {	  
+  public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {	    
 	  String toReturn = "";
 	  
+	  //have to navigate down the exception tree twice to get to constraint violations
 	  if(ex.getCause().getCause() instanceof ConstraintViolationException){
 		  toReturn = ((ConstraintViolationException) ex.getCause().getCause())
 				  .getConstraintViolations()
@@ -50,7 +54,7 @@ public class GlobalExceptionHandler {
 		  toReturn = ex.getMessage();
 	  }
 	  
-      System.out.println(toReturn);
+	  LOGGER.error("Unable to complete transaction", ex);
       return new ResponseEntity<Object>(toReturn,HttpStatus.BAD_REQUEST);
   }
   

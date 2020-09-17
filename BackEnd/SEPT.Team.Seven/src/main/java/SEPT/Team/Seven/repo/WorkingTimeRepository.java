@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.WorkingTime;
 
 @CrossOrigin(origins = "http://localhost:3000")
