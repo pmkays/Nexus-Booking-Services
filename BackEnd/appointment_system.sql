@@ -1,10 +1,17 @@
 CREATE DATABASE IF NOT EXISTS `appointment_system`;
 USE `appointment_system`;
 
+DROP TABLE IF EXISTS `employee_service`;
 DROP TABLE IF EXISTS `booking`;
+DROP TABLE IF EXISTS `service`;
 DROP TABLE IF EXISTS `availability`;
 DROP TABLE IF EXISTS `working_time`;
 DROP TABLE IF EXISTS `security_user`;
+DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `employee`;
+DROP TABLE IF EXISTS `security_role`;
+
 
 --
 -- Table structure for table `security_role`
@@ -90,6 +97,32 @@ CREATE TABLE `security_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `service`
+--
+
+DROP TABLE IF EXISTS `service`;
+
+CREATE TABLE `service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, 
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `employee_service`
+--
+
+DROP TABLE IF EXISTS `employee_service`;
+
+CREATE TABLE `employee_service` (
+  `employee_id` int(11), 
+  `service_id` int(11),
+  PRIMARY KEY (employee_id, service_id),
+  CONSTRAINT `fk_employee_id_service` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
+  CONSTRAINT `fk_service_id_employee` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `booking`
 --
 
@@ -102,9 +135,11 @@ CREATE TABLE `booking` (
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
   `status` varchar(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
-  CONSTRAINT `fk_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`)
+  CONSTRAINT `fk_customer_booking_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_employee_booking_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
+  CONSTRAINT `fk_service_id` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
@@ -202,4 +237,18 @@ INSERT INTO `availability` VALUES
 INSERT INTO `working_time` VALUES
 	(1, 4, '2020-09-28 12:00:00', '2020-09-28 17:00:00'),
     (2, 4, '2020-09-29 12:00:00', '2020-09-29 17:00:00');
+
+--
+-- Data for table `working_time`
+--
+
+INSERT INTO `service` VALUES
+	(1, 'service1'),
+    (2, 'service2'),
+    (3, 'service1'),
+    (4, 'service1');
+    
+INSERT INTO `employee_service` VALUES
+	(4, 1),
+    (4, 2);
 

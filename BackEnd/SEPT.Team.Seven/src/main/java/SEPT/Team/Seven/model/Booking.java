@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,17 +19,19 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name="working_time")
-public class WorkingTime {
+@Table(name="booking")
+public class Booking {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
+	
+	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinColumn(name="customer_id")
+	private Customer customer;
 	
 	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="employee_id")
@@ -48,13 +51,24 @@ public class WorkingTime {
 	@Column(name="end_time")
 	private Date endTime;
 	
-	public WorkingTime() {}
+	@Column(name="status")
+	private String status;
 	
-	public WorkingTime(Employee employee, Date startTime, Date endTime) {
+	@JsonBackReference
+	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinColumn(name="service_id")
+	private Service service;
+	
+	public Booking() {}
 
+	public Booking(Customer customer, Employee employee, Date startTime, Date endTime,
+			String status, Service service) {
+		this.customer = customer;
 		this.employee = employee;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.status = status;
+		this.service = service;
 	}
 
 	public int getId() {
@@ -63,6 +77,14 @@ public class WorkingTime {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Employee getEmployee() {
@@ -88,5 +110,22 @@ public class WorkingTime {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
+
 	
 }

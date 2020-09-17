@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 
 @SpringBootTest
@@ -137,7 +139,6 @@ public class CustomerAPITests
 				  .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 	}
 	
-	@Disabled
 	@Test
 	@WithMockUser(username="admin",roles={"ADMIN"})
 	public void updateCustomer_InvalidData_ThrowsError() throws Exception
@@ -151,12 +152,14 @@ public class CustomerAPITests
 		requestBody.put("address", "updated address");
 		
 		//Act and Assert
-		this.mockMvc.perform(MockMvcRequestBuilders
-			      .put("/api/customers/1")
-			      .content(requestBody.toString())
-			      .contentType(MediaType.APPLICATION_JSON))
-				  .andDo(MockMvcResultHandlers.print())
-				  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
+		Assertions.assertThrows(NestedServletException.class, () -> {
+			this.mockMvc.perform(MockMvcRequestBuilders
+				      .put("/api/customers/1")
+				      .content(requestBody.toString())
+				      .contentType(MediaType.APPLICATION_JSON))
+					  .andDo(MockMvcResultHandlers.print())
+					  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
+		  });
 	}
 	
 }

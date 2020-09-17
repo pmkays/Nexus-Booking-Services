@@ -25,7 +25,7 @@ public class AvailabilityController {
 	private AvailabilityService availabilityService;
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping("?employee={id}")
+	@GetMapping("/employee/{id}")
 	public List<Availability> getAvailabilitiesForEmployee(@PathVariable("id") int id) {
 		List<Availability> availabilities = availabilityService.getAvailabilitiesForEmployee(id);
 		return availabilities;

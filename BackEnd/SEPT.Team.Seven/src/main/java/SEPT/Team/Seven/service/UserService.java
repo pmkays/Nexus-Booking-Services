@@ -75,7 +75,7 @@ public class UserService {
 				} else if (user.get().getRole().getRoleName().equals("ROLE_EMPLOYEE")) {
 					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getEmployee().getId()));
 				} else if (user.get().getRole().getRoleName().equals("ROLE_ADMIN")) {
-					System.out.println("User Role: " + user.get().getRole().getRoleName());
+//					System.out.println("User Role: " + user.get().getRole().getRoleName());
 					token = Optional.of(jwtProvider.createToken(username, roles, user.get().getAdmin().getId()));
 				}
 
