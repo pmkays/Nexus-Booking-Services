@@ -47,16 +47,11 @@ public class AvailabilityControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	
-	private static List<Availability> availabilities;
-	
-	private static List<Availability> emptyAvailabilities; 
-	
+	private static List<Availability> availabilities;	
+	private static List<Availability> emptyAvailabilities; 	
 	private static Calendar start;
 	private static Calendar end;
-	
 	private static Employee employee;
-	
 	
 	@BeforeAll
 	public static void setUp()
@@ -127,7 +122,7 @@ public class AvailabilityControllerTest {
 	}
 	
 	@Test
-	public void addAvailability_ValidAvailability_ReturnsAvailabilities() throws Exception
+	public void addAvailability_ValidAvailability_ReturnsAvailability() throws Exception
 	{
 		//Arrange
 		Calendar availStart = Calendar.getInstance();

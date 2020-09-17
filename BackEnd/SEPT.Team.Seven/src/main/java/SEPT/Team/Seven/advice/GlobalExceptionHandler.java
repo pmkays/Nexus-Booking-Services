@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
   //anything that's 403
   @ResponseStatus(HttpStatus.FORBIDDEN)
   @ExceptionHandler(HttpServerErrorException.class)
-  public ResponseEntity<Object> handleServerException(HttpServerErrorException ex) {
+  public ResponseEntity<Object> handleServerErrorException(HttpServerErrorException ex) {
 	  LOGGER.error("Unable to complete transaction", ex);
       return new ResponseEntity<Object>(ex.getMessage(),HttpStatus.FORBIDDEN);
   }
