@@ -152,14 +152,12 @@ public class CustomerAPITests
 		requestBody.put("address", "updated address");
 		
 		//Act and Assert
-		Assertions.assertThrows(NestedServletException.class, () -> {
-			this.mockMvc.perform(MockMvcRequestBuilders
-				      .put("/api/customers/1")
-				      .content(requestBody.toString())
-				      .contentType(MediaType.APPLICATION_JSON))
-					  .andDo(MockMvcResultHandlers.print())
-					  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
-		  });
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .put("/api/customers/1")
+			      .content(requestBody.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 	
 }

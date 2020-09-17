@@ -65,13 +65,13 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAll();
     }
-
-    // Will be moved to an ADVICE
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(RuntimeException.class)
-    public String return400(RuntimeException ex) {
-        LOGGER.error("Unable to complete transaction", ex);
-        return ex.getMessage();
-    }
+//
+//    // Will be moved to an ADVICE
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(RuntimeException.class)
+//    public String return400(RuntimeException ex) {
+//        LOGGER.error("Unable to complete transaction", ex);
+//        return ex.getMessage();
+//    }
     
 }

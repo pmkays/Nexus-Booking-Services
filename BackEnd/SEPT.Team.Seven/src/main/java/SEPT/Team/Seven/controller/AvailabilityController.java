@@ -1,6 +1,7 @@
 package SEPT.Team.Seven.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +35,15 @@ public class AvailabilityController {
 	@CrossOrigin(origins = "http://localhost:3000")
     @PostMapping()
     public Availability addAvailability(@RequestBody TimeDto timeDto) {
-       return availabilityService.addAvailability(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
-       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding availability."));
+		Optional<Availability> availability = availabilityService.addAvailability(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime());
+		if(!availability.isPresent())
+		{
+			throw new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding availability.");
+
+		}
+		return availability.get();
+//       return availabilityService.addAvailability(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
+//       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding availability."));
     }
 
 }

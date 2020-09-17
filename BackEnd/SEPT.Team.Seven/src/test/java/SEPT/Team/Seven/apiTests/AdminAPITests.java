@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
-import SEPT.Team.Seven.advice.ConstraintViolationHandler;
+import SEPT.Team.Seven.advice.GlobalExceptionHandler;
 import SEPT.Team.Seven.repo.AdminRepository;
 
 
@@ -156,14 +156,12 @@ public class AdminAPITests
 		requestBody.put("address", "updated addressss");
 
 		//Act and Assert
-		 Assertions.assertThrows(NestedServletException.class, () -> {
-				this.mockMvc.perform(MockMvcRequestBuilders
-					      .put("/api/admins/5")
-					      .content(requestBody.toString())
-					      .contentType(MediaType.APPLICATION_JSON))
-						  .andDo(MockMvcResultHandlers.print())
-						  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
-			  });
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .put("/api/admins/5")
+			      .content(requestBody.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 		
 	}
 	

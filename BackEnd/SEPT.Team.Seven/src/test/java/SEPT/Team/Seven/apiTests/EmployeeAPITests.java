@@ -152,13 +152,11 @@ public class EmployeeAPITests
 		requestBody.put("address", "updated address");
 		
 		//Act and Assert
-		Assertions.assertThrows(NestedServletException.class, () -> {
-			this.mockMvc.perform(MockMvcRequestBuilders
-				      .put("/api/employees/4")
-				      .content(requestBody.toString())
-				      .contentType(MediaType.APPLICATION_JSON))
-					  .andDo(MockMvcResultHandlers.print())
-					  .andExpect(MockMvcResultMatchers.status().is5xxServerError());
-		  });
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .put("/api/employees/4")
+			      .content(requestBody.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 }

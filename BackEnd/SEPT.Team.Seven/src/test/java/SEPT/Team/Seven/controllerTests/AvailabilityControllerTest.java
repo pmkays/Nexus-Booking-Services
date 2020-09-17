@@ -2,8 +2,10 @@ package SEPT.Team.Seven.controllerTests;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,16 +56,13 @@ public class AvailabilityControllerTest {
 	private static Calendar start;
 	private static Calendar end;
 	
-	private static Availability availabilityToAdd;
-	
-	private static Calendar startNewAvail; 
-	private static Calendar endNewAvail; 
+	private static Employee employee;
 	
 	
 	@BeforeAll
 	public static void setUp()
 	{
-		Employee employee = new Employee("hello", "world", "a@a.com", "1234567889", "blah"); 
+		employee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address");
 		employee.setId(4);
 		
 		start = Calendar.getInstance();
@@ -81,20 +80,16 @@ public class AvailabilityControllerTest {
 		availabilities.add(new Availability(employee, start2.getTime(), end2.getTime()));
 		
 		emptyAvailabilities = new ArrayList<Availability>();
-		
-		Calendar startNewAvail = Calendar.getInstance();
-		Calendar endNewAvail = Calendar.getInstance(); 
-		startNewAvail.add(Calendar.DATE, 20);
-		endNewAvail.add(Calendar.DATE, 21);
 
 	}
 	
 	@Test
 	public void getAvailabilitiesForEmployee_IdOfEmployeeThatExists_ReturnsAvailabilities() throws Exception
 	{
-		//employee exists 
+		//Arrange
 		when(availabilityService.getAvailabilitiesForEmployee(4)).thenReturn(availabilities);
 		
+		//Act
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
 						      .get("/api/availability/employee/4")
 						      .contentType(MediaType.APPLICATION_JSON))
@@ -113,9 +108,10 @@ public class AvailabilityControllerTest {
 	@Test
 	public void getAvailabilitiesForEmployee_NonExistentEmployeeId_ReturnsNoAvailabilities() throws Exception
 	{
-		//employee exists 
+		//Arrange
 		when(availabilityService.getAvailabilitiesForEmployee(8)).thenReturn(emptyAvailabilities);
 		
+		//Act
 		String result = this.mockMvc.perform(MockMvcRequestBuilders
 						      .get("/api/availability/employee/8")
 						      .contentType(MediaType.APPLICATION_JSON))
@@ -132,10 +128,46 @@ public class AvailabilityControllerTest {
 	}
 	
 	@Test
-	public void addAvailability_AvailabilityAlreadyExists_ReturnsAvailabilities() throws Exception
+	public void addAvailability_ValidAvailability_ReturnsAvailabilities() throws Exception
 	{
-//		System.out.println(start.getTime().toString());
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd'T'hh:mm:ss");  
+		//Arrange
+		Calendar availStart = Calendar.getInstance();
+		Calendar availEnd = Calendar.getInstance(); 
+		availStart.add(Calendar.DATE, 1);
+		availEnd.add(Calendar.DATE, 2);
+				
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
+		String startStr = dateFormat.format(availStart.getTime());  
+		String endStr = dateFormat.format(availEnd.getTime());  
+		
+		JSONObject json = new JSONObject(); 
+		json.put("employeeId", 4);
+		json.put("startTime", startStr);
+		json.put("endTime", endStr);
+		
+		//need to use the string to the date values when mocking since precision will be different
+		Date date1 = dateFormat.parse(startStr);
+		Date date2 = dateFormat.parse(endStr);
+		Availability toAdd = new Availability(employee, date1, date2);
+		
+		when(availabilityService.addAvailability(4, date1, date2)).thenReturn(Optional.of(toAdd));
+		
+		//Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .post("/api/availability")
+			      .content(json.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().isOk());
+
+		
+	}
+	
+	@Test
+	public void addAvailability_AvailabilityAlreadyExists_ReturnsError() throws Exception
+	{
+		//Arrange
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
 		String startStr = dateFormat.format(start.getTime());  
 		String endStr = dateFormat.format(end.getTime());  
 
@@ -144,11 +176,14 @@ public class AvailabilityControllerTest {
 		json.put("employeeId", 4);
 		json.put("startTime", startStr);
 		json.put("endTime", endStr);
+		
+		//need to use the string to the date values when mocking since precision will be different
+		Date date1 = dateFormat.parse(startStr);
+		Date date2 = dateFormat.parse(endStr);
 
+		when(availabilityService.addAvailability(4, date1, date2)).thenReturn(Optional.empty());
 		
-		//employee exists 
-		when(availabilityService.addAvailability(4, start.getTime(), end.getTime())).thenReturn(Optional.empty());
-		
+		//Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders
 						      .post("/api/availability")
 						      .content(json.toString())
@@ -156,7 +191,6 @@ public class AvailabilityControllerTest {
 							  .andDo(MockMvcResultHandlers.print())
 							  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
 							  .andExpect(MockMvcResultMatchers.content().string("403 Error adding availability."));
-
 		
 	}
 	
