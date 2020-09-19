@@ -245,8 +245,8 @@ INSERT INTO `working_time` VALUES
 INSERT INTO `service` VALUES
 	(1, 'service1'),
     (2, 'service2'),
-    (3, 'service1'),
-    (4, 'service1');
+    (3, 'service3'),
+    (4, 'service4');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
