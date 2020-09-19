@@ -1,0 +1,26 @@
+.NavLogo {
+  font-size: 4rem;
+}
+
+.Blue {
+  color: #45cdd6;
+}
+
+.Slogan {
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  position: relative;
+  bottom: 30px;
+}
+
+.Register {
+  background-color: #45cdd6;
+  height: 3.5vh;
+  border-radius: 5px;
+  width: 6vw;
+  text-align: center;
+  color: white;
+  position: relative;
+  bottom: 5px;
+  padding-top: 4px;
+}

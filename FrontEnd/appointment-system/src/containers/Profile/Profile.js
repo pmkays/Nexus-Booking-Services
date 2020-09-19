@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../../store/actions/actions";
-import {NavLink} from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/actions';
+import { NavLink } from 'react-router-dom';
 
-import Spinner from "../../components/UI/Spinner/Spinner";
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 export class Profile extends Component {
   //As soon as this component loads it will attempt to grab the current profile
-    componentDidMount() {
-      this.props.onFetchProfile(this.props.token);
-    }
+  componentDidMount() {
+    this.props.onFetchProfile(this.props.token);
+  }
 
   render() {
     let profile = <Spinner />;
@@ -19,19 +19,21 @@ export class Profile extends Component {
       profile = (
         <React.Fragment>
           <h2>My Profile</h2>
-          <p><NavLink to="/editprofile">Edit Profile</NavLink></p>
+          <p>
+            <NavLink to='/editprofile'>Edit Profile</NavLink>
+          </p>
           <hr />
-          <dl className="row">
-            <dt className="col-sm-2">First Name</dt>
-            <dd className="col-sm-10">{this.props.profileDetails.firstName}</dd>
-            <dt className="col-sm-2">Last Name</dt>
-            <dd className="col-sm-10">{this.props.profileDetails.lastName}</dd>
-            <dt className="col-sm-2">Address</dt>
-            <dd className="col-sm-10">{this.props.profileDetails.address}</dd>
-            <dt className="col-sm-2">Email</dt>
-            <dd className="col-sm-10">{this.props.profileDetails.email}</dd>
-            <dt className="col-sm-2">Phone Number</dt>
-            <dd className="col-sm-10">{this.props.profileDetails.phoneNo}</dd>
+          <dl className='row'>
+            <dt className='col-sm-2'>First Name</dt>
+            <dd className='col-sm-10'>{this.props.profileDetails.firstName}</dd>
+            <dt className='col-sm-2'>Last Name</dt>
+            <dd className='col-sm-10'>{this.props.profileDetails.lastName}</dd>
+            <dt className='col-sm-2'>Address</dt>
+            <dd className='col-sm-10'>{this.props.profileDetails.address}</dd>
+            <dt className='col-sm-2'>Email</dt>
+            <dd className='col-sm-10'>{this.props.profileDetails.email}</dd>
+            <dt className='col-sm-2'>Phone Number</dt>
+            <dd className='col-sm-10'>{this.props.profileDetails.phoneNo}</dd>
           </dl>
         </React.Fragment>
       );
@@ -41,7 +43,7 @@ export class Profile extends Component {
       profile = this.props.error;
     }
 
-    return <div>{profile}</div>;
+    return <div className='container'>{profile}</div>;
   }
 }
 

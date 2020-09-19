@@ -1,25 +1,25 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-import * as actions from "../../../store/actions/actions";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Button from "../../../components/UI/Button/Button";
-import Input from "../../../components/UI/Input/Input";
-import ErrorMessage from "../../../components/UI/Input/ErrorMessage";
-import { checkValidity, errorMessageToDisplay } from "../../../utility/utility";
+import * as actions from '../../../store/actions/actions';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Button from '../../../components/UI/Button/Button';
+import Input from '../../../components/UI/Input/Input';
+import ErrorMessage from '../../../components/UI/Input/ErrorMessage';
+import { checkValidity, errorMessageToDisplay } from '../../../utility/utility';
 
 export class AddEmployee extends Component {
   state = {
     controls: {
       username: {
-        labelName: "Username",
-        elementType: "input",
+        labelName: 'Username',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Username",
+          type: 'text',
+          placeholder: 'Username',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
         },
@@ -27,13 +27,13 @@ export class AddEmployee extends Component {
         touched: false,
       },
       firstName: {
-        labelName: "First Name",
-        elementType: "input",
+        labelName: 'First Name',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Firstname",
+          type: 'text',
+          placeholder: 'Firstname',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
         },
@@ -41,13 +41,13 @@ export class AddEmployee extends Component {
         touched: false,
       },
       lastName: {
-        labelName: "Last Name",
-        elementType: "input",
+        labelName: 'Last Name',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Lastname",
+          type: 'text',
+          placeholder: 'Lastname',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
         },
@@ -55,13 +55,13 @@ export class AddEmployee extends Component {
         touched: false,
       },
       email: {
-        labelName: "Email",
-        elementType: "input",
+        labelName: 'Email',
+        elementType: 'input',
         elementConfig: {
-          type: "email",
-          placeholder: "Email",
+          type: 'email',
+          placeholder: 'Email',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           isEmail: true,
@@ -70,13 +70,13 @@ export class AddEmployee extends Component {
         touched: false,
       },
       address: {
-        labelName: "Address",
-        elementType: "input",
+        labelName: 'Address',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Address",
+          type: 'text',
+          placeholder: 'Address',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
         },
@@ -84,13 +84,13 @@ export class AddEmployee extends Component {
         touched: false,
       },
       phoneNumber: {
-        labelName: "Phone number",
-        elementType: "input",
+        labelName: 'Phone number',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Phonenumber",
+          type: 'text',
+          placeholder: 'Phonenumber',
         },
-        value: "",
+        value: '',
         validation: {
           required: true,
           isNumeric: true,
@@ -107,7 +107,7 @@ export class AddEmployee extends Component {
   inputChangedHandler = (event, controlName) => {
     let updatedControls = null;
 
-    if (controlName === "password") {
+    if (controlName === 'password') {
       updatedControls = {
         ...this.state.controls,
         [controlName]: {
@@ -121,7 +121,7 @@ export class AddEmployee extends Component {
           valid: event.target.value === this.state.controls.passwordAgain.value,
         },
       };
-    } else if (controlName === "passwordAgain") {
+    } else if (controlName === 'passwordAgain') {
       updatedControls = {
         ...this.state.controls,
         [controlName]: {
@@ -141,7 +141,10 @@ export class AddEmployee extends Component {
         [controlName]: {
           ...this.state.controls[controlName],
           value: event.target.value,
-          valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
+          valid: checkValidity(
+            event.target.value,
+            this.state.controls[controlName].validation
+          ),
           touched: true,
         },
       };
@@ -165,7 +168,7 @@ export class AddEmployee extends Component {
 
     let formData = {
       username: this.state.controls.username.value,
-      password: "abc123",
+      password: 'abc123',
       firstName: this.state.controls.firstName.value,
       lastName: this.state.controls.lastName.value,
       email: this.state.controls.email.value,
@@ -173,7 +176,7 @@ export class AddEmployee extends Component {
       address: this.state.controls.address.value,
     };
 
-    console.log("Printing token", this.props.token);
+    console.log('Printing token', this.props.token);
 
     this.props.onAddNewProfile(formData, this.props.history, this.props.token);
   };
@@ -202,7 +205,10 @@ export class AddEmployee extends Component {
           touched={formElement.config.touched}
         />
         {formElement.config.valid ? null : (
-          <ErrorMessage key={formElement.id + "Error"} message={errorMessageToDisplay(formElement.id)} />
+          <ErrorMessage
+            key={formElement.id + 'Error'}
+            message={errorMessageToDisplay(formElement.id)}
+          />
         )}
       </React.Fragment>
     ));
@@ -227,17 +233,24 @@ export class AddEmployee extends Component {
     //displays error message beneath the submit button
     let errorMsg = null;
     if (!this.state.isFormValid) {
-      errorMsg = <p className="text-danger">Please make sure all fields are filled and valid.</p>;
+      errorMsg = (
+        <p className='text-danger'>
+          Please make sure all fields are filled and valid.
+        </p>
+      );
     }
 
     return (
       <div>
         {authRedirect}
         <form onSubmit={this.addProfileHandler}>
-          <div className="form-group">
+          <div className='form-group container'>
             {form}
             {errorMessage}
-            <Button disabled={!this.state.isFormValid} classes="btn btn-primary">
+            <Button
+              disabled={!this.state.isFormValid}
+              classes='btn btn-primary'
+            >
               Submit
             </Button>
             {errorMsg}
@@ -259,7 +272,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddNewProfile: (formData, history, token) => dispatch(actions.addProfile(formData, history, "employees", token)),
+    onAddNewProfile: (formData, history, token) =>
+      dispatch(actions.addProfile(formData, history, 'employees', token)),
   };
 };
 
