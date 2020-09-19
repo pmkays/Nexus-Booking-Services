@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-import Spinner from '../../../components/UI/Spinner/Spinner';
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Button from "../../../components/UI/Button/Button";
+
+import * as actions from "../../../store/actions/actions";
 
 export class Employees extends Component {
   state = {
@@ -15,14 +18,14 @@ export class Employees extends Component {
   componentDidMount() {
     const config = {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     };
 
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get('http://localhost:8080/api/employees/', config)
+      .get("http://localhost:8080/api/employees/", config)
       .then((response) => {
         this.setState({
           ...this.state,
@@ -33,11 +36,16 @@ export class Employees extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: 'Error retrieving employees.',
+          error: "Error retrieving employees.",
           loading: false,
         });
       });
   }
+
+  addService = (employeeId) => {
+    this.props.addService(employeeId);
+    this.props.history.push("/addservice");
+  };
 
   render() {
     let employees = null;
@@ -52,6 +60,14 @@ export class Employees extends Component {
             <td>{employee.email}</td>
             <td>{employee.phoneNo}</td>
             <td>{employee.address}</td>
+            <td>
+              <Button
+                clicked={() => this.addService(employee.id)}
+                classes="btn btn-primary"
+              >
+                Add Service(s)
+              </Button>
+            </td>
           </tr>
         );
       });
@@ -66,15 +82,15 @@ export class Employees extends Component {
     }
 
     return (
-      <div className='container'>
+      <div className="container">
         <br />
         <h3>Employees</h3>
-        <Link className='btn btn-secondary btn-sm' to='/addemployee'>
+        <Link className="btn btn-secondary btn-sm" to="/addemployee">
           Add Employee
         </Link>
         <br />
         <br />
-        <table className='table'>
+        <table className="table">
           <thead>
             <tr>
               <th>ID</th>
@@ -83,7 +99,7 @@ export class Employees extends Component {
               <th>Email</th>
               <th>Phone No.</th>
               <th>Address</th>
-              <th></th>
+              <th>Add Service</th>
             </tr>
           </thead>
           <tbody>{employees}</tbody>
@@ -96,7 +112,14 @@ export class Employees extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
+    employeeId: state.service.employeeId,
   };
 };
 
-export default connect(mapStateToProps)(Employees);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addService: (employeeId) => dispatch(actions.updateEmployeeId(employeeId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Employees);
