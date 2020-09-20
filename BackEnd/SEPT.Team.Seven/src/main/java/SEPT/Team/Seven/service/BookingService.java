@@ -47,6 +47,9 @@ public class BookingService {
 	public Optional<Booking> addBooking(int employeeId, int customerId, Date startTime, Date endTime,
 			int serviceId) {
 		
+		System.out.println(startTime);
+		System.out.println(endTime);
+		
 		if (startTime == null || endTime == null) {
 			return Optional.empty();
 		}

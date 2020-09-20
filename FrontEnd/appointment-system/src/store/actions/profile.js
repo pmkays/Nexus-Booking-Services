@@ -1,6 +1,8 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { isCompositeComponent } from "react-dom/test-utils";
+import { compose } from "redux";
 
 export const clearProfileUponLogout = () => {
   return {
@@ -336,6 +338,10 @@ export const addAvailabilities = (startTime, endTime, token) => {
         Authorization: "Bearer " + token,
       },
     };
+
+    console.log(
+      "employeeId" + data.employeeId + " startTime: " + data.startTime
+    );
 
     axios
       .post("http://localhost:8080/api/availability", data, config)

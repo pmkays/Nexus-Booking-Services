@@ -37,7 +37,7 @@ export class AddService extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving the employees services.",
+          error: "Error retrieving the services.",
           loading: false,
         });
       });

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
 import SEPT.Team.Seven.model.Availability;
+import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.Service;
+import SEPT.Team.Seven.model.DTO.BookingDateDTO;
 import SEPT.Team.Seven.model.DTO.ServiceDTO;
 import SEPT.Team.Seven.service.EmployeeService;
 
@@ -39,5 +41,10 @@ public class EmployeeController {
 	    new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding service for employee."));
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PostMapping("/findAllByDate")
+	public List<Employee> findEmployeesByDate(@RequestBody BookingDateDTO bookingDateDTO) {
+		return employeeService.findEmployeeByDate(bookingDateDTO.getStartTime());
+	}
 	
 }

@@ -5,6 +5,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.stereotype.Component;
 
 import SEPT.Team.Seven.model.Employee;
+import SEPT.Team.Seven.model.Service;
 
 @Component
 public class RestConfig implements RepositoryRestConfigurer {
@@ -12,6 +13,7 @@ public class RestConfig implements RepositoryRestConfigurer {
     @Override
       public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(Employee.class);
+        config.exposeIdsFor(Service.class);
         //config.exposeIdsFor(Library.class);
       }
 
