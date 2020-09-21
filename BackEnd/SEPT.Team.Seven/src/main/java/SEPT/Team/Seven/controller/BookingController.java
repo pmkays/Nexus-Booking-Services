@@ -41,6 +41,7 @@ public class BookingController {
 	@CrossOrigin(origins = "http://localhost:3000")
     @PostMapping()
     public Booking addBooking(@RequestBody BookingDto bookingDto) {
+		System.out.println("yeet");
        return bookingService.addBooking(bookingDto.getEmployeeId(), bookingDto.getCustomerId(),
     		   bookingDto.getStartTime(), bookingDto.getEndTime(), bookingDto.getServiceId()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding booking."));

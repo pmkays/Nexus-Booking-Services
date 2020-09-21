@@ -30,7 +30,7 @@ export const addServiceFail = (error) => {
   };
 };
 
-export const addService = (formData, token) => {
+export const addService = (formData, token, history) => {
   return (dispatch) => {
     dispatch(addServiceStart);
 
@@ -57,6 +57,9 @@ export const addService = (formData, token) => {
       .then((response) => {
         console.log(response);
         dispatch(addServiceSuccess(token));
+      })
+      .then(() => {
+        history.push("/employees");
       })
       .catch((error) => {
         dispatch(

@@ -10,3 +10,4 @@ export {
   clearProfileUponLogout,
 } from "./profile";
 export { updateEmployeeId, addService } from "./service";
+export { addBooking } from "./booking";

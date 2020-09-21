@@ -12,6 +12,7 @@ import thunk from "redux-thunk";
 import authReducer from "./store/reducers/auth";
 import profileReducer from "./store/reducers/profile";
 import serviceReducer from "./store/reducers/service";
+import bookingReducer from "./store/reducers/booking";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   service: serviceReducer,
+  booking: bookingReducer,
 });
 
 const store = createStore(

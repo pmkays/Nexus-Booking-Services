@@ -1,6 +1,8 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { isCompositeComponent } from "react-dom/test-utils";
+import { compose } from "redux";
 
 export const clearProfileUponLogout = () => {
   return {
@@ -321,7 +323,7 @@ export const addAvailabilitiesFail = (error) => {
   };
 };
 
-export const addAvailabilities = (startTime, endTime, token) => {
+export const addAvailabilities = (startTime, endTime, token, history) => {
   return (dispatch) => {
     let decodedJwt = jwtDecode(token);
 
@@ -337,11 +339,18 @@ export const addAvailabilities = (startTime, endTime, token) => {
       },
     };
 
+    console.log(
+      "employeeId" + data.employeeId + " startTime: " + data.startTime
+    );
+
     axios
       .post("http://localhost:8080/api/availability", data, config)
       .then((response) => {
         console.log(response);
         dispatch(addAvailabilitiesSuccess(response.data));
+      })
+      .then(() => {
+        history.push("/");
       })
       .catch((error) => {
         console.log(error.response);

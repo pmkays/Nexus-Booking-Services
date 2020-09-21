@@ -149,7 +149,12 @@ class Availabilites extends Component {
             const startTime = `${baseTime}T${startTimeText}:00:00`;
             const endTime = `${baseTime}T${endTimeText}:00:00`;
             addAvailabilitiesPromise.push(
-              this.props.addAvailabilities(startTime, endTime, this.props.token)
+              this.props.addAvailabilities(
+                startTime,
+                endTime,
+                this.props.token,
+                this.props.history
+              )
             );
           }
         }
@@ -220,8 +225,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addAvailabilities: (startTime, endTime, token) =>
-      dispatch(actions.addAvailabilities(startTime, endTime, token)),
+    addAvailabilities: (startTime, endTime, token, history) =>
+      dispatch(actions.addAvailabilities(startTime, endTime, token, history)),
   };
 };
 

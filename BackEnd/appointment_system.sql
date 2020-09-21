@@ -186,7 +186,8 @@ INSERT INTO `customer` VALUES
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way');
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way'),
+    (5,'asdsa','Dasdasdov','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way');
     
 --
 -- Data for table `admin`
@@ -214,7 +215,8 @@ INSERT INTO `security_user` VALUES
     (2,'sakura1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 2, null, null, 1),
     (3,'naruto1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 3, null, null, 1),
     (4,'employee1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, 4, null, 2),
-    (5,'admin', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, null, 5, 3);
+    (5,'employee2', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, 5, null, 2),
+    (6,'admin', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, null, 5, 3);
     
     
 --
@@ -227,7 +229,10 @@ INSERT INTO `availability` VALUES
     (3, 4, '2020-09-28 17:00:00', '2020-09-29 00:00:00'),
 	(4, 4, '2020-09-29 00:00:00', '2020-09-29 9:00:00'),
     (5, 4, '2020-09-29 9:00:00', '2020-09-29 17:00:00'),
-    (6, 4, '2020-09-29 17:00:00', '2020-09-30 00:00:00');
+    (6, 4, '2020-09-29 17:00:00', '2020-09-30 00:00:00'),
+    (7, 5, '2020-09-29 17:00:00', '2020-09-29 23:00:00'),
+    (8, 5, '2020-09-30 17:00:00', '2020-09-30 23:00:00'),
+    (9, 4, '2020-09-27 17:00:00', '2020-09-27 23:00:00');
 
     
 --
@@ -236,7 +241,10 @@ INSERT INTO `availability` VALUES
 
 INSERT INTO `working_time` VALUES
 	(1, 4, '2020-09-28 12:00:00', '2020-09-28 17:00:00'),
-    (2, 4, '2020-09-29 12:00:00', '2020-09-29 17:00:00');
+    (2, 4, '2020-09-29 12:00:00', '2020-09-29 17:00:00'),
+    (3, 5, '2020-09-29 18:00:00', '2020-09-29 20:00:00'),
+    (4, 5, '2020-09-30 18:00:00', '2020-09-30 20:00:00'),
+    (5, 4, '2020-09-27 16:00:00', '2020-09-27 20:00:00');
 
 --
 -- Data for table `working_time`
@@ -250,5 +258,8 @@ INSERT INTO `service` VALUES
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
-    (4, 2);
+    (4, 2),
+    (5, 2),
+    (5, 3),
+    (5, 4);
 

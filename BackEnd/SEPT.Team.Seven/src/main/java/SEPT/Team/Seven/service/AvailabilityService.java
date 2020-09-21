@@ -31,9 +31,6 @@ public class AvailabilityService {
 			return Optional.empty();
 		}
 		
-		System.out.println(startTime);
-		System.out.println(endTime);
-		
 		if (employeeRepository.findById(employeeId).isPresent()) {
 			
 			List<Availability> employeesAvailabilities = availabilityRepository.findAllByEmployeeId(employeeId);
