@@ -74,7 +74,7 @@ export class AddService extends Component {
       serviceName: this.state.selected,
     };
 
-    this.props.onAddService(formData, this.props.token);
+    this.props.onAddService(formData, this.props.token, this.props.history);
   };
 
   // Runs when new service is selected
@@ -160,8 +160,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddService: (formData, token) =>
-      dispatch(actions.addService(formData, token)),
+    onAddService: (formData, token, history) =>
+      dispatch(actions.addService(formData, token, history)),
   };
 };
 

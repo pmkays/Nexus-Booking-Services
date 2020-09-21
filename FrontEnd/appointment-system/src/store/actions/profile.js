@@ -323,7 +323,7 @@ export const addAvailabilitiesFail = (error) => {
   };
 };
 
-export const addAvailabilities = (startTime, endTime, token) => {
+export const addAvailabilities = (startTime, endTime, token, history) => {
   return (dispatch) => {
     let decodedJwt = jwtDecode(token);
 
@@ -348,6 +348,9 @@ export const addAvailabilities = (startTime, endTime, token) => {
       .then((response) => {
         console.log(response);
         dispatch(addAvailabilitiesSuccess(response.data));
+      })
+      .then(() => {
+        history.push("/");
       })
       .catch((error) => {
         console.log(error.response);

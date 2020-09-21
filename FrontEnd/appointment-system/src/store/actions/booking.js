@@ -22,7 +22,7 @@ export const addBookingFail = (error) => {
   };
 };
 
-export const addBooking = (formData, token) => {
+export const addBooking = (formData, token, history) => {
   return (dispatch) => {
     dispatch(addBookingStart);
 
@@ -52,6 +52,9 @@ export const addBooking = (formData, token) => {
       .then((response) => {
         console.log(response);
         dispatch(addBookingSuccess(token));
+      })
+      .then(() => {
+        history.push("/");
       })
       .catch((error) => {
         dispatch(addBookingFail("Error adding Booking."));

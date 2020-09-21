@@ -165,7 +165,7 @@ export class Booking extends Component {
       endTime: newEnd,
     };
 
-    this.props.onAddBooking(formData, this.props.token);
+    this.props.onAddBooking(formData, this.props.token, this.props.history);
   };
 
   render() {
@@ -317,8 +317,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddBooking: (formData, token) =>
-      dispatch(actions.addBooking(formData, token)),
+    onAddBooking: (formData, token, history) =>
+      dispatch(actions.addBooking(formData, token, history)),
   };
 };
 
