@@ -22,44 +22,27 @@ export class Booking extends Component {
     dates: null,
   };
 
-  componentDidMount() {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + this.props.token,
-      },
-    };
-
-    this.setState({ ...this.state, loading: true });
-
-    axios
-      .get("http://localhost:8080/api/services/", config)
-      .then((response) => {
-        this.setState({
-          ...this.state,
-          services: response.data._embedded.services,
-          loading: false,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          ...this.state,
-          error: "Error retrieving the services.",
-          loading: false,
-        });
-      });
-  }
-
   // Runs when new date is selected
   updateDateHandler = (event) => {
     event.preventDefault();
     if (event.target.value === "Choose Date") {
-      this.setState({ ...this.props.state, bookingDate: null });
+      this.setState({
+        ...this.props.state,
+        bookingDate: null,
+        service: null,
+        employeeId: null,
+        employees: null,
+      });
     } else {
-      this.setState({ ...this.props.state, bookingDate: event.target.value });
+      this.setState({
+        ...this.props.state,
+        bookingDate: event.target.value,
+        service: null,
+        employeeId: null,
+        employees: null,
+      });
     }
-  };
 
-  updateDateHandler2 = (event) => {
     // update dropdown box for services
     const config = {
       headers: {
@@ -69,18 +52,14 @@ export class Booking extends Component {
     const url = "http://localhost:8080/api/service/findAllByDate";
 
     let formData = {
-      startTime: `${this.state.bookingDate}T00:00:00`,
+      startTime: `${event.target.value}T00:00:00`,
     };
 
-    console.log("sHIIIIIIIIIIIIIIIIIIIT " + formData.startTime);
+    console.log("Start time: " + formData.startTime);
 
     axios
       .post(url, formData, config)
       .then((response) => {
-        console.log(response.data[0].name);
-        console.log("yeet1");
-        console.log(response.data);
-        console.log("yeet");
         this.setState({
           ...this.state,
           services: response.data,
@@ -90,12 +69,12 @@ export class Booking extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving the services.",
+          error:
+            "Error retrieving the services. Possibly no services available on this date.",
+          services: [],
           loading: false,
         });
       });
-
-    // console.log(" SERVICESSSSSS ============== " + this.state.services);
   };
 
   // Runs when new service is selected
@@ -113,22 +92,33 @@ export class Booking extends Component {
         Authorization: "Bearer " + this.props.token,
       },
     };
-    const url =
-      "http://localhost:8080/api/services/" + event.target.value + "/employees";
+    const url = "http://localhost:8080/api/employee/services/findAllByDate";
     console.log(url);
+
+    let formData = {
+      startTime: `${this.state.bookingDate}T00:00:00`,
+      serviceId: event.target.value,
+    };
+
+    console.log("FOOOOOOORM");
+    console.log(formData.startTime);
+    console.log(formData.serviceId);
+
     axios
-      .get(url, config)
+      .post(url, formData, config)
       .then((response) => {
         this.setState({
           ...this.state,
-          employees: response.data._embedded.employees,
+          employees: response.data,
           loading: false,
         });
       })
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving the employees.",
+          error:
+            "Error retrieving the employees. Possibly no employees with this service available on this date.",
+          employees: [],
           loading: false,
         });
       });
@@ -179,8 +169,6 @@ export class Booking extends Component {
   };
 
   render() {
-    console.log(this.state.time.format("YYYY-MM-DD"));
-
     const populateDates = () => {
       const dates = ["Choose Date"];
       for (let i = 0; i <= 7; i++) {
@@ -219,7 +207,6 @@ export class Booking extends Component {
 
     if (this.state.services !== null) {
       services = this.state.services.map((service) => {
-        console.log(service.id);
         return <option value={service.id}>{service.name}</option>;
       });
     }
@@ -314,11 +301,7 @@ export class Booking extends Component {
       <div>
         {authRedirect}
         {form}
-
         {errorMessage}
-        <Button clicked={this.updateDateHandler2} classes="btn btn-primary">
-          Render
-        </Button>
       </div>
     );
   }
