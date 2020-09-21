@@ -278,7 +278,7 @@ export class Booking extends Component {
               }
               classes="btn btn-primary"
             >
-              Add Service
+              Add Booking
             </Button>
           </div>
         </form>
