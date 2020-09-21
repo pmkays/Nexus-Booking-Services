@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.Service;
+import SEPT.Team.Seven.model.DTO.BookingDateAndServiceDTO;
 import SEPT.Team.Seven.model.DTO.BookingDateDTO;
 import SEPT.Team.Seven.model.DTO.ServiceDTO;
 import SEPT.Team.Seven.service.EmployeeService;
@@ -45,6 +46,12 @@ public class EmployeeController {
 	@PostMapping("/findAllByDate")
 	public List<Employee> findEmployeesByDate(@RequestBody BookingDateDTO bookingDateDTO) {
 		return employeeService.findEmployeeByDate(bookingDateDTO.getStartTime());
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PostMapping("/services/findAllByDate")
+	public List<Employee> findEmployeesByServiceAndDate(@RequestBody BookingDateAndServiceDTO bookingDateAndServiceDTO) {
+	    return employeeService.findEmployeesByServiceAndDate(bookingDateAndServiceDTO.getServiceId(), bookingDateAndServiceDTO.getStartTime());
 	}
 	
 }
