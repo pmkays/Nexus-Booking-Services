@@ -33,16 +33,18 @@
 
 # Milestone 2 Submission
 ## Documentation
-* For milestone 2, all associated documentation is on google drive in the Milestone_2 folder and NOT in this repo's docs folder. It can be accessed here: https://drive.google.com/drive/folders/1Rojb2B0WnBYiYUAhRXHf73XZkf2ad12s?usp=sharing
+* For milestone 2, all associated documentation (sprint artifacts, tests, etc...) is on google drive in the Milestone_2 folder and NOT in this repo's docs folder (as discussed in class). It can be accessed here: https://drive.google.com/drive/folders/1Rojb2B0WnBYiYUAhRXHf73XZkf2ad12s?usp=sharing
 * For general documentation that was also used in Milestone 1, e.g. diagrams, API documentation, please check the root google drive folder here: https://drive.google.com/drive/folders/1cklphZt4S_oX1kbOpaKISPzBxNlitVgx?usp=sharing 
 * Test coverage spreadsheet is also on google drive, but to see the coverage bars, please download and open the document in Microsoft Excel rather than google sheets. 
 * Final state of the Trello board before submission can be found here (no assignees): https://trello.com/b/xMW6yWIs
   
 
 ## Circle CI, Docker, AWS deployment
-* As suggested by Homy in prior announcements, the private repo where you can see our CI/CD in action is here: 
+* As suggested by Homy in prior announcements, the private repo where you can see our CI/CD in action is here: https://github.com/davidkevork/rmit-setp
 * This has been necessary due to the Circle CI credits running out issue.  
-* Screenshots of the build working can be found directly in this document here: 
+* Screenshots and documentation of the build working can be found directly in this document here: https://docs.google.com/document/d/1bX2ZMHe_n6VK1sY2uvMSb5v0MnhYCdk68FIbaxzzrMs/edit?usp=sharing
+* This document can be found within our Milestone_2 google drive folder.
+* To access the high-resolution screenshots, please see the files in the Deployment Screenshots folder here: https://drive.google.com/drive/u/1/folders/1Mj3nUEDXmNxyCKlM-FPsBveclqwadxCJ 
    
 
 ## Release notes  (2.0.0)
@@ -62,6 +64,7 @@ Major functionality implemented includes:
 * Implementation of a page for employees to add their availabilities. 
 * Implementation of booking capabilities. 
 * Implementation of styled front-end pages. 
+* Implementation of a services page for admins to add to employees.
 
 
 
