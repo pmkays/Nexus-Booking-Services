@@ -25,7 +25,7 @@ export class Employees extends Component {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get("http://localhost:8080/api/employees/", config)
+      .get("http://3.235.248.135:8080/api/employees/", config)
       .then((response) => {
         this.setState({
           ...this.state,

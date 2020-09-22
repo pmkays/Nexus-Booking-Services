@@ -25,21 +25,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/signin")
     public String login(@RequestBody LoginDto loginDto) {
        return userService.signin(loginDto.getUsername(), loginDto.getPassword()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Username or password is incorrect."));
     }
     
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/signup")
     public User signup(@RequestBody LoginDto loginDto) {
        return userService.signup(loginDto.getUsername(), loginDto.getPassword(), loginDto.getType()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error processing registration."));
     }
     
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/accountno")
     public Integer getUserAccountNo(@RequestBody LoginDto loginDto) {
     	
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     // Test method for testing authority
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<User> getAllUsers() {

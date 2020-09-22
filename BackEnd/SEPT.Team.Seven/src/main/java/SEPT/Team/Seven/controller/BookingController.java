@@ -24,21 +24,21 @@ public class BookingController {
 	@Autowired
 	private BookingService bookingService;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/customer/{id}")
 	public List<Booking> getBookingsForCustomer(@PathVariable("id") int id) {
 		List<Booking> bookings = bookingService.getBookingsForCustomer(id);
 		return bookings;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/employee/{id}")
 	public List<Booking> getBookingsForEmployee(@PathVariable("id") int id) {
 		List<Booking> bookings = bookingService.getBookingsForEmployee(id);
 		return bookings;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
     public Booking addBooking(@RequestBody BookingDto bookingDto) {
 		System.out.println("yeet");

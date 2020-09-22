@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import SEPT.Team.Seven.model.WorkingTime;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface WorkingTimeRepository extends JpaRepository<WorkingTime, Integer>{
 
 	Optional<WorkingTime> findByEmployeeId(int employeeId);

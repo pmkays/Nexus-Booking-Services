@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import SEPT.Team.Seven.model.Admin;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface AdminRepository extends JpaRepository<Admin, Integer>{
 
 }

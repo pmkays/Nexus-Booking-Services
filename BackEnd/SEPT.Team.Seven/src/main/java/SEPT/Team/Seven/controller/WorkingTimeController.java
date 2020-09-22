@@ -24,14 +24,14 @@ public class WorkingTimeController {
 	@Autowired
 	private WorkingTimeService workingTimeService;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/employee/{id}")
 	public List<WorkingTime> getWorkingTimesForEmployee(@PathVariable("id") int id) {
 		List<WorkingTime> workingTimes = workingTimeService.getWorkingTimesForEmployee(id);
 		return workingTimes;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
     public WorkingTime addWorkingTime(@RequestBody TimeDto timeDto) {
        return workingTimeService.addWorkingTime(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->

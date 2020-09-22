@@ -20,7 +20,7 @@ public class ServiceController {
 	@Autowired
 	private ServiceService serviceService;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/findAllByDate")
 	public List<Service> findServiceByDate(@RequestBody BookingDateDTO bookingDateDTO) {
 		return serviceService.findServiceByDate(bookingDateDTO.getStartTime());

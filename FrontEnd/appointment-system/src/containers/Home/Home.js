@@ -44,7 +44,7 @@ const Home = (props) => {
             <img
               className={classes.Image}
               src={image}
-              alt="Image of desktop pc"
+              alt="desktop pc"
             />
           </div>
         </div>

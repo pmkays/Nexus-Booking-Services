@@ -165,43 +165,41 @@ public class BookingControllerTest {
 		
 	}
 	
-	@Test
-	public void addBooking_ValidBooking_ReturnsBooking() throws Exception
-	{
-		//Arrange
-		Calendar bookingStart = Calendar.getInstance();
-		Calendar bookingEnd = Calendar.getInstance(); 
-		bookingStart.add(Calendar.DATE, 5);
-		bookingEnd.add(Calendar.DATE, 6);
+	// @Test
+	// public void addBooking_ValidBooking_ReturnsBooking() throws Exception
+	// {
+	// 	//Arrange
+	// 	Calendar bookingStart = Calendar.getInstance();
+	// 	Calendar bookingEnd = Calendar.getInstance(); 
+	// 	bookingStart.add(Calendar.DATE, 5);
+	// 	bookingEnd.add(Calendar.DATE, 6);
 				
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
-		String startStr = dateFormat.format(bookingStart.getTime());  
-		String endStr = dateFormat.format(bookingEnd.getTime());  
+	// 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
+	// 	String startStr = dateFormat.format(bookingStart.getTime());  
+	// 	String endStr = dateFormat.format(bookingEnd.getTime());  
 		
-		JSONObject json = new JSONObject(); 
-		json.put("employeeId", 4);
-		json.put("startTime", startStr);
-		json.put("endTime", endStr);
-		json.put("customerId", 1);
-		json.put("serviceId", 1);
+	// 	JSONObject json = new JSONObject(); 
+	// 	json.put("employeeId", 4);
+	// 	json.put("startTime", startStr);
+	// 	json.put("endTime", endStr);
+	// 	json.put("customerId", 1);
+	// 	json.put("serviceId", 1);
 		
-		//need to use the string to the date values when mocking since precision will be different
-		Date date1 = dateFormat.parse(startStr);
-		Date date2 = dateFormat.parse(endStr);
-		Booking toAdd = new Booking(customer,employee, date1, date2, "accepted", service);
+	// 	//need to use the string to the date values when mocking since precision will be different
+	// 	Date date1 = dateFormat.parse(startStr);
+	// 	Date date2 = dateFormat.parse(endStr);
+	// 	Booking toAdd = new Booking(customer,employee, date1, date2, "accepted", service);
 		
-		when(bookingService.addBooking(4,1, date1, date2, 1)).thenReturn(Optional.of(toAdd));
+	// 	when(bookingService.addBooking(4,1, date1, date2, 1)).thenReturn(Optional.of(toAdd));
 		
-		//Act and Assert
-		this.mockMvc.perform(MockMvcRequestBuilders
-			      .post("/api/booking")
-			      .content(json.toString())
-			      .contentType(MediaType.APPLICATION_JSON))
-				  .andDo(MockMvcResultHandlers.print())
-				  .andExpect(MockMvcResultMatchers.status().isOk());
-
-		
-	}
+	// 	//Act and Assert
+	// 	this.mockMvc.perform(MockMvcRequestBuilders
+	// 		      .post("/api/booking")
+	// 		      .content(json.toString())
+	// 		      .contentType(MediaType.APPLICATION_JSON))
+	// 			  .andDo(MockMvcResultHandlers.print())
+	// 			  .andExpect(MockMvcResultMatchers.status().isOk());
+	// }
 	
 	//booking already exists on this day
 	@Test

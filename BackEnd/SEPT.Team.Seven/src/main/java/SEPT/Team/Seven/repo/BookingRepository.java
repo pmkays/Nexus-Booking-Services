@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import SEPT.Team.Seven.model.Booking;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public interface BookingRepository extends JpaRepository<Booking, Integer>{
 
 	List<Booking> findAllByCustomerId(int customerId);

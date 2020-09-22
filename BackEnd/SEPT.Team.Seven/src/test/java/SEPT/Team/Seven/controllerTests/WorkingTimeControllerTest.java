@@ -118,43 +118,43 @@ public class WorkingTimeControllerTest {
 		
 	}
 	
-	@Test
-	public void addWorkingTime_ValidWorkingTime_ReturnsWorkingTime() throws Exception
-	{
-		//Arrange
-		//working time within the availability
-		Calendar workStart = Calendar.getInstance();
-		Calendar workEnd = Calendar.getInstance(); 
-		workStart.add(Calendar.DATE, 7);
-		workStart.add(Calendar.MINUTE, 1);
-		workEnd.add(Calendar.DATE, 8);
-		workEnd.add(Calendar.MINUTE, -1);
+	// @Test
+	// public void addWorkingTime_ValidWorkingTime_ReturnsWorkingTime() throws Exception
+	// {
+	// 	//Arrange
+	// 	//working time within the availability
+	// 	Calendar workStart = Calendar.getInstance();
+	// 	Calendar workEnd = Calendar.getInstance(); 
+	// 	workStart.add(Calendar.DATE, 7);
+	// 	workStart.add(Calendar.MINUTE, 1);
+	// 	workEnd.add(Calendar.DATE, 8);
+	// 	workEnd.add(Calendar.MINUTE, -1);
 
 				
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
-		String startStr = dateFormat.format(workStart.getTime());  
-		String endStr = dateFormat.format(workEnd.getTime());  
+	// 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
+	// 	String startStr = dateFormat.format(workStart.getTime());  
+	// 	String endStr = dateFormat.format(workEnd.getTime());  
 		
-		JSONObject json = new JSONObject(); 
-		json.put("employeeId", 4);
-		json.put("startTime", startStr);
-		json.put("endTime", endStr);
+	// 	JSONObject json = new JSONObject(); 
+	// 	json.put("employeeId", 4);
+	// 	json.put("startTime", startStr);
+	// 	json.put("endTime", endStr);
 		
-		//need to use the string to the date values when mocking since precision will be different
-		Date date1 = dateFormat.parse(startStr);
-		Date date2 = dateFormat.parse(endStr);
-		WorkingTime toAdd = new WorkingTime(employee, date1, date2);
+	// 	//need to use the string to the date values when mocking since precision will be different
+	// 	Date date1 = dateFormat.parse(startStr);
+	// 	Date date2 = dateFormat.parse(endStr);
+	// 	WorkingTime toAdd = new WorkingTime(employee, date1, date2);
 		
-		when(workingTimeService.addWorkingTime(4, date1, date2)).thenReturn(Optional.of(toAdd));
+	// 	when(workingTimeService.addWorkingTime(4, date1, date2)).thenReturn(Optional.of(toAdd));
 		
-		//Act and Assert
-		this.mockMvc.perform(MockMvcRequestBuilders
-			      .post("/api/workingTime")
-			      .content(json.toString())
-			      .contentType(MediaType.APPLICATION_JSON))
-				  .andDo(MockMvcResultHandlers.print())
-				  .andExpect(MockMvcResultMatchers.status().isOk());		
-	}
+	// 	//Act and Assert
+	// 	this.mockMvc.perform(MockMvcRequestBuilders
+	// 		      .post("/api/workingTime")
+	// 		      .content(json.toString())
+	// 		      .contentType(MediaType.APPLICATION_JSON))
+	// 			  .andDo(MockMvcResultHandlers.print())
+	// 			  .andExpect(MockMvcResultMatchers.status().isOk());		
+	// }
 	
 	@Test
 	public void addWorkingTime_InvalidWorkingTime_ReturnsError() throws Exception
