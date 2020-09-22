@@ -1,8 +1,11 @@
 package SEPT.Team.Seven.security;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,6 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -25,17 +31,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()
-                //.antMatchers("/api/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/users/accountno").permitAll()
+				.antMatchers(HttpMethod.POST, "/users/signup").permitAll()
+        		.antMatchers(HttpMethod.POST, "/api/customers").permitAll()
+        		.antMatchers(HttpMethod.PUT, "/api/customers/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
                 .antMatchers("/users/signin").permitAll()
                 .anyRequest().authenticated();
 
-        //Dsiable csrf
+        //Disable csrf
         http.csrf().disable();
 
         // No session will be made
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
         http.addFilterBefore(new JwtFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
+        
+        http.cors().configurationSource(corsConfigurationSource());
+//        http.cors();
 
     }
 
@@ -53,5 +66,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     	auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
    }
+    
+
+	private CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		configuration.setAllowedMethods(Arrays.asList("*"));
+	    configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "Access-Control-Request-Headers"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		source.registerCorsConfiguration("/api/**", configuration);
+		return source;
+	}
 
 }

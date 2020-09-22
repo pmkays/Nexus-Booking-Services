@@ -1,0 +1,60 @@
+.Cta {
+  padding-left: 9.5%;
+}
+
+/* .Center {
+   padding-top: 10%;
+} */
+
+.Content {
+  margin-top: 15vh;
+  margin-bottom: 10vh;
+}
+
+.CtaBig {
+  padding-top: 25%;
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.CtaSmall {
+  font-size: 1.5rem;
+}
+
+.Image {
+  padding-top: 8%;
+  width: 35vw;
+}
+
+.Button {
+  margin-top: 3%;
+  width: 50%;
+  height: 8%;
+  color: white;
+  background-color: #45cdd6;
+  font-family: 'Roboto';
+  font-weight: bold;
+  border-style: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.Stats {
+  font-family: 'Roboto';
+  font-weight: bold;
+  font-size: 2rem;
+  color: grey;
+}
+
+.StatsTag {
+  font-family: 'Roboto';
+  color: grey;
+}
+
+@media (max-width: 768px) {
+  .Image {
+    padding-top: 8%;
+    margin-bottom: 10%;
+    width: 50vw;
+  }
+}
