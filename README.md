@@ -19,7 +19,7 @@
 ### Final statuses of Trello Board before submissions (assignees are not been copied; only columns, cards and labels copied)
 
 * Milestone 1 (Sprint 0) Submission: https://trello.com/b/aKRzhu38
-* Milestone 2 (Sprint 1 & 2) Submission: https://trello.com/b/1HBdyrrz
+* Milestone 2 (Sprint 1 & 2) Submission: https://trello.com/b/xMW6yWIs
   
 ***  
 
@@ -36,7 +36,7 @@
 * For milestone 2, all associated documentation is on google drive in the Milestone_2 folder and NOT in this repo's docs folder. It can be accessed here: https://drive.google.com/drive/folders/1Rojb2B0WnBYiYUAhRXHf73XZkf2ad12s?usp=sharing
 * For general documentation that was also used in Milestone 1, e.g. diagrams, API documentation, please check the root google drive folder here: https://drive.google.com/drive/folders/1cklphZt4S_oX1kbOpaKISPzBxNlitVgx?usp=sharing 
 * Test coverage spreadsheet is also on google drive, but to see the coverage bars, please download and open the document in Microsoft Excel rather than google sheets. 
-* Final state of the Trello board before submission can be found here (no assignees): https://trello.com/b/1HBdyrrz
+* Final state of the Trello board before submission can be found here (no assignees): https://trello.com/b/xMW6yWIs
   
 
 ## Circle CI, Docker, AWS deployment
