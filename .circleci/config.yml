@@ -49,6 +49,9 @@ jobs:
           command: |
             eval $(aws ecr get-login --region us-east-1 --no-include-email)
             docker push 934111436846.dkr.ecr.us-east-1.amazonaws.com/sept-team-seven:latest
+      - run:
+          name: ECS update
+          command: aws ecs update-service --cluster sept-team-seven --service sept-team-seven --force-new-deployment
   test_backend:
     working_directory: ~/BackEnd/SEPT.Team.Seven
     docker:

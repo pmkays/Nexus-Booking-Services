@@ -23,7 +23,7 @@ class WorkingTimes extends Component {
         Authorization: `Bearer ${this.props.token}`,
       },
     };
-    const employees = await axios.get("http://3.208.71.179:8080/api/employees/", config);
+    const employees = await axios.get("http://3.235.248.135:8080/api/employees/", config);
     this.setState({
       ...this.state,
       employees: [{id:-1,firstName:'Select a',lastName:' employee'}, ...employees.data._embedded.employees],
@@ -41,7 +41,7 @@ class WorkingTimes extends Component {
           Authorization: `Bearer ${this.props.token}`,
         },
       };
-      const availabilities = await axios.get("http://3.208.71.179:8080/api/availability/employee/"+e.target.value, config);
+      const availabilities = await axios.get("http://3.235.248.135:8080/api/availability/employee/"+e.target.value, config);
       this.setState({
         employeeId: e.target.value,
         availabilities: availabilities,
