@@ -28,27 +28,27 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/next7DaysAvai/{id}")
 	public List<Availability> getNext7DaysAvailabilitiesById(@PathVariable("id") int id) {
 		List<Availability> availabilities = employeeService.getNext7DaysAvailabilitiesById(id);
 		return availabilities;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/services")
 	public Service addServiceById(@RequestBody ServiceDTO serviceDTO) {
 	    return employeeService.addServiceByName(serviceDTO.getEmployeeId(), serviceDTO.getServiceName()).orElseThrow(()->
 	    new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding service for employee."));
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/findAllByDate")
 	public List<Employee> findEmployeesByDate(@RequestBody BookingDateDTO bookingDateDTO) {
 		return employeeService.findEmployeeByDate(bookingDateDTO.getStartTime());
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/services/findAllByDate")
 	public List<Employee> findEmployeesByServiceAndDate(@RequestBody BookingDateAndServiceDTO bookingDateAndServiceDTO) {
 	    return employeeService.findEmployeesByServiceAndDate(bookingDateAndServiceDTO.getServiceId(), bookingDateAndServiceDTO.getStartTime());

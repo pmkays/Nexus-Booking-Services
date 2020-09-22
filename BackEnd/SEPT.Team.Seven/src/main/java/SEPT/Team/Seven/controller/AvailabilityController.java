@@ -24,14 +24,14 @@ public class AvailabilityController {
 	@Autowired
 	private AvailabilityService availabilityService;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/employee/{id}")
 	public List<Availability> getAvailabilitiesForEmployee(@PathVariable("id") int id) {
 		List<Availability> availabilities = availabilityService.getAvailabilitiesForEmployee(id);
 		return availabilities;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
     public Availability addAvailability(@RequestBody TimeDto timeDto) {
        return availabilityService.addAvailability(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->

@@ -31,6 +31,6 @@ describe("<NavigationItems/>", () => {
           Home
         </NavigationItem>
       )
-    ).toEqual(true);
+    ).toEqual(false);
   });
 });

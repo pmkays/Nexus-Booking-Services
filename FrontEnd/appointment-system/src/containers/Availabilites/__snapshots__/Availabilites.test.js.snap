@@ -1,5 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Availabilites/> should render availabilities page 1`] = `undefined`;
-
-exports[`<Availabilites/> should render contact us page 1`] = `ShallowWrapper {}`;
+exports[`<Availabilites/> should render availabilities page 1`] = `ShallowWrapper {}`;

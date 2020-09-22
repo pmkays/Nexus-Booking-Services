@@ -1,7 +1,5 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
-import { addProfileSuccess } from "./profile";
 
 export const updateEmployeeId = (employeeId) => {
   return {
@@ -53,7 +51,7 @@ export const addService = (formData, token, history) => {
     };
 
     axios
-      .post("http://localhost:8080/api/employee/services", serviceData, config)
+      .post("http://3.208.71.179:8080/api/employee/services", serviceData, config)
       .then((response) => {
         console.log(response);
         dispatch(addServiceSuccess(token));

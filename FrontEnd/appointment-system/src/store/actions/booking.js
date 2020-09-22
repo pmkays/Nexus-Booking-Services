@@ -48,7 +48,7 @@ export const addBooking = (formData, token, history) => {
     console.log("employeeid" + bookingData.employeeId);
 
     axios
-      .post("http://localhost:8080/api/booking", bookingData, config)
+      .post("http://3.208.71.179:8080/api/booking", bookingData, config)
       .then((response) => {
         console.log(response);
         dispatch(addBookingSuccess(token));

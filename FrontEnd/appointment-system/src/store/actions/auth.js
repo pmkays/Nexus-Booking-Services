@@ -56,7 +56,7 @@ export const auth = (username, password, isSignUp) => {
     let authCode = "";
 
     axios
-      .post("http://localhost:8080/users/signin", userDetails)
+      .post("http://3.208.71.179:8080/users/signin", userDetails)
       .then((response) => {
         authCode = response.data;
         let decodedJwt = jwtDecode(authCode);

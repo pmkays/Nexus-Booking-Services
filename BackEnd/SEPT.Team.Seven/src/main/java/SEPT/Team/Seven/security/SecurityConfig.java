@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		configuration.setAllowedOrigins(Arrays.asList("http://d2maztjzxux6f3.cloudfront.net"));
 		configuration.setAllowedMethods(Arrays.asList("*"));
 	    configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "Access-Control-Request-Headers"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

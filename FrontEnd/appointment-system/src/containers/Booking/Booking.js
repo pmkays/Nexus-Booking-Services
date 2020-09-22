@@ -49,7 +49,7 @@ export class Booking extends Component {
         Authorization: "Bearer " + this.props.token,
       },
     };
-    const url = "http://localhost:8080/api/service/findAllByDate";
+    const url = "http://3.208.71.179:8080/api/service/findAllByDate";
 
     let formData = {
       startTime: `${event.target.value}T00:00:00`,
@@ -92,7 +92,7 @@ export class Booking extends Component {
         Authorization: "Bearer " + this.props.token,
       },
     };
-    const url = "http://localhost:8080/api/employee/services/findAllByDate";
+    const url = "http://3.208.71.179:8080/api/employee/services/findAllByDate";
     console.log(url);
 
     let formData = {
