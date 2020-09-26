@@ -121,39 +121,39 @@ public class AvailabilityControllerTest {
 		
 	}
 	
-	// @Test
-	// public void addAvailability_ValidAvailability_ReturnsAvailability() throws Exception
-	// {
-	// 	//Arrange
-	// 	Calendar availStart = Calendar.getInstance();
-	// 	Calendar availEnd = Calendar.getInstance(); 
-	// 	availStart.add(Calendar.DATE, 1);
-	// 	availEnd.add(Calendar.DATE, 2);
+	@Test
+	 public void addAvailability_ValidAvailability_ReturnsAvailability() throws Exception
+	 {
+	 	//Arrange
+	 	Calendar availStart = Calendar.getInstance();
+	 	Calendar availEnd = Calendar.getInstance(); 
+	 	availStart.add(Calendar.DATE, 1);
+	 	availEnd.add(Calendar.DATE, 2);
 				
-	// 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
-	// 	String startStr = dateFormat.format(availStart.getTime());  
-	// 	String endStr = dateFormat.format(availEnd.getTime());  
+	 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
+	 	String startStr = dateFormat.format(availStart.getTime());  
+	 	String endStr = dateFormat.format(availEnd.getTime());  
 		
-	// 	JSONObject json = new JSONObject(); 
-	// 	json.put("employeeId", 4);
-	// 	json.put("startTime", startStr);
-	// 	json.put("endTime", endStr);
+	 	JSONObject json = new JSONObject(); 
+	 	json.put("employeeId", 4);
+	 	json.put("startTime", startStr);
+	 	json.put("endTime", endStr);
 		
-	// 	//need to use the string to the date values when mocking since precision will be different
-	// 	Date date1 = dateFormat.parse(startStr);
-	// 	Date date2 = dateFormat.parse(endStr);
-	// 	Availability toAdd = new Availability(employee, date1, date2);
+	 	//need to use the string to the date values when mocking since precision will be different
+	 	Date date1 = dateFormat.parse(startStr);
+	 	Date date2 = dateFormat.parse(endStr);
+	 	Availability toAdd = new Availability(employee, date1, date2);
 		
-	// 	when(availabilityService.addAvailability(4, date1, date2)).thenReturn(Optional.of(toAdd));
+	 	when(availabilityService.addAvailability(4, date1, date2)).thenReturn(Optional.of(toAdd));
 		
-	// 	//Act and Assert
-	// 	this.mockMvc.perform(MockMvcRequestBuilders
-	// 		      .post("/api/availability")
-	// 		      .content(json.toString())
-	// 		      .contentType(MediaType.APPLICATION_JSON))
-	// 			  .andDo(MockMvcResultHandlers.print())
-	// 			  .andExpect(MockMvcResultMatchers.status().isOk());
-	// }
+	 	//Act and Assert
+	 	this.mockMvc.perform(MockMvcRequestBuilders
+	 		      .post("/api/availability")
+	 		      .content(json.toString())
+	 		      .contentType(MediaType.APPLICATION_JSON))
+	 			  .andDo(MockMvcResultHandlers.print())
+	 			  .andExpect(MockMvcResultMatchers.status().isOk());
+	 }
 	
 	//availability already exists on this day
 	@Test
