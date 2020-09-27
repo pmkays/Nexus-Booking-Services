@@ -128,7 +128,14 @@ jobs:
           name: test
           command: npm run test
 workflows:
+  test:
+    jobs:
+      - test_frontend
+      - test_backend
   build:
     jobs:
       - build_frontend
       - build_backend
+    branches:
+      only:
+        - master

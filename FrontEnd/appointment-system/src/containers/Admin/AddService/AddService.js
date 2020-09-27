@@ -26,7 +26,7 @@ export class AddService extends Component {
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get("http://3.235.248.135:8080/api/services/", config)
+      .get("http://54.144.245.48:8080/api/services/", config)
       .then((response) => {
         this.setState({
           ...this.state,
@@ -44,7 +44,7 @@ export class AddService extends Component {
 
     axios
       .get(
-        "http://3.235.248.135:8080/api/employees/" +
+        "http://54.144.245.48:8080/api/employees/" +
           this.props.employeeId +
           "/services",
         config

@@ -51,7 +51,7 @@ export const addService = (formData, token, history) => {
     };
 
     axios
-      .post("http://3.235.248.135:8080/api/employee/services", serviceData, config)
+      .post("http://54.144.245.48:8080/api/employee/services", serviceData, config)
       .then((response) => {
         console.log(response);
         dispatch(addServiceSuccess(token));
