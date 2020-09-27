@@ -427,12 +427,10 @@ export const addWorkingTimeFail = (error) => {
   };
 };
 
-export const addWorkingTime = (startTime, endTime, token) => {
+export const addWorkingTime = (startTime, endTime, employeeId, token) => {
   return (dispatch) => {
-    let decodedJwt = jwtDecode(token);
-
     const data = {
-      employeeId: decodedJwt.userId,
+      employeeId,
       startTime,
       endTime,
     };
