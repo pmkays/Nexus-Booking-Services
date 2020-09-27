@@ -136,6 +136,7 @@ workflows:
     jobs:
       - build_frontend
       - build_backend
-    branches:
-      only:
-        - master
+    filters:
+      branches:
+        only:
+          - master
