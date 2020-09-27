@@ -56,7 +56,7 @@ export const fetchProfile = (token) => {
     };
 
     axios
-      .get("http://3.235.248.135:8080/api/" + url + "/" + userId, config)
+      .get("http://54.144.245.48:8080/api/" + url + "/" + userId, config)
       .then((response) => {
         console.log(response);
         dispatch(fetchProfileSuccess(response.data));
@@ -117,7 +117,7 @@ export const editProfile = (formData, token, history) => {
     };
 
     axios
-      .put("http://3.235.248.135:8080/api/" + url + "/" + userId, formData, config)
+      .put("http://54.144.245.48:8080/api/" + url + "/" + userId, formData, config)
       .then((response) => {
         console.log(response);
         dispatch(editProfileSuccess(response.data));
@@ -173,7 +173,7 @@ export const addProfile = (formData, history, type, token) => {
     };
 
     axios
-      .post("http://3.235.248.135:8080/users/signup", userData)
+      .post("http://54.144.245.48:8080/users/signup", userData)
       .then((response) => {
         console.log(response);
         dispatch(fetchAccountNo(formData, history, type, token));
@@ -193,7 +193,7 @@ export const fetchAccountNo = (formData, history, type, token) => {
     };
 
     axios
-      .post("http://3.235.248.135:8080/users/accountno", profileData)
+      .post("http://54.144.245.48:8080/users/accountno", profileData)
       .then((response) => {
         console.log(response);
         let updatedProfileData = { ...formData, accountNo: response.data };
@@ -234,7 +234,7 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
 
     axios
       .put(
-        "http://3.235.248.135:8080/api/" + type + "/" + formData.accountNo,
+        "http://54.144.245.48:8080/api/" + type + "/" + formData.accountNo,
         profileData,
         config
       )
@@ -286,7 +286,7 @@ export const fetchAvailabilities = (token) => {
     };
 
     axios
-      .get("http://3.235.248.135:8080/api/availability/employee/" + userId, config)
+      .get("http://54.144.245.48:8080/api/availability/employee/" + userId, config)
       .then((response) => {
         console.log(response);
         dispatch(fetchAvailabilitiesSuccess(response.data));
@@ -342,7 +342,7 @@ export const addAvailabilities = (startTime, endTime, token, history) => {
     );
 
     axios
-      .post("http://3.235.248.135:8080/api/availability", data, config)
+      .post("http://54.144.245.48:8080/api/availability", data, config)
       .then((response) => {
         console.log(response);
         dispatch(addAvailabilitiesSuccess(response.data));
@@ -394,7 +394,7 @@ export const fetchWorkingTime = (startTime, endTime, token) => {
     };
 
     axios
-      .get("http://3.235.248.135:8080/api/workingTIme/employee/" + userId, config)
+      .get("http://54.144.245.48:8080/api/workingTIme/employee/" + userId, config)
       .then((response) => {
         console.log(response);
         dispatch(fetchWorkingTimeSuccess(response.data));
@@ -427,12 +427,10 @@ export const addWorkingTimeFail = (error) => {
   };
 };
 
-export const addWorkingTime = (startTime, endTime, token) => {
+export const addWorkingTime = (startTime, endTime, employeeId, token) => {
   return (dispatch) => {
-    let decodedJwt = jwtDecode(token);
-
     const data = {
-      employeeId: decodedJwt.userId,
+      employeeId,
       startTime,
       endTime,
     };
@@ -444,7 +442,7 @@ export const addWorkingTime = (startTime, endTime, token) => {
     };
 
     axios
-      .post("http://3.235.248.135:8080/api/workingTime", data, config)
+      .post("http://54.144.245.48:8080/api/workingTime", data, config)
       .then((response) => {
         console.log(response);
         dispatch(addWorkingTimeSuccess(response.data));

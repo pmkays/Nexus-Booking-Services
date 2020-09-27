@@ -23,7 +23,7 @@ class WorkingTimes extends Component {
         Authorization: `Bearer ${this.props.token}`,
       },
     };
-    const employees = await axios.get("http://3.235.248.135:8080/api/employees/", config);
+    const employees = await axios.get("http://54.144.245.48:8080/api/employees/", config);
     this.setState({
       ...this.state,
       employees: [{id:-1,firstName:'Select a',lastName:' employee'}, ...employees.data._embedded.employees],
@@ -36,15 +36,16 @@ class WorkingTimes extends Component {
     }
     const setEmployee = async (e) => {
       e.preventDefault();
+      const employeeId = e.target.value;
       const config = {
         headers: {
           Authorization: `Bearer ${this.props.token}`,
         },
       };
-      const availabilities = await axios.get("http://3.235.248.135:8080/api/availability/employee/"+e.target.value, config);
+      const availabilities = await axios.get("http://54.144.245.48:8080/api/availability/employee/"+e.target.value, config);
       this.setState({
-        employeeId: e.target.value,
-        availabilities: availabilities,
+        employeeId,
+        availabilities: availabilities.data,
       });
     }
     const setTime = (e) => {
@@ -77,13 +78,12 @@ class WorkingTimes extends Component {
       }
     }
     const listAvailabilities = () => {
-      return <ul>{this.state.availabilities.map((availability) => <li key={availability.id}>{availability.startTime} - {availability.endTime}</li>)}</ul>;
+      return <ul className="list-group">{this.state.availabilities.map((availability) => <li key={availability.id} className="list-group-item">{availability.startTime} - {availability.endTime}</li>)}</ul>;
     }
     const addWorkingTime = (e) => {
       e.preventDefault();
       const errors = [];
       const addWorkingTimesPromise = [];
-      console.log(this.state);
       if (this.state.startTime !== null && this.state.endTime !== null && this.state.employeeId !== -1) {
         if (parseInt(this.state.startTime, 10) > parseInt(this.state.endTime, 10)) {
           errors.push(`End Time for day ${this.state.time.format('dddd')} has to be before start time`);
@@ -100,12 +100,12 @@ class WorkingTimes extends Component {
         const baseTime = this.state.time.format('YYYY-MM-DD');
         const startTime = `${baseTime}T${startTimeText}:00:00`;
         const endTime = `${baseTime}T${endTimeText}:00:00`;
-        addWorkingTimesPromise.push(this.props.addWorkingTime(startTime, endTime, this.props.token));
+        addWorkingTimesPromise.push(this.props.addWorkingTime(startTime, endTime, this.state.employeeId, this.props.token));
         errors.push("Working time added successfully");
       } else {
         errors.push("Please select an employee, starting and finishing time.");
       }
-      this.setState({ error: errors });
+      this.setState({ error: errors, startTime: null, endTime: null });
       return Promise.all(addWorkingTimesPromise);
     }
     return (
@@ -120,15 +120,17 @@ class WorkingTimes extends Component {
           <div className="row">
             <div className="col-md">
               <p>Starting Time</p>
-              <select id="startTime" className="custom-select" onChange={setTime}>{shiftTimes()}</select>
+              <select id="startTime" className="custom-select" onChange={setTime} value={this.state.startTime || undefined}>{shiftTimes()}</select>
             </div>
             <div className="col-md">
               <p>Finishing Time</p>
-              <select id="endTime" className="custom-select" onChange={setTime}>{shiftTimes()}</select>
+              <select id="endTime" className="custom-select" onChange={setTime} value={this.state.endTime || undefined}>{shiftTimes()}</select>
             </div>
           </div>
+          <div className="row flex justify-content-center">
+            {listAvailabilities()}
+          </div>
         </div>
-        {listAvailabilities()}
         <div className="text-center">
           <button className="btn btn-primary" onClick={addWorkingTime}>Add</button>
         </div>
@@ -148,7 +150,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addWorkingTime: (startTime, endTime, token) => dispatch(actions.addWorkingTime(startTime, endTime, token)),
+    addWorkingTime: (startTime, endTime, employeeId, token) => dispatch(actions.addWorkingTime(startTime, endTime, employeeId, token)),
   };
 };
 

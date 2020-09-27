@@ -16,6 +16,7 @@ export const NavigationItems = (props) => {
         <NavigationItem link="/howitworks">HOW IT WORKS</NavigationItem>
         <NavigationItem link="/contact">CONTACT</NavigationItem>
         <NavigationItem link="/employees">EMPLOYEES</NavigationItem>
+        <NavigationItem link="workingtimes">WORKING TIMES</NavigationItem>
         <NavigationItem link="/profile">PROFILE</NavigationItem>
         <NavigationItem link="/logout">LOG OUT</NavigationItem>
       </ul>
