@@ -71,7 +71,7 @@ public class AvailabilityServiceTest {
 		Optional<Availability> result = service.addAvailability(4, start.getTime(), end.getTime());
 		
 		System.out.println("=======================================");
-		System.out.println(result.get());
+//		System.out.println(result.get());
 		System.out.println("=======================================");
 		
 		//Assert
