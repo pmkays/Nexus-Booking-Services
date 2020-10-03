@@ -40,6 +40,7 @@ CREATE TABLE `customer` (
   `email` varchar(45) DEFAULT NULL,
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -56,6 +57,7 @@ CREATE TABLE `employee` (
   `email` varchar(45) DEFAULT NULL,
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -105,6 +107,7 @@ DROP TABLE IF EXISTS `service`;
 CREATE TABLE `service` (
   `id` int(11) NOT NULL AUTO_INCREMENT, 
   `name` varchar(20) NOT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -177,17 +180,17 @@ CREATE TABLE `working_time` (
 --
 
 INSERT INTO `customer` VALUES
-    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road'),
-    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street'),
-    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court');
+    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road', 'imgurl'),
+    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street', 'imgurl'),
+    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court', 'imgurl');
     
 --
 -- Data for table `employee`
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way'),
-    (5,'asdsa','Dasdasdov','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way');
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'imgurl'),
+    (5,'asdsa','Dasdasdov','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'imgurl');
     
 --
 -- Data for table `admin`
@@ -251,10 +254,10 @@ INSERT INTO `working_time` VALUES
 --
 
 INSERT INTO `service` VALUES
-	(1, 'service1'),
-    (2, 'service2'),
-    (3, 'service3'),
-    (4, 'service4');
+	(1, 'service1', 'imgurl'),
+    (2, 'service2', 'imgurl'),
+    (3, 'service3', 'imgurl'),
+    (4, 'service4', 'imgurl');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),

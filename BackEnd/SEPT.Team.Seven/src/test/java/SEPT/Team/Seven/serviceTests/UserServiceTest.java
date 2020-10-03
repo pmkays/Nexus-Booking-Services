@@ -79,18 +79,18 @@ public class UserServiceTest
 		String pass  = "$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa";
 
 		customerRole = new Role("ROLE_CUSTOMER", "Customer role"); 
-		newCustomer = new Customer("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder");
+		newCustomer = new Customer("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder", "placeholder");
 		newCustomerUser = new User("testCustomer", pass, newCustomer,null,null,customerRole);
 		
-		existingCustomer = new Customer("Leslie", "Uzumaki", "leslie@hotmail.com", "1234567891", "some address");
+		existingCustomer = new Customer("Leslie", "Uzumaki", "leslie@hotmail.com", "1234567891", "some address", "fake img url");
 		existingCustomer.setId(1);
 		existingCustomerUser = new User("leslie1", pass, existingCustomer, null, null, customerRole);
 		
 		employeeRole = new Role("ROLE_EMPLOYEE", "Employee role"); 
-		newEmployee = new Employee("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder");
+		newEmployee = new Employee("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder", "placeholder");
 		newEmployeeUser = new User("testEmployee", pass, null,newEmployee,null,employeeRole);
 		
-		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address");
+		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url");
 		existingEmployee.setId(4);
 		existingEmployeeUser = new User("employee1", pass, null, existingEmployee, null, employeeRole);
 		

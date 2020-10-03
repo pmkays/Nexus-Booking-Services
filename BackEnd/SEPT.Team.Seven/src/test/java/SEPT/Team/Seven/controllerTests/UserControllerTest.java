@@ -121,7 +121,7 @@ public class UserControllerTest {
 		json.put("type", "customers");
 		
 		Role role = new Role("ROLE_CUSTOMER", "Customer role.");
-		Customer customer = new Customer("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder");
+		Customer customer = new Customer("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder", "placeholder");
 		User user = new User("david", "$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa",customer,null,null,role);
 		
 		//Act and Assert

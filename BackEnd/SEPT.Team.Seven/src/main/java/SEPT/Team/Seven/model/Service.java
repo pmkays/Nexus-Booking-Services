@@ -29,10 +29,14 @@ public class Service {
 	@Column(name="name")
 	private String name;
 	
+	@Column(name="img")
+	private String img;
+	
 	public Service () {}
 	
-	public Service(String name) {
+	public Service(String name, String img) {
 		this.name = name;
+		this.img = img;
 	}
 	
 	public List<Employee> getEmployees() {
@@ -53,6 +57,14 @@ public class Service {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
+	public String getImg() {
+		return this.img;
 	}
 	
 }
