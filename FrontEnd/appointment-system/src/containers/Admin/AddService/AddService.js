@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import axios from "axios";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import axios from '../../../axios-sept';
 
-import * as actions from "../../../store/actions/actions";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Button from "../../../components/UI/Button/Button";
+import * as actions from '../../../store/actions/actions';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Button from '../../../components/UI/Button/Button';
 
 export class AddService extends Component {
   state = {
@@ -19,14 +19,14 @@ export class AddService extends Component {
   componentDidMount() {
     const config = {
       headers: {
-        Authorization: "Bearer " + this.props.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     };
 
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get("http://54.144.245.48:8080/api/services/", config)
+      .get('/api/services/', config)
       .then((response) => {
         this.setState({
           ...this.state,
@@ -37,18 +37,13 @@ export class AddService extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving the services.",
+          error: 'Error retrieving the services.',
           loading: false,
         });
       });
 
     axios
-      .get(
-        "http://54.144.245.48:8080/api/employees/" +
-          this.props.employeeId +
-          "/services",
-        config
-      )
+      .get('/api/employees/' + this.props.employeeId + '/services', config)
       .then((response) => {
         this.setState({
           ...this.state,
@@ -59,7 +54,7 @@ export class AddService extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving the employees services.",
+          error: 'Error retrieving the employees services.',
           loading: false,
         });
       });
@@ -80,7 +75,7 @@ export class AddService extends Component {
   // Runs when new service is selected
   updateSelectedHandler = (event) => {
     event.preventDefault();
-    if (event.target.value === "Choose Service") {
+    if (event.target.value === 'Choose Service') {
       this.setState({ ...this.props.state, selected: null });
     } else {
       this.setState({ ...this.props.state, selected: event.target.value });
@@ -110,14 +105,14 @@ export class AddService extends Component {
     } else {
       form = (
         <form onSubmit={this.addServiceHandler}>
-          <div className="form-group container">
-            <select id="dropdown" onChange={this.updateSelectedHandler}>
+          <div className='form-group container'>
+            <select id='dropdown' onChange={this.updateSelectedHandler}>
               <option>Choose Service</option>
               {services}
             </select>
           </div>
-          <div className="form-group container">
-            <Button disabled={!this.state.selected} classes="btn btn-primary">
+          <div className='form-group container'>
+            <Button disabled={!this.state.selected} classes='btn btn-primary'>
               Add Service
             </Button>
           </div>

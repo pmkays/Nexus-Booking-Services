@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import axios from '../../../axios-sept';
 
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Button from "../../../components/UI/Button/Button";
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Button from '../../../components/UI/Button/Button';
 
-import * as actions from "../../../store/actions/actions";
+import * as actions from '../../../store/actions/actions';
 
 export class Employees extends Component {
   state = {
@@ -18,14 +18,14 @@ export class Employees extends Component {
   componentDidMount() {
     const config = {
       headers: {
-        Authorization: "Bearer " + this.props.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     };
 
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get("http://54.144.245.48:8080/api/employees/", config)
+      .get('/api/employees/', config)
       .then((response) => {
         this.setState({
           ...this.state,
@@ -36,7 +36,7 @@ export class Employees extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving employees.",
+          error: 'Error retrieving employees.',
           loading: false,
         });
       });
@@ -44,7 +44,7 @@ export class Employees extends Component {
 
   addService = (employeeId) => {
     this.props.addService(employeeId);
-    this.props.history.push("/addservice");
+    this.props.history.push('/addservice');
   };
 
   render() {
@@ -63,7 +63,7 @@ export class Employees extends Component {
             <td>
               <Button
                 clicked={() => this.addService(employee.id)}
-                classes="btn btn-primary"
+                classes='btn btn-primary'
               >
                 Add Service(s)
               </Button>
@@ -82,15 +82,15 @@ export class Employees extends Component {
     }
 
     return (
-      <div className="container">
+      <div className='container'>
         <br />
         <h3>Employees</h3>
-        <Link className="btn btn-secondary btn-sm" to="/addemployee">
+        <Link className='btn btn-secondary btn-sm' to='/addemployee'>
           Add Employee
         </Link>
         <br />
         <br />
-        <table className="table">
+        <table className='table'>
           <thead>
             <tr>
               <th>ID</th>
