@@ -53,6 +53,10 @@ public class Employee extends Account {
 		services.add(service);
 	}
 	
+	public void deleteFromServices(Service service) {
+		services.remove(service);
+	}
+	
 	public void addToWorkingTime(WorkingTime time) {
 		workingTimes.add(time);
 	}
