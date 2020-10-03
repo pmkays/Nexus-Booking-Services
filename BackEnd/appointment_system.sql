@@ -180,17 +180,17 @@ CREATE TABLE `working_time` (
 --
 
 INSERT INTO `customer` VALUES
-    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road', 'imgurl'),
-    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street', 'imgurl'),
-    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court', 'imgurl');
+    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road', 'https://i.imgur.com/VXnG3tg.jpg'),
+    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street', 'https://i.imgur.com/t6EJkdF.jpg'),
+    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court', 'https://i.imgur.com/vmFc3lX.jpg');
     
 --
 -- Data for table `employee`
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'imgurl'),
-    (5,'asdsa','Dasdasdov','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'imgurl');
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg'),
+    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg');
     
 --
 -- Data for table `admin`
@@ -254,10 +254,10 @@ INSERT INTO `working_time` VALUES
 --
 
 INSERT INTO `service` VALUES
-	(1, 'service1', 'imgurl'),
-    (2, 'service2', 'imgurl'),
-    (3, 'service3', 'imgurl'),
-    (4, 'service4', 'imgurl');
+	(1, 'service1', 'https://i.imgur.com/z53yLmm.jpg'),
+    (2, 'service2', 'https://i.imgur.com/gzi5Nmu.jpg'),
+    (3, 'service3', 'https://i.imgur.com/NfYcrHt.jpg'),
+    (4, 'service4', 'https://i.imgur.com/eD7gQ7N.jpg');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
