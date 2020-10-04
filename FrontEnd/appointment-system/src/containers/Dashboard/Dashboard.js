@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/actions';
 import classes from './Dashboard.module.css';
-import userImage from './images/user.svg';
-import bookImage from './images/bookmark.svg';
-import gearImage from './images/gear.svg';
-import logoutImage from './images/logout.svg';
 import { NavLink } from 'react-router-dom';
+import { Animated } from 'react-animated-css';
 
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Availabilities from '../../containers/Availabilites/Availabilites';
@@ -35,19 +32,35 @@ export class Dashboard extends Component {
         content = <DashboardWelcome />;
         break;
       case 'booking':
-        content = <Booking />;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <Booking />
+          </Animated>
+        );
         break;
       case 'availabilities':
-        content = <Availabilities />;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <Availabilities />
+          </Animated>
+        );
         break;
       case 'login':
         content = <Login />;
         break;
       case 'profile':
-        content = <Profile />;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <Profile />
+          </Animated>
+        );
         break;
       case 'editprofile':
-        content = <EditProfile />;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <EditProfile />
+          </Animated>
+        );
         break;
       default:
         break;
@@ -87,45 +100,42 @@ export class Dashboard extends Component {
                 </div>
               </div>
               <div>
-                <NavLink to='/dashboard'>
-                  <img className={classes.Icon} src={userImage} alt='user' />
+                <NavLink
+                  activeClassName={classes.IconActive}
+                  className={classes.Icon}
+                  to='/dashboard'
+                >
+                  <i class='fas fa-user'></i>
                 </NavLink>
               </div>
               <br />
               <div>
-                <NavLink to='/bookings'>
-                  <img
-                    className={classes.Icon}
-                    src={bookImage}
-                    alt='bookings'
-                  />
+                <NavLink
+                  activeClassName={classes.IconActive}
+                  className={classes.Icon}
+                  to='/bookings'
+                >
+                  <i class='fas fa-book'></i>
                 </NavLink>
               </div>
               <br />
               <div>
-                <NavLink to='/profile'>
-                  <img
-                    className={classes.Icon}
-                    src={gearImage}
-                    alt='settings'
-                  />
+                <NavLink
+                  activeClassName={classes.IconActive}
+                  className={classes.Icon}
+                  to='/profile'
+                >
+                  <i class='fas fa-cog'></i>
                 </NavLink>
               </div>
               <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
               <div>
-                <NavLink to='/logout'>
-                  <img
-                    className={classes.Icon}
-                    src={logoutImage}
-                    alt='logout'
-                  />
+                <NavLink
+                  activeClassName={classes.IconActive}
+                  className={classes.Icon}
+                  to='/logout'
+                >
+                  <i class='fas fa-sign-out-alt'></i>
                 </NavLink>
               </div>
             </div>

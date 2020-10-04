@@ -90,7 +90,7 @@ export class DashboardWelcome extends Component {
       count = 0;
       upcomingBookings = this.state.bookings.map((booking, index) => {
         let card = null;
-        if (count != 5 && booking.status === 'complete') {
+        if (count != 5 && booking.status === 'pending') {
           card = (
             <Card
               key={index}
@@ -117,7 +117,7 @@ export class DashboardWelcome extends Component {
       profile = (
         <React.Fragment>
           <div className='row'>
-            <div className='col-sm-6'>
+            <div className='col col-sm-12 col-md-6'>
               <Animated animationIn='zoomIn' animationInDuration={400}>
                 <div className={classes.WelcomeBox + ' row'}>
                   <div className='col-sm-6'>
@@ -150,7 +150,7 @@ export class DashboardWelcome extends Component {
                 </div>
               </Animated>
             </div>
-            <div className='col-sm-6'>
+            <div className='col col-sm-12 col-md-6'>
               <Animated animationIn='zoomIn' animationInDuration={400}>
                 <div className={classes.PrevBookings + ' row'}>
                   <div className='col-sm-12'>

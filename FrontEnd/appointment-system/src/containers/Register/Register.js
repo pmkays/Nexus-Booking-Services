@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import * as actions from '../../store/actions/actions';
+import Layout from '../Layout/Layout';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
@@ -282,22 +283,24 @@ export class Register extends Component {
     }
 
     return (
-      <div>
-        {authRedirect}
-        <form onSubmit={this.addProfileHandler}>
-          <div className='form-group container'>
-            {form}
-            {errorMessage}
-            <Button
-              disabled={!this.state.isFormValid}
-              classes='btn btn-primary'
-            >
-              Submit
-            </Button>
-            {errorMsg}
-          </div>
-        </form>
-      </div>
+      <Layout>
+        <div>
+          {authRedirect}
+          <form onSubmit={this.addProfileHandler}>
+            <div className='form-group container'>
+              {form}
+              {errorMessage}
+              <Button
+                disabled={!this.state.isFormValid}
+                classes='btn btn-primary'
+              >
+                Submit
+              </Button>
+              {errorMsg}
+            </div>
+          </form>
+        </div>
+      </Layout>
     );
   }
 }

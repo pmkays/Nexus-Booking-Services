@@ -34,3 +34,14 @@
   transform: scale(1.1);
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .Card {
+    margin-top: 20px;
+    width: inherit;
+  }
+
+  .Image {
+    width: -webkit-fill-available;
+  }
+}
