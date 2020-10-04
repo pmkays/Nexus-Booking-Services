@@ -1,6 +1,6 @@
 .Dashboard {
-  width: 80vw;
-  height: 712px;
+  width: 85vw;
+  height: 85vh;
   margin: auto;
 
   background: #2e767a;
@@ -29,7 +29,7 @@
   background: #e3f2f3;
   border-radius: 25px;
   flex: 0 0 88%;
-  height: 650px;
+  height: 80vh;
 }
 
 .WelcomeBox {

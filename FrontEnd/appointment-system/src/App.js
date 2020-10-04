@@ -67,14 +67,24 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path='/login' component={Login} />
-          <Route path='/dashboard' component={Dashboard} />
+          <Route
+            path='/dashboard'
+            component={() => <Dashboard content='welcome' />}
+          />
           <Route path='/profile' component={Profile} />
           <Route path='/editProfile' component={EditProfile} />
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
-          <Route path='/bookings' component={Booking} />
+          <Route
+            path='/bookings'
+            component={() => <Dashboard content='booking' />}
+          />
+          <Route
+            path='/availabilities'
+            component={() => <Dashboard content='availabilities' />}
+          />
           <Route path='/' component={Home} />
         </Switch>
       );

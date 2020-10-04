@@ -11,8 +11,8 @@
 }
 
 .Image {
-  height: 15vh;
-  width: 20vh;
+  height: 20vh;
+  width: 25vh;
   object-fit: cover;
   border-radius: 15px;
 }

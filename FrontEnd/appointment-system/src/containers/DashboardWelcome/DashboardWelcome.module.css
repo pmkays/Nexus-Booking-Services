@@ -36,7 +36,8 @@
   background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%);
   border-radius: 15px;
   margin: 2% 2%;
-  height: 30vh;
+  height: 35vh;
+  padding: 5%;
 }
 
 .WelcomeBoxText {
@@ -63,7 +64,8 @@
   background-color: #ffffff;
   border-radius: 15px;
   margin: 2% 2%;
-  height: 30vh;
+  height: 35vh;
+  padding: 5%;
 }
 
 .PrevBookingsText {

@@ -2,115 +2,49 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/actions';
 import classes from './Dashboard.module.css';
-import welcomeImage from './images/welcome.svg';
 import userImage from './images/user.svg';
 import bookImage from './images/bookmark.svg';
 import gearImage from './images/gear.svg';
 import logoutImage from './images/logout.svg';
-import axios from '../../axios-sept';
 
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
+import Availabilities from '../../containers/Availabilites/Availabilites';
+import Booking from '../Booking/Booking';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import PreviousBooking from '../../components/UI/PreviousBooking/PreviousBooking';
-import Card from '../../components/UI/Card/Card';
 
 export class Dashboard extends Component {
   state = {
-    bookings: null,
+    content: null,
     error: null,
   };
 
   //As soon as this component loads it will attempt to grab the current profile
   componentDidMount() {
     this.props.onFetchProfile(this.props.token);
-    this.fetchBookings();
   }
 
-  fetchBookings() {
-    const config = {
-      headers: {
-        Authorization: 'Bearer ' + this.props.token,
-      },
-    };
+  contentToRender = () => {
+    let content = null;
 
-    const url = '/api/booking/customer/' + this.props.userId;
+    switch (this.props.content) {
+      case 'welcome':
+        content = <DashboardWelcome />;
+        break;
+      case 'booking':
+        content = <Booking />;
+        break;
+      case 'availabilities':
+        content = <Availabilities />;
+      default:
+        break;
+    }
 
-    axios
-      .get(url, config)
-      .then((response) => {
-        console.log(response.data);
-        this.setState({
-          ...this.state,
-          bookings: response.data,
-          loading: false,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          ...this.state,
-          error:
-            'Error retrieving the services. Possibly no services available on this date.',
-          services: [],
-          loading: false,
-        });
-      });
-  }
+    return content;
+  };
 
   render() {
     let profile = <Spinner />;
-
-    let previousBookings = null;
-    let count = 0;
-    if (this.state.bookings) {
-      previousBookings = this.state.bookings.map((booking, index) => {
-        let card = null;
-        if (count != 3 && booking.status === 'complete') {
-          card = (
-            <PreviousBooking
-              key={index}
-              serviceName={booking.service.name}
-              employeeName={
-                booking.employee.firstName + ' ' + booking.employee.lastName
-              }
-              startTime={booking.startTime}
-            />
-          );
-          count++;
-        }
-        return card;
-      });
-    }
-
-    if (count === 0) {
-      previousBookings = 'No previous bookings.';
-    }
-
-    let upcomingBookings = null;
-    if (this.state.bookings) {
-      count = 0;
-      upcomingBookings = this.state.bookings.map((booking, index) => {
-        let card = null;
-        if (count != 5 && booking.status === 'complete') {
-          card = (
-            <Card
-              key={index}
-              imgUrl={booking.service.img}
-              serviceName={booking.service.name}
-              employeeName={
-                booking.employee.firstName + ' ' + booking.employee.lastName
-              }
-              startTime={booking.startTime}
-            />
-          );
-          count++;
-        }
-        return card;
-      });
-    }
-
-    if (count === 0) {
-      upcomingBookings = 'No upcoming bookings.';
-    }
+    let content = this.contentToRender();
 
     // If not loading and the profile is present, it will render the details
     if (!this.props.loading && this.props.profileDetails !== null) {
@@ -135,7 +69,7 @@ export class Dashboard extends Component {
                     classes.Center
                   }
                 >
-                  Leslie
+                  Leslie {this.props.hello}
                 </div>
               </div>
               <div>
@@ -161,9 +95,7 @@ export class Dashboard extends Component {
                 <img className={classes.Icon} src={logoutImage} alt='logout' />
               </div>
             </div>
-            <div className={classes.MainContent + ' col-sm-11'}>
-              <DashboardWelcome />
-            </div>
+            <div className={classes.MainContent + ' col-sm-11'}>{content}</div>
           </div>
         </React.Fragment>
       );
