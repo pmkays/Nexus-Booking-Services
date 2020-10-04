@@ -5,6 +5,7 @@ import classes from './Dashboard.module.css';
 import { NavLink } from 'react-router-dom';
 import { Animated } from 'react-animated-css';
 
+import DrawerToggle from '../../components/Navigation/DrawerToggle/DrawerToggle';
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Availabilities from '../../containers/Availabilites/Availabilites';
 import Login from '../../containers/Login/Login';
@@ -151,14 +152,19 @@ export class Dashboard extends Component {
 
     return (
       <div className={classes.Dashboard}>
-        <NavLink to='/' exact>
-          <div className={classes.Logo}>
-            <span className={classes.NavLogo}>
-              NE<span className={classes.Blue}>X</span>US
-            </span>
-            <span className={classes.Slogan}>BOOKING - SYSTEM</span>
+        <div className={classes.MenuLogo}>
+          <DrawerToggle />
+          <div className={classes.Float}>
+            <NavLink to='/' exact>
+              <div className={classes.Logo}>
+                <span className={classes.NavLogo}>
+                  NE<span className={classes.Blue}>X</span>US
+                </span>
+                <span className={classes.Slogan}>BOOKING - SYSTEM</span>
+              </div>
+            </NavLink>
           </div>
-        </NavLink>
+        </div>
         {profile}
       </div>
     );

@@ -127,4 +127,28 @@
   .Toolbar {
     display: none;
   }
+
+  .Logo {
+    color: white;
+    margin-left: 0;
+  }
+
+  .NavLogo {
+    font-size: 2rem;
+  }
+
+  .Slogan {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-left: 5px;
+    display: none;
+  }
+
+  .MenuLogo {
+    display: flex;
+  }
+
+  .Float {
+    float: right;
+  }
 }
