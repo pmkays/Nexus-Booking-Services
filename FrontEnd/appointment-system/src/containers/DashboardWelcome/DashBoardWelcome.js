@@ -170,7 +170,7 @@ export class DashboardWelcome extends Component {
                 animationIn='fadeInRight'
                 animationInDuration={600}
               >
-                <h4>Upcoming Bookings</h4>
+                <h4 style={{ fontWeight: 'bold' }}>Upcoming Bookings</h4>
                 <div className={classes.Flex}>{upcomingBookings}</div>
               </Animated>
             </div>

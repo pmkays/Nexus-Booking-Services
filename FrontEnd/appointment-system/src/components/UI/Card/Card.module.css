@@ -43,6 +43,11 @@
     width: inherit;
   }
 
+  .Card:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+  }
+
   .Image {
     width: -webkit-fill-available;
   }
