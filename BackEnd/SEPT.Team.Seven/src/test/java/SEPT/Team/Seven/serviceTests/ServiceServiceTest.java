@@ -188,5 +188,44 @@ public class ServiceServiceTest
 		assertTrue(services.stream().anyMatch(x-> x.getName().equals("Salon")));
 
 	}
+	
+	@Test
+	public void findServiceByDate_NoEmployees_ReturnsEmptyListOfServices()
+	{
+		Calendar date = new GregorianCalendar();
+		date.set(Calendar.HOUR_OF_DAY, 1);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+		date.add(Calendar.DAY_OF_MONTH, 2); // +2 days from now at 1am
+		
+		List<Employee> empty = new ArrayList<Employee>();
+		when(employeeRepository.findAll()).thenReturn(empty);
+		
+		List<Service> services = serviceService.findServiceByDate(date.getTime());
+		
+		assertEquals(0, services.size());
+	}
+	
+	@Test
+	public void findServiceByDate_NoWorkingTimes_ReturnsEmptyListOfServices()
+	{
+		Calendar date = new GregorianCalendar();
+		date.set(Calendar.HOUR_OF_DAY, 1);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+		date.add(Calendar.DAY_OF_MONTH, 2); // +2 days from now at 1am
+		
+		List<WorkingTime> emptyWT = new ArrayList<WorkingTime>();
+
+		when(employeeRepository.findAll()).thenReturn(existingEmployees);
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(emptyWT);
+		when(workingTimeRepository.findAllByEmployeeId(5)).thenReturn(emptyWT);
+		
+		List<Service> services = serviceService.findServiceByDate(date.getTime());
+		
+		assertEquals(0, services.size());
+	}
 
 }
