@@ -12,6 +12,7 @@ import RegisterProfile from './containers/Register/Register';
 import Employees from './containers/Admin/Employees/Employees';
 import AddEmployee from './containers/Admin/AddEmployee/AddEmployee';
 import AddService from './containers/Admin/AddService/AddService';
+import ViewBookings from './containers/ViewBookings/ViewBookings';
 
 import AboutUs from './containers/AboutUs/AboutUs';
 import ContactUs from './containers/ContactUs/ContactUs';
@@ -45,6 +46,7 @@ class App extends Component {
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
           <Route path='/workingtimes' component={WorkingTimes} />
+          <Route path='/viewbookings' component={ViewBookings} />
           <Route path='/' component={Home} />
         </Switch>
       );
@@ -60,6 +62,7 @@ class App extends Component {
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
           <Route path='/availabilities' component={Availabilites} />
+          <Route path='/viewbookings' component={ViewBookings} />
           <Route path='/' component={Home} />
         </Switch>
       );
@@ -75,6 +78,7 @@ class App extends Component {
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
           <Route path='/bookings' component={Booking} />
+          <Route path='/viewbookings' component={ViewBookings} />
           <Route path='/' component={Home} />
         </Switch>
       );

@@ -22,6 +22,46 @@ export const addBookingFail = (error) => {
   };
 };
 
+// export const viewBookings = (token) => {
+
+//   return (dispatch) => {
+//     let decodedJwt = jwtDecode(token);
+
+//     let url = '';
+//     switch (decodedJwt.roles[0].authority) {
+//       case 'ROLE_EMPLOYEE':
+//         url = 'employees';
+//         break;
+//       case 'ROLE_CUSTOMER':
+//         url = 'customers';
+//         break;
+//       default:
+//         return '';
+//     }
+
+//     const userId = decodedJwt.userId;
+
+//     const config = {
+//       headers: {
+//         Authorization: 'Bearer ' + token,
+//       },
+//     };
+
+//     axios
+//       .get('/api/booking' + url + '/' + userId, config)
+//       .then((response) => {
+//         console.log(response);
+//         // dispatch(editProfileSuccess(response.data));
+//       })
+//       .catch((error) => {
+//         // dispatch();
+//           // editProfileFail('Error reaching server. Please try again later.')
+//         // );
+//       });
+//   };
+
+// }
+
 export const addBooking = (formData, token, history) => {
   return (dispatch) => {
     dispatch(addBookingStart);
