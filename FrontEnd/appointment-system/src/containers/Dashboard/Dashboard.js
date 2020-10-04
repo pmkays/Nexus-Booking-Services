@@ -5,6 +5,7 @@ import classes from './Dashboard.module.css';
 import { NavLink } from 'react-router-dom';
 import { Animated } from 'react-animated-css';
 
+import DashboardIcon from './DashboardIcon/DashboardIcon';
 import DrawerToggle from '../../components/Navigation/DrawerToggle/DrawerToggle';
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Employees from '../Admin/Employees/Employees';
@@ -82,16 +83,6 @@ export class Dashboard extends Component {
     return content;
   };
 
-  appear(element) {
-    var x = document.getElementById(element);
-    x.style.display = 'block';
-  }
-
-  dissappear(element) {
-    var x = document.getElementById(element);
-    x.style.display = 'none';
-  }
-
   render() {
     let profile = <Spinner />;
     let content = this.contentToRender();
@@ -110,108 +101,60 @@ export class Dashboard extends Component {
                 />
               </div>
 
-              <div className={classes.Center + ' ' + classes.Flex}>
-                <div className={classes.IconMargin}>
-                  <NavLink
-                    activeClassName={classes.IconActive}
-                    className={classes.Icon}
-                    to='/dashboard'
-                  >
-                    <i
-                      className=' fas fa-home'
-                      onMouseOver={() => this.appear('dashboard')}
-                      onMouseLeave={() => this.dissappear('dashboard')}
-                    ></i>
-                  </NavLink>
-                </div>
-                <div
-                  id='dashboard'
-                  className={classes.Index + ' ' + classes.Hide}
-                >
-                  <Animated
-                    className={classes.Flex}
-                    animationIn='fadeInLeft'
-                    animationInDuration={200}
-                  >
-                    <div className={classes.DashboardLabel}>Dashboard</div>
-                    <div className={classes.DashboardLabelHighLight}></div>
-                  </Animated>
-                </div>
-              </div>
+              <DashboardIcon
+                name='Dashboard'
+                classes='fas fa-home'
+                to='dashboard'
+              />
               <br />
               {this.props.authority === 'ROLE_ADMIN' ? (
                 <React.Fragment>
-                  <div className={classes.Center}>
-                    <NavLink
-                      activeClassName={classes.IconActive}
-                      className={classes.Icon}
-                      to='/employees'
-                    >
-                      <i class='fas fa-users'></i>
-                    </NavLink>
-                  </div>
+                  <DashboardIcon
+                    name='Employees'
+                    classes='fas fa-users'
+                    to='employees'
+                  />
                   <br />
-                  <div className={classes.Center}>
-                    <NavLink
-                      activeClassName={classes.IconActive}
-                      className={classes.Icon}
-                      to='/workingtimes'
-                    >
-                      <i class='fas fa-hourglass-half'></i>
-                    </NavLink>
-                  </div>
+                  <DashboardIcon
+                    name='Workhours'
+                    classes='fas fa-hourglass-half'
+                    to='workingtimes'
+                  />
                   <br />
                 </React.Fragment>
               ) : null}
               {this.props.authority === 'ROLE_CUSTOMER' ? (
                 <React.Fragment>
-                  <div className={classes.Center}>
-                    <NavLink
-                      activeClassName={classes.IconActive}
-                      className={classes.Icon}
-                      to='/bookings'
-                    >
-                      <i class='fas fa-book'></i>
-                    </NavLink>
-                  </div>
+                  <DashboardIcon
+                    name='Bookings'
+                    classes='fas fa-book'
+                    to='bookings'
+                  />
                   <br />
                 </React.Fragment>
               ) : null}
 
               {this.props.authority === 'ROLE_EMPLOYEE' ? (
                 <React.Fragment>
-                  <div className={classes.Center}>
-                    <NavLink
-                      activeClassName={classes.IconActive}
-                      className={classes.Icon}
-                      to='/availabilities'
-                    >
-                      <i class='fas fa-calendar-check'></i>
-                    </NavLink>
-                  </div>
+                  <DashboardIcon
+                    name='Availabilities'
+                    classes='fas fa-calendar-check'
+                    to='availabilities'
+                  />
                   <br />
                 </React.Fragment>
               ) : null}
-
-              <div className={classes.Center}>
-                <NavLink
-                  activeClassName={classes.IconActive}
-                  className={classes.Icon}
-                  to='/profile'
-                >
-                  <i class='fas fa-cog'></i>
-                </NavLink>
-              </div>
+              <DashboardIcon
+                name='Settings'
+                classes='fas fa-cog'
+                to='profile'
+              />
               <br />
-              <div className={classes.Center}>
-                <NavLink
-                  activeClassName={classes.IconActive}
-                  className={classes.Icon}
-                  to='/logout'
-                >
-                  <i class='fas fa-sign-out-alt'></i>
-                </NavLink>
-              </div>
+              <DashboardIcon
+                name='Logout'
+                classes='fas fa-sign-out-alt'
+                to='logout'
+              />
             </div>
             <div className={classes.MainContent}>{content}</div>
           </div>

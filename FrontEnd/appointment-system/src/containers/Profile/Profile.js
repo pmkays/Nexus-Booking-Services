@@ -51,6 +51,7 @@ export class Profile extends Component {
               <img
                 className={classes.Avatar}
                 src={this.props.profileDetails.img}
+                alt={this.props.profileDetails.firstName}
               />
             </div>
           </div>

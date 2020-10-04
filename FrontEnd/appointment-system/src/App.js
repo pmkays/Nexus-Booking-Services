@@ -4,22 +4,14 @@ import { connect } from 'react-redux';
 
 import Login from './containers/Login/Login';
 import Logout from './containers/Login/Logout/Logout';
-import Layout from './containers/Layout/Layout';
 import Home from './containers/Home/Home';
-import Profile from './containers/Profile/Profile';
-import EditProfile from './containers/Profile/EditProfile/EditProfile';
 import RegisterProfile from './containers/Register/Register';
-import Employees from './containers/Admin/Employees/Employees';
-import AddEmployee from './containers/Admin/AddEmployee/AddEmployee';
 import AddService from './containers/Admin/AddService/AddService';
 
 import AboutUs from './containers/AboutUs/AboutUs';
 import ContactUs from './containers/ContactUs/ContactUs';
 import * as actions from './store/actions/actions';
 import HowItWorks from './containers/HowItWorks/HowItWorks';
-import Availabilites from './containers/Availabilites/Availabilites';
-import Booking from './containers/Booking/Booking';
-import WorkingTimes from './containers/WorkingTimes/WorkingTimes';
 import Dashboard from './containers/Dashboard/Dashboard';
 
 class App extends Component {
@@ -129,6 +121,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path='/login' component={Login} />
+          <Route path='/bookings' component={RegisterProfile} />
           <Route path='/register' component={RegisterProfile} />
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />

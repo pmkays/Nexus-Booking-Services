@@ -76,6 +76,19 @@ class Login extends Component {
   };
 
   render() {
+    // Renders error message if there is any errors
+    let errorMessage = null;
+    if (this.props.error) {
+      errorMessage = <p>{this.props.error}</p>;
+    }
+
+    // Redirects user if already logged in
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      authRedirect = <Redirect to={this.props.authRedirectPath} />;
+    }
+
+    //Create form elements
     const formElementsArray = [];
     for (let key in this.state.controls) {
       formElementsArray.push({
@@ -85,7 +98,7 @@ class Login extends Component {
     }
 
     // Creates an input element with configurations from state
-    let form = formElementsArray.map((formElement) => (
+    let formElements = formElementsArray.map((formElement) => (
       <Input
         key={formElement.id}
         label={formElement.config.labelName}
@@ -99,35 +112,25 @@ class Login extends Component {
       />
     ));
 
+    let form = (
+      <form onSubmit={this.loginHandler}>
+        <div className='form-group container'>
+          {formElements}
+          {errorMessage}
+          <Button classes='btn btn-primary'>SUBMIT</Button>
+        </div>
+      </form>
+    );
+
     // Renders a spinning icon if loading
     if (this.props.loading) {
       form = <Spinner />;
     }
 
-    // Renders error message if there is any errors
-    let errorMessage = null;
-    if (this.props.error) {
-      errorMessage = <p>{this.props.error}</p>;
-    }
-
-    // Redirects user if already logged in
-    let authRedirect = null;
-    if (this.props.isAuthenticated) {
-      authRedirect = <Redirect to={this.props.authRedirectPath} />;
-    }
-
     return (
       <Layout>
-        <div>
-          {authRedirect}
-          <form onSubmit={this.loginHandler}>
-            <div className='form-group container'>
-              {form}
-              {errorMessage}
-              <Button classes='btn btn-primary'>SUBMIT</Button>
-            </div>
-          </form>
-        </div>
+        <div>{authRedirect}</div>
+        {form}
       </Layout>
     );
   }

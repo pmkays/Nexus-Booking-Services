@@ -4,7 +4,11 @@ import classes from './Card.module.css';
 const card = (props) => (
   <div className={classes.Card}>
     <div className={classes.NoMargin + ' row'}>
-      <img className={classes.Image} src={props.imgUrl} />
+      <img
+        className={classes.Image}
+        src={props.imgUrl}
+        alt={props.serviceName}
+      />
     </div>
     <div className={classes.NoMargin + ' row'}>
       <span className={classes.Bold}>{props.serviceName}</span>
