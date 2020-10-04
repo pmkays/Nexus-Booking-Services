@@ -1,6 +1,7 @@
 package SEPT.Team.Seven.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +35,15 @@ public class WorkingTimeController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
     public WorkingTime addWorkingTime(@RequestBody TimeDto timeDto) {
-       return workingTimeService.addWorkingTime(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
-       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding working time."));
+		
+		Optional<WorkingTime> wt = workingTimeService.addWorkingTime(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime());
+		if(wt.isPresent())
+		{
+			return wt.get();
+		}
+		throw new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding working time.");
+//       return workingTimeService.addWorkingTime(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
+//       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding working time."));
     }
 
 }
