@@ -58,7 +58,7 @@ export const fetchProfile = (token) => {
     axios
       .get('/api/' + url + '/' + userId, config)
       .then((response) => {
-        console.log(response);
+        response.data.id = userId;
         dispatch(fetchProfileSuccess(response.data));
       })
       .catch((error) => {
@@ -119,7 +119,6 @@ export const editProfile = (formData, token, history) => {
     axios
       .put('/api/' + url + '/' + userId, formData, config)
       .then((response) => {
-        console.log(response);
         dispatch(editProfileSuccess(response.data));
       })
       .then(() => {

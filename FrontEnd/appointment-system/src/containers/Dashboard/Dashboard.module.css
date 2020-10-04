@@ -83,3 +83,8 @@
 .Center {
   margin: auto;
 }
+
+.Flex {
+  display: flex;
+  margin: 10px;
+}

@@ -1,0 +1,23 @@
+.Card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 2% 2%;
+  margin-right: 5%;
+}
+
+.Bold {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.Image {
+  height: 15vh;
+  width: 20vh;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.NoMargin {
+  margin-left: 0;
+  margin-right: 0;
+}
