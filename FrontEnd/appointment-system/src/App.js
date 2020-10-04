@@ -34,17 +34,35 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path='/login' component={Login} />
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path='/employees' component={Employees} />
-          <Route path='/addEmployee' component={AddEmployee} />
+          <Route
+            path='/dashboard'
+            component={() => <Dashboard content='welcome' />}
+          />
+          <Route
+            path='/employees'
+            component={() => <Dashboard content='employees' />}
+          />
+          <Route
+            path='/addemployee'
+            component={() => <Dashboard content='addemployee' />}
+          />
           <Route path='/addService' component={AddService} />
-          <Route path='/profile' component={Profile} />
-          <Route path='/editProfile' component={EditProfile} />
+          <Route
+            path='/profile'
+            component={() => <Dashboard content='profile' />}
+          />
+          <Route
+            path='/workingtimes'
+            component={() => <Dashboard content='workingtimes' />}
+          />
+          <Route
+            path='/editprofile'
+            component={() => <Dashboard content='editprofile' />}
+          />
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
-          <Route path='/workingtimes' component={WorkingTimes} />
           <Route path='/' component={Home} />
         </Switch>
       );
@@ -52,14 +70,27 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path='/login' component={Login} />
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path='/profile' component={Profile} />
-          <Route path='/editProfile' component={EditProfile} />
+          <Route
+            path='/dashboard'
+            component={() => <Dashboard content='welcome' />}
+          />
+          <Route
+            path='/profile'
+            component={() => <Dashboard content='profile' />}
+          />
+          <Route
+            path='/editprofile'
+            component={() => <Dashboard content='editprofile' />}
+          />
+          <Route
+            path='/availabilities'
+            component={() => <Dashboard content='availabilities' />}
+          />
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
-          <Route path='/availabilities' component={Availabilites} />
+
           <Route path='/' component={Home} />
         </Switch>
       );
@@ -90,10 +121,7 @@ class App extends Component {
             path='/bookings'
             component={() => <Dashboard content='booking' />}
           />
-          <Route
-            path='/availabilities'
-            component={() => <Dashboard content='availabilities' />}
-          />
+
           <Route path='/' component={Home} />
         </Switch>
       );

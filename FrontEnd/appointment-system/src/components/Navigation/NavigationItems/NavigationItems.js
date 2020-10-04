@@ -15,10 +15,11 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/about'>ABOUT</NavigationItem>
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
-        <NavigationItem link='/employees'>EMPLOYEES</NavigationItem>
-        <NavigationItem link='workingtimes'>WORKING TIMES</NavigationItem>
-        <NavigationItem link='/profile'>PROFILE</NavigationItem>
-        <NavigationItem link='/logout'>LOG OUT</NavigationItem>
+        <NavigationItem link='/dashboard'>
+          <div className={classes.Dashboard}>
+            <span>MY DASHBOARD</span>
+          </div>
+        </NavigationItem>
       </ul>
     );
   } else if (props.isEmployee && props.isAuthenticated) {
@@ -30,9 +31,11 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/about'>ABOUT</NavigationItem>
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
-        <NavigationItem link='/availabilities'>AVAILABILITIES</NavigationItem>
-        <NavigationItem link='/profile'>PROFILE</NavigationItem>
-        <NavigationItem link='/logout'>LOG OUT</NavigationItem>
+        <NavigationItem link='/dashboard'>
+          <div className={classes.Dashboard}>
+            <span>MY DASHBOARD</span>
+          </div>
+        </NavigationItem>
       </ul>
     );
   } else if (props.isCustomer && props.isAuthenticated) {

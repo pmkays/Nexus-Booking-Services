@@ -7,6 +7,9 @@ import { Animated } from 'react-animated-css';
 
 import DrawerToggle from '../../components/Navigation/DrawerToggle/DrawerToggle';
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
+import Employees from '../Admin/Employees/Employees';
+import AddEmployee from '../Admin/AddEmployee/AddEmployee';
+import WorkingTimes from '../WorkingTimes/WorkingTimes';
 import Availabilities from '../../containers/Availabilites/Availabilites';
 import Login from '../../containers/Login/Login';
 import Profile from '../../containers/Profile/Profile';
@@ -31,6 +34,15 @@ export class Dashboard extends Component {
     switch (this.props.content) {
       case 'welcome':
         content = <DashboardWelcome />;
+        break;
+      case 'employees':
+        content = <Employees />;
+        break;
+      case 'addemployee':
+        content = <AddEmployee />;
+        break;
+      case 'workingtimes':
+        content = <WorkingTimes />;
         break;
       case 'booking':
         content = (
@@ -70,6 +82,16 @@ export class Dashboard extends Component {
     return content;
   };
 
+  appear(element) {
+    var x = document.getElementById(element);
+    x.style.display = 'block';
+  }
+
+  dissappear(element) {
+    var x = document.getElementById(element);
+    x.style.display = 'none';
+  }
+
   render() {
     let profile = <Spinner />;
     let content = this.contentToRender();
@@ -87,40 +109,91 @@ export class Dashboard extends Component {
                   alt='avatar'
                 />
               </div>
-              <div className='row'>
+
+              <div className={classes.Center + ' ' + classes.Flex}>
+                <div className={classes.IconMargin}>
+                  <NavLink
+                    activeClassName={classes.IconActive}
+                    className={classes.Icon}
+                    to='/dashboard'
+                  >
+                    <i
+                      className=' fas fa-home'
+                      onMouseOver={() => this.appear('dashboard')}
+                      onMouseLeave={() => this.dissappear('dashboard')}
+                    ></i>
+                  </NavLink>
+                </div>
                 <div
-                  className={
-                    classes.BoldedText +
-                    ' ' +
-                    classes.White +
-                    ' ' +
-                    classes.Center
-                  }
+                  id='dashboard'
+                  className={classes.Index + ' ' + classes.Hide}
                 >
-                  Leslie {this.props.hello}
+                  <Animated
+                    className={classes.Flex}
+                    animationIn='fadeInLeft'
+                    animationInDuration={200}
+                  >
+                    <div className={classes.DashboardLabel}>Dashboard</div>
+                    <div className={classes.DashboardLabelHighLight}></div>
+                  </Animated>
                 </div>
               </div>
-              <div>
-                <NavLink
-                  activeClassName={classes.IconActive}
-                  className={classes.Icon}
-                  to='/dashboard'
-                >
-                  <i class='fas fa-user'></i>
-                </NavLink>
-              </div>
               <br />
-              <div>
-                <NavLink
-                  activeClassName={classes.IconActive}
-                  className={classes.Icon}
-                  to='/bookings'
-                >
-                  <i class='fas fa-book'></i>
-                </NavLink>
-              </div>
-              <br />
-              <div>
+              {this.props.authority === 'ROLE_ADMIN' ? (
+                <React.Fragment>
+                  <div className={classes.Center}>
+                    <NavLink
+                      activeClassName={classes.IconActive}
+                      className={classes.Icon}
+                      to='/employees'
+                    >
+                      <i class='fas fa-users'></i>
+                    </NavLink>
+                  </div>
+                  <br />
+                  <div className={classes.Center}>
+                    <NavLink
+                      activeClassName={classes.IconActive}
+                      className={classes.Icon}
+                      to='/workingtimes'
+                    >
+                      <i class='fas fa-hourglass-half'></i>
+                    </NavLink>
+                  </div>
+                  <br />
+                </React.Fragment>
+              ) : null}
+              {this.props.authority === 'ROLE_CUSTOMER' ? (
+                <React.Fragment>
+                  <div className={classes.Center}>
+                    <NavLink
+                      activeClassName={classes.IconActive}
+                      className={classes.Icon}
+                      to='/bookings'
+                    >
+                      <i class='fas fa-book'></i>
+                    </NavLink>
+                  </div>
+                  <br />
+                </React.Fragment>
+              ) : null}
+
+              {this.props.authority === 'ROLE_EMPLOYEE' ? (
+                <React.Fragment>
+                  <div className={classes.Center}>
+                    <NavLink
+                      activeClassName={classes.IconActive}
+                      className={classes.Icon}
+                      to='/availabilities'
+                    >
+                      <i class='fas fa-calendar-check'></i>
+                    </NavLink>
+                  </div>
+                  <br />
+                </React.Fragment>
+              ) : null}
+
+              <div className={classes.Center}>
                 <NavLink
                   activeClassName={classes.IconActive}
                   className={classes.Icon}
@@ -130,7 +203,7 @@ export class Dashboard extends Component {
                 </NavLink>
               </div>
               <br />
-              <div>
+              <div className={classes.Center}>
                 <NavLink
                   activeClassName={classes.IconActive}
                   className={classes.Icon}
@@ -175,6 +248,7 @@ const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     userId: state.auth.userId,
+    authority: state.auth.authority,
     profileDetails: state.profile.profileDetails,
     loading: state.profile.loading,
     error: state.profile.error,

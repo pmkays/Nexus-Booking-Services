@@ -27,6 +27,7 @@
 
 .Toolbar {
   width: 4vw;
+  z-index: 99;
 }
 
 .Avatar {
@@ -34,13 +35,12 @@
   width: 5vh;
   border-radius: 100%;
   object-fit: cover;
-  margin: 35% 20% 0;
+  margin: 35% 20% 30%;
   border: 5px solid white;
 }
 
 .Icon {
   object-fit: cover;
-  margin-left: 35%;
   padding-top: 35px;
   color: white;
   font-size: 2rem;
@@ -109,13 +109,46 @@
   margin-right: 0;
 }
 
+.IconMargin {
+  margin: 0 30%;
+}
+
 .Center {
   margin: auto;
+  text-align: center;
 }
 
 .Flex {
   display: flex;
-  margin: 10px;
+}
+
+.Index {
+  z-index: -99;
+}
+
+.DashboardLabel {
+  position: relative;
+  right: 5px;
+  padding: 15%;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  background-color: #2e767a;
+  width: fit-content;
+  z-index: 10;
+}
+
+.DashboardLabelHighLight {
+  background-color: white;
+  height: auto;
+  width: 5px;
+  padding: 2px;
+  position: relative;
+  right: 5px;
+}
+
+.Hide {
+  display: none;
 }
 
 @media (max-width: 768px) {
