@@ -88,6 +88,30 @@ public class BookingService {
 					}
 				}
 			}
+			
+			// Check that the employee doesn't already have an overlapping booking
+			// THIS CODE IS REPEATED FOR THE CUSTOMERS BOOKINGS. could probably move into own method
+			// when REFACTORING
+			List<Booking> employeesBookings = bookingRepository.findAllByEmployeeId(employeeId);
+			for (Booking booking : employeesBookings) {
+				Calendar cal = Calendar.getInstance();
+				Calendar endCal = Calendar.getInstance();
+				cal.setTime(booking.getStartTime());
+				endCal.setTime(booking.getEndTime());
+
+				if (cal.get(Calendar.DATE) == newStartCal.get(Calendar.DATE)
+						&& cal.get(Calendar.MONTH) == newStartCal.get(Calendar.MONTH)
+						&& cal.get(Calendar.YEAR) == newStartCal.get(Calendar.YEAR)) {
+					// now we have to check that the times dont overlap
+					// so this is checking that the new start is after the booking is done,
+					// or it ends before the booking starts.
+					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0)) {
+						// so if these conditions are not meant, we'll return empty.
+						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
+						return Optional.empty();
+					}
+				}
+			}
 
 			// now check that the booking is within the employee's working times
 			List<WorkingTime> employeesWorkingTimes = workingTimeRepository.findAllByEmployeeId(employeeId);
