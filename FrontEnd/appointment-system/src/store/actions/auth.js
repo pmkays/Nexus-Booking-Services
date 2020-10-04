@@ -51,8 +51,6 @@ export const auth = (username, password, isSignUp) => {
       password: password,
     };
 
-    console.log(userDetails);
-
     let authCode = '';
 
     axios

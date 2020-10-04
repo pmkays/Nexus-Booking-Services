@@ -15,12 +15,26 @@
 
 .Register {
   background-color: #45cdd6;
-  height: 3.5vh;
+  height: 35px;
   border-radius: 5px;
-  width: 6vw;
+  width: 125px;
   text-align: center;
   color: white;
   position: relative;
   bottom: 5px;
   padding-top: 4px;
+}
+
+.Dashboard {
+  background-color: #45cdd6;
+  height: 35px;
+  border-radius: 5px;
+  width: 160px;
+  text-align: center;
+  color: white;
+  position: relative;
+  bottom: 5px;
+  font-weight: bold;
+  padding-top: 4px;
+  cursor: pointer;
 }

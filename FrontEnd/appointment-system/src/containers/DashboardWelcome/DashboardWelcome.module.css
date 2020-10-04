@@ -93,3 +93,16 @@
 .Slogan {
   font-size: 1.2rem;
 }
+
+.Button {
+  margin-top: 3%;
+  width: 50%;
+  height: 40px;
+  color: white;
+  background-color: #1f7b81;
+  font-family: 'Roboto';
+  font-weight: bold;
+  border-style: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

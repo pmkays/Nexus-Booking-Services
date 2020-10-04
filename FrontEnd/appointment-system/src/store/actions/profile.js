@@ -174,7 +174,6 @@ export const addProfile = (formData, history, type, token) => {
     axios
       .post('/users/signup', userData)
       .then((response) => {
-        console.log(response);
         dispatch(fetchAccountNo(formData, history, type, token));
       })
       .catch((error) => {
@@ -194,7 +193,6 @@ export const fetchAccountNo = (formData, history, type, token) => {
     axios
       .post('/users/accountno', profileData)
       .then((response) => {
-        console.log(response);
         let updatedProfileData = { ...formData, accountNo: response.data };
         dispatch(
           addProfileDetailsToUser(updatedProfileData, history, type, token)
@@ -218,12 +216,9 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
       address: formData.address,
     };
 
-    console.log(profileData);
-
     let config = null;
 
     if (type === 'employees') {
-      console.log('Employee adding...', token);
       config = {
         headers: {
           Authorization: 'Bearer ' + token,
@@ -234,7 +229,6 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
     axios
       .put('/api/' + type + '/' + formData.accountNo, profileData, config)
       .then((response) => {
-        console.log(response);
         dispatch(addProfileSuccess(response.data, type));
       })
       .then(() => {
@@ -283,7 +277,6 @@ export const fetchAvailabilities = (token) => {
     axios
       .get('/api/availability/employee/' + userId, config)
       .then((response) => {
-        console.log(response);
         dispatch(fetchAvailabilitiesSuccess(response.data));
       })
       .catch((error) => {
@@ -332,21 +325,15 @@ export const addAvailabilities = (startTime, endTime, token, history) => {
       },
     };
 
-    console.log(
-      'employeeId' + data.employeeId + ' startTime: ' + data.startTime
-    );
-
     axios
       .post('/api/availability', data, config)
       .then((response) => {
-        console.log(response);
         dispatch(addAvailabilitiesSuccess(response.data));
       })
       .then(() => {
         history.push('/');
       })
       .catch((error) => {
-        console.log(error.response);
         //"Error adding availability. You must not already have an availability on the day(s) you have chosen."
         const reason =
           error.response.data +
@@ -391,7 +378,6 @@ export const fetchWorkingTime = (startTime, endTime, token) => {
     axios
       .get('/api/workingTIme/employee/' + userId, config)
       .then((response) => {
-        console.log(response);
         dispatch(fetchWorkingTimeSuccess(response.data));
       })
       .catch((error) => {
@@ -439,7 +425,6 @@ export const addWorkingTime = (startTime, endTime, employeeId, token) => {
     axios
       .post('/api/workingTime', data, config)
       .then((response) => {
-        console.log(response);
         dispatch(addWorkingTimeSuccess(response.data));
       })
       .catch((error) => {

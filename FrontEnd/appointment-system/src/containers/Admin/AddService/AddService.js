@@ -120,8 +120,6 @@ export class AddService extends Component {
       );
     }
 
-    console.log(this.state.selected);
-
     // Renders error message if there is any errors
     let errorMessage = null;
     if (this.props.error) {

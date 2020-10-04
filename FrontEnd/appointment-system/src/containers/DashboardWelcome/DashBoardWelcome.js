@@ -4,8 +4,10 @@ import * as actions from '../../store/actions/actions';
 import classes from './DashboardWelcome.module.css';
 import welcomeImage from './images/welcome.svg';
 import axios from '../../axios-sept';
+import { withRouter } from 'react-router';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Button from '../../components/UI/Button/Button';
 import PreviousBooking from '../../components/UI/PreviousBooking/PreviousBooking';
 import Card from '../../components/UI/Card/Card';
 import { Animated } from 'react-animated-css';
@@ -14,6 +16,10 @@ export class DashboardWelcome extends Component {
   state = {
     bookings: null,
     error: null,
+  };
+
+  goToBooking = () => {
+    this.props.history.push('/bookings');
   };
 
   //As soon as this component loads it will attempt to grab the current profile
@@ -33,7 +39,6 @@ export class DashboardWelcome extends Component {
     axios
       .get(url, config)
       .then((response) => {
-        console.log(response.data);
         this.setState({
           ...this.state,
           bookings: response.data,
@@ -127,6 +132,12 @@ export class DashboardWelcome extends Component {
                         Many new services added daily.
                         <br /> Have a look!
                       </p>
+                      <Button
+                        clicked={this.goToBooking}
+                        classes={classes.Button}
+                      >
+                        BOOK NOW
+                      </Button>
                     </div>
                   </div>
                   <div className='col-sm-6'>
@@ -192,4 +203,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardWelcome);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(DashboardWelcome));

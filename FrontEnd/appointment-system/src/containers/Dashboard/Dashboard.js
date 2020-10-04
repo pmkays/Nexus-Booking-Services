@@ -87,15 +87,29 @@ export class Dashboard extends Component {
                 </div>
               </div>
               <div>
-                <img className={classes.Icon} src={userImage} alt='user' />
+                <NavLink to='/dashboard'>
+                  <img className={classes.Icon} src={userImage} alt='user' />
+                </NavLink>
               </div>
               <br />
               <div>
-                <img className={classes.Icon} src={bookImage} alt='bookings' />
+                <NavLink to='/bookings'>
+                  <img
+                    className={classes.Icon}
+                    src={bookImage}
+                    alt='bookings'
+                  />
+                </NavLink>
               </div>
               <br />
               <div>
-                <img className={classes.Icon} src={gearImage} alt='settings' />
+                <NavLink to='/profile'>
+                  <img
+                    className={classes.Icon}
+                    src={gearImage}
+                    alt='settings'
+                  />
+                </NavLink>
               </div>
               <br />
               <br />
@@ -106,7 +120,13 @@ export class Dashboard extends Component {
               <br />
               <br />
               <div>
-                <img className={classes.Icon} src={logoutImage} alt='logout' />
+                <NavLink to='/logout'>
+                  <img
+                    className={classes.Icon}
+                    src={logoutImage}
+                    alt='logout'
+                  />
+                </NavLink>
               </div>
             </div>
             <div className={classes.MainContent}>{content}</div>
