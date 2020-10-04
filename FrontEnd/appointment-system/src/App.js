@@ -66,13 +66,22 @@ class App extends Component {
     } else if (this.props.isCustomer && this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path='/login' component={Login} />
+          <Route
+            path='/login'
+            component={() => <Dashboard content='login' />}
+          />
           <Route
             path='/dashboard'
             component={() => <Dashboard content='welcome' />}
           />
-          <Route path='/profile' component={Profile} />
-          <Route path='/editProfile' component={EditProfile} />
+          <Route
+            path='/profile'
+            component={() => <Dashboard content='profile' />}
+          />
+          <Route
+            path='/editprofile'
+            component={() => <Dashboard content='editprofile' />}
+          />
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />
           <Route path='/contact' component={ContactUs} />
@@ -101,7 +110,7 @@ class App extends Component {
         </Switch>
       );
     }
-    return <Layout>{routes}</Layout>;
+    return <React.Fragment>{routes}</React.Fragment>;
   }
 }
 

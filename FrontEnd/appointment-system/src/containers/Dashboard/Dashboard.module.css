@@ -1,35 +1,56 @@
+.Logo {
+  color: white;
+  margin-left: 4vw;
+}
+
+.NavLogo {
+  font-size: 3rem;
+}
+
+.Blue {
+  color: #45cdd6;
+}
+
+.Slogan {
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin-left: 5px;
+}
+
 .Dashboard {
-  width: 85vw;
-  height: 85vh;
+  width: 100vw;
+  height: 100vh;
   margin: auto;
 
   background: #2e767a;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 25px;
+}
+
+.Toolbar {
+  width: 4vw;
 }
 
 .Avatar {
-  height: 8vh;
-  width: 8vh;
+  height: 5vh;
+  width: 5vh;
   border-radius: 100%;
   object-fit: cover;
-  margin: 35% 10% 0;
+  margin: 35% 20% 0;
   border: 5px solid white;
 }
 
 .Icon {
-  height: 4vh;
-  width: 4vh;
+  height: 3vh;
+  width: 3vh;
   object-fit: cover;
-  margin: 35% 30% 0;
+  margin: 30% 30% 0;
 }
 
 .MainContent {
-  margin-top: 2%;
   background: #e3f2f3;
-  border-radius: 25px;
-  flex: 0 0 88%;
-  height: 80vh;
+  flex: 1 1 88%;
+  height: 90vh;
+  max-width: 95vw;
 }
 
 .WelcomeBox {

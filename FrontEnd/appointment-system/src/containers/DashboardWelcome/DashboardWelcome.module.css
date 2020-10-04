@@ -41,14 +41,14 @@
 }
 
 .WelcomeBoxText {
-  margin-top: 35%;
+  margin-top: 20%;
 }
 
 .WelcomeImage {
   height: 30vh;
   width: 20vw;
   position: relative;
-  left: 10px;
+  left: 0px;
 }
 
 .BoldedText {
@@ -88,4 +88,8 @@
 .Flex {
   display: flex;
   margin: 10px;
+}
+
+.Slogan {
+  font-size: 1.2rem;
 }

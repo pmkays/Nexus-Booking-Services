@@ -8,6 +8,7 @@ import axios from '../../axios-sept';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import PreviousBooking from '../../components/UI/PreviousBooking/PreviousBooking';
 import Card from '../../components/UI/Card/Card';
+import { Animated } from 'react-animated-css';
 
 export class DashboardWelcome extends Component {
   state = {
@@ -112,42 +113,55 @@ export class DashboardWelcome extends Component {
         <React.Fragment>
           <div className='row'>
             <div className='col-sm-6'>
-              <div className={classes.WelcomeBox + ' row'}>
-                <div className='col-sm-5'>
-                  <div className={classes.WelcomeBoxText}>
-                    <h3>
-                      Welcome{' '}
-                      <span className={classes.BoldText}>
-                        {this.props.profileDetails.firstName}!
-                      </span>
-                    </h3>
-                    <p>Many new services added daily. Have a look!</p>
+              <Animated animationIn='zoomIn' animationInDuration={400}>
+                <div className={classes.WelcomeBox + ' row'}>
+                  <div className='col-sm-6'>
+                    <div className={classes.WelcomeBoxText}>
+                      <h1>
+                        Welcome{' '}
+                        <span className={classes.BoldText}>
+                          {this.props.profileDetails.firstName}!
+                        </span>
+                      </h1>
+                      <p className={classes.Slogan}>
+                        Many new services added daily.
+                        <br /> Have a look!
+                      </p>
+                    </div>
+                  </div>
+                  <div className='col-sm-6'>
+                    <img
+                      className={classes.WelcomeImage}
+                      src={welcomeImage}
+                      alt='computer'
+                    />
                   </div>
                 </div>
-                <div className='col-sm-7'>
-                  <img
-                    className={classes.WelcomeImage}
-                    src={welcomeImage}
-                    alt='computer'
-                  />
-                </div>
-              </div>
+              </Animated>
             </div>
             <div className='col-sm-6'>
-              <div className={classes.PrevBookings + ' row'}>
-                <div className='col-sm-12'>
-                  <div className={classes.PrevBookingsText}>
-                    <h3>Previous Bookings</h3>
-                    {previousBookings}
+              <Animated animationIn='zoomIn' animationInDuration={400}>
+                <div className={classes.PrevBookings + ' row'}>
+                  <div className='col-sm-12'>
+                    <div className={classes.PrevBookingsText}>
+                      <h3>Previous Bookings</h3>
+                      {previousBookings}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Animated>
             </div>
           </div>
           <div className='row'>
             <div className={classes.UpcomingBookingsText}>
-              <h4>Upcoming Bookings</h4>
-              <div className={classes.Flex}>{upcomingBookings}</div>
+              <Animated
+                animationInDelay={400}
+                animationIn='fadeInRight'
+                animationInDuration={600}
+              >
+                <h4>Upcoming Bookings</h4>
+                <div className={classes.Flex}>{upcomingBookings}</div>
+              </Animated>
             </div>
           </div>
         </React.Fragment>

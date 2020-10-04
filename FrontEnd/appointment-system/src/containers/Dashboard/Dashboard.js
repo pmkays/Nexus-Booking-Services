@@ -6,9 +6,13 @@ import userImage from './images/user.svg';
 import bookImage from './images/bookmark.svg';
 import gearImage from './images/gear.svg';
 import logoutImage from './images/logout.svg';
+import { NavLink } from 'react-router-dom';
 
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Availabilities from '../../containers/Availabilites/Availabilites';
+import Login from '../../containers/Login/Login';
+import Profile from '../../containers/Profile/Profile';
+import EditProfile from '../../containers/Profile/EditProfile/EditProfile';
 import Booking from '../Booking/Booking';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
@@ -35,6 +39,16 @@ export class Dashboard extends Component {
         break;
       case 'availabilities':
         content = <Availabilities />;
+        break;
+      case 'login':
+        content = <Login />;
+        break;
+      case 'profile':
+        content = <Profile />;
+        break;
+      case 'editprofile':
+        content = <EditProfile />;
+        break;
       default:
         break;
     }
@@ -51,7 +65,7 @@ export class Dashboard extends Component {
       profile = (
         <React.Fragment>
           <div className={classes.NoMargin + ' row'}>
-            <div className='col-sm-1'>
+            <div className={classes.Toolbar}>
               <div className={classes.NoMargin + ' row'}>
                 <img
                   className={classes.Avatar}
@@ -95,7 +109,7 @@ export class Dashboard extends Component {
                 <img className={classes.Icon} src={logoutImage} alt='logout' />
               </div>
             </div>
-            <div className={classes.MainContent + ' col-sm-11'}>{content}</div>
+            <div className={classes.MainContent}>{content}</div>
           </div>
         </React.Fragment>
       );
@@ -105,7 +119,19 @@ export class Dashboard extends Component {
       profile = this.props.error;
     }
 
-    return <div className={classes.Dashboard}>{profile}</div>;
+    return (
+      <div className={classes.Dashboard}>
+        <NavLink to='/' exact>
+          <div className={classes.Logo}>
+            <span className={classes.NavLogo}>
+              NE<span className={classes.Blue}>X</span>US
+            </span>
+            <span className={classes.Slogan}>BOOKING - SYSTEM</span>
+          </div>
+        </NavLink>
+        {profile}
+      </div>
+    );
   }
 }
 

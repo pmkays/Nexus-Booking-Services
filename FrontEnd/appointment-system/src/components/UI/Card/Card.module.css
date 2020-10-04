@@ -3,6 +3,7 @@
   border-radius: 15px;
   padding: 2% 2%;
   margin-right: 5%;
+  transition: transform 0.2s;
 }
 
 .Bold {
@@ -20,4 +21,16 @@
 .NoMargin {
   margin-left: 0;
   margin-right: 0;
+}
+
+.zoom {
+  padding: 50px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.Card:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
