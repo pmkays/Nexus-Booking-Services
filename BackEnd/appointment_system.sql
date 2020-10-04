@@ -254,10 +254,10 @@ INSERT INTO `working_time` VALUES
 --
 
 INSERT INTO `service` VALUES
-	(1, 'service1', 'https://i.imgur.com/z53yLmm.jpg'),
-    (2, 'service2', 'https://i.imgur.com/gzi5Nmu.jpg'),
-    (3, 'service3', 'https://i.imgur.com/NfYcrHt.jpg'),
-    (4, 'service4', 'https://i.imgur.com/eD7gQ7N.jpg');
+	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg'),
+    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg'),
+    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg'),
+    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
@@ -270,7 +270,9 @@ INSERT INTO `booking` VALUES
     (1, 1, 4, '2020-05-28 15:00:00', '2020-10-28 17:00:00','complete',1),
     (2, 1, 4, '2020-07-29 15:00:00', '2020-10-29 17:00:00','complete',2),
     (3, 1, 5, '2020-08-30 18:00:00', '2020-10-30 19:00:00','complete',3),
-    (4, 1, 4, '2020-10-28 15:00:00', '2020-10-28 17:00:00','pending',1),
-    (5, 1, 4, '2020-10-29 15:00:00', '2020-10-29 17:00:00','pending',2),
-    (6, 1, 5, '2020-10-30 18:00:00', '2020-10-30 19:00:00','pending',3);
+    (4, 1, 5, '2020-10-27 16:00:00', '2020-10-27 17:00:00','pending',4),
+    (5, 1, 5, '2020-10-27 18:30:00', '2020-10-27 19:00:00','pending',4),
+    (6, 1, 4, '2020-10-28 15:00:00', '2020-10-28 17:00:00','pending',1),
+    (7, 1, 4, '2020-10-29 15:00:00', '2020-10-29 17:00:00','pending',2),
+    (8, 1, 5, '2020-10-30 18:00:00', '2020-10-30 19:00:00','pending',3);
 
