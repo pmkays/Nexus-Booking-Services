@@ -1,5 +1,6 @@
 package SEPT.Team.Seven.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.Booking;
 import SEPT.Team.Seven.model.WorkingTime;
 import SEPT.Team.Seven.repo.BookingRepository;
@@ -81,7 +83,7 @@ public class BookingService {
 					// now we have to check that the times dont overlap
 					// so this is checking that the new start is after the booking is done,
 					// or it ends before the booking starts.
-					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0)) {
+					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0) && booking.getStatus().equals("accepted")) {
 						// so if these conditions are not meant, we'll return empty.
 						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
 						return Optional.empty();
@@ -104,8 +106,8 @@ public class BookingService {
 						&& cal.get(Calendar.YEAR) == newStartCal.get(Calendar.YEAR)) {
 					// now we have to check that the times dont overlap
 					// so this is checking that the new start is after the booking is done,
-					// or it ends before the booking starts.
-					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0)) {
+					// or it ends before the booking starts. Also only consider this booking if it's accepted.
+					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0) && booking.getStatus().equals("accepted")) {
 						// so if these conditions are not meant, we'll return empty.
 						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
 						return Optional.empty();
@@ -153,5 +155,65 @@ public class BookingService {
 
 		return Optional.empty();
 	}
+
+	public List<Booking> findBookingsByEmployeeAndDate(int employeeId, Date startTime, Date endTime) {
+		List<Booking> toReturn = new ArrayList<Booking>();
+		List<Booking> bookings = bookingRepository.findAllByEmployeeId(employeeId);
+		
+		for (Booking booking : bookings) {
+			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
+					&& booking.getStartTime().compareTo(endTime) <= 0;
+			boolean endValid = booking.getEndTime().compareTo(startTime) >= 0
+					&& booking.getEndTime().compareTo(endTime) <= 0;
+			if (startValid && endValid) {
+				toReturn.add(booking);
+			}
+		}
+		
+		return toReturn;
+	}
+	
+	// this is the exact same as the method above. Could be extrapolated into own helper
+	// method once refactoring
+	public List<Booking> findBookingsByCustomerAndDate(int customerId, Date startTime, Date endTime) {
+		List<Booking> toReturn = new ArrayList<Booking>();
+		List<Booking> bookings = bookingRepository.findAllByCustomerId(customerId);
+		
+		for (Booking booking : bookings) {
+			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
+					&& booking.getStartTime().compareTo(endTime) <= 0;
+			boolean endValid = booking.getEndTime().compareTo(startTime) >= 0
+					&& booking.getEndTime().compareTo(endTime) <= 0;
+			if (startValid && endValid) {
+				toReturn.add(booking);
+			}
+		}
+		
+		return toReturn;
+	}
+	
+	// same deal with this.
+	public List<Booking> findBookingsByDate(Date startTime, Date endTime) {
+		List<Booking> toReturn = new ArrayList<Booking>();
+		List<Booking> bookings = bookingRepository.findAll();
+		
+		for (Booking booking : bookings) {
+			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
+					&& booking.getStartTime().compareTo(endTime) <= 0;
+			boolean endValid = booking.getEndTime().compareTo(startTime) >= 0
+					&& booking.getEndTime().compareTo(endTime) <= 0;
+			if (startValid && endValid) {
+				toReturn.add(booking);
+			}
+		}
+		
+		return toReturn;
+	}
+
+	public List<Booking> getAllBookings() {
+		return bookingRepository.findAll();
+	}
+
+
 
 }

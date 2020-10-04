@@ -257,7 +257,7 @@ INSERT INTO `working_time` VALUES
     (10, 5, '2020-10-10 02:00:00', '2020-10-10 09:00:00');
 
 --
--- Data for table `working_time`
+-- Data for table `services`
 --
 
 INSERT INTO `service` VALUES
@@ -265,6 +265,22 @@ INSERT INTO `service` VALUES
     (2, 'service2', 'https://i.imgur.com/gzi5Nmu.jpg'),
     (3, 'service3', 'https://i.imgur.com/NfYcrHt.jpg'),
     (4, 'service4', 'https://i.imgur.com/eD7gQ7N.jpg');
+    
+--
+-- Data for table `booking`
+--
+
+INSERT INTO `booking` VALUES
+    (1, 1, 4, '2020-10-06 03:00:00', '2020-10-06 03:00:30', 'accepted', 1),
+    (2, 2, 4, '2020-10-07 02:00:00', '2020-10-07 09:00:00', 'accepted', 1),
+    (3, 2, 4, '2020-10-08 02:00:00', '2020-10-08 09:00:00', 'accepted', 1),
+    (4, 1, 4, '2020-10-09 02:00:00', '2020-10-09 09:00:00', 'accepted', 1),
+    (5, 1, 4, '2020-10-10 02:00:00', '2020-10-10 09:00:00', 'accepted', 1),
+    (6, 1, 4, '2020-10-06 02:00:00', '2020-10-06 09:00:00', 'accepted', 1),
+    (7, 2, 4, '2020-10-07 02:00:00', '2020-10-07 09:00:00', 'accepted', 1),
+    (8, 1, 4, '2020-10-08 02:00:00', '2020-10-08 09:00:00', 'accepted', 1),
+    (9, 1, 5, '2020-10-09 02:00:00', '2020-10-09 09:00:00', 'accepted', 1),
+    (10, 1, 4, '2020-10-10 02:00:00', '2020-10-10 09:00:00', 'accepted', 1);
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
