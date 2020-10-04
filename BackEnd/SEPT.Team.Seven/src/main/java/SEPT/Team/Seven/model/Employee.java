@@ -1,5 +1,6 @@
 package SEPT.Team.Seven.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -43,6 +44,7 @@ public class Employee extends Account {
 	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String img) {
 		super(firstName,lastName,email,phoneNo, address);
 		this.img = img;
+		services = new ArrayList<Service>();
 	}
 	
 	public List<Service> getServices() {
