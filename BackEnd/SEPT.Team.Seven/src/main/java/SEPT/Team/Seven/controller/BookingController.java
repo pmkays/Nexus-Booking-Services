@@ -58,6 +58,15 @@ public class BookingController {
     }
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/cancel")
+    public Booking cancelBooking(@RequestBody BookingDTO bookingDto) {
+		System.out.println("cancelling booking");
+       return bookingService.cancelBooking(bookingDto.getEmployeeId(), bookingDto.getCustomerId(),
+    		   bookingDto.getStartTime(), bookingDto.getEndTime(), bookingDto.getServiceId()).orElseThrow(()->
+       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error cancelling booking."));
+    }
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/employee/findAllByDate")
 	public List<Booking> findBookingsByEmployeeAndDate(@RequestBody EmployeeTimeDTO employeeTimeDTO) {
 		return bookingService.findBookingsByEmployeeAndDate(employeeTimeDTO.getEmployeeId(),

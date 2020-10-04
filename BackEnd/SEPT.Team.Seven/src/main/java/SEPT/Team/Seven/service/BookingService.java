@@ -85,6 +85,8 @@ public class BookingService {
 					// or it ends before the booking starts.
 					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0) && booking.getStatus().equals("accepted")) {
 						// so if these conditions are not meant, we'll return empty.
+						System.out.println("IS ACCEPTED: " + booking.getStatus().equals("accepted"));
+						System.out.println("BOOKING ID: " + booking.getId());
 						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
 						return Optional.empty();
 					}
@@ -213,7 +215,31 @@ public class BookingService {
 	public List<Booking> getAllBookings() {
 		return bookingRepository.findAll();
 	}
+	
+	public Optional<Booking> cancelBooking(int employeeId, int customerId, Date startTime, Date endTime,
+			int serviceId) {
+		
+		Optional<Booking> toReturn = Optional.empty();
+		
+		for (Booking booking : bookingRepository.findAllByEmployeeId(employeeId)) {
+			if (booking.getCustomer().getId() == customerId && booking.getStartTime().compareTo(startTime) == 0
+					&& booking.getEndTime().compareTo(endTime) == 0 && booking.getService().getId() == serviceId) {
+				Calendar TwoDaysInFuture = Calendar.getInstance();
+				TwoDaysInFuture.add(Calendar.DATE, 2);
+				// check that the booking is after 2 days from the current time
+				if (TwoDaysInFuture.getTime().compareTo(startTime) < 0) {
+					booking.setStatus("cancelled");
+					bookingRepository.save(booking);
+					toReturn = Optional.of(booking);
+					break;
+				}
+			}
+		}
+		return toReturn;
+	}
 
 
 
 }
+
+
