@@ -38,7 +38,10 @@ class App extends Component {
             path='/addemployee'
             component={() => <Dashboard content='addemployee' />}
           />
-          <Route path='/addService' component={AddService} />
+          <Route
+            path='/addservice'
+            component={() => <Dashboard content='addservice' />}
+          />
           <Route
             path='/profile'
             component={() => <Dashboard content='profile' />}

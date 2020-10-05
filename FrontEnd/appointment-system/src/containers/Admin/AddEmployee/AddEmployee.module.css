@@ -1,0 +1,10 @@
+.AddEmployeeBox {
+  border-radius: 15px;
+  margin: 2% 5% 0;
+  padding: 2% 10% 2%;
+  background-color: white;
+}
+
+.AddEmployeeBox h1 {
+  font-weight: bold;
+}

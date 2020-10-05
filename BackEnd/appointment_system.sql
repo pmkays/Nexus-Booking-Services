@@ -198,7 +198,7 @@ INSERT INTO `employee` VALUES
 --
 
 INSERT INTO `admin` VALUES
-    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road', 'imgurl');
+    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road', 'https://i.imgur.com/hCEQVy0.jpg');
 
 --
 -- Data for table `security_role`

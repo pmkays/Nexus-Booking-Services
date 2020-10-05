@@ -143,6 +143,23 @@ export class Register extends Component {
         valid: true,
         touched: false,
       },
+      avatar: {
+        labelName: 'Avatar',
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Paste image url here',
+        },
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.img,
+        validation: {
+          required: false,
+        },
+        valid: true,
+        touched: false,
+      },
     },
     isFormValid: true,
   };
@@ -218,12 +235,15 @@ export class Register extends Component {
       email: this.state.controls.email.value,
       phoneNo: this.state.controls.phoneNumber.value,
       address: this.state.controls.address.value,
+      avatar: this.state.controls.avatar.value,
     };
 
     this.props.onAddNewProfile(formData, this.props.history);
   };
 
   render() {
+    let form = null;
+
     const formElementsArray = [];
     for (let key in this.state.controls) {
       formElementsArray.push({
@@ -233,7 +253,7 @@ export class Register extends Component {
     }
 
     // Creates an input element with configurations from state
-    let form = formElementsArray.map((formElement) => (
+    let formElements = formElementsArray.map((formElement) => (
       <React.Fragment key={formElement.id}>
         <Input
           key={formElement.id}
@@ -254,11 +274,6 @@ export class Register extends Component {
         )}
       </React.Fragment>
     ));
-
-    // Renders a spinning icon if loading
-    if (this.props.loading) {
-      form = <Spinner />;
-    }
 
     // Renders error message if there is any errors
     let errorMessage = null;
@@ -282,23 +297,29 @@ export class Register extends Component {
       );
     }
 
+    form = (
+      <form onSubmit={this.addProfileHandler}>
+        <div className='form-group container'>
+          {formElements}
+          {errorMessage}
+          <Button disabled={!this.state.isFormValid} classes='btn btn-primary'>
+            Submit
+          </Button>
+          {errorMsg}
+        </div>
+      </form>
+    );
+
+    // Renders a spinning icon if loading
+    if (this.props.loading) {
+      form = <Spinner />;
+    }
+
     return (
       <Layout>
         <div>
           {authRedirect}
-          <form onSubmit={this.addProfileHandler}>
-            <div className='form-group container'>
-              {form}
-              {errorMessage}
-              <Button
-                disabled={!this.state.isFormValid}
-                classes='btn btn-primary'
-              >
-                Submit
-              </Button>
-              {errorMsg}
-            </div>
-          </form>
+          {form}
         </div>
       </Layout>
     );

@@ -10,8 +10,9 @@ import DrawerToggle from '../../components/Navigation/DrawerToggle/DrawerToggle'
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Employees from '../Admin/Employees/Employees';
 import AddEmployee from '../Admin/AddEmployee/AddEmployee';
+import AddService from '../Admin/AddService/AddService';
 import WorkingTimes from '../WorkingTimes/WorkingTimes';
-import Availabilities from '../../containers/Availabilites/Availabilites';
+import Availabilities from '../../containers/Availabilities/Availabilities';
 import Login from '../../containers/Login/Login';
 import Profile from '../../containers/Profile/Profile';
 import EditProfile from '../../containers/Profile/EditProfile/EditProfile';
@@ -37,13 +38,32 @@ export class Dashboard extends Component {
         content = <DashboardWelcome />;
         break;
       case 'employees':
-        content = <Employees />;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <Employees />
+          </Animated>
+        );
         break;
       case 'addemployee':
-        content = <AddEmployee />;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <AddEmployee />
+          </Animated>
+        );
+        break;
+      case 'addservice':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <AddService />
+          </Animated>
+        );
         break;
       case 'workingtimes':
-        content = <WorkingTimes />;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <WorkingTimes />
+          </Animated>
+        );
         break;
       case 'booking':
         content = (
@@ -170,7 +190,7 @@ export class Dashboard extends Component {
       <div className={classes.Dashboard}>
         <div className={classes.MenuLogo}>
           <DrawerToggle />
-          <div className={classes.Float}>
+          <div className={classes.Float + ' ' + classes.NoDecoration}>
             <NavLink to='/' exact>
               <div className={classes.Logo}>
                 <span className={classes.NavLogo}>

@@ -151,6 +151,10 @@
   display: none;
 } */
 
+.NoDecoration a:hover {
+  text-decoration: none;
+}
+
 @media (max-width: 768px) {
   .MainContent {
     overflow-y: scroll;

@@ -208,13 +208,22 @@ export const fetchAccountNo = (formData, history, type, token) => {
 
 export const addProfileDetailsToUser = (formData, history, type, token) => {
   return (dispatch) => {
+    console.log('data coming in', formData);
+
+    if (formData.avatar === '') {
+      formData.avatar = 'https://i.imgur.com/Eie9ARV.png';
+    }
+
     let profileData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
       phoneNo: formData.phoneNo,
       address: formData.address,
+      img: formData.avatar,
     };
+
+    console.log(profileData);
 
     let config = null;
 
@@ -229,10 +238,15 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
     axios
       .put('/api/' + type + '/' + formData.accountNo, profileData, config)
       .then((response) => {
+        console.log(response);
         dispatch(addProfileSuccess(response.data, type));
       })
       .then(() => {
-        history.push('/login');
+        if (type === 'employees') {
+          history.push('/employees');
+        } else {
+          history.push('/login');
+        }
       })
       .catch((error) => {
         dispatch(

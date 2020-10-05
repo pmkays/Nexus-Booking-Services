@@ -4,6 +4,7 @@ import moment from 'moment';
 import axios from '../../axios-sept';
 
 import * as actions from '../../store/actions/actions';
+import classes from './WorkingTimes.module.css';
 
 class WorkingTimes extends Component {
   state = {
@@ -154,8 +155,9 @@ class WorkingTimes extends Component {
       return Promise.all(addWorkingTimesPromise);
     };
     return (
-      <React.Fragment>
-        <h2 className='text-center'>Add Working Times for {employeeList()}</h2>
+      <div className={classes.WorkingTimesBox}>
+        <h1 className='text-center'>Add Working Times for {employeeList()}</h1>
+        <br />
         <div className='text-center'>
           <i className='fas fa-arrow-left btn' onClick={previousDay}></i>
           On {this.state.time.format('dddd')} -{' '}
@@ -191,6 +193,7 @@ class WorkingTimes extends Component {
             {listAvailabilities()}
           </div>
         </div>
+        <br />
         <div className='text-center'>
           <button className='btn btn-primary' onClick={addWorkingTime}>
             Add
@@ -210,7 +213,7 @@ class WorkingTimes extends Component {
             </ul>
           )}
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
