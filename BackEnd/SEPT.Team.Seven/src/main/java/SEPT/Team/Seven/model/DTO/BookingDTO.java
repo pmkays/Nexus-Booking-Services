@@ -2,17 +2,17 @@ package SEPT.Team.Seven.model.DTO;
 
 import java.util.Date;
 
-public class BookingDto {
+public class BookingDTO {
     private int employeeId;
     private int customerId;
 	private Date startTime;
 	private Date endTime;
 	private int serviceId;
 	
-    protected BookingDto() {
+    protected BookingDTO() {
     }
     
-	public BookingDto(int employeeId, int customerId, Date startTime, Date endTime, String accountType, int serviceId) {
+	public BookingDTO(int employeeId, int customerId, Date startTime, Date endTime, int serviceId) {
 		this.employeeId = employeeId;
 		this.customerId = customerId;
 		this.startTime = startTime;

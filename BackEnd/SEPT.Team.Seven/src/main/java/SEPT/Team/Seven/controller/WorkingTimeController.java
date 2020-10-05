@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
 import SEPT.Team.Seven.model.WorkingTime;
-import SEPT.Team.Seven.model.DTO.TimeDto;
+import SEPT.Team.Seven.model.DTO.EmployeeTimeDTO;
 import SEPT.Team.Seven.service.WorkingTimeService;
 
 @RestController
@@ -33,7 +33,7 @@ public class WorkingTimeController {
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
-    public WorkingTime addWorkingTime(@RequestBody TimeDto timeDto) {
+    public WorkingTime addWorkingTime(@RequestBody EmployeeTimeDTO timeDto) {
        return workingTimeService.addWorkingTime(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding working time."));
     }

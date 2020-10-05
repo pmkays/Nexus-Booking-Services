@@ -1,0 +1,14 @@
+.filter{
+    float: left;
+    width: 25%;
+    margin-right: 20px;
+}
+
+a[aria-controls]{
+    color:#4873a6;
+    font-weight: bold;
+}
+
+button[type=submit]{
+    margin: 5px;
+}

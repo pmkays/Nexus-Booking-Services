@@ -12,14 +12,17 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/' exact>
           HOME
         </NavigationItem>
+
         <NavigationItem link='/about'>ABOUT</NavigationItem>
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
+        <NavigationItem link="/viewbookings">VIEW BOOKINGS</NavigationItem>
         <NavigationItem link='/dashboard'>
           <div className={classes.Dashboard}>
             <span>MY DASHBOARD</span>
           </div>
         </NavigationItem>
+
       </ul>
     );
   } else if (props.isEmployee && props.isAuthenticated) {
@@ -31,11 +34,13 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/about'>ABOUT</NavigationItem>
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
+        <NavigationItem link="/viewbookings">VIEW BOOKINGS</NavigationItem>
         <NavigationItem link='/dashboard'>
           <div className={classes.Dashboard}>
             <span>MY DASHBOARD</span>
           </div>
         </NavigationItem>
+
       </ul>
     );
   } else if (props.isCustomer && props.isAuthenticated) {
@@ -44,14 +49,17 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/' exact>
           HOME
         </NavigationItem>
+
         <NavigationItem link='/about'>ABOUT</NavigationItem>
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
+        <NavigationItem link="/viewbookings">VIEW BOOKINGS</NavigationItem>
         <NavigationItem link='/dashboard'>
           <div className={classes.Dashboard}>
             <span>MY DASHBOARD</span>
           </div>
         </NavigationItem>
+
       </ul>
     );
   } else {
