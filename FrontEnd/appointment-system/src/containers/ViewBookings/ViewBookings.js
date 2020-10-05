@@ -15,7 +15,7 @@ export class ViewBookings extends Component {
     error: null,
     filters: {'complete': false, 'pending': false, 'cancelled': false, 'date':false, 'sort':'default'} ,
     from: null,
-    to: null
+    to: null,
   };
 
   componentDidMount() {
@@ -145,6 +145,16 @@ export class ViewBookings extends Component {
         return word.substring(0,1).toUpperCase() + word.substring(1);
     }
 
+    const timeDiff = (time1, time2) => {
+        var duration = moment(time1).diff(moment(time2), 'hours'); 
+
+        if(duration === 1){
+            return `${duration} hour`
+        }
+        return `${duration} hours`
+
+    }
+
     let bookings = null;
     if (this.state.bookings !== null) {
         bookings = this.state.bookings.map((bookings) => {
@@ -153,6 +163,7 @@ export class ViewBookings extends Component {
             <td>{moment(bookings.startTime).format('DD/MM/yyyy')}</td>
             <td>{moment(bookings.startTime).format('HH:mm')}</td>
             <td>{moment(bookings.endTime).format('HH:mm')}</td>
+            <td>{timeDiff(bookings.endTime, bookings.startTime)}</td>
             <td>{uppercaseFirstCharacter(bookings.service.name)}</td>
             <td>{uppercaseFirstCharacter(bookings.employee.firstName)} {uppercaseFirstCharacter(bookings.employee.lastName)}</td>
             <td>{uppercaseFirstCharacter(bookings.status)}</td>
@@ -225,56 +236,58 @@ export class ViewBookings extends Component {
       <div className='container' style={{display: "flex"}}>
         <div className={classes.filter}>
             <h4>Filter by...</h4>
+            <hr/>
             <div className="row">
                 <div className="col">
-                    <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Sort v</a>
-                    <div className="collapse multi-collapse" id="statusAccordion">
-                        <div className="">
-                            <select name="sort" onChange = {handleSorting}>
+                    <a data-toggle="collapse" href="#sortAccordion" aria-expanded="false" aria-controls="sortAccordion">Sort &#x25BC;</a>
+                    <div className="collapse multi-collapse" id="sortAccordion">
+                        <div className="form-group">
+                            <label htmlFor="sort">Date:</label>
+                            <select className ="form-control" name="sort" onChange = {handleSorting}>
                                 <option value = "default" selected> Default</option>
-                                <option value = "ascending" > Ascending</option>
+                                <option value = "ascending" > Ascending </option>
                                 <option value = "descending"> Descending</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
+            <hr/>
             <div className="row">
                 <div className="col">
-                    <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Status v</a>
+                    <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Status &#x25BC;</a>
                     <div className="collapse multi-collapse" id="statusAccordion">
                         <div className="">
                             <input type="checkbox" name="Completed" value="complete" onChange={handleStatusChange}/>
-                            <label for="Completed"> &nbsp; Complete</label><br/>
+                            <label htmlFor="Completed"> &nbsp; Complete</label><br/>
                             <input type="checkbox" name="Pending" value="pending" onChange={handleStatusChange}/>
-                            <label for="Pending"> &nbsp; Pending</label><br/>
+                            <label htmlFor="Pending"> &nbsp; Pending</label><br/>
                             <input type="checkbox" name="Cancelled" value="cancelled" onChange={handleStatusChange}/>
-                            <label for="Cancelled">  &nbsp; Cancelled</label><br/>
+                            <label htmlFor="Cancelled">  &nbsp; Cancelled</label><br/>
                         </div>
                     </div>
                 </div>
             </div>
+            <hr/>
             <div className="row">
                 <div className="col">
-                    <a data-toggle="collapse" href="#dateAccordion" aria-expanded="false" aria-controls="dateAccordion">Date v</a>
+                    <a data-toggle="collapse" href="#dateAccordion" aria-expanded="false" aria-controls="dateAccordion">Date &#x25BC;</a>
                     <div className="collapse multi-collapse" id="dateAccordion">
-                        <form className="form-horizontal" onSubmit={handleFormSubmit}>
+                        <form className="form" onSubmit={handleFormSubmit}>
                             <div className="form-group">
-                                <label className="col-sm-2" for="from">From:</label>
-                                <div className="col-sm-10">
-                                    <input type="date" className="form-control" id="from" name="from"/>
-                                </div>
+                                <label htmlFor="from">From:</label>
+                                <input type="date" className="form-control" id="from" name="from"/>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-2" for="to">To:</label>
-                                <div className="col-sm-10">
-                                    <input type="date" className="form-control" id="to" name="to"/>
-                                </div>
+                                <label htmlFor="to">To:</label>
+                                <input type="date" className="form-control" id="to" name="to"/>
                             </div>
                             <div className="form-group">
-                            <div className="col-sm-offset-2 col-sm-10">
-                                <button type="submit" className="btn btn-primary" onClick = {getButton} value = "go">Go!</button>
-                                <button type="submit" className="btn btn-danger" onClick = {getButton} value ="clear">Clear</button>
+                            <div className="row">
+                                <div className="col text-center">
+                                    <button type="submit" className="btn btn-primary" onClick = {getButton} value = "go">Go!</button>
+                                    <button type="submit" className="btn btn-danger" onClick = {getButton} value ="clear">Clear</button>
+                                </div>
                             </div>
                             </div>
                         </form>
@@ -287,17 +300,18 @@ export class ViewBookings extends Component {
         <br />
         <div style={{"flexGrow":1}}>
             <table className='table'>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Service</th>
-                    <th>Employee</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>{bookings}</tbody>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration</th>
+                        <th>Service</th>
+                        <th>Employee</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>{bookings}</tbody>
             </table>
         </div>   
       </div>
@@ -314,9 +328,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    // return {
-    //   onFetchBookings: (token) => dispatch(actions.fetchBookings(token)),
-    // };
+//     return {
+//       onFetchBookings: (token) => dispatch(actions.fetchBookings(token)),
+//     };
   };
   
 
