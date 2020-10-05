@@ -327,7 +327,7 @@ export class ViewBookings extends Component {
                             <div className="form-group">
                             <div className="row">
                                 <div className="col text-center">
-                                    <button type="submit" className="btn btn-primary" onClick = {getButton} value = "go">Go!</button>
+                                    <button type="submit" className="btn" style={{color: "white", backgroundColor: "#44CDD6"}} onClick = {getButton} value = "go">Find!</button>
                                     <button type="submit" className="btn btn-danger" onClick = {getButton} value ="clear">Clear</button>
                                 </div>
                             </div>
