@@ -155,6 +155,12 @@
   text-decoration: none;
 }
 
+@media (max-width: 1024px) {
+  .Toolbar {
+    min-width: 100px;
+  }
+}
+
 @media (max-width: 768px) {
   .MainContent {
     overflow-y: scroll;

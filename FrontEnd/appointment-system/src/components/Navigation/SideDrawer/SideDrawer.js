@@ -15,17 +15,15 @@ const sideDrawer = (props) => {
       <Backdrop show={props.open} cancel={props.closed} />
       <div className={attachedClasses.join(' ')} onClick={props.closed}>
         <div className={classes.Float + ' ' + classes.NoDecoration}>
-          <NavLink to='/' exact>
-            <div className={classes.Logo}>
-              <span className={classes.NavLogo}>
-                NE<span className={classes.Blue}>X</span>US
-              </span>
-              <span className={classes.Slogan}>
-                <br />
-                BOOKING - SYSTEM
-              </span>
-            </div>
-          </NavLink>
+          <div className={classes.Logo}>
+            <span className={classes.NavLogo}>
+              NE<span className={classes.Blue}>X</span>US
+            </span>
+            <span className={classes.Slogan}>
+              <br />
+              BOOKING - SYSTEM
+            </span>
+          </div>
         </div>
         <nav className={classes.FlexDown}>
           <DashboardIcon
