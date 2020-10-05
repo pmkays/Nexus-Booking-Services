@@ -45,6 +45,13 @@ public class EmployeeController {
 	}
 
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@PostMapping("/services/remove")
+	public Service removeServiceById(@RequestBody ServiceDTO serviceDTO) {
+	    return employeeService.removeServiceByName(serviceDTO.getEmployeeId(), serviceDTO.getServiceName()).orElseThrow(()->
+	    new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error removing service for employee."));
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/findAllByDate")
 	public List<Employee> findEmployeesByDate(@RequestBody BookingDateDTO bookingDateDTO) {
 		return employeeService.findEmployeeByDate(bookingDateDTO.getStartTime());
