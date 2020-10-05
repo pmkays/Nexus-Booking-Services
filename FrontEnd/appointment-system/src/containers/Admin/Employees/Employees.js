@@ -57,7 +57,7 @@ export class Employees extends Component {
     if (this.state.employees !== null) {
       employees = this.state.employees.map((employee) => {
         return (
-          <tr key={employee.id}>
+          <tr scope='row' key={employee.id}>
             <td>{employee.id}</td>
             <td>{employee.firstName}</td>
             <td>{employee.lastName}</td>
@@ -82,13 +82,13 @@ export class Employees extends Component {
       <table className='table'>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone No.</th>
-            <th>Address</th>
-            <th>Add Service</th>
+            <th scope='col'>ID</th>
+            <th scope='col'>First Name</th>
+            <th scope='col'>Last Name</th>
+            <th scope='col'>Email</th>
+            <th scope='col'>Phone No.</th>
+            <th scope='col'>Address</th>
+            <th scope='col'>Add Service</th>
           </tr>
         </thead>
         {tbody}

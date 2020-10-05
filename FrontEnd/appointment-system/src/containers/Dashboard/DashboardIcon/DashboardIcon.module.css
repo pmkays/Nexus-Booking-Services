@@ -54,3 +54,27 @@
 .Hide {
   display: none;
 }
+
+@media (max-width: 500px) {
+  .Hide {
+    display: initial;
+  }
+
+  .IconMargin {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+
+  .Center {
+    margin: 0;
+    text-align: center;
+  }
+
+  .DashboardLabelHighLight {
+    display: none;
+  }
+
+  .Index {
+    z-index: 0;
+  }
+}

@@ -24,21 +24,23 @@ const dashboardIcon = (props) => {
         >
           <i
             className={props.classes}
-            onMouseOver={() => appear(props.to)}
-            onMouseLeave={() => dissappear(props.to)}
+            onMouseOver={() => appear(props.id)}
+            onMouseLeave={() => dissappear(props.id)}
           ></i>
         </NavLink>
       </div>
-      <div id={props.to} className={classes.Index + ' ' + classes.Hide}>
-        <Animated
-          className={classes.Flex}
-          animationIn='fadeInLeft'
-          animationInDuration={200}
-        >
-          <div className={classes.DashboardLabel}>{props.name}</div>
-          <div className={classes.DashboardLabelHighLight}></div>
-        </Animated>
-      </div>
+      <NavLink className={classes.Index} to={props.to}>
+        <div id={props.id} className={classes.Index + ' ' + classes.Hide}>
+          <Animated
+            className={classes.Flex}
+            animationIn='fadeInLeft'
+            animationInDuration={200}
+          >
+            <div className={classes.DashboardLabel}>{props.name}</div>
+            <div className={classes.DashboardLabelHighLight}></div>
+          </Animated>
+        </div>
+      </NavLink>
     </div>
   );
 };

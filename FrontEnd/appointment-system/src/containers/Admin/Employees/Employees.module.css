@@ -8,3 +8,11 @@
 .EmployeesBox h1 {
   font-weight: bold;
 }
+
+@media (max-width: 500px) {
+  .EmployeesBox {
+    margin: 5% 5%;
+    padding: 2% 2%;
+    overflow-x: scroll;
+  }
+}

@@ -7,6 +7,7 @@ import { Animated } from 'react-animated-css';
 
 import DashboardIcon from './DashboardIcon/DashboardIcon';
 import DrawerToggle from '../../components/Navigation/DrawerToggle/DrawerToggle';
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Employees from '../Admin/Employees/Employees';
 import AddEmployee from '../Admin/AddEmployee/AddEmployee';
@@ -23,6 +24,7 @@ export class Dashboard extends Component {
   state = {
     content: null,
     error: null,
+    showSideDrawer: false,
   };
 
   //As soon as this component loads it will attempt to grab the current profile
@@ -103,6 +105,16 @@ export class Dashboard extends Component {
     return content;
   };
 
+  sideDrawerClosedHandler = () => {
+    this.setState({ showSideDrawer: false });
+  };
+
+  sideDrawerOpenHandler = () => {
+    this.setState((prevState) => {
+      return { showSideDrawer: !prevState.showSideDrawer };
+    });
+  };
+
   render() {
     let profile = <Spinner />;
     let content = this.contentToRender();
@@ -123,6 +135,7 @@ export class Dashboard extends Component {
 
               <DashboardIcon
                 name='Dashboard'
+                id='Dashboard'
                 classes='fas fa-home'
                 to='dashboard'
               />
@@ -131,12 +144,14 @@ export class Dashboard extends Component {
                 <React.Fragment>
                   <DashboardIcon
                     name='Employees'
+                    id='Employees'
                     classes='fas fa-users'
                     to='employees'
                   />
                   <br />
                   <DashboardIcon
                     name='Workhours'
+                    id='Workhours'
                     classes='fas fa-hourglass-half'
                     to='workingtimes'
                   />
@@ -147,6 +162,7 @@ export class Dashboard extends Component {
                 <React.Fragment>
                   <DashboardIcon
                     name='Bookings'
+                    id='Bookings'
                     classes='fas fa-book'
                     to='bookings'
                   />
@@ -158,6 +174,7 @@ export class Dashboard extends Component {
                 <React.Fragment>
                   <DashboardIcon
                     name='Availabilities'
+                    id='Availabilities'
                     classes='fas fa-calendar-check'
                     to='availabilities'
                   />
@@ -166,12 +183,14 @@ export class Dashboard extends Component {
               ) : null}
               <DashboardIcon
                 name='Settings'
+                id='Settings'
                 classes='fas fa-cog'
                 to='profile'
               />
               <br />
               <DashboardIcon
                 name='Logout'
+                id='Logout'
                 classes='fas fa-sign-out-alt'
                 to='logout'
               />
@@ -189,7 +208,11 @@ export class Dashboard extends Component {
     return (
       <div className={classes.Dashboard}>
         <div className={classes.MenuLogo}>
-          <DrawerToggle />
+          <DrawerToggle openSideDrawHandler={this.sideDrawerOpenHandler} />
+          <SideDrawer
+            open={this.state.showSideDrawer}
+            closed={this.sideDrawerClosedHandler}
+          />
           <div className={classes.Float + ' ' + classes.NoDecoration}>
             <NavLink to='/' exact>
               <div className={classes.Logo}>

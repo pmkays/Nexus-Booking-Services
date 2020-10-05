@@ -1,0 +1,104 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import classes from './SideDrawer.module.css';
+import DashboardIcon from '../../../containers/Dashboard/DashboardIcon/DashboardIcon';
+import Backdrop from '../../UI/Backdrop/Backdrop';
+
+const sideDrawer = (props) => {
+  let attachedClasses = [classes.SideDrawer, classes.Close];
+  if (props.open) {
+    attachedClasses = [classes.SideDrawer, classes.Open];
+  }
+  return (
+    <React.Fragment>
+      <Backdrop show={props.open} cancel={props.closed} />
+      <div className={attachedClasses.join(' ')} onClick={props.closed}>
+        <div className={classes.Float + ' ' + classes.NoDecoration}>
+          <NavLink to='/' exact>
+            <div className={classes.Logo}>
+              <span className={classes.NavLogo}>
+                NE<span className={classes.Blue}>X</span>US
+              </span>
+              <span className={classes.Slogan}>
+                <br />
+                BOOKING - SYSTEM
+              </span>
+            </div>
+          </NavLink>
+        </div>
+        <nav className={classes.FlexDown}>
+          <DashboardIcon
+            name='Dashboard'
+            id='dashboard-sd'
+            classes='fas fa-home'
+            to='dashboard'
+          />
+          <br />
+          {props.authority === 'ROLE_ADMIN' ? (
+            <React.Fragment>
+              <DashboardIcon
+                name='Employees'
+                id='Employees'
+                classes='fas fa-users'
+                to='employees'
+              />
+              <br />
+              <DashboardIcon
+                name='Workhours'
+                id='Workhours'
+                classes='fas fa-hourglass-half'
+                to='workingtimes'
+              />
+              <br />
+            </React.Fragment>
+          ) : null}
+          {props.authority === 'ROLE_CUSTOMER' ? (
+            <React.Fragment>
+              <DashboardIcon
+                name='Bookings'
+                id='Bookings'
+                classes='fas fa-book'
+                to='bookings'
+              />
+              <br />
+            </React.Fragment>
+          ) : null}
+
+          {props.authority === 'ROLE_EMPLOYEE' ? (
+            <React.Fragment>
+              <DashboardIcon
+                name='Availabilities'
+                id='Availabilities'
+                classes='fas fa-calendar-check'
+                to='availabilities'
+              />
+              <br />
+            </React.Fragment>
+          ) : null}
+          <DashboardIcon
+            name='Settings'
+            id='Settings'
+            classes='fas fa-cog'
+            to='profile'
+          />
+          <br />
+          <DashboardIcon
+            name='Logout'
+            id='Logout'
+            classes='fas fa-sign-out-alt'
+            to='logout'
+          />
+        </nav>
+      </div>
+    </React.Fragment>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    authority: state.auth.authority,
+  };
+};
+
+export default connect(mapStateToProps)(sideDrawer);
