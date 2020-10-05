@@ -7,7 +7,6 @@ import Logout from './containers/Login/Logout/Logout';
 import Home from './containers/Home/Home';
 import RegisterProfile from './containers/Register/Register';
 import AddService from './containers/Admin/AddService/AddService';
-import ViewBookings from './containers/ViewBookings/ViewBookings';
 import BookingDetails from './containers/ViewBookings/BookingDetails/BookingDetails'
 
 import AboutUs from './containers/AboutUs/AboutUs';
@@ -56,14 +55,19 @@ class App extends Component {
             path='/editprofile'
             component={() => <Dashboard content='editprofile' />}
           />
+          <Route
+            path='/viewbookings'
+            component={() => <Dashboard content='viewbookings' />}
+          />
+          <Route
+            path='/booking/:id'
+            component={() => <Dashboard content='bookingdetails' />}
+          />
+
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
-
-          <Route path='/workingtimes' component={WorkingTimes} />
-          <Route path='/viewbookings' component={ViewBookings} />
-          <Route path='/booking/:id' component={BookingDetails} />
           <Route path='/' component={Home} />
         </Switch>
       );
@@ -87,15 +91,19 @@ class App extends Component {
             path='/availabilities'
             component={() => <Dashboard content='availabilities' />}
           />
+          <Route
+            path='/viewbookings'
+            component={() => <Dashboard content='viewbookings' />}
+          />
+          <Route
+            path='/booking/:id'
+            component={() => <Dashboard content='bookingdetails' />}
+          />
+
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />
           <Route path='/contact' component={ContactUs} />
           <Route path='/howitworks' component={HowItWorks} />
-
-          <Route path='/availabilities' component={Availabilites} />
-          <Route path='/viewbookings' component={ViewBookings} />
-          <Route path='/booking/:id' component={BookingDetails} />
-
           <Route path='/' component={Home} />
         </Switch>
       );
@@ -118,18 +126,24 @@ class App extends Component {
             path='/editprofile'
             component={() => <Dashboard content='editprofile' />}
           />
-          <Route path='/logout' component={Logout} />
-          <Route path='/about' component={AboutUs} />
-          <Route path='/contact' component={ContactUs} />
-          <Route path='/howitworks' component={HowItWorks} />
-
           <Route
             path='/bookings'
             component={() => <Dashboard content='booking' />}
           />
+          <Route
+            path='/viewbookings'
+            component={() => <Dashboard content='viewbookings' />}
+          />
+          <Route
+            path='/booking/:id'
+            component={() => <Dashboard content='bookingdetails'
+            {...this.props}/>}
+          />
 
-          <Route path='/viewbookings' component={ViewBookings} />
-          <Route path='/booking/:id' component={BookingDetails} />
+          <Route path='/logout' component={Logout} />
+          <Route path='/about' component={AboutUs} />
+          <Route path='/contact' component={ContactUs} />
+          <Route path='/howitworks' component={HowItWorks} />
           <Route path='/' component={Home} />
         </Switch>
       );

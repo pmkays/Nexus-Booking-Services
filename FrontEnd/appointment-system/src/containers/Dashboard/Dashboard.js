@@ -19,6 +19,10 @@ import Profile from '../../containers/Profile/Profile';
 import EditProfile from '../../containers/Profile/EditProfile/EditProfile';
 import Booking from '../Booking/Booking';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ViewBookings from '../ViewBookings/ViewBookings';
+import BookingDetails from '../ViewBookings/BookingDetails/BookingDetails';
+
+
 
 export class Dashboard extends Component {
   state = {
@@ -98,6 +102,20 @@ export class Dashboard extends Component {
           </Animated>
         );
         break;
+      case 'viewbookings':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <ViewBookings />
+          </Animated>
+        );
+        break;
+      case 'bookingdetails':
+          content = (
+            <Animated animationIn='zoomIn' animationInDuration={200}>
+              <BookingDetails {...this.props}/>
+            </Animated>
+          );
+          break;
       default:
         break;
     }
