@@ -28,6 +28,13 @@ public class BookingController {
 	private BookingService bookingService;
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@GetMapping("/{id}")
+	public Booking getBookingById(@PathVariable("id") int id) {
+		return bookingService.getBookingById(id).orElseThrow(()->
+	       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error retrieving booking."));
+	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/customer/{id}")
 	public List<Booking> getBookingsForCustomer(@PathVariable("id") int id) {
 		List<Booking> bookings = bookingService.getBookingsForCustomer(id);

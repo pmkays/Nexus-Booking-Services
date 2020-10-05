@@ -238,6 +238,10 @@ public class BookingService {
 		return toReturn;
 	}
 
+	public Optional<Booking> getBookingById(int id) {
+		return bookingRepository.findById(id);
+	}
+
 
 
 }
