@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import axios from '../../../axios-sept';
 import moment from 'moment';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import {uppercaseFirstCharacter, timeDiff} from '../../../utility/utility'
+import {uppercaseFirstCharacter, timeDiff} from '../../../utility/utility';
+import classes from './BookingDetails.module.css';
 
 export class BookingDetails extends Component {
     state = {
@@ -83,56 +84,56 @@ export class BookingDetails extends Component {
         <React.Fragment>
             <div style={{display: 'flex'}}>{/*blue-green div*/}
                 <hr />
-                <div style={{float:'left',width:'35%'}}> {/*booking details div*/}
-                    <h2>Booking Details</h2>
+                <div className={classes.bookingDetails}> {/*booking details div*/}
+                    <h1>Booking Details</h1><br/>
                     <dl className='row'>
-                        <dt className='col-sm-3'>Date</dt>
+                        <dt className='col-sm-3'>Date:</dt>
                         <dd className='col-sm-9'>{moment(this.state.bookingDetails.startTime).format('DD/MM/yyyy')}</dd>
-                        <dt className='col-sm-3'>Start Time</dt>
+                        <dt className='col-sm-3'>Start Time:</dt>
                         <dd className='col-sm-9'>{moment(this.state.bookingDetails.startTime).format('HH:mm')}</dd>
-                        <dt className='col-sm-3'>End Time</dt>
+                        <dt className='col-sm-3'>End Time:</dt>
                         <dd className='col-sm-9'>{moment(this.state.bookingDetails.endTime).format('HH:mm')}</dd>
-                        <dt className='col-sm-3'>Duration</dt>
+                        <dt className='col-sm-3'>Duration:</dt>
                         <dd className='col-sm-9'>{timeDiff(this.state.bookingDetails.endTime, this.state.bookingDetails.startTime)}</dd>
-                        <dt className='col-sm-3'>Status</dt>
+                        <dt className='col-sm-3'>Status:</dt>
                         <dd className='col-sm-9'>{uppercaseFirstCharacter(this.state.bookingDetails.status)}</dd>
-                        <button type="button" className='btn btn-danger'style={{display:'block'}}>Cancel</button>
-                        <dd>Note you cannot cancel a booking within 48 hours of the booking time</dd>
+                        <button type="button" className={classes.cancelBtn}>Cancel</button><br/>
+                        <div className={classes.note}><p>Note you cannot cancel a booking within 48 hours of the booking time</p></div>
                     </dl>
                 </div>
-                <div style={{float:'right', width:'65%'}}> 
-                    <div className="row"> {/*this div is meant to be light green*/}
-                        <div className="col-sm-3"> {/*for services*/}
+                <div className={classes.extraDetails}> 
+                    <div className={'row ' + classes.lightGreenContainer}> {/*this div is meant to be light green*/}
+                        <div className={'col-sm-3 d-flex justify-content-center text-center ' + classes.title}> {/*for services*/}
                             <h2>Service</h2>
                         </div>
-                        <div className="col-sm-9"> {/*this div is meant to be white*/}
-                            <div className="row">
-                                <h4>Service Name</h4>
+                        <div className={'col-sm-9 ' + classes.whiteContainer}> {/*this div is meant to be white*/}
+                            <div className={'row ' + classes.name}>
+                                <h4>{uppercaseFirstCharacter(this.state.bookingDetails.service.name)}</h4>
                             </div>
                             <div className="row">
-                                <div className="col">
-                                    Service Description
+                                 <div className={'col ' + classes.description}>
+                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                 </div>
-                                <div className="col">
-                                    Service picture
+                                <div className={'col ' + classes.image}>
+                                    <img src={this.state.bookingDetails.service.img} alt="service"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="row"> {/*this div is meant to be light green*/}
-                        <div className="col-sm-3"> {/*for employees/customers */}
+                    <div className={'row ' + classes.lightGreenContainer}> {/*this div is meant to be light green*/}
+                        <div className={'col-sm-3 d-flex justify-content-center text-center ' + classes.title}> {/*for employees/customers */}
                             <h2>Employee</h2>
                         </div>
-                        <div className="col-sm-9"> {/*this div is meant to be white*/}
-                            <div className="row">
-                                <h4>Employee Name - Number</h4>                          
+                        <div className={'col-sm-9 ' + classes.whiteContainer}>{/*this div is meant to be white*/}
+                            <div className={'row ' + classes.name}>
+                                <h4>{uppercaseFirstCharacter(this.state.bookingDetails.employee.firstName)} {uppercaseFirstCharacter(this.state.bookingDetails.employee.lastName)} - {this.state.bookingDetails.employee.phoneNo}</h4>                          
                             </div>
                             <div className="row">
-                                <div className="col">
-                                    Employee Description
+                                <div className={'col ' + classes.description}>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                 </div>
-                                <div className="col">
-                                    Employee picture
+                                <div className={'col ' + classes.image}>
+                                    <img src={this.state.bookingDetails.employee.img} alt="employee"/>
                                 </div> 
                             </div>
                         </div>
@@ -147,7 +148,7 @@ export class BookingDetails extends Component {
       booking = this.state.error;
     }
 
-    return <div className='container'>{booking}</div>;
+    return <div className={classes.container}>{booking}</div>;
   }
 }
 

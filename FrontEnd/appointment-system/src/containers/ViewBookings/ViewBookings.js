@@ -176,7 +176,7 @@ export class ViewBookings extends Component {
             <td>{uppercaseFirstCharacter(booking.service.name)}</td>
             {customerOrEmployee(booking)}
             <td>{uppercaseFirstCharacter(booking.status)}</td>
-            <td><NavLink to={`/booking/${booking.id}`}><i class="fas fa-arrow-right"></i></NavLink></td>
+            <td><NavLink to={`/booking/${booking.id}`}><i className="fas fa-arrow-right"></i></NavLink></td>
           </tr>
         );
       });
