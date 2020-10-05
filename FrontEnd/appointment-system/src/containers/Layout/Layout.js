@@ -8,10 +8,10 @@ class Layout extends Component {
       <div className={classes.Background}>
         <NavigationBar />
         <main className='container-fluid'>{this.props.children}</main>
-        <footer className={classes.Foot}>Copyright © 2020 <br/> Design by Ian Nguyen <br/> Software Engineering Process and Tools: Group 7</footer>
       </div>
     );
   }
 }
 
+//</div>footer className={classes.Foot}>Copyright © 2020 <br/> Design by Ian Nguyen <br/> Software Engineering Process and Tools: Group 7</footer>
 export default Layout;

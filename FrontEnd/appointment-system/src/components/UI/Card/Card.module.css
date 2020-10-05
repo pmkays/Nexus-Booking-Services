@@ -1,0 +1,54 @@
+.Card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 1% 1% 2%;
+  margin-right: 5%;
+  transition: transform 0.2s;
+  width: 20%;
+}
+
+.Bold {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.Image {
+  height: 20vh;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 5%;
+}
+
+.NoMargin {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.zoom {
+  padding: 50px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.Card:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .Card {
+    margin-top: 20px;
+    width: inherit;
+  }
+
+  .Card:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+  }
+
+  .Image {
+    width: -webkit-fill-available;
+  }
+}

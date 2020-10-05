@@ -1,0 +1,23 @@
+.AvailabilitiesBox {
+  border-radius: 15px;
+  margin: 2% 5%;
+  padding: 5% 10%;
+  background-color: white;
+}
+
+.AvailabilitiesBox h1 {
+  font-weight: bold;
+}
+
+@media (max-width: 500px) {
+  .AvailabilitiesBox {
+    border-radius: 15px;
+    margin: 2% 5%;
+    padding: 5% 5%;
+    background-color: white;
+  }
+
+  table td {
+    padding: 2% 2% !important;
+  }
+}

@@ -2,6 +2,7 @@ package SEPT.Team.Seven.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -24,6 +25,9 @@ public class Employee extends Account {
 	@OneToMany(mappedBy="employee")
 	private List<Booking> bookings;
 	
+	@Column(name="img")
+	private String img;
+	
 	// used to fix infinite recursion issue
 	@JsonBackReference
 	@ManyToMany()
@@ -36,8 +40,9 @@ public class Employee extends Account {
 	
 	public Employee() {};
 	
-	public Employee(String firstName, String lastName, String email, String phoneNo, String address) {
+	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String img) {
 		super(firstName,lastName,email,phoneNo, address);
+		this.img = img;
 	}
 	
 	public List<Service> getServices() {
@@ -58,6 +63,14 @@ public class Employee extends Account {
 	
 	public void addToBookings(Booking booking) {
 		bookings.add(booking);
+	}
+	
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
+	public String getImg() {
+		return this.img;
 	}
 	
 }

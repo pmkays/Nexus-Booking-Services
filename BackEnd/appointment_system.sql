@@ -40,6 +40,7 @@ CREATE TABLE `customer` (
   `email` varchar(45) DEFAULT NULL,
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -56,6 +57,7 @@ CREATE TABLE `employee` (
   `email` varchar(45) DEFAULT NULL,
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -72,6 +74,7 @@ CREATE TABLE `admin` (
   `email` varchar(45) DEFAULT NULL,
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -105,6 +108,7 @@ DROP TABLE IF EXISTS `service`;
 CREATE TABLE `service` (
   `id` int(11) NOT NULL AUTO_INCREMENT, 
   `name` varchar(20) NOT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -177,24 +181,24 @@ CREATE TABLE `working_time` (
 --
 
 INSERT INTO `customer` VALUES
-    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road'),
-    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street'),
-    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court');
+    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road', 'https://i.imgur.com/VXnG3tg.jpg'),
+    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street', 'https://i.imgur.com/t6EJkdF.jpg'),
+    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court', 'https://i.imgur.com/vmFc3lX.jpg');
     
 --
 -- Data for table `employee`
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way'),
-    (5,'asdsa','Dasdasdov','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way');
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg'),
+    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg');
     
 --
 -- Data for table `admin`
 --
 
 INSERT INTO `admin` VALUES
-    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road');
+    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road', 'https://i.imgur.com/hCEQVy0.jpg');
 
 --
 -- Data for table `security_role`
@@ -240,21 +244,21 @@ INSERT INTO `availability` VALUES
 --
 
 INSERT INTO `working_time` VALUES
-	(1, 4, '2020-09-28 12:00:00', '2020-09-28 17:00:00'),
-    (2, 4, '2020-09-29 12:00:00', '2020-09-29 17:00:00'),
-    (3, 5, '2020-09-29 18:00:00', '2020-09-29 20:00:00'),
-    (4, 5, '2020-09-30 18:00:00', '2020-09-30 20:00:00'),
-    (5, 4, '2020-09-27 16:00:00', '2020-09-27 20:00:00');
+	(1, 4, '2020-10-28 12:00:00', '2020-10-28 17:00:00'),
+    (2, 4, '2020-10-29 12:00:00', '2020-10-29 17:00:00'),
+    (3, 5, '2020-10-29 18:00:00', '2020-10-29 20:00:00'),
+    (4, 5, '2020-10-30 18:00:00', '2020-10-30 20:00:00'),
+    (5, 4, '2020-10-27 16:00:00', '2020-10-27 20:00:00');
 
 --
 -- Data for table `working_time`
 --
 
 INSERT INTO `service` VALUES
-	(1, 'service1'),
-    (2, 'service2'),
-    (3, 'service3'),
-    (4, 'service4');
+	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg'),
+    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg'),
+    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg'),
+    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
@@ -262,4 +266,14 @@ INSERT INTO `employee_service` VALUES
     (5, 2),
     (5, 3),
     (5, 4);
+    
+INSERT INTO `booking` VALUES
+    (1, 1, 4, '2020-05-28 15:00:00', '2020-10-28 17:00:00','complete',1),
+    (2, 1, 4, '2020-07-29 15:00:00', '2020-10-29 17:00:00','complete',2),
+    (3, 1, 5, '2020-08-30 18:00:00', '2020-10-30 19:00:00','complete',3),
+    (4, 1, 5, '2020-10-27 16:00:00', '2020-10-27 17:00:00','pending',4),
+    (5, 1, 5, '2020-10-27 18:30:00', '2020-10-27 19:00:00','pending',4),
+    (6, 1, 4, '2020-10-28 15:00:00', '2020-10-28 17:00:00','pending',1),
+    (7, 1, 4, '2020-10-29 15:00:00', '2020-10-29 17:00:00','pending',2),
+    (8, 1, 5, '2020-10-30 18:00:00', '2020-10-30 19:00:00','pending',3);
 

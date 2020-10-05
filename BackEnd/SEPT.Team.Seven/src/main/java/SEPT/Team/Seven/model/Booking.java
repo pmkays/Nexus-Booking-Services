@@ -53,7 +53,6 @@ public class Booking {
 	@Column(name="status")
 	private String status;
 	
-	@JsonBackReference
 	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="service_id")
 	private Service service;

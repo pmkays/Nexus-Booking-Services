@@ -60,17 +60,17 @@ public class BookingServiceTest {
 	@BeforeAll
 	public static void setUp()
 	{
-		service = new Service("service1");
+		service = new Service("service1", "fake img url");
 		
 		startTime = Calendar.getInstance();
 		endTime = Calendar.getInstance(); 
 		startTime.add(Calendar.DATE, 5);
 		endTime.add(Calendar.DATE, 6);
 		
-		existingCustomer = new Customer("Leslie", "Uzumaki", "leslie@hotmail.com", "1234567891", "some address");
+		existingCustomer = new Customer("Leslie", "Uzumaki", "leslie@hotmail.com", "1234567891", "some address", "fake img url");
 		existingCustomer.setId(1);
 		
-		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address");
+		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url");
 		existingEmployee.setId(4);
 	}
 	

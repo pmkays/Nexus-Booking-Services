@@ -1,5 +1,5 @@
-import * as actionTypes from "./actionTypes";
-import axios from "axios";
+import * as actionTypes from './actionTypes';
+import axios from '../../axios-sept';
 
 export const updateEmployeeId = (employeeId) => {
   return {
@@ -37,32 +37,24 @@ export const addService = (formData, token, history) => {
       serviceName: formData.serviceName,
     };
 
-    console.log(
-      "employeeId " +
-        serviceData.employeeId +
-        " serviceName " +
-        serviceData.serviceName
-    );
-
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
     axios
-      .post("http://54.144.245.48:8080/api/employee/services", serviceData, config)
+      .post('/api/employee/services', serviceData, config)
       .then((response) => {
-        console.log(response);
         dispatch(addServiceSuccess(token));
       })
       .then(() => {
-        history.push("/employees");
+        history.push('/employees');
       })
       .catch((error) => {
         dispatch(
           addServiceFail(
-            "Error adding Service. Cannot add service to employee if they already have it."
+            'Error adding Service. Cannot add service to employee if they already have it.'
           )
         );
       });

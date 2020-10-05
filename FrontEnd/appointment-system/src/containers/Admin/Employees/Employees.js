@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import axios from '../../../axios-sept';
 
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Button from "../../../components/UI/Button/Button";
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Button from '../../../components/UI/Button/Button';
 
-import * as actions from "../../../store/actions/actions";
+import * as actions from '../../../store/actions/actions';
+import classes from './Employees.module.css';
 
 export class Employees extends Component {
   state = {
@@ -18,14 +20,14 @@ export class Employees extends Component {
   componentDidMount() {
     const config = {
       headers: {
-        Authorization: "Bearer " + this.props.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     };
 
     this.setState({ ...this.state, loading: true });
 
     axios
-      .get("http://54.144.245.48:8080/api/employees/", config)
+      .get('/api/employees/', config)
       .then((response) => {
         this.setState({
           ...this.state,
@@ -36,7 +38,7 @@ export class Employees extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving employees.",
+          error: 'Error retrieving employees.',
           loading: false,
         });
       });
@@ -44,16 +46,18 @@ export class Employees extends Component {
 
   addService = (employeeId) => {
     this.props.addService(employeeId);
-    this.props.history.push("/addservice");
+    this.props.history.push('/addservice');
   };
 
   render() {
     let employees = null;
+    let tbody = null;
+    let employeeTable = null;
 
     if (this.state.employees !== null) {
       employees = this.state.employees.map((employee) => {
         return (
-          <tr key={employee.id}>
+          <tr scope='row' key={employee.id}>
             <td>{employee.id}</td>
             <td>{employee.firstName}</td>
             <td>{employee.lastName}</td>
@@ -63,7 +67,7 @@ export class Employees extends Component {
             <td>
               <Button
                 clicked={() => this.addService(employee.id)}
-                classes="btn btn-primary"
+                classes='btn btn-primary'
               >
                 Add Service(s)
               </Button>
@@ -73,37 +77,43 @@ export class Employees extends Component {
       });
     }
 
+    tbody = <tbody>{employees}</tbody>;
+    employeeTable = (
+      <table className='table'>
+        <thead>
+          <tr>
+            <th scope='col'>ID</th>
+            <th scope='col'>First Name</th>
+            <th scope='col'>Last Name</th>
+            <th scope='col'>Email</th>
+            <th scope='col'>Phone No.</th>
+            <th scope='col'>Address</th>
+            <th scope='col'>Add Service</th>
+          </tr>
+        </thead>
+        {tbody}
+      </table>
+    );
+
     if (this.state.loading) {
-      employees = <Spinner />;
+      employeeTable = <Spinner />;
     }
 
     if (this.state.error) {
-      employees = this.state.error;
+      employeeTable = this.state.error;
     }
 
     return (
-      <div className="container">
-        <br />
-        <h3>Employees</h3>
-        <Link className="btn btn-secondary btn-sm" to="/addemployee">
-          Add Employee
-        </Link>
-        <br />
-        <br />
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Phone No.</th>
-              <th>Address</th>
-              <th>Add Service</th>
-            </tr>
-          </thead>
-          <tbody>{employees}</tbody>
-        </table>
+      <div className={classes.EmployeesBox}>
+        <div className='container'>
+          <h1>Employees</h1>
+          <Link className='btn btn-secondary btn-sm' to='/addemployee'>
+            Add Employee
+          </Link>
+          <br />
+          <br />
+          {employeeTable}
+        </div>
       </div>
     );
   }
@@ -122,4 +132,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Employees);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Employees));

@@ -40,6 +40,10 @@ public class WorkingTimeService {
 	
 	public Optional<WorkingTime> addWorkingTime(int employeeId, Date startTime, Date endTime){
 		
+		System.out.println("Employee ID: " + employeeId);
+		System.out.println("Start Time: " + startTime);
+		System.out.println("End Time: " + endTime);
+		
 		if (startTime == null || endTime == null) {
 			return Optional.empty();
 		}
@@ -47,6 +51,7 @@ public class WorkingTimeService {
 		if (employeeRepository.findById(employeeId).isPresent()) {
 			
 			// First checking if the employee already has a working time on this day.
+			System.out.println("employee is present");
 			
 			List<WorkingTime> employeesWorkingTimes = workingTimeRepository.findAllByEmployeeId(employeeId);
 			Calendar newStartCalendar = Calendar.getInstance();
@@ -63,6 +68,8 @@ public class WorkingTimeService {
 				if (cal.get(Calendar.DATE) == newStartCalendar.get(Calendar.DATE) &&
 						cal.get(Calendar.MONTH) == newStartCalendar.get(Calendar.MONTH) &&
 						cal.get(Calendar.YEAR) == newStartCalendar.get(Calendar.YEAR)) {
+					System.out.println("Already has a working time on this day.");
+					System.out.println("Working Time ID: " + workingTime.getId());
 					return Optional.empty();
 				}
 			}
@@ -99,6 +106,7 @@ public class WorkingTimeService {
 					}
 				}
 			}
+			System.out.println("No availability");
 		}
 		return Optional.empty();
 	}

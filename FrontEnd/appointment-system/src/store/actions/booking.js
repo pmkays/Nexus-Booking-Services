@@ -1,6 +1,6 @@
-import * as actionTypes from "./actionTypes";
-import axios from "axios";
-import jwtDecode from "jwt-decode";
+import * as actionTypes from './actionTypes';
+import axios from '../../axios-sept';
+import jwtDecode from 'jwt-decode';
 
 export const addBookingStart = () => {
   return {
@@ -38,26 +38,26 @@ export const addBooking = (formData, token, history) => {
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
     console.log(bookingData.startTime);
     console.log(bookingData.endTime);
-    console.log("customerid" + bookingData.customerId);
-    console.log("employeeid" + bookingData.employeeId);
+    console.log('customerid' + bookingData.customerId);
+    console.log('employeeid' + bookingData.employeeId);
 
     axios
-      .post("http://54.144.245.48:8080/api/booking", bookingData, config)
+      .post('/api/booking', bookingData, config)
       .then((response) => {
         console.log(response);
         dispatch(addBookingSuccess(token));
       })
       .then(() => {
-        history.push("/");
+        history.push('/');
       })
       .catch((error) => {
-        dispatch(addBookingFail("Error adding Booking."));
+        dispatch(addBookingFail('Error adding Booking.'));
       });
   };
 };
