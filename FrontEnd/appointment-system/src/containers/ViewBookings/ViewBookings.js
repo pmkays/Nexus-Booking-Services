@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../axios-sept';
 import moment from 'moment';
-
+import { NavLink } from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './ViewBookings.module.css';
 
@@ -26,7 +26,6 @@ export class ViewBookings extends Component {
     };
 
     this.setState({ ...this.state, loading: true });
-    //admin not done yet
     let user = "";
     switch(this.props.userType){
         case "ROLE_CUSTOMER":
@@ -177,6 +176,7 @@ export class ViewBookings extends Component {
             <td>{uppercaseFirstCharacter(booking.service.name)}</td>
             {customerOrEmployee(booking)}
             <td>{uppercaseFirstCharacter(booking.status)}</td>
+            <td><NavLink to={`/booking/${booking.id}`}><i class="fas fa-arrow-right"></i></NavLink></td>
           </tr>
         );
       });
@@ -209,6 +209,7 @@ export class ViewBookings extends Component {
                         <th>Service</th>
                         {customerOrEmployeeHeader()}
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>{bookings}</tbody>
