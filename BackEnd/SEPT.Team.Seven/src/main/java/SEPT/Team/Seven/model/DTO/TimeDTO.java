@@ -2,25 +2,15 @@ package SEPT.Team.Seven.model.DTO;
 
 import java.util.Date;
 
-public class TimeDto {
+public class TimeDTO {
 	
 
-	private int employeeId;
 	private Date startTime;
 	private Date endTime;
 	
-	public TimeDto(int employeeId, Date startTime, Date endTime) {
-		this.employeeId = employeeId;
+	public TimeDTO(Date startTime, Date endTime) {
 		this.startTime = startTime;
 		this.endTime = endTime;
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
 	}
 
 	public Date getStartTime() {

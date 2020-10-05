@@ -2,9 +2,14 @@ package SEPT.Team.Seven.controllerTests;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -168,12 +173,19 @@ public class BookingControllerTest {
 	 @Test
 	 public void addBooking_ValidBooking_ReturnsBooking() throws Exception
 	 {
-	 	//Arrange
-	 	Calendar bookingStart = Calendar.getInstance();
-	 	Calendar bookingEnd = Calendar.getInstance(); 
-	 	bookingStart.add(Calendar.DATE, 5);
-	 	bookingEnd.add(Calendar.DATE, 6);
-				
+		//Arrange
+		// get 12am 2 days from today    
+		Calendar bookingStart = new GregorianCalendar();
+		bookingStart.set(Calendar.HOUR_OF_DAY, 0);
+		bookingStart.set(Calendar.MINUTE, 0);
+		bookingStart.set(Calendar.SECOND, 0);
+		bookingStart.set(Calendar.MILLISECOND, 0);
+		bookingStart.add(Calendar.DAY_OF_MONTH, 2);
+		 
+	 	//make their shift 3 hours
+	 	Calendar bookingEnd = (Calendar)bookingStart.clone(); 
+	 	bookingEnd.add(Calendar.HOUR_OF_DAY, 3);
+			
 	 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
 	 	String startStr = dateFormat.format(bookingStart.getTime());  
 	 	String endStr = dateFormat.format(bookingEnd.getTime());  
@@ -186,8 +198,19 @@ public class BookingControllerTest {
 	 	json.put("serviceId", 1);
 		
 	 	//need to use the string to the date values when mocking since precision will be different
-	 	Date date1 = dateFormat.parse(startStr);
-	 	Date date2 = dateFormat.parse(endStr);
+	 	//Parse to iso local date time, i.e. yyyy-MM-ddThh:mm:ss
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+	 	TemporalAccessor format1 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(startStr);
+	 	TemporalAccessor format2 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(endStr);
+		
+		//need to use localdatetime to get both date and time, which can be retrieved from temporal accessor
+        LocalDateTime localDate1 = LocalDateTime.from(format1);
+        LocalDateTime localDate2 = LocalDateTime.from(format2);
+
+        //convert the local date time to date to pass into the method params
+        Date date1 = Date.from(localDate1.atZone(defaultZoneId).toInstant());
+        Date date2 = Date.from(localDate2.atZone(defaultZoneId).toInstant());
+
 	 	Booking toAdd = new Booking(customer,employee, date1, date2, "accepted", service);
 		
 	 	when(bookingService.addBooking(4,1, date1, date2, 1)).thenReturn(Optional.of(toAdd));
