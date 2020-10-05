@@ -99,16 +99,8 @@ class WorkingTimes extends Component {
       }
     };
     const listAvailabilities = () => {
-      return (
-        <ul className='list-group'>
-          {this.state.availabilities.map((availability) => (
-            <li key={availability.id} className='list-group-item'>
-              {availability.startTime} - {availability.endTime}
-            </li>
-          ))}
-        </ul>
-      );
-    };
+      return <ul className="list-group">{this.state.availabilities.map((availability) => <li key={availability.id} className="list-group-item">{moment(availability.startTime).format('LLLL')} - {moment(availability.endTime).format('LLLL')}</li>)}</ul>;
+    }
     const addWorkingTime = (e) => {
       e.preventDefault();
       const errors = [];
