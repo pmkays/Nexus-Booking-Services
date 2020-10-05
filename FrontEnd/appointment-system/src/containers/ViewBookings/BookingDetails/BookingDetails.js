@@ -80,26 +80,26 @@ export class Profile extends Component {
     if (this.state.bookingDetails != null) {
         booking = (
         <React.Fragment>
-            <div>{/*blue-green div*/}
+            <div style={{display: 'flex'}}>{/*blue-green div*/}
                 <hr />
-                <div> {/*booking details div*/}
+                <div style={{float:'left',width:'35%'}}> {/*booking details div*/}
                     <h2>Booking Details</h2>
                     <dl className='row'>
-                        <dt className='col-sm-2'>Date</dt>
-                        <dd className='col-sm-10'>{moment(this.state.bookingDetails.startTime).format('DD/MM/yyyy')}</dd>
-                        <dt className='col-sm-2'>Start Time</dt>
-                        <dd className='col-sm-10'>{moment(this.state.bookingDetails.startTime).format('HH:mm')}</dd>
-                        <dt className='col-sm-2'>End Time</dt>
-                        <dd className='col-sm-10'>{moment(this.state.bookingDetails.endTime).format('HH:mm')}</dd>
-                        <dt className='col-sm-2'>Duration</dt>
-                        <dd className='col-sm-10'>{timeDiff(this.state.bookingDetails.endTime, this.state.bookingDetails.startTime)}</dd>
-                        <dt className='col-sm-2'>Status</dt>
-                        <dd className='col-sm-10'>{uppercaseFirstCharacter(this.state.bookingDetails.status)}</dd>
-                        <button>Cancel</button>
-                        <small>Note you cannot cancel a booking within 48 hours of the booking time</small>
+                        <dt className='col-sm-3'>Date</dt>
+                        <dd className='col-sm-9'>{moment(this.state.bookingDetails.startTime).format('DD/MM/yyyy')}</dd>
+                        <dt className='col-sm-3'>Start Time</dt>
+                        <dd className='col-sm-9'>{moment(this.state.bookingDetails.startTime).format('HH:mm')}</dd>
+                        <dt className='col-sm-3'>End Time</dt>
+                        <dd className='col-sm-9'>{moment(this.state.bookingDetails.endTime).format('HH:mm')}</dd>
+                        <dt className='col-sm-3'>Duration</dt>
+                        <dd className='col-sm-9'>{timeDiff(this.state.bookingDetails.endTime, this.state.bookingDetails.startTime)}</dd>
+                        <dt className='col-sm-3'>Status</dt>
+                        <dd className='col-sm-9'>{uppercaseFirstCharacter(this.state.bookingDetails.status)}</dd>
+                        <button type="button" className='btn btn-danger'style={{display:'block'}}>Cancel</button>
+                        <dd>Note you cannot cancel a booking within 48 hours of the booking time</dd>
                     </dl>
                 </div>
-                <div> 
+                <div style={{float:'right', width:'65%'}}> 
                     <div className="row"> {/*this div is meant to be light green*/}
                         <div className="col-sm-3"> {/*for services*/}
                             <h2>Service</h2>
@@ -107,6 +107,8 @@ export class Profile extends Component {
                         <div className="col-sm-9"> {/*this div is meant to be white*/}
                             <div className="row">
                                 <h4>Service Name</h4>
+                            </div>
+                            <div className="row">
                                 <div className="col">
                                     Service Description
                                 </div>
@@ -122,13 +124,15 @@ export class Profile extends Component {
                         </div>
                         <div className="col-sm-9"> {/*this div is meant to be white*/}
                             <div className="row">
-                                <h4>Employee Name - Number</h4>
+                                <h4>Employee Name - Number</h4>                          
+                            </div>
+                            <div className="row">
                                 <div className="col">
                                     Employee Description
                                 </div>
                                 <div className="col">
                                     Employee picture
-                                </div>                           
+                                </div> 
                             </div>
                         </div>
                     </div>      
