@@ -1,0 +1,23 @@
+.WorkingTimesBox {
+  border-radius: 15px;
+  margin: 5% 10%;
+  padding: 5% 10%;
+  background-color: white;
+}
+
+.WorkingTimesBox h1 {
+  font-weight: bold;
+}
+
+@media (max-width: 500px) {
+  .WorkingTimesBox {
+    border-radius: 15px;
+    margin: 5% 5%;
+    padding: 5% 5%;
+    background-color: white;
+  }
+
+  .WorkingTimesBox div {
+    margin-top: 5%;
+  }
+}

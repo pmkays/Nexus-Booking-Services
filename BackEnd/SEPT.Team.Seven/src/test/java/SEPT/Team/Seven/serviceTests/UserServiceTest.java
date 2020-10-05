@@ -95,7 +95,7 @@ public class UserServiceTest
 		existingEmployeeUser = new User("employee1", pass, null, existingEmployee, null, employeeRole);
 		
 		adminRole = new Role("ROLE_ADMIN", "Admin role");
-		existingAdmin = new Admin("Juan", "Yega", "juan@hotmail.com", "1234567891", "some address");
+		existingAdmin = new Admin("Juan", "Yega", "juan@hotmail.com", "1234567891", "some address", "fake img url");
 		existingAdmin.setId(5);
 		existingAdminUser = new User("admin", pass, null, null, existingAdmin, adminRole);
 	}

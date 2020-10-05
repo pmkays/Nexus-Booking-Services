@@ -74,6 +74,7 @@ CREATE TABLE `admin` (
   `email` varchar(45) DEFAULT NULL,
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -197,7 +198,7 @@ INSERT INTO `employee` VALUES
 --
 
 INSERT INTO `admin` VALUES
-    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road');
+    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road', 'https://i.imgur.com/hCEQVy0.jpg');
 
 --
 -- Data for table `security_role`
@@ -261,10 +262,10 @@ INSERT INTO `working_time` VALUES
 --
 
 INSERT INTO `service` VALUES
-	(1, 'service1', 'https://i.imgur.com/z53yLmm.jpg'),
-    (2, 'service2', 'https://i.imgur.com/gzi5Nmu.jpg'),
-    (3, 'service3', 'https://i.imgur.com/NfYcrHt.jpg'),
-    (4, 'service4', 'https://i.imgur.com/eD7gQ7N.jpg');
+	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg'),
+    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg'),
+    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg'),
+    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
@@ -278,6 +279,7 @@ INSERT INTO `employee_service` VALUES
 --
 
 INSERT INTO `booking` VALUES
+
     (1, 1, 4, '2020-05-28 15:00:00', '2020-05-28 17:00:00','complete',1),
     (2, 1, 4, '2020-07-29 15:00:00', '2020-07-29 17:00:00','complete',2),
     (3, 1, 5, '2020-08-30 18:00:00', '2020-08-30 19:00:00','complete',3),
@@ -287,4 +289,5 @@ INSERT INTO `booking` VALUES
     (7, 1, 5, '2020-06-25 18:00:00', '2020-06-25 19:00:00','cancelled',1),
     (8, 1, 5, '2020-06-26 18:00:00', '2020-06-26 19:00:00','cancelled',2),
     (9, 1, 5, '2020-06-27 18:00:00', '2020-06-27 19:00:00','cancelled',3);
+
 

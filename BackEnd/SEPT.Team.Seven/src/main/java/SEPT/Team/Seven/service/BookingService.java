@@ -25,6 +25,8 @@ public class BookingService {
 	private EmployeeRepository employeeRepository;
 	private CustomerRepository customerRepository;
 	private ServiceRepository serviceRepository;
+	
+	private final String PENDING = "pending";
 
 	public BookingService(BookingRepository bookingRepository, WorkingTimeRepository workingTimeRepository,
 			EmployeeRepository employeeRepository, CustomerRepository customerRepository,
@@ -140,10 +142,12 @@ public class BookingService {
 								&& newEndCal.compareTo(workingTimeEnd) <= 0;
 
 						if (startValid && endValid) {
-							return Optional.of(
-									bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
-											employeeRepository.findById(employeeId).get(), startTime, endTime,
-											"accepted", serviceRepository.findById(serviceId).get())));
+							return Optional.of(bookingRepository.save(
+									new Booking(customerRepository.findById(customerId).get(),
+											employeeRepository.findById(employeeId).get(),
+											startTime, endTime, PENDING,
+											serviceRepository.findById(serviceId).get())));
+							
 
 						}
 

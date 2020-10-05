@@ -7,6 +7,7 @@ import axios from '../../axios-sept';
 import * as actions from '../../store/actions/actions';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
+import classes from './Booking.module.css';
 
 export class Booking extends Component {
   state = {
@@ -233,7 +234,8 @@ export class Booking extends Component {
     } else {
       form = (
         <form onSubmit={this.addBookingHandler}>
-          <div className='form-group container'>
+          <div className='form-group'>
+            <label>Pick a day for the booking:</label>
             <select
               className='custom-select'
               id='dateDropdown'
@@ -241,6 +243,9 @@ export class Booking extends Component {
             >
               {populateDates()}
             </select>
+          </div>
+          <div className='form-group'>
+            <label>What service you require:</label>
             <select
               className='custom-select'
               id='serviceDropdown'
@@ -249,6 +254,9 @@ export class Booking extends Component {
               <option>Choose Service</option>
               {services}
             </select>
+          </div>
+          <div className='form-group'>
+            <label>Who do you require:</label>
             <select
               className='custom-select'
               id='employeeDropdown'
@@ -257,6 +265,9 @@ export class Booking extends Component {
               <option>Choose Employee</option>
               {employees}
             </select>
+          </div>
+          <div className='form-group'>
+            <label>What time suits you:</label>
             <select
               className='custom-select'
               id='timeDropdown'
@@ -266,21 +277,19 @@ export class Booking extends Component {
               {populateTimes()}
             </select>
           </div>
-          <div className='form-group container'>
-            <Button
-              disabled={
-                !(
-                  this.state.service &&
-                  this.state.employeeId &&
-                  this.state.bookingDate &&
-                  this.state.bookingTime
-                )
-              }
-              classes='btn btn-primary'
-            >
-              Add Booking
-            </Button>
-          </div>
+          <Button
+            disabled={
+              !(
+                this.state.service &&
+                this.state.employeeId &&
+                this.state.bookingDate &&
+                this.state.bookingTime
+              )
+            }
+            classes='btn btn-primary'
+          >
+            Add Booking
+          </Button>
         </form>
       );
     }
@@ -298,10 +307,13 @@ export class Booking extends Component {
     }
 
     return (
-      <div>
-        {authRedirect}
-        {form}
-        {errorMessage}
+      <div className={classes.BookNowBox}>
+        <div className={classes.BookNow}>
+          <h1>Book Now</h1>
+          {authRedirect}
+          {form}
+          {errorMessage}
+        </div>
       </div>
     );
   }

@@ -37,13 +37,6 @@ export const addService = (formData, token, history) => {
       serviceName: formData.serviceName,
     };
 
-    console.log(
-      'employeeId ' +
-        serviceData.employeeId +
-        ' serviceName ' +
-        serviceData.serviceName
-    );
-
     const config = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -53,7 +46,6 @@ export const addService = (formData, token, history) => {
     axios
       .post('/api/employee/services', serviceData, config)
       .then((response) => {
-        console.log(response);
         dispatch(addServiceSuccess(token));
       })
       .then(() => {
