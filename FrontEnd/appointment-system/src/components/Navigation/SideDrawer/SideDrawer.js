@@ -39,14 +39,14 @@ const sideDrawer = (props) => {
             <React.Fragment>
               <DashboardIcon
                 name='Employees'
-                id='Employees'
+                id='Employees-sd'
                 classes='fas fa-users'
                 to='employees'
               />
               <br />
               <DashboardIcon
                 name='Workhours'
-                id='Workhours'
+                id='Workhours-sd'
                 classes='fas fa-hourglass-half'
                 to='workingtimes'
               />
@@ -56,8 +56,8 @@ const sideDrawer = (props) => {
           {props.authority === 'ROLE_CUSTOMER' ? (
             <React.Fragment>
               <DashboardIcon
-                name='Bookings'
-                id='Bookings'
+                name='Booking'
+                id='Bookings-sd'
                 classes='fas fa-book'
                 to='bookings'
               />
@@ -69,7 +69,7 @@ const sideDrawer = (props) => {
             <React.Fragment>
               <DashboardIcon
                 name='Availabilities'
-                id='Availabilities'
+                id='Availabilities-sd'
                 classes='fas fa-calendar-check'
                 to='availabilities'
               />
@@ -78,14 +78,14 @@ const sideDrawer = (props) => {
           ) : null}
           <DashboardIcon
             name='Settings'
-            id='Settings'
+            id='Settings-sd'
             classes='fas fa-cog'
             to='profile'
           />
           <br />
           <DashboardIcon
             name='Logout'
-            id='Logout'
+            id='Logout-sd'
             classes='fas fa-sign-out-alt'
             to='logout'
           />
