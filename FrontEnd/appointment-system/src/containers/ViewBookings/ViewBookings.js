@@ -13,7 +13,7 @@ export class ViewBookings extends Component {
     defaultBookings:null,
     loading: false,
     error: null,
-    filters: {'complete': false, 'pending': false, 'cancelled': false, 'date':true} ,
+    filters: {'complete': false, 'pending': false, 'cancelled': false, 'date':false, 'sort':'default'} ,
     from: null,
     to: null
   };
@@ -66,10 +66,13 @@ export class ViewBookings extends Component {
 
   componentDidUpdate(prevProps, prevState){
       const changeBookings = () => {
+
+        //filter by status
         let cancelled = this.state.defaultBookings.filter(x => x.status === "cancelled");
         let complete = this.state.defaultBookings.filter(x => x.status === "complete");
         let pending = this.state.defaultBookings.filter(x => x.status === "pending");
 
+        //filter by date
         if(this.state.from !== null && this.state.to !== null){
             cancelled  = cancelled.filter(x => 
                 moment(x.startTime).isSameOrAfter(this.state.from, 'day') && 
@@ -89,6 +92,7 @@ export class ViewBookings extends Component {
        
         let filteredBookings = []; 
 
+        //populate array to display
         if(this.state.filters.cancelled){
             filteredBookings.push(...cancelled);
             console.log(filteredBookings);
@@ -102,8 +106,9 @@ export class ViewBookings extends Component {
             console.log(filteredBookings);
         }
 
-        //default when nothing is ticked is show all of them
+        //what happens when there's no statuses
         if (!this.state.filters.cancelled && !this.state.filters.complete && !this.state.filters.pending && filteredBookings.length === 0) {
+            //might need to filter by date though
             if(this.state.from !== null && this.state.to !== null){
                 filteredBookings = this.state.defaultBookings.filter(x => 
                     moment(x.startTime).isSameOrAfter(this.state.from, 'day') && 
@@ -114,6 +119,15 @@ export class ViewBookings extends Component {
             }
         }
 
+        //sort the results
+        if(this.state.filters.sort === "ascending"){
+            filteredBookings.sort((a,b)=>moment(a.startTime).diff(moment(b.startTime)));
+        } else if (this.state.filters.sort === "descending"){
+            filteredBookings.sort((a,b)=>moment(b.startTime).diff(moment(a.startTime)));
+        } else{
+            filteredBookings.sort((a,b)=> a.id - b.id);
+        }
+
         this.setState({
             ...this.state, 
             bookings: filteredBookings 
@@ -121,7 +135,6 @@ export class ViewBookings extends Component {
 
     }
       if(prevState.filters !== this.state.filters || prevState.from !== this.state.from || prevState.to !== this.state.to){
-          alert("changing bookings!")
         changeBookings();
       }
   }
@@ -155,6 +168,13 @@ export class ViewBookings extends Component {
     if (this.state.error) {
       bookings = this.state.error;
     }
+
+    const handleSorting = (event) =>{
+        this.setState({
+            ...this.state,
+            filters: {...this.state.filters, 'sort': event.target.value}
+        });
+    }
         
     const handleStatusChange = (event) =>{
         let checkbox = event.target.value;
@@ -162,6 +182,16 @@ export class ViewBookings extends Component {
             ...this.state,
             filters: {...this.state.filters, [checkbox]: event.target.checked}
         });
+    }
+
+    let buttonType = null; 
+    const handleFormSubmit = (event) => {
+        event.preventDefault(); 
+        if(buttonType === "go"){
+            handleDateSubmit(event);
+        } else {
+            handleClearDate(event);
+        }
     }
 
     const handleDateSubmit = (event) => {
@@ -173,7 +203,22 @@ export class ViewBookings extends Component {
             from: event.target.from.value,
             to: event.target.to.value
         });
+    }
 
+    const handleClearDate = (event) => {
+        event.preventDefault(); 
+        event.target.from.value ="";
+        event.target.to.value ="";
+        this.setState({
+            ...this.state,
+            filters: {...this.state.filters, 'date': false},
+            from: null,
+            to: null
+        });
+    }
+    
+    const getButton = (event) => {
+        buttonType = event.target.value;
     }
 
     return (
@@ -182,7 +227,21 @@ export class ViewBookings extends Component {
             <h4>Filter by...</h4>
             <div className="row">
                 <div className="col">
-                    <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Status</a>
+                    <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Sort v</a>
+                    <div className="collapse multi-collapse" id="statusAccordion">
+                        <div className="">
+                            <select name="sort" onChange = {handleSorting}>
+                                <option value = "default" selected> Default</option>
+                                <option value = "ascending" > Ascending</option>
+                                <option value = "descending"> Descending</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col">
+                    <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Status v</a>
                     <div className="collapse multi-collapse" id="statusAccordion">
                         <div className="">
                             <input type="checkbox" name="Completed" value="complete" onChange={handleStatusChange}/>
@@ -197,24 +256,25 @@ export class ViewBookings extends Component {
             </div>
             <div className="row">
                 <div className="col">
-                    <a data-toggle="collapse" href="#dateAccordion" aria-expanded="false" aria-controls="dateAccordion">Date</a>
+                    <a data-toggle="collapse" href="#dateAccordion" aria-expanded="false" aria-controls="dateAccordion">Date v</a>
                     <div className="collapse multi-collapse" id="dateAccordion">
-                        <form class="form-horizontal" onSubmit={handleDateSubmit}>
-                            <div class="form-group">
-                                <label class="col-sm-2" for="from">From:</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="from" name="from"/>
+                        <form className="form-horizontal" onSubmit={handleFormSubmit}>
+                            <div className="form-group">
+                                <label className="col-sm-2" for="from">From:</label>
+                                <div className="col-sm-10">
+                                    <input type="date" className="form-control" id="from" name="from"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2" for="to">To:</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="to" name="to"/>
+                            <div className="form-group">
+                                <label className="col-sm-2" for="to">To:</label>
+                                <div className="col-sm-10">
+                                    <input type="date" className="form-control" id="to" name="to"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">Go!</button>
+                            <div className="form-group">
+                            <div className="col-sm-offset-2 col-sm-10">
+                                <button type="submit" className="btn btn-primary" onClick = {getButton} value = "go">Go!</button>
+                                <button type="submit" className="btn btn-danger" onClick = {getButton} value ="clear">Clear</button>
                             </div>
                             </div>
                         </form>
