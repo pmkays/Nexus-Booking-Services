@@ -13,7 +13,9 @@ export class ViewBookings extends Component {
     defaultBookings:null,
     loading: false,
     error: null,
-    filters: {'complete': false, 'pending': false, 'cancelled': false} 
+    filters: {'complete': false, 'pending': false, 'cancelled': false, 'date':true} ,
+    from: null,
+    to: null
   };
 
   componentDidMount() {
@@ -68,6 +70,23 @@ export class ViewBookings extends Component {
         let complete = this.state.defaultBookings.filter(x => x.status === "complete");
         let pending = this.state.defaultBookings.filter(x => x.status === "pending");
 
+        if(this.state.from !== null && this.state.to !== null){
+            cancelled  = cancelled.filter(x => 
+                moment(x.startTime).isSameOrAfter(this.state.from, 'day') && 
+                moment(x.startTime).isSameOrBefore(this.state.to, 'day')
+            );
+
+            complete  = complete.filter(x => 
+                moment(x.startTime).isSameOrAfter(this.state.from, 'day') && 
+                moment(x.startTime).isSameOrBefore(this.state.to, 'day')
+            );
+
+            pending  = pending.filter(x => 
+                moment(x.startTime).isSameOrAfter(this.state.from, 'day') && 
+                moment(x.startTime).isSameOrBefore(this.state.to, 'day')
+            );
+        }       
+       
         let filteredBookings = []; 
 
         if(this.state.filters.cancelled){
@@ -85,7 +104,14 @@ export class ViewBookings extends Component {
 
         //default when nothing is ticked is show all of them
         if (!this.state.filters.cancelled && !this.state.filters.complete && !this.state.filters.pending && filteredBookings.length === 0) {
-            filteredBookings = this.state.defaultBookings;
+            if(this.state.from !== null && this.state.to !== null){
+                filteredBookings = this.state.defaultBookings.filter(x => 
+                    moment(x.startTime).isSameOrAfter(this.state.from, 'day') && 
+                    moment(x.startTime).isSameOrBefore(this.state.to, 'day'));
+                console.log(filteredBookings);
+            } else {
+                filteredBookings = this.state.defaultBookings;
+            }
         }
 
         this.setState({
@@ -94,15 +120,19 @@ export class ViewBookings extends Component {
         });
 
     }
-      if(prevState.filters !== this.state.filters){
+      if(prevState.filters !== this.state.filters || prevState.from !== this.state.from || prevState.to !== this.state.to){
+          alert("changing bookings!")
         changeBookings();
       }
   }
 
 
   render() {
-    let bookings = null;
+    const uppercaseFirstCharacter = (word) => {
+        return word.substring(0,1).toUpperCase() + word.substring(1);
+    }
 
+    let bookings = null;
     if (this.state.bookings !== null) {
         bookings = this.state.bookings.map((bookings) => {
         return (
@@ -110,9 +140,9 @@ export class ViewBookings extends Component {
             <td>{moment(bookings.startTime).format('DD/MM/yyyy')}</td>
             <td>{moment(bookings.startTime).format('HH:mm')}</td>
             <td>{moment(bookings.endTime).format('HH:mm')}</td>
-            <td>{bookings.service.name}</td>
-            <td>{bookings.employee.firstName} {bookings.employee.lastName}</td>
-            <td>{bookings.status.substring(0,1).toUpperCase() + bookings.status.substring(1)}</td>
+            <td>{uppercaseFirstCharacter(bookings.service.name)}</td>
+            <td>{uppercaseFirstCharacter(bookings.employee.firstName)} {uppercaseFirstCharacter(bookings.employee.lastName)}</td>
+            <td>{uppercaseFirstCharacter(bookings.status)}</td>
           </tr>
         );
       });
@@ -132,6 +162,18 @@ export class ViewBookings extends Component {
             ...this.state,
             filters: {...this.state.filters, [checkbox]: event.target.checked}
         });
+    }
+
+    const handleDateSubmit = (event) => {
+        event.preventDefault(); 
+        console.log("handlesubmit");
+        this.setState({
+            ...this.state,
+            filters: {...this.state.filters, 'date': true},
+            from: event.target.from.value,
+            to: event.target.to.value
+        });
+
     }
 
     return (
@@ -157,24 +199,24 @@ export class ViewBookings extends Component {
                 <div className="col">
                     <a data-toggle="collapse" href="#dateAccordion" aria-expanded="false" aria-controls="dateAccordion">Date</a>
                     <div className="collapse multi-collapse" id="dateAccordion">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-2" for="from">From:</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" id="from"/>
+                        <form class="form-horizontal" onSubmit={handleDateSubmit}>
+                            <div class="form-group">
+                                <label class="col-sm-2" for="from">From:</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="from" name="from"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2" for="to">To:</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" id="to"/>
+                            <div class="form-group">
+                                <label class="col-sm-2" for="to">To:</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="to" name="to"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Go!</button>
-                        </div>
-                        </div>
+                            <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Go!</button>
+                            </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -183,7 +225,7 @@ export class ViewBookings extends Component {
         <br />
         <br />
         <br />
-        <div style={{"flex-grow":1}}>
+        <div style={{"flexGrow":1}}>
             <table className='table'>
             <thead>
                 <tr>
