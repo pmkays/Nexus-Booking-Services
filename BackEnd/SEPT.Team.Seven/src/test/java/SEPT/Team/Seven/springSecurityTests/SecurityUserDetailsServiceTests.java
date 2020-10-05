@@ -44,7 +44,7 @@ public class SecurityUserDetailsServiceTests {
 		
 		provider = mock(JwtProvider.class);
 		
-		Admin admin = new Admin("Juan","Yega","juan@hotmail.com", "410567343","1 Digger Road");
+		Admin admin = new Admin("Juan","Yega","juan@hotmail.com", "410567343","1 Digger Road", "fake img url");
 		Role role = new Role("ROLE_ADMIN", "Admin role");
 		validUser = new User("admin", "$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa", null, null, admin, role);
 		

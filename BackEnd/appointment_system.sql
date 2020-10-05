@@ -74,6 +74,7 @@ CREATE TABLE `admin` (
   `email` varchar(45) DEFAULT NULL,
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
+  `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -197,7 +198,7 @@ INSERT INTO `employee` VALUES
 --
 
 INSERT INTO `admin` VALUES
-    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road');
+    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road', 'imgurl');
 
 --
 -- Data for table `security_role`
