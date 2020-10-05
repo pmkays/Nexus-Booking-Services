@@ -9,10 +9,7 @@
 }
 
 .bookingDetails{
-   /* float:'left'; */
-   /* width:45%; */
    height: 73vh;
-   /* background-color:  #F4F4F4; */
 }
 
 .bookingDetails p, dd, dt, h1{
@@ -27,14 +24,13 @@
 
 .bookingDetails h1{
    padding-top: 40px;
-   /* margin-left: 150px; */
-   margin-left:20%;
+   text-align: center;
 }
 
 .bookingDetails dl{
    margin-top: 30px;
-   /* margin-left: 140px; */
    margin-left:20%;
+   align-items: center;
 
 }
 
@@ -47,9 +43,8 @@
 
 .bookingDetails .whiteContainer{
    background-color: #F4F4F4;
-   /* width: 600px;*/
    height: 73vh;
-   border-radius: 15px;
+   border-radius: 20px;
 }
 
 .cancelBtn{
@@ -63,16 +58,17 @@
    font-size: 1.2em;
    border:none;
    border-radius: 5px;
-   margin: 20px 0px 15px 80px
+   margin: 20px 0px 15px 20%
 }
 
+.note{
+   align-items:center;
+}
 .extraDetails{
-   /* float:right; */
-   /* width: 65%; */
+   height: 73vh;
 }
 
 .lightGreenContainer{
-   /* width: 100%;  */
    height:35vh;
    border-radius: 15px;
    background-color: #C5E7EA;
