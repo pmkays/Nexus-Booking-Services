@@ -82,26 +82,27 @@ export class BookingDetails extends Component {
     if (this.state.bookingDetails != null) {
         booking = (
         <React.Fragment>
-            <div style={{display: 'flex'}}>{/*blue-green div*/}
-                <hr />
-                <div className={classes.bookingDetails}> {/*booking details div*/}
-                    <h1>Booking Details</h1><br/>
-                    <dl className='row'>
-                        <dt className='col-sm-3'>Date:</dt>
-                        <dd className='col-sm-9'>{moment(this.state.bookingDetails.startTime).format('DD/MM/yyyy')}</dd>
-                        <dt className='col-sm-3'>Start Time:</dt>
-                        <dd className='col-sm-9'>{moment(this.state.bookingDetails.startTime).format('HH:mm')}</dd>
-                        <dt className='col-sm-3'>End Time:</dt>
-                        <dd className='col-sm-9'>{moment(this.state.bookingDetails.endTime).format('HH:mm')}</dd>
-                        <dt className='col-sm-3'>Duration:</dt>
-                        <dd className='col-sm-9'>{timeDiff(this.state.bookingDetails.endTime, this.state.bookingDetails.startTime)}</dd>
-                        <dt className='col-sm-3'>Status:</dt>
-                        <dd className='col-sm-9'>{uppercaseFirstCharacter(this.state.bookingDetails.status)}</dd>
-                        <button type="button" className={classes.cancelBtn}>Cancel</button><br/>
-                        <div className={classes.note}><p>Note you cannot cancel a booking within 48 hours of the booking time</p></div>
-                    </dl>
+            <div className="row">{/*blue-green div*/}
+                <div className={"col-sm-4 " + classes.bookingDetails}> {/*booking details div*/}
+                    <div className={classes.whiteContainer}>
+                        <h1>Booking Details</h1><hr/>
+                        <dl className='row'>
+                            <dt className='col-sm-4'>Date:</dt>
+                            <dd className='col-sm-8'>{moment(this.state.bookingDetails.startTime).format('DD/MM/yyyy')}</dd>
+                            <dt className='col-sm-4'>Start Time:</dt>
+                            <dd className='col-sm-8'>{moment(this.state.bookingDetails.startTime).format('HH:mm')}</dd>
+                            <dt className='col-sm-4'>End Time:</dt>
+                            <dd className='col-sm-8'>{moment(this.state.bookingDetails.endTime).format('HH:mm')}</dd>
+                            <dt className='col-sm-4'>Duration:</dt>
+                            <dd className='col-sm-8'>{timeDiff(this.state.bookingDetails.endTime, this.state.bookingDetails.startTime)}</dd>
+                            <dt className='col-sm-4'>Status:</dt>
+                            <dd className='col-sm-8'>{uppercaseFirstCharacter(this.state.bookingDetails.status)}</dd>
+                            <button type="button" className={classes.cancelBtn}>Cancel</button><br/>
+                            <div className={classes.note}><p>Note you cannot cancel a booking within 48 hours of the booking time</p></div>
+                        </dl> 
+                    </div>
                 </div>
-                <div className={classes.extraDetails}> 
+                <div className={"col-sm-8 " + classes.extraDetails}> 
                     <div className={'row ' + classes.lightGreenContainer}> {/*this div is meant to be light green*/}
                         <div className={'col-sm-3 d-flex justify-content-center text-center ' + classes.title}> {/*for services*/}
                             <h2>Service</h2>
