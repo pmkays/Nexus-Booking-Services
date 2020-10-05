@@ -11,5 +11,4 @@ export {
 } from "./profile";
 export { updateEmployeeId, addService } from "./service";
 export { addBooking} from "./booking";
-// export { addBooking, viewBookings} from "./booking";
 

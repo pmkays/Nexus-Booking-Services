@@ -26,8 +26,8 @@ export class ViewBookings extends Component {
     };
 
     this.setState({ ...this.state, loading: true });
-    let user = "";
     //admin not done yet
+    let user = "";
     switch(this.props.userType){
         case "ROLE_CUSTOMER":
             user = "customer";
@@ -55,7 +55,7 @@ export class ViewBookings extends Component {
         });
       })
       .catch((error) => {
-          console.log(error);
+        console.log(error);
         this.setState({
           ...this.state,
           error: 'Error retrieving bookings.',
@@ -95,15 +95,12 @@ export class ViewBookings extends Component {
         //populate array to display
         if(this.state.filters.cancelled){
             filteredBookings.push(...cancelled);
-            console.log(filteredBookings);
         }
         if(this.state.filters.complete){
             filteredBookings.push(...complete);
-            console.log(filteredBookings);
         }
         if(this.state.filters.pending){
             filteredBookings.push(...pending);
-            console.log(filteredBookings);
         }
 
         //what happens when there's no statuses
@@ -113,7 +110,6 @@ export class ViewBookings extends Component {
                 filteredBookings = this.state.defaultBookings.filter(x => 
                     moment(x.startTime).isSameOrAfter(this.state.from, 'day') && 
                     moment(x.startTime).isSameOrBefore(this.state.to, 'day'));
-                console.log(filteredBookings);
             } else {
                 filteredBookings = this.state.defaultBookings;
             }
@@ -147,33 +143,80 @@ export class ViewBookings extends Component {
 
     const timeDiff = (time1, time2) => {
         var duration = moment(time1).diff(moment(time2), 'hours'); 
-
         if(duration === 1){
             return `${duration} hour`
         }
         return `${duration} hours`
-
     }
 
     let bookings = null;
+
     if (this.state.bookings !== null) {
-        bookings = this.state.bookings.map((bookings) => {
+
+        const customerOrEmployee = (booking) => {
+            if(this.props.userType === "ROLE_CUSTOMER"){
+                return (<td>{uppercaseFirstCharacter(booking.employee.firstName)} {uppercaseFirstCharacter(booking.employee.lastName)}</td>);
+            } else if (this.props.userType === "ROLE_EMPLOYEE"){
+                return (<td>{uppercaseFirstCharacter(booking.customer.firstName)} {uppercaseFirstCharacter(booking.customer.lastName)}</td>);
+            } else{
+                return (
+                    <React.Fragment>
+                        <td>{uppercaseFirstCharacter(booking.customer.firstName)} {uppercaseFirstCharacter(booking.customer.lastName)}</td>
+                        <td>{uppercaseFirstCharacter(booking.employee.firstName)} {uppercaseFirstCharacter(booking.employee.lastName)}</td>
+                    </React.Fragment>);
+            }
+        }
+
+        bookings = this.state.bookings.map((booking) => {
         return (
-          <tr key={bookings.id}>
-            <td>{moment(bookings.startTime).format('DD/MM/yyyy')}</td>
-            <td>{moment(bookings.startTime).format('HH:mm')}</td>
-            <td>{moment(bookings.endTime).format('HH:mm')}</td>
-            <td>{timeDiff(bookings.endTime, bookings.startTime)}</td>
-            <td>{uppercaseFirstCharacter(bookings.service.name)}</td>
-            <td>{uppercaseFirstCharacter(bookings.employee.firstName)} {uppercaseFirstCharacter(bookings.employee.lastName)}</td>
-            <td>{uppercaseFirstCharacter(bookings.status)}</td>
+          <tr key={booking.id}>
+            <td>{moment(booking.startTime).format('DD/MM/yyyy')}</td>
+            <td>{moment(booking.startTime).format('HH:mm')}</td>
+            <td>{moment(booking.endTime).format('HH:mm')}</td>
+            <td>{timeDiff(booking.endTime, booking.startTime)}</td>
+            <td>{uppercaseFirstCharacter(booking.service.name)}</td>
+            {customerOrEmployee(booking)}
+            <td>{uppercaseFirstCharacter(booking.status)}</td>
           </tr>
         );
       });
     }
 
+    const customerOrEmployeeHeader = () => {
+        if(this.props.userType === "ROLE_CUSTOMER"){
+            return (<th>Employee</th>);
+        } else if (this.props.userType === "ROLE_EMPLOYEE"){
+            return (<th>Customer</th>);
+        } else{
+            return (
+                <React.Fragment>
+                    <th>Customer</th>
+                    <th>Employee</th>
+                </React.Fragment>
+            );
+        }
+    }
+
+    let bookingsTable =
+        (
+            <table className='table'>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration</th>
+                        <th>Service</th>
+                        {customerOrEmployeeHeader()}
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>{bookings}</tbody>
+             </table>
+        );
+
     if (this.state.loading) {
-      bookings = <Spinner />;
+        bookingsTable = <Spinner />;
     }
 
     if (this.state.error) {
@@ -207,7 +250,6 @@ export class ViewBookings extends Component {
 
     const handleDateSubmit = (event) => {
         event.preventDefault(); 
-        console.log("handlesubmit");
         this.setState({
             ...this.state,
             filters: {...this.state.filters, 'date': true},
@@ -244,7 +286,7 @@ export class ViewBookings extends Component {
                         <div className="form-group">
                             <label htmlFor="sort">Date:</label>
                             <select className ="form-control" name="sort" onChange = {handleSorting}>
-                                <option value = "default" selected> Default</option>
+                                <option value = "default" defaultValue> Default</option>
                                 <option value = "ascending" > Ascending </option>
                                 <option value = "descending"> Descending</option>
                             </select>
@@ -298,21 +340,8 @@ export class ViewBookings extends Component {
         <br />
         <br />
         <br />
-        <div style={{"flexGrow":1}}>
-            <table className='table'>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Duration</th>
-                        <th>Service</th>
-                        <th>Employee</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>{bookings}</tbody>
-            </table>
+        <div>
+           {bookingsTable}
         </div>   
       </div>
     );
@@ -327,11 +356,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-//     return {
-//       onFetchBookings: (token) => dispatch(actions.fetchBookings(token)),
-//     };
-  };
+const mapDispatchToProps = (dispatch) => {};
   
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewBookings);
