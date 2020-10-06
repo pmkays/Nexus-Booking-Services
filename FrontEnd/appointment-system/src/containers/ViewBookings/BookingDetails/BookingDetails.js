@@ -118,7 +118,6 @@ export class BookingDetails extends Component {
         axios.post(`/api/booking/cancel`, bookingToSend, config)
         .then((response) => {
           console.log(response.data);
-            alert("booking cancelled");
             this.setState({
                 ...this.state,
                 bookingDetails: response.data

@@ -158,6 +158,15 @@ export class Dashboard extends Component {
                 to='dashboard'
               />
               <br />
+
+              <DashboardIcon
+                name='Bookings'
+                id='ViewBookings'
+                classes='fas fa-book'
+                to='viewbookings'
+              />
+
+              <br />
               {this.props.authority === 'ROLE_ADMIN' ? (
                 <React.Fragment>
                   <DashboardIcon
@@ -168,7 +177,7 @@ export class Dashboard extends Component {
                   />
                   <br />
                   <DashboardIcon
-                    name='Workhours'
+                    name='Work&nbsp;Hours'
                     id='Workhours'
                     classes='fas fa-hourglass-half'
                     to='workingtimes'
@@ -179,9 +188,9 @@ export class Dashboard extends Component {
               {this.props.authority === 'ROLE_CUSTOMER' ? (
                 <React.Fragment>
                   <DashboardIcon
-                    name='Bookings'
-                    id='Bookings'
-                    classes='fas fa-book'
+                    name='New&nbsp;Booking'
+                    id='NewBooking'
+                    classes='fas fa-edit'
                     to='bookings'
                   />
                   <br />
