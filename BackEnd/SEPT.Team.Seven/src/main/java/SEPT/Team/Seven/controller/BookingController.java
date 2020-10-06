@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import SEPT.Team.Seven.model.Booking;
 import SEPT.Team.Seven.model.DTO.BookingDTO;
 import SEPT.Team.Seven.model.DTO.CustomerTimeDTO;
+import SEPT.Team.Seven.model.DTO.EmployeeDateDTO;
 import SEPT.Team.Seven.model.DTO.EmployeeTimeDTO;
 import SEPT.Team.Seven.model.DTO.TimeDTO;
 import SEPT.Team.Seven.service.BookingService;
@@ -93,5 +94,14 @@ public class BookingController {
 		return bookingService.findBookingsByDate(
 				timeDTO.getStartTime(), timeDTO.getEndTime());
 	}
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@PostMapping("/findAvailable")
+	public List<String> findAvailableTimesByDateAndEmployee(@RequestBody EmployeeDateDTO employeeDateDTO) {
+		return bookingService.findAvailableTimesByDateAndEmployee(
+				employeeDateDTO.getEmployeeId(), employeeDateDTO.getDate());
+	}
+	
+	
 	
 }

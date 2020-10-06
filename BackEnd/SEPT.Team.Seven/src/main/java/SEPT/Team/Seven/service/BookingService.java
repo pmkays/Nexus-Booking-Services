@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.Booking;
+import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.WorkingTime;
 import SEPT.Team.Seven.repo.BookingRepository;
 import SEPT.Team.Seven.repo.CustomerRepository;
@@ -25,7 +25,7 @@ public class BookingService {
 	private EmployeeRepository employeeRepository;
 	private CustomerRepository customerRepository;
 	private ServiceRepository serviceRepository;
-	
+
 	private final String PENDING = "pending";
 
 	public BookingService(BookingRepository bookingRepository, WorkingTimeRepository workingTimeRepository,
@@ -85,18 +85,20 @@ public class BookingService {
 					// now we have to check that the times dont overlap
 					// so this is checking that the new start is after the booking is done,
 					// or it ends before the booking starts.
-					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0) && booking.getStatus().equals("accepted")) {
+					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0)
+							&& booking.getStatus().equals(PENDING)) {
 						// so if these conditions are not meant, we'll return empty.
-						System.out.println("IS ACCEPTED: " + booking.getStatus().equals("accepted"));
+						System.out.println("IS ACCEPTED: " + booking.getStatus().equals(PENDING));
 						System.out.println("BOOKING ID: " + booking.getId());
 						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
 						return Optional.empty();
 					}
 				}
 			}
-			
+
 			// Check that the employee doesn't already have an overlapping booking
-			// THIS CODE IS REPEATED FOR THE CUSTOMERS BOOKINGS. could probably move into own method
+			// THIS CODE IS REPEATED FOR THE CUSTOMERS BOOKINGS. could probably move into
+			// own method
 			// when REFACTORING
 			List<Booking> employeesBookings = bookingRepository.findAllByEmployeeId(employeeId);
 			for (Booking booking : employeesBookings) {
@@ -110,8 +112,10 @@ public class BookingService {
 						&& cal.get(Calendar.YEAR) == newStartCal.get(Calendar.YEAR)) {
 					// now we have to check that the times dont overlap
 					// so this is checking that the new start is after the booking is done,
-					// or it ends before the booking starts. Also only consider this booking if it's accepted.
-					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0) && booking.getStatus().equals("accepted")) {
+					// or it ends before the booking starts. Also only consider this booking if it's
+					// accepted.
+					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0)
+							&& booking.getStatus().equals(PENDING)) {
 						// so if these conditions are not meant, we'll return empty.
 						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
 						return Optional.empty();
@@ -142,12 +146,10 @@ public class BookingService {
 								&& newEndCal.compareTo(workingTimeEnd) <= 0;
 
 						if (startValid && endValid) {
-							return Optional.of(bookingRepository.save(
-									new Booking(customerRepository.findById(customerId).get(),
-											employeeRepository.findById(employeeId).get(),
-											startTime, endTime, PENDING,
+							return Optional.of(
+									bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
+											employeeRepository.findById(employeeId).get(), startTime, endTime, PENDING,
 											serviceRepository.findById(serviceId).get())));
-							
 
 						}
 
@@ -165,7 +167,7 @@ public class BookingService {
 	public List<Booking> findBookingsByEmployeeAndDate(int employeeId, Date startTime, Date endTime) {
 		List<Booking> toReturn = new ArrayList<Booking>();
 		List<Booking> bookings = bookingRepository.findAllByEmployeeId(employeeId);
-		
+
 		for (Booking booking : bookings) {
 			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
 					&& booking.getStartTime().compareTo(endTime) <= 0;
@@ -175,16 +177,17 @@ public class BookingService {
 				toReturn.add(booking);
 			}
 		}
-		
+
 		return toReturn;
 	}
-	
-	// this is the exact same as the method above. Could be extrapolated into own helper
+
+	// this is the exact same as the method above. Could be extrapolated into own
+	// helper
 	// method once refactoring
 	public List<Booking> findBookingsByCustomerAndDate(int customerId, Date startTime, Date endTime) {
 		List<Booking> toReturn = new ArrayList<Booking>();
 		List<Booking> bookings = bookingRepository.findAllByCustomerId(customerId);
-		
+
 		for (Booking booking : bookings) {
 			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
 					&& booking.getStartTime().compareTo(endTime) <= 0;
@@ -194,15 +197,15 @@ public class BookingService {
 				toReturn.add(booking);
 			}
 		}
-		
+
 		return toReturn;
 	}
-	
+
 	// same deal with this.
 	public List<Booking> findBookingsByDate(Date startTime, Date endTime) {
 		List<Booking> toReturn = new ArrayList<Booking>();
 		List<Booking> bookings = bookingRepository.findAll();
-		
+
 		for (Booking booking : bookings) {
 			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
 					&& booking.getStartTime().compareTo(endTime) <= 0;
@@ -212,19 +215,19 @@ public class BookingService {
 				toReturn.add(booking);
 			}
 		}
-		
+
 		return toReturn;
 	}
 
 	public List<Booking> getAllBookings() {
 		return bookingRepository.findAll();
 	}
-	
+
 	public Optional<Booking> cancelBooking(int employeeId, int customerId, Date startTime, Date endTime,
 			int serviceId) {
-		
+
 		Optional<Booking> toReturn = Optional.empty();
-		
+
 		for (Booking booking : bookingRepository.findAllByEmployeeId(employeeId)) {
 			if (booking.getCustomer().getId() == customerId && booking.getStartTime().compareTo(startTime) == 0
 					&& booking.getEndTime().compareTo(endTime) == 0 && booking.getService().getId() == serviceId) {
@@ -246,8 +249,99 @@ public class BookingService {
 		return bookingRepository.findById(id);
 	}
 
+	public List<String> findAvailableTimesByDateAndEmployee(int employeeId, Date date) {
+		// first we find the working time on this date that the employee has.
+		List<String> times = new ArrayList<String>();
 
+		if (employeeRepository.findById(employeeId).isPresent()) {
+			Employee employee = employeeRepository.findById(employeeId).get();
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+
+			for (WorkingTime workingTime : workingTimeRepository.findAllByEmployeeId(employeeId)) {
+				Calendar workingTimeStart = Calendar.getInstance();
+				workingTimeStart.setTime(workingTime.getStartTime());
+
+				// find the employee's working time on this day.
+				if (workingTimeStart.get(Calendar.DATE) == cal.get(Calendar.DATE)
+						&& workingTimeStart.get(Calendar.MONTH) == cal.get(Calendar.MONTH)
+						&& workingTimeStart.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
+
+//					System.out.println(workingTimeStart.get(Calendar.HOUR_OF_DAY));
+
+					int start = workingTimeStart.get(Calendar.HOUR_OF_DAY);
+					
+					Calendar workingTimeEnd = Calendar.getInstance();
+					workingTimeEnd.setTime(workingTime.getEndTime());
+					
+					int end = workingTimeEnd.get(Calendar.HOUR_OF_DAY);
+					
+//					System.out.println("End: " + end);
+
+					boolean hourIsAvailable = true;
+
+					// starting from the starting hour of the working time, check every
+					// hour and ensure they do not already have a booking on that hour.
+					// bookings are only allowed every hour which is why we can do it this way.
+					for (int i = start; i < end; ++i) {
+						
+						hourIsAvailable = true;
+
+						Calendar hourCalendar = Calendar.getInstance();
+						hourCalendar.setTime(date);
+						hourCalendar.add(Calendar.HOUR_OF_DAY, i);
+
+						for (Booking booking : bookingRepository.findAllByEmployeeId(employeeId)) {
+							Calendar bookingStart = Calendar.getInstance();
+							bookingStart.setTime(booking.getStartTime());
+
+							Calendar bookingEnd = Calendar.getInstance();
+							bookingEnd.setTime(booking.getEndTime());
+
+							// only consider bookings on the day and that are pending
+							if (bookingStart.get(Calendar.DATE) == cal.get(Calendar.DATE)
+									&& bookingStart.get(Calendar.MONTH) == cal.get(Calendar.MONTH)
+									&& bookingStart.get(Calendar.YEAR) == cal.get(Calendar.YEAR)
+									&& booking.getStatus().equals(PENDING)) {
+
+								// if the hour is within a booking's start and endtime, it's not available.
+								// invalid if current hour is after a bookings start time and also before its
+								// end time.
+								if (hourCalendar.getTime().compareTo(bookingStart.getTime()) >= 0
+										&& hourCalendar.getTime().compareTo(bookingEnd.getTime()) < 0) {
+//									System.out.println("Hour is not available due to booking ID: " + booking.getId());
+									hourIsAvailable = false;
+									break;
+								}
+							}
+						}
+
+						// now if the hour is available, we add it to the list of strings in the format
+						// we need for frontend.
+						if (hourIsAvailable) {
+							String hour = "";
+							if (i < 10) {
+								hour = "0";
+							}
+
+							String time = hour + i + ":00";
+
+//							System.out.println("Hour is available, so getting added to list of strings as: " + time);
+							times.add(time);
+
+						}
+					}
+
+					return times;
+				}
+			}
+
+			System.out.println("There is no working time for this employee on this date.");
+			return times;
+		}
+
+		return times;
+	}
 
 }
-
-
