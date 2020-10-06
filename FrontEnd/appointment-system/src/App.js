@@ -7,7 +7,6 @@ import Logout from './containers/Login/Logout/Logout';
 import Home from './containers/Home/Home';
 import RegisterProfile from './containers/Register/Register';
 import AddService from './containers/Admin/AddService/AddService';
-import BookingDetails from './containers/ViewBookings/BookingDetails/BookingDetails'
 
 import AboutUs from './containers/AboutUs/AboutUs';
 import ContactUs from './containers/ContactUs/ContactUs';

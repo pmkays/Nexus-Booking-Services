@@ -44,6 +44,7 @@
   flex: 1 1 88%;
   height: 90vh;
   max-width: 95vw;
+  overflow-y:scroll;
 }
 
 .WelcomeBox {

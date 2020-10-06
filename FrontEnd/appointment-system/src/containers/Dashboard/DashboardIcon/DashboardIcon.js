@@ -20,7 +20,7 @@ const dashboardIcon = (props) => {
         <NavLink
           activeClassName={classes.IconActive}
           className={classes.Icon}
-          to={props.to}
+          to={'/' + props.to}
         >
           <i
             className={props.classes}

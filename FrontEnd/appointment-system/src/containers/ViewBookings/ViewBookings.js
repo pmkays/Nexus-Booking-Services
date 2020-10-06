@@ -176,7 +176,7 @@ export class ViewBookings extends Component {
             <td>{uppercaseFirstCharacter(booking.service.name)}</td>
             {customerOrEmployee(booking)}
             <td>{uppercaseFirstCharacter(booking.status)}</td>
-            <td><NavLink to={`/booking/${booking.id}`}><i className="fas fa-arrow-right"></i></NavLink></td>
+            <td><NavLink to={`/booking/${booking.id}`}><i className={"fas fa-arrow-right "} style={{color: "#44CDD6"}}></i></NavLink></td>
           </tr>
         );
       });
@@ -276,74 +276,74 @@ export class ViewBookings extends Component {
     }
 
     return (
-      <div className='container' style={{display: "flex"}}>
-        <div className={classes.filter}>
-            <h4>Filter by...</h4>
-            <hr/>
-            <div className="row">
-                <div className="col">
-                    <a data-toggle="collapse" href="#sortAccordion" aria-expanded="false" aria-controls="sortAccordion">Sort &#x25BC;</a>
-                    <div className="collapse multi-collapse" id="sortAccordion">
-                        <div className="form-group">
-                            <label htmlFor="sort">Date:</label>
-                            <select className ="form-control" name="sort" onChange = {handleSorting}>
-                                <option value = "default" defaultValue> Default</option>
-                                <option value = "ascending" > Ascending </option>
-                                <option value = "descending"> Descending</option>
-                            </select>
+      <div className={'container ' + classes.display}>
+        <h1>View Bookings</h1>
+        <div style={{display: "flex"}}>
+            <div className={classes.filter}>
+                <h4>Filter by...</h4>
+                <hr/>
+                <div className="row">
+                    <div className="col">
+                        <a data-toggle="collapse" href="#sortAccordion" aria-expanded="false" aria-controls="sortAccordion">Sort &#x25BC;</a>
+                        <div className="collapse multi-collapse" id="sortAccordion">
+                            <div className="form-group">
+                                <label htmlFor="sort">Date:</label>
+                                <select className ="form-control" name="sort" onChange = {handleSorting}>
+                                    <option value = "default" defaultValue> Default</option>
+                                    <option value = "ascending" > Ascending </option>
+                                    <option value = "descending"> Descending</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr/>
-            <div className="row">
-                <div className="col">
-                    <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Status &#x25BC;</a>
-                    <div className="collapse multi-collapse" id="statusAccordion">
-                        <div className="">
-                            <input type="checkbox" name="Completed" value="complete" onChange={handleStatusChange}/>
-                            <label htmlFor="Completed"> &nbsp; Complete</label><br/>
-                            <input type="checkbox" name="Pending" value="pending" onChange={handleStatusChange}/>
-                            <label htmlFor="Pending"> &nbsp; Pending</label><br/>
-                            <input type="checkbox" name="Cancelled" value="cancelled" onChange={handleStatusChange}/>
-                            <label htmlFor="Cancelled">  &nbsp; Cancelled</label><br/>
+                <hr/>
+                <div className="row">
+                    <div className="col">
+                        <a data-toggle="collapse" href="#statusAccordion" aria-expanded="false" aria-controls="statusAccordion">Status &#x25BC;</a>
+                        <div className="collapse multi-collapse" id="statusAccordion">
+                            <div className="">
+                                <input type="checkbox" name="Completed" value="complete" onChange={handleStatusChange}/>
+                                <label htmlFor="Completed"> &nbsp; Complete</label><br/>
+                                <input type="checkbox" name="Pending" value="pending" onChange={handleStatusChange}/>
+                                <label htmlFor="Pending"> &nbsp; Pending</label><br/>
+                                <input type="checkbox" name="Cancelled" value="cancelled" onChange={handleStatusChange}/>
+                                <label htmlFor="Cancelled">  &nbsp; Cancelled</label><br/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr/>
-            <div className="row">
-                <div className="col">
-                    <a data-toggle="collapse" href="#dateAccordion" aria-expanded="false" aria-controls="dateAccordion">Date &#x25BC;</a>
-                    <div className="collapse multi-collapse" id="dateAccordion">
-                        <form className="form" onSubmit={handleFormSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="from">From:</label>
-                                <input type="date" className="form-control" id="from" name="from"/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="to">To:</label>
-                                <input type="date" className="form-control" id="to" name="to"/>
-                            </div>
-                            <div className="form-group">
-                            <div className="row">
-                                <div className="col text-center">
-                                    <button type="submit" className="btn" style={{color: "white", backgroundColor: "#44CDD6"}} onClick = {getButton} value = "go">Find!</button>
-                                    <button type="submit" className="btn btn-danger" onClick = {getButton} value ="clear">Clear</button>
+                <hr/>
+                <div className="row">
+                    <div className="col">
+                        <a data-toggle="collapse" href="#dateAccordion" aria-expanded="false" aria-controls="dateAccordion">Date &#x25BC;</a>
+                        <div className="collapse multi-collapse" id="dateAccordion">
+                            <form className="form" onSubmit={handleFormSubmit}>
+                                <div className="form-group">
+                                    <label htmlFor="from">From:</label>
+                                    <input type="date" className="form-control" id="from" name="from"/>
                                 </div>
-                            </div>
-                            </div>
-                        </form>
+                                <div className="form-group">
+                                    <label htmlFor="to">To:</label>
+                                    <input type="date" className="form-control" id="to" name="to"/>
+                                </div>
+                                <div className="form-group">
+                                <div className="row">
+                                    <div className="col text-center">
+                                        <button type="submit" className="btn" style={{color: "white", backgroundColor: "#44CDD6"}} onClick = {getButton} value = "go">Find!</button>
+                                        <button type="submit" className="btn btn-danger" onClick = {getButton} value ="clear">Clear</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div>
+                {bookingsTable}
+            </div>  
         </div>
-        <br />
-        <br />
-        <br />
-        <div>
-           {bookingsTable}
-        </div>   
       </div>
     );
   }

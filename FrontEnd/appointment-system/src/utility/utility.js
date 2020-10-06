@@ -1,5 +1,4 @@
 import moment from 'moment';
-import React, { Component } from 'react';
 
 export const updateObject = (oldObject, updatedProperties) => {
   return {

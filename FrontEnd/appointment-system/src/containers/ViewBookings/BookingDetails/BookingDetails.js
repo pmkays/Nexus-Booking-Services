@@ -106,7 +106,6 @@ export class BookingDetails extends Component {
     }
 
     const handleCancelBooking = (event) => {
-        // int employeeId, int customerId, Date startTime, Date endTime, int serviceId
         let booking = this.state.bookingDetails;
         let bookingToSend = {'startTime': booking.startTime, 'endTime': booking.endTime, 'employeeId':booking.employee.id, 'customerId': booking.customer.id, 'serviceId': booking.service.id}
         
