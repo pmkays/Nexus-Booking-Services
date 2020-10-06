@@ -61,7 +61,7 @@ class App extends Component {
           />
           <Route
             path='/booking/:id'
-            component={() => <Dashboard content='bookingdetails' />}
+            component={() => <Dashboard content='bookingdetails' {...this.props}/>}
           />
 
           <Route path='/logout' component={Logout} />
@@ -97,7 +97,7 @@ class App extends Component {
           />
           <Route
             path='/booking/:id'
-            component={() => <Dashboard content='bookingdetails' />}
+            component={() => <Dashboard content='bookingdetails' {...this.props}/>}
           />
 
           <Route path='/logout' component={Logout} />

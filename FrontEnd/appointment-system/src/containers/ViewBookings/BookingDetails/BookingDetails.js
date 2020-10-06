@@ -14,6 +14,7 @@ export class BookingDetails extends Component {
         error: null,
         bookingDetails: null
     };
+    
 
   //As soon as this component loads it will attempt to grab booking details
   componentDidMount() {
@@ -24,22 +25,9 @@ export class BookingDetails extends Component {
       };
   
       this.setState({ ...this.state, loading: true });
-      let user = "";
-      switch(this.props.userType){
-          case "ROLE_CUSTOMER":
-              user = "customer";
-              break;
-          case "ROLE_EMPLOYEE":
-              user = "employee";
-              break;
-          case "ROLE_ADMIN":
-              user="admin";
-              break;
-          default:
-              user= "";
-              break;
-      }
+
     //url is booking/{id}
+      console.log(this.props);
       let indexOfId = this.props.location.pathname.length-1;
       let bookingId = this.props.location.pathname.substring(indexOfId);
       
@@ -62,21 +50,105 @@ export class BookingDetails extends Component {
   }
 
   render() {
-    // const customerOrEmployee = (booking) => {
-    //     if(this.props.userType === "ROLE_CUSTOMER"){
-    //         return (<td>{uppercaseFirstCharacter(booking.employee.firstName)} {uppercaseFirstCharacter(booking.employee.lastName)}</td>);
-    //     } else if (this.props.userType === "ROLE_EMPLOYEE"){
-    //         return (<td>{uppercaseFirstCharacter(booking.customer.firstName)} {uppercaseFirstCharacter(booking.customer.lastName)}</td>);
-    //     } else{
-    //         return (
-    //             <React.Fragment>
-    //                 <td>{uppercaseFirstCharacter(booking.customer.firstName)} {uppercaseFirstCharacter(booking.customer.lastName)}</td>
-    //                 <td>{uppercaseFirstCharacter(booking.employee.firstName)} {uppercaseFirstCharacter(booking.employee.lastName)}</td>
-    //             </React.Fragment>);
-    //     }
-    // }
+    const customerOrEmployeeName = () => {
+        let booking = this.state.bookingDetails;
+        if(this.props.userType === "ROLE_CUSTOMER" || this.props.userType === "ROLE_ADMIN"){
+            return (<h4>{uppercaseFirstCharacter(booking.employee.firstName)} {uppercaseFirstCharacter(booking.employee.lastName)}</h4>);
+        } else if (this.props.userType === "ROLE_EMPLOYEE"){
+            return (<h4>{uppercaseFirstCharacter(booking.customer.firstName)} {uppercaseFirstCharacter(booking.customer.lastName)}</h4>);
+        }
+    }
+
+    const customerOrEmployeeImg = () => {
+        if(this.props.userType === "ROLE_CUSTOMER" || this.props.userType === "ROLE_ADMIN"){
+            return (<img src= {this.state.bookingDetails.employee.img} alt="employee"/>);
+        } else if (this.props.userType === "ROLE_EMPLOYEE"){
+            return (<img src= {this.state.bookingDetails.customer.img} alt="customer"/>);
+        }
+    }
+
+    const customerOrEmployeeDescription = () => {
+        let booking = this.state.bookingDetails;
+        if(this.props.userType === "ROLE_CUSTOMER" || this.props.userType === "ROLE_ADMIN"){
+            return (<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>);
+        } else if (this.props.userType === "ROLE_EMPLOYEE"){
+            return (
+            <div className={classes.customerDesc}>
+                <dl className="row">
+                    <dd className="col-sm-3">Email:</dd>
+                    <dd className="col-sm-9">{booking.customer.email}</dd>
+                    <dd className="col-sm-3">Number:</dd>
+                    <dd className="col-sm-9">{booking.customer.phoneNo}</dd>
+                    <dd className="col-sm-3">Address:</dd>
+                    <dd className="col-sm-9">{booking.customer.address}</dd>
+                </dl>
+                
+            </div>
+            );
+        }
+    }
+
+    let customerOrEmployeeHeader = (this.props.userType === "ROLE_CUSTOMER" || this.props.userType === "ROLE_ADMIN") ? "Employee" : "Customer";
+
+    const customerDetailsForAdmin = () => {
+        let booking = this.state.bookingDetails;
+        if(this.props.userType === 'ROLE_ADMIN'){
+            return(
+                <React.Fragment>
+                    <dt className='col-sm-4'>Customer:</dt>
+                    <dd className='col-sm-8'>{uppercaseFirstCharacter(booking.customer.firstName)} {uppercaseFirstCharacter(booking.customer.lastName)}</dd> 
+                </React.Fragment>
+            );
+        } else{
+            return null;
+        }
+
+    }
+
+    const handleCancelBooking = (event) => {
+        // int employeeId, int customerId, Date startTime, Date endTime, int serviceId
+        let booking = this.state.bookingDetails;
+        let bookingToSend = {'startTime': booking.startTime, 'endTime': booking.endTime, 'employeeId':booking.employee.id, 'customerId': booking.customer.id, 'serviceId': booking.service.id}
+        
+        const config = {
+            headers: {
+              Authorization: 'Bearer ' + this.props.token,
+            },
+          };
+
+        axios.post(`/api/booking/cancel`, bookingToSend, config)
+        .then((response) => {
+          console.log(response.data);
+            alert("booking cancelled");
+            this.setState({
+                ...this.state,
+                bookingDetails: response.data
+              });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.setState({
+            ...this.state,
+            error: 'Error retrieving bookings.',
+            loading: false
+          });
+        });
+    }
 
     let booking = <Spinner />;
+
+    let cancelBtn = () => {
+        if (this.state.bookingDetails.status !== "pending" || this.props.userType === "ROLE_ADMIN"){
+            return null; 
+        } else {
+            return (
+                <React.Fragment>
+                    <button type="button" className={classes.cancelBtn} onClick={handleCancelBooking}>Cancel</button>
+                    <div className={classes.note}><p>Note you cannot cancel a booking within 48 hours of the booking time</p></div>
+                </React.Fragment>
+            );
+        }
+    } 
 
     // If not loading and the profile is present, it will render the details
     if (this.state.bookingDetails != null) {
@@ -97,8 +169,8 @@ export class BookingDetails extends Component {
                             <dd className='col-sm-8'>{timeDiff(this.state.bookingDetails.endTime, this.state.bookingDetails.startTime)}</dd>
                             <dt className='col-sm-4'>Status:</dt>
                             <dd className='col-sm-8'>{uppercaseFirstCharacter(this.state.bookingDetails.status)}</dd>
-                            <button type="button" className={classes.cancelBtn}>Cancel</button><br/>
-                            <div className={classes.note}><p>Note you cannot cancel a booking within 48 hours of the booking time</p></div>
+                            {customerDetailsForAdmin()}
+                            {cancelBtn()}<br/>
                         </dl> 
                     </div>
                 </div>
@@ -110,10 +182,10 @@ export class BookingDetails extends Component {
                         <div className={'col-sm-9 ' + classes.whiteContainer}> {/*this div is meant to be white*/}
                             <div className={'row ' + classes.name}>
                                 <h4>{uppercaseFirstCharacter(this.state.bookingDetails.service.name)}</h4>
-                            </div>
+                            </div><hr/>
                             <div className="row">
-                                 <div className={'col ' + classes.description}>
-                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                <div className={'col ' + classes.description}>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                                 </div>
                                 <div className={'col ' + classes.image}>
                                     <img src={this.state.bookingDetails.service.img} alt="service"/>
@@ -123,18 +195,18 @@ export class BookingDetails extends Component {
                     </div>
                     <div className={'row ' + classes.lightGreenContainer}> {/*this div is meant to be light green*/}
                         <div className={'col-sm-3 d-flex justify-content-center text-center ' + classes.title}> {/*for employees/customers */}
-                            <h2>Employee</h2>
+                            <h2>{customerOrEmployeeHeader}</h2>
                         </div>
                         <div className={'col-sm-9 ' + classes.whiteContainer}>{/*this div is meant to be white*/}
                             <div className={'row ' + classes.name}>
-                                <h4>{uppercaseFirstCharacter(this.state.bookingDetails.employee.firstName)} {uppercaseFirstCharacter(this.state.bookingDetails.employee.lastName)} - {this.state.bookingDetails.employee.phoneNo}</h4>                          
-                            </div>
+                                <h4>{customerOrEmployeeName()}</h4>                          
+                            </div><hr/>
                             <div className="row">
                                 <div className={'col ' + classes.description}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    {customerOrEmployeeDescription()}
                                 </div>
                                 <div className={'col ' + classes.image}>
-                                    <img src={this.state.bookingDetails.employee.img} alt="employee"/>
+                                    {customerOrEmployeeImg()}
                                 </div> 
                             </div>
                         </div>
