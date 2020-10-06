@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.Service;
+import SEPT.Team.Seven.model.WorkingTime;
 
 @Component
 public class RestConfig implements RepositoryRestConfigurer {
@@ -14,6 +15,7 @@ public class RestConfig implements RepositoryRestConfigurer {
       public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(Employee.class);
         config.exposeIdsFor(Service.class);
+        config.exposeIdsFor(WorkingTime.class);
         //config.exposeIdsFor(Library.class);
       }
 
