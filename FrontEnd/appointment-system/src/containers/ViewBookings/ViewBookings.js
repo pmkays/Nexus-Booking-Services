@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './ViewBookings.module.css';
 
-// import actions from '../../store/actions/booking'
+import * as actions from '../../store/actions/profile'
 export class ViewBookings extends Component {
   state = {
     bookings: null,
@@ -119,8 +119,6 @@ export class ViewBookings extends Component {
             filteredBookings.sort((a,b)=>moment(a.startTime).diff(moment(b.startTime)));
         } else if (this.state.filters.sort === "descending"){
             filteredBookings.sort((a,b)=>moment(b.startTime).diff(moment(a.startTime)));
-        } else{
-            filteredBookings.sort((a,b)=> a.id - b.id);
         }
 
         this.setState({
@@ -356,7 +354,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {};
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
+    };
+  };
   
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewBookings);

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import * as actions from '../../store/actions/actions';
-// import { NavLink } from 'react-router-dom';
+import * as actions from '../../../store/actions/profile';
 import axios from '../../../axios-sept';
 import moment from 'moment';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -232,9 +231,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
-//   };
+  return {
+    onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingDetails);
