@@ -124,7 +124,7 @@ export class DashboardWelcome extends Component {
                     <div className={classes.WelcomeBoxText}>
                       <h1>
                         Welcome{' '}
-                        <span className={classes.BoldText}>
+                        <span className={classes.BoldedText}>
                           {this.props.profileDetails.firstName}!
                         </span>
                       </h1>

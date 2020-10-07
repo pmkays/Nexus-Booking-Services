@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import classes from './SideDrawer.module.css';
 import DashboardIcon from '../../../containers/Dashboard/DashboardIcon/DashboardIcon';
 import Backdrop from '../../UI/Backdrop/Backdrop';
