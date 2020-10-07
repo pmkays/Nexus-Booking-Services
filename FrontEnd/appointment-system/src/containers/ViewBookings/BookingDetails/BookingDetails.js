@@ -6,6 +6,7 @@ import moment from 'moment';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import {uppercaseFirstCharacter, timeDiff} from '../../../utility/utility';
 import classes from './BookingDetails.module.css';
+import { withRouter} from 'react-router-dom';
 
 export class BookingDetails extends Component {
     state = {
@@ -26,10 +27,7 @@ export class BookingDetails extends Component {
       this.setState({ ...this.state, loading: true });
 
     //url is booking/{id}
-      console.log(this.props);
-      let indexOfId = this.props.location.pathname.length-1;
-      let bookingId = this.props.location.pathname.substring(indexOfId);
-      
+      let bookingId = this.props.match.params.id;
       axios.get(`/api/booking/${bookingId}`, config)
         .then((response) => {
           this.setState({
@@ -236,4 +234,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BookingDetails));
+
