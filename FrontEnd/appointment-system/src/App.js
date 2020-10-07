@@ -6,7 +6,7 @@ import Login from './containers/Login/Login';
 import Logout from './containers/Login/Logout/Logout';
 import Home from './containers/Home/Home';
 import RegisterProfile from './containers/Register/Register';
-import AddService from './containers/Admin/AddService/AddService';
+import SuccessRegister from './components/Success/SuccessRegister/SuccessRegister';
 
 import AboutUs from './containers/AboutUs/AboutUs';
 import ContactUs from './containers/ContactUs/ContactUs';
@@ -39,6 +39,10 @@ class App extends Component {
             component={() => <Dashboard content='addemployee' />}
           />
           <Route
+            path='/editemployee/:id'
+            component={() => <Dashboard content='editemployee' />}
+          />
+          <Route
             path='/addservice'
             component={() => <Dashboard content='addservice' />}
           />
@@ -60,7 +64,13 @@ class App extends Component {
           />
           <Route
             path='/booking/:id'
-            component={() => <Dashboard content='bookingdetails' {...this.props}/>}
+            component={() => (
+              <Dashboard content='bookingdetails' {...this.props} />
+            )}
+          />
+          <Route
+            path='/success'
+            component={() => <Dashboard content='success' />}
           />
 
           <Route path='/logout' component={Logout} />
@@ -96,7 +106,13 @@ class App extends Component {
           />
           <Route
             path='/booking/:id'
-            component={() => <Dashboard content='bookingdetails' {...this.props}/>}
+            component={() => (
+              <Dashboard content='bookingdetails' {...this.props} />
+            )}
+          />
+          <Route
+            path='/success'
+            component={() => <Dashboard content='success' />}
           />
 
           <Route path='/logout' component={Logout} />
@@ -135,8 +151,13 @@ class App extends Component {
           />
           <Route
             path='/booking/:id'
-            component={() => <Dashboard content='bookingdetails'
-            {...this.props}/>}
+            component={() => (
+              <Dashboard content='bookingdetails' {...this.props} />
+            )}
+          />
+          <Route
+            path='/success'
+            component={() => <Dashboard content='success' />}
           />
 
           <Route path='/logout' component={Logout} />
@@ -152,6 +173,7 @@ class App extends Component {
           <Route path='/login' component={Login} />
           <Route path='/bookings' component={RegisterProfile} />
           <Route path='/register' component={RegisterProfile} />
+          <Route path='/registersuccess' component={SuccessRegister} />
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={AboutUs} />
           <Route path='/contact' component={ContactUs} />
@@ -170,6 +192,8 @@ const mapStateToProps = (state) => {
     isAdmin: state.auth.authority === 'ROLE_ADMIN',
     isEmployee: state.auth.authority === 'ROLE_EMPLOYEE',
     isCustomer: state.auth.authority === 'ROLE_CUSTOMER',
+    content: state.redirect.content,
+    redirect: state.redirect.redirect,
   };
 };
 

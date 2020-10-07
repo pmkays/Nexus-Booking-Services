@@ -11,6 +11,7 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Employees from '../Admin/Employees/Employees';
 import AddEmployee from '../Admin/AddEmployee/AddEmployee';
+import EditEmployee from '../Admin/EditEmployee/EditEmployee';
 import AddService from '../Admin/AddService/AddService';
 import WorkingTimes from '../WorkingTimes/WorkingTimes';
 import Availabilities from '../../containers/Availabilities/Availabilities';
@@ -21,8 +22,7 @@ import Booking from '../Booking/Booking';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ViewBookings from '../ViewBookings/ViewBookings';
 import BookingDetails from '../ViewBookings/BookingDetails/BookingDetails';
-
-
+import Success from '../../components/Success/Success';
 
 export class Dashboard extends Component {
   state = {
@@ -54,6 +54,13 @@ export class Dashboard extends Component {
         content = (
           <Animated animationIn='zoomIn' animationInDuration={200}>
             <AddEmployee />
+          </Animated>
+        );
+        break;
+      case 'editemployee':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <EditEmployee />
           </Animated>
         );
         break;
@@ -110,12 +117,20 @@ export class Dashboard extends Component {
         );
         break;
       case 'bookingdetails':
-          content = (
-            <Animated animationIn='zoomIn' animationInDuration={200}>
-              <BookingDetails {...this.props}/>
-            </Animated>
-          );
-          break;
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <BookingDetails {...this.props} />
+          </Animated>
+        );
+        break;
+      case 'success':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <Success />
+          </Animated>
+        );
+        console.log('wtf');
+        break;
       default:
         break;
     }

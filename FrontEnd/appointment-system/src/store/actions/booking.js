@@ -1,6 +1,7 @@
-import * as actionTypes from "./actionTypes";
-import axios from "../../axios-sept";
-import jwtDecode from "jwt-decode";
+import * as actionTypes from './actionTypes';
+import * as actions from './actions';
+import axios from '../../axios-sept';
+import jwtDecode from 'jwt-decode';
 
 export const addBookingStart = () => {
   return {
@@ -38,31 +39,33 @@ export const addBooking = (formData, token, history) => {
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
     console.log(bookingData.startTime);
     console.log(bookingData.endTime);
-    console.log("customerid" + bookingData.customerId);
-    console.log("employeeid" + bookingData.employeeId);
+    console.log('customerid' + bookingData.customerId);
+    console.log('employeeid' + bookingData.employeeId);
 
     axios
-      .post("/api/booking", bookingData, config)
+      .post('/api/booking', bookingData, config)
       .then((response) => {
-        console.log("HEHE");
         dispatch(addBookingSuccess(token));
-        console.log("YEET");
       })
       .then(() => {
-        console.log("OMG");
-        history.push("/dashboard");
-        console.log("NUUU");
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully booked the service.',
+            '/bookings'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
         dispatch(
           addBookingFail(
-            "Error adding Booking. You may already have a booking at this time with another employee."
+            'Error adding Booking. You may already have a booking at this time with another employee.'
           )
         );
       });

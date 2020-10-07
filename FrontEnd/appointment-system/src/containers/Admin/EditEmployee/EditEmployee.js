@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-import classes from './EditProfile.module.css';
+import { withRouter, Redirect } from 'react-router-dom';
+import classes from './EditEmployee.module.css';
 
 import * as actions from '../../../store/actions/actions';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import ErrorMessage from '../../../components/UI/Input/ErrorMessage';
+import axios from '../../../axios-sept';
 import { checkValidity, errorMessageToDisplay } from '../../../utility/utility';
 
-export class EditProfile extends Component {
+export class EditEmployee extends Component {
   state = {
     controls: {
       firstName: {
@@ -123,10 +123,11 @@ export class EditProfile extends Component {
       },
     },
     isFormValid: true,
+    error: null,
   };
 
   componentDidMount() {
-    this.props.onFetchProfile(this.props.token);
+    this.props.onFetchEmployee(this.props.match.params.id, this.props.token);
   }
 
   // Updates value and validity of input in state when interacted with by the user
@@ -172,8 +173,35 @@ export class EditProfile extends Component {
           : this.state.controls.avatar.value,
     };
 
-    this.props.onEditProfile(formData, this.props.token, this.props.history);
+    this.updateProfile(formData);
   };
+
+  updateProfile(formData) {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token,
+      },
+    };
+
+    console.log(formData);
+
+    console.log(this.props.match.params.id);
+    axios
+      .put('/api/employees/' + this.props.match.params.id, formData, config)
+      .then((response) => {
+        this.props.updateRedirect(
+          "You have succesfully updated the employee's details.",
+          '/employees'
+        );
+        this.props.history.push('/success');
+      })
+      .catch((error) => {
+        this.setState({
+          ...this.state,
+          error: 'Error editing employee data.',
+        });
+      });
+  }
 
   render() {
     let form = null;
@@ -252,7 +280,7 @@ export class EditProfile extends Component {
     return (
       <div className={classes.EditProfileBox}>
         {authRedirect}
-        <h1>Edit Profile</h1>
+        <h1>Edit Employee</h1>
         {form}
       </div>
     );
@@ -261,22 +289,22 @@ export class EditProfile extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.profile.loading,
-    error: state.profile.error,
-    profileDetails: state.profile.profileDetails,
+    loading: state.employee.loading,
+    error: state.employee.error,
+    profileDetails: state.employee.profileDetails,
     token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onEditProfile: (formData, token, history) =>
-      dispatch(actions.editProfile(formData, token, history)),
-    onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
+    onFetchEmployee: (id, token) => dispatch(actions.fetchEmployee(id, token)),
+    updateRedirect: (content, redirect) =>
+      dispatch(actions.updateRedirect(content, redirect)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(EditProfile));
+)(withRouter(EditEmployee));

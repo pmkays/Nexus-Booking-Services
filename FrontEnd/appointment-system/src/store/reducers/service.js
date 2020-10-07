@@ -1,5 +1,5 @@
-import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../../utility/utility";
+import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../../utility/utility';
 
 const initialState = {
   employeeId: null,

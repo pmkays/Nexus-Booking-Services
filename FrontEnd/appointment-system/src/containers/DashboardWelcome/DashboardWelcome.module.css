@@ -1,12 +1,3 @@
-.Dashboard {
-  width: 80vw;
-  height: 712px;
-  margin: auto;
-
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 25px;
-}
-
 .Avatar {
   height: 8vh;
   width: 8vh;
@@ -42,6 +33,7 @@
 
 .WelcomeBoxText {
   margin-top: 20%;
+  color: white;
 }
 
 .WelcomeImage {
