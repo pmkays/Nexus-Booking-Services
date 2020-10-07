@@ -58,6 +58,7 @@ CREATE TABLE `employee` (
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `img` varchar(200) DEFAULT NULL,
+  `description` varchar(232) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -109,6 +110,7 @@ CREATE TABLE `service` (
   `id` int(11) NOT NULL AUTO_INCREMENT, 
   `name` varchar(20) NOT NULL,
   `img` varchar(200) DEFAULT NULL,
+  `description` varchar(232) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -190,8 +192,8 @@ INSERT INTO `customer` VALUES
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg'),
-    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg');
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg', 'is an employee'),
+    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg', 'is an employee');
     
 --
 -- Data for table `admin`
@@ -263,10 +265,10 @@ INSERT INTO `working_time` VALUES
 --
 
 INSERT INTO `service` VALUES
-	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg'),
-    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg'),
-    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg'),
-    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg');
+	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg', 'Is a service for Design'),
+    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg', 'dis is da service for da Construction'),
+    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg', 'hair repairs becuz im going bald'),
+    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg', 'time to make up with my ex-wife Karen');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),

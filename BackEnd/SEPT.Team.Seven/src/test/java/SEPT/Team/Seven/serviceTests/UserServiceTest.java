@@ -87,10 +87,10 @@ public class UserServiceTest
 		existingCustomerUser = new User("leslie1", pass, existingCustomer, null, null, customerRole);
 		
 		employeeRole = new Role("ROLE_EMPLOYEE", "Employee role"); 
-		newEmployee = new Employee("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder", "placeholder");
+		newEmployee = new Employee("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder", "placeholder", "placeholder");
 		newEmployeeUser = new User("testEmployee", pass, null,newEmployee,null,employeeRole);
 		
-		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url");
+		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url", "some description");
 		existingEmployee.setId(4);
 		existingEmployeeUser = new User("employee1", pass, null, existingEmployee, null, employeeRole);
 		

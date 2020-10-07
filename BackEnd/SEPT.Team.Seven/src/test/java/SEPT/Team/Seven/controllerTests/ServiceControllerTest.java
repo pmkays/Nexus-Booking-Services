@@ -52,8 +52,8 @@ public class ServiceControllerTest
 	@BeforeAll
 	public static void setUp()
 	{
-		Service service1 = new Service("Manicure", "someUrl");
-		Service service2 = new Service("Pedicure", "someUrl");
+		Service service1 = new Service("Manicure", "someUrl", "some description");
+		Service service2 = new Service("Pedicure", "someUrl", "some description");
 		
 		services = new ArrayList<Service>();
 		services.add(service1);

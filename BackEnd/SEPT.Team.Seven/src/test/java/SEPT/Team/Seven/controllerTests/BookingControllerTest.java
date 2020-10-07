@@ -63,13 +63,13 @@ public class BookingControllerTest {
 	@BeforeAll
 	public static void setUp()
 	{
-		employee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url");
+		employee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url", "some description");
 		employee.setId(4);
 		
 		customer = new Customer("Leslie", "Uzumaki", "leslie@hotmail.com", "1234567891", "some address", "fake img url");
 		customer.setId(1);
 		
-		service = new Service("service1", "fake img url");
+		service = new Service("service1", "fake img url", "some description");
 
 		start = Calendar.getInstance();
 		end = Calendar.getInstance(); 

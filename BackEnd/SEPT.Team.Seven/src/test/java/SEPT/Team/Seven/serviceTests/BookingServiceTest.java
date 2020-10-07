@@ -60,7 +60,7 @@ public class BookingServiceTest {
 	@BeforeAll
 	public static void setUp()
 	{
-		service = new Service("service1", "fake img url");
+		service = new Service("service1", "fake img url", "some description");
 		
 		startTime = Calendar.getInstance();
 		endTime = Calendar.getInstance(); 
@@ -70,7 +70,7 @@ public class BookingServiceTest {
 		existingCustomer = new Customer("Leslie", "Uzumaki", "leslie@hotmail.com", "1234567891", "some address", "fake img url");
 		existingCustomer.setId(1);
 		
-		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url");
+		existingEmployee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url", "some description");
 		existingEmployee.setId(4);
 	}
 	

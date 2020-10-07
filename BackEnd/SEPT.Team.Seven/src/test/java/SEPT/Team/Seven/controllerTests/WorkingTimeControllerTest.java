@@ -59,7 +59,7 @@ public class WorkingTimeControllerTest {
 	
 	@BeforeAll
 	public static void setUp() {
-		employee = new Employee("Paula", "Kurniawan", "iannguyen@hotmail.yeet", "0123456789", "4 yeet court", "fake img url");
+		employee = new Employee("Paula", "Kurniawan", "iannguyen@hotmail.yeet", "0123456789", "4 yeet court", "fake img url", "some description");
 		employee.setId(4);
 		
 		start = Calendar.getInstance();
