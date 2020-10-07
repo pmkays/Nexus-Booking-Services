@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-sept';
+import * as actions from './actions';
 
 export const updateEmployeeId = (employeeId) => {
   return {
@@ -49,7 +50,13 @@ export const addService = (formData, token, history) => {
         dispatch(addServiceSuccess(token));
       })
       .then(() => {
-        history.push('/employees');
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully added a service to the employee.',
+            '/employees'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
         dispatch(
