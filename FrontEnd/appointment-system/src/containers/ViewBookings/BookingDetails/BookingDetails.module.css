@@ -61,6 +61,11 @@
    margin: 20px 0px 15px 20%
 }
 
+.cancelBtn[disabled]{
+   background-color: #4A5B5C;
+   opacity: 0.3;
+}
+
 .note{
    align-items:center;
    text-align:center;

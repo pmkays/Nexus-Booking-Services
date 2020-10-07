@@ -44,6 +44,8 @@ export class BookingDetails extends Component {
             loading: false
           });
         });
+
+        console.log(this.state.bookingDetails);
   }
 
   render() {
@@ -67,7 +69,7 @@ export class BookingDetails extends Component {
     const customerOrEmployeeDescription = () => {
         let booking = this.state.bookingDetails;
         if(this.props.userType === "ROLE_CUSTOMER" || this.props.userType === "ROLE_ADMIN"){
-            return (<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>);
+            return (<p>{booking.employee.description}</p>);
         } else if (this.props.userType === "ROLE_EMPLOYEE"){
             return (
             <div className={classes.customerDesc}>
@@ -132,10 +134,26 @@ export class BookingDetails extends Component {
 
     let booking = <Spinner />;
 
+    const isWithin48Hrs = () => {
+        var time = moment(this.state.bookingDetails.startTime),
+        beforeTime = moment(),
+        afterTime = moment().add(48,'hours');
+
+        console.log(time.isBetween(beforeTime, afterTime, 'hours'));
+        return time.isBetween(beforeTime, afterTime, 'hours');
+    }
+
     let cancelBtn = () => {
         if (this.state.bookingDetails.status !== "pending" || this.props.userType === "ROLE_ADMIN"){
             return null; 
-        } else {
+        } else if (isWithin48Hrs()){
+            return (
+                <React.Fragment>
+                    <button type="button" className={classes.cancelBtn} disabled >Cancel</button>
+                    <div className={classes.note}><p>Note you cannot cancel a booking within 48 hours of the booking time</p></div>
+                </React.Fragment>
+            );
+        } else{
             return (
                 <React.Fragment>
                     <button type="button" className={classes.cancelBtn} onClick={handleCancelBooking}>Cancel</button>
@@ -180,7 +198,7 @@ export class BookingDetails extends Component {
                             </div><hr/>
                             <div className="row">
                                 <div className={'col ' + classes.description}>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    <p>{this.state.bookingDetails.service.description}</p>
                                 </div>
                                 <div className={'col ' + classes.image}>
                                     <img src={this.state.bookingDetails.service.img} alt="service"/>

@@ -17,6 +17,7 @@ export class Profile extends Component {
 
     // If not loading and the profile is present, it will render the details
     if (!this.props.loading && this.props.profileDetails !== null) {
+      console.log(this.props.profileDetails);
       profile = (
         <React.Fragment>
           <h1>My Profile</h1>

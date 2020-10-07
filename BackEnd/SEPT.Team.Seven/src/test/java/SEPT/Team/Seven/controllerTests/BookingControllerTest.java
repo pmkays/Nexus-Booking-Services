@@ -27,12 +27,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import SEPT.Team.Seven.controller.BookingController;
 import SEPT.Team.Seven.model.Booking;
 import SEPT.Team.Seven.model.Customer;
 import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.Service;
+import SEPT.Team.Seven.model.DTO.EmployeeDateDTO;
 import SEPT.Team.Seven.security.SecurityUserDetailsService;
 import SEPT.Team.Seven.service.BookingService;
 
@@ -362,8 +364,5 @@ public class BookingControllerTest {
 				  .andExpect(MockMvcResultMatchers.content().string("403 Error cancelling booking."));
 		
 	}
-	
-	
-	
 	
 }
