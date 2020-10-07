@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -211,7 +212,7 @@ public class BookingControllerTest {
         Date date1 = Date.from(localDate1.atZone(defaultZoneId).toInstant());
         Date date2 = Date.from(localDate2.atZone(defaultZoneId).toInstant());
 
-	 	Booking toAdd = new Booking(customer,employee, date1, date2, "accepted", service);
+	 	Booking toAdd = new Booking(customer,employee, date1, date2, "pending", service);
 		
 	 	when(bookingService.addBooking(4,1, date1, date2, 1)).thenReturn(Optional.of(toAdd));
 		
@@ -254,9 +255,114 @@ public class BookingControllerTest {
 				  .andDo(MockMvcResultHandlers.print())
 				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
 				  .andExpect(MockMvcResultMatchers.content().string("403 Error adding booking."));
-
 		
 	}
+	
+	@Test
+	public void cancelBooking_ValidBookingOutside48Hrs_ReturnsBookingCancelled() throws Exception
+	{
+		//Arrange
+		// get 12am 4 days from today    
+		Calendar bookingStart = new GregorianCalendar();
+		bookingStart.set(Calendar.HOUR_OF_DAY, 0);
+		bookingStart.set(Calendar.MINUTE, 0);
+		bookingStart.set(Calendar.SECOND, 0);
+		bookingStart.set(Calendar.MILLISECOND, 0);
+		bookingStart.add(Calendar.DAY_OF_MONTH, 4);
+		 
+	 	Calendar bookingEnd = (Calendar)bookingStart.clone(); 
+	 	bookingEnd.add(Calendar.HOUR_OF_DAY, 3);
+			
+	 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
+	 	String startStr = dateFormat.format(bookingStart.getTime());  
+	 	String endStr = dateFormat.format(bookingEnd.getTime());  
+		
+	 	JSONObject json = new JSONObject(); 
+	 	json.put("employeeId", 4);
+	 	json.put("startTime", startStr);
+	 	json.put("endTime", endStr);
+	 	json.put("customerId", 1);
+	 	json.put("serviceId", 1);
+		
+	 	//need to use the string to the date values when mocking since precision will be different
+	 	//Parse to iso local date time, i.e. yyyy-MM-ddThh:mm:ss
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+	 	TemporalAccessor format1 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(startStr);
+	 	TemporalAccessor format2 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(endStr);
+		
+		//need to use localdatetime to get both date and time, which can be retrieved from temporal accessor
+        LocalDateTime localDate1 = LocalDateTime.from(format1);
+        LocalDateTime localDate2 = LocalDateTime.from(format2);
+
+        //convert the local date time to date to pass into the method params
+        Date date1 = Date.from(localDate1.atZone(defaultZoneId).toInstant());
+        Date date2 = Date.from(localDate2.atZone(defaultZoneId).toInstant());
+
+	 	Booking toCancel = new Booking(customer,employee, date1, date2, "cancelled", service);
+		
+	 	when(bookingService.cancelBooking(4,1, date1, date2, 1)).thenReturn(Optional.of(toCancel));
+		
+	 	//Act and Assert
+	 	this.mockMvc.perform(MockMvcRequestBuilders
+	 		      .post("/api/booking/cancel")
+	 		      .content(json.toString())
+	 		      .contentType(MediaType.APPLICATION_JSON))
+	 			  .andDo(MockMvcResultHandlers.print())
+	 			  .andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	public void cancelBooking_BookingWithin48Hrs_ReturnsError() throws Exception
+	{
+		//Arrange
+		Calendar bookingStart = new GregorianCalendar();
+		bookingStart.set(Calendar.HOUR_OF_DAY, 0);
+		bookingStart.set(Calendar.MINUTE, 0);
+		bookingStart.set(Calendar.SECOND, 0);
+		bookingStart.set(Calendar.MILLISECOND, 0);
+		bookingStart.add(Calendar.DAY_OF_MONTH, 1);
+		 
+	 	Calendar bookingEnd = (Calendar)bookingStart.clone(); 
+	 	bookingEnd.add(Calendar.HOUR_OF_DAY, 3);
+			
+	 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
+	 	String startStr = dateFormat.format(bookingStart.getTime());  
+	 	String endStr = dateFormat.format(bookingEnd.getTime());  
+		
+	 	JSONObject json = new JSONObject(); 
+	 	json.put("employeeId", 4);
+	 	json.put("startTime", startStr);
+	 	json.put("endTime", endStr);
+	 	json.put("customerId", 1);
+	 	json.put("serviceId", 1);
+		
+	 	//need to use the string to the date values when mocking since precision will be different
+	 	//Parse to iso local date time, i.e. yyyy-MM-ddThh:mm:ss
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+	 	TemporalAccessor format1 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(startStr);
+	 	TemporalAccessor format2 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(endStr);
+		
+		//need to use localdatetime to get both date and time, which can be retrieved from temporal accessor
+        LocalDateTime localDate1 = LocalDateTime.from(format1);
+        LocalDateTime localDate2 = LocalDateTime.from(format2);
+
+        //convert the local date time to date to pass into the method params
+        Date date1 = Date.from(localDate1.atZone(defaultZoneId).toInstant());
+        Date date2 = Date.from(localDate2.atZone(defaultZoneId).toInstant());	
+		
+		when(bookingService.cancelBooking(4,1, date1, date2, 1)).thenReturn(Optional.empty());
+		
+		//Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+			      .post("/api/booking/cancel")
+			      .content(json.toString())
+			      .contentType(MediaType.APPLICATION_JSON))
+				  .andDo(MockMvcResultHandlers.print())
+				  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+				  .andExpect(MockMvcResultMatchers.content().string("403 Error cancelling booking."));
+		
+	}
+	
 	
 	
 	

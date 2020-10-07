@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import SEPT.Team.Seven.model.Availability;
@@ -57,10 +58,16 @@ public class AvailabilityServiceTest {
 	public void addAvailability_ValidDates_ReturnsTheNewAvailability()
 	{	
 		//Arrange
-		Calendar start = Calendar.getInstance(); 
-		Calendar end = Calendar.getInstance(); 
-		start.add(Calendar.DATE, 1);
-		end.add(Calendar.DATE, 2);
+		// get 12am 2 days from today    
+		Calendar start = new GregorianCalendar();
+		start.set(Calendar.HOUR_OF_DAY, 0);
+		start.set(Calendar.MINUTE, 0);
+		start.set(Calendar.SECOND, 0);
+		start.set(Calendar.MILLISECOND, 0);
+		start.add(Calendar.DAY_OF_MONTH, 2);
+		Calendar end = (Calendar)start.clone(); 
+	 	end.add(Calendar.HOUR_OF_DAY, 3);
+
 		Availability availabilityToAdd = new Availability(employee, start.getTime(), end.getTime());
 		
 		when(availabilityRepository.save(any(Availability.class))).thenReturn(availabilityToAdd);
@@ -69,10 +76,6 @@ public class AvailabilityServiceTest {
 
 		//Act
 		Optional<Availability> result = service.addAvailability(4, start.getTime(), end.getTime());
-		
-		System.out.println("=======================================");
-//		System.out.println(result.get());
-		System.out.println("=======================================");
 		
 		//Assert
 		assertTrue(result.isPresent()); 
