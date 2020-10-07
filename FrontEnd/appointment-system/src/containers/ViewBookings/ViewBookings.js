@@ -6,20 +6,14 @@ import { NavLink } from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './ViewBookings.module.css';
 
-// import actions from '../../store/actions/booking'
+import * as actions from '../../store/actions/profile'
 export class ViewBookings extends Component {
   state = {
     bookings: null,
     defaultBookings: null,
     loading: false,
     error: null,
-    filters: {
-      complete: false,
-      pending: false,
-      cancelled: false,
-      date: false,
-      sort: 'default',
-    },
+    filters: {'complete': false, 'pending': false, 'cancelled': false, 'date':false, 'sort':'descending'} ,
     from: null,
     to: null,
   };
@@ -55,8 +49,8 @@ export class ViewBookings extends Component {
       .then((response) => {
         this.setState({
           ...this.state,
-          defaultBookings: response.data,
-          bookings: response.data,
+          defaultBookings: response.data.sort((a,b)=>moment(b.startTime).diff(moment(a.startTime))),
+          bookings: response.data.sort((a,b)=>moment(b.startTime).diff(moment(a.startTime))),
           loading: false,
         });
       })
@@ -106,6 +100,12 @@ export class ViewBookings extends Component {
 
       let filteredBookings = [];
 
+        //sort the results
+        if(this.state.filters.sort === "ascending"){
+            filteredBookings.sort((a,b)=>moment(a.startTime).diff(moment(b.startTime)));
+        } else if (this.state.filters.sort === "descending"){
+            filteredBookings.sort((a,b)=>moment(b.startTime).diff(moment(a.startTime)));
+
       //populate array to display
       if (this.state.filters.cancelled) {
         filteredBookings.push(...cancelled);
@@ -133,6 +133,7 @@ export class ViewBookings extends Component {
           );
         } else {
           filteredBookings = this.state.defaultBookings;
+
         }
       }
 
@@ -350,12 +351,8 @@ export class ViewBookings extends Component {
                       name='sort'
                       onChange={handleSorting}
                     >
-                      <option value='default' defaultValue>
-                        {' '}
-                        Default
-                      </option>
                       <option value='ascending'> Ascending </option>
-                      <option value='descending'> Descending</option>
+                      <option value='descending' defaultValue> Descending</option>
                     </select>
                   </div>
                 </div>

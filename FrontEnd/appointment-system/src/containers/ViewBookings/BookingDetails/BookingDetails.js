@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import * as actions from '../../store/actions/actions';
-// import { NavLink } from 'react-router-dom';
+import * as actions from '../../../store/actions/profile';
 import axios from '../../../axios-sept';
 import moment from 'moment';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import {uppercaseFirstCharacter, timeDiff} from '../../../utility/utility';
 import classes from './BookingDetails.module.css';
+import { withRouter} from 'react-router-dom';
 
 export class BookingDetails extends Component {
     state = {
@@ -27,10 +27,7 @@ export class BookingDetails extends Component {
       this.setState({ ...this.state, loading: true });
 
     //url is booking/{id}
-      console.log(this.props);
-      let indexOfId = this.props.location.pathname.length-1;
-      let bookingId = this.props.location.pathname.substring(indexOfId);
-      
+      let bookingId = this.props.match.params.id;
       axios.get(`/api/booking/${bookingId}`, config)
         .then((response) => {
           this.setState({
@@ -47,6 +44,8 @@ export class BookingDetails extends Component {
             loading: false
           });
         });
+
+        console.log(this.state.bookingDetails);
   }
 
   render() {
@@ -70,7 +69,7 @@ export class BookingDetails extends Component {
     const customerOrEmployeeDescription = () => {
         let booking = this.state.bookingDetails;
         if(this.props.userType === "ROLE_CUSTOMER" || this.props.userType === "ROLE_ADMIN"){
-            return (<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>);
+            return (<p>{booking.employee.description}</p>);
         } else if (this.props.userType === "ROLE_EMPLOYEE"){
             return (
             <div className={classes.customerDesc}>
@@ -135,10 +134,26 @@ export class BookingDetails extends Component {
 
     let booking = <Spinner />;
 
+    const isWithin48Hrs = () => {
+        var time = moment(this.state.bookingDetails.startTime),
+        beforeTime = moment(),
+        afterTime = moment().add(48,'hours');
+
+        console.log(time.isBetween(beforeTime, afterTime, 'hours'));
+        return time.isBetween(beforeTime, afterTime, 'hours');
+    }
+
     let cancelBtn = () => {
         if (this.state.bookingDetails.status !== "pending" || this.props.userType === "ROLE_ADMIN"){
             return null; 
-        } else {
+        } else if (isWithin48Hrs()){
+            return (
+                <React.Fragment>
+                    <button type="button" className={classes.cancelBtn} disabled >Cancel</button>
+                    <div className={classes.note}><p>Note you cannot cancel a booking within 48 hours of the booking time</p></div>
+                </React.Fragment>
+            );
+        } else{
             return (
                 <React.Fragment>
                     <button type="button" className={classes.cancelBtn} onClick={handleCancelBooking}>Cancel</button>
@@ -183,7 +198,7 @@ export class BookingDetails extends Component {
                             </div><hr/>
                             <div className="row">
                                 <div className={'col ' + classes.description}>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    <p>{this.state.bookingDetails.service.description}</p>
                                 </div>
                                 <div className={'col ' + classes.image}>
                                     <img src={this.state.bookingDetails.service.img} alt="service"/>
@@ -232,9 +247,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
-//   };
+  return {
+    onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BookingDetails));
+

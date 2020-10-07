@@ -54,17 +54,17 @@ public class ServiceServiceTest
 	@BeforeAll
 	public static void setUp()
 	{
-		Service service1 = new Service("Manicure", "someUrl");
-		Service service2 = new Service("Pedicure", "someUrl");
-		Service service3 = new Service("Salon", "someUrl");
-		Service service4 = new Service("Spa", "someUrl");
+		Service service1 = new Service("Manicure", "someUrl", "some description");
+		Service service2 = new Service("Pedicure", "someUrl", "some description");
+		Service service3 = new Service("Salon", "someUrl", "some description");
+		Service service4 = new Service("Spa", "someUrl", "some description");
 		
-		existingEmployee1 = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url");
+		existingEmployee1 = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "fake img url", "some description");
 		existingEmployee1.setId(4);
 		existingEmployee1.addToServices(service1);
 		existingEmployee1.addToServices(service2);
 		
-		existingEmployee2 = new Employee("Sammy", "Detrov", "sammy@hotmail.com", "1234567891", "some address", "fake img url");
+		existingEmployee2 = new Employee("Sammy", "Detrov", "sammy@hotmail.com", "1234567891", "some address", "fake img url", "some description");
 		existingEmployee2.setId(5);
 		existingEmployee2.addToServices(service3);
 		existingEmployee2.addToServices(service4);

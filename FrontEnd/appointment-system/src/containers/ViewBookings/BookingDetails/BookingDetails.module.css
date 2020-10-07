@@ -54,6 +54,16 @@ dt {
   text-align: center;
 }
 
+
+.cancelBtn[disabled]{
+   background-color: #4A5B5C;
+   opacity: 0.3;
+}
+
+.note{
+   align-items:center;
+   text-align:center;
+
 .bookingDetails .whiteContainer {
   background-color: #f4f4f4;
   height: 73vh;

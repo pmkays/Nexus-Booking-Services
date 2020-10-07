@@ -227,8 +227,8 @@ public class BookingService {
 			int serviceId) {
 
 		Optional<Booking> toReturn = Optional.empty();
-
-		for (Booking booking : bookingRepository.findAllByEmployeeId(employeeId)) {
+		List<Booking> bookings = bookingRepository.findAllByEmployeeId(employeeId);
+		for (Booking booking : bookings) {
 			if (booking.getCustomer().getId() == customerId && booking.getStartTime().compareTo(startTime) == 0
 					&& booking.getEndTime().compareTo(endTime) == 0 && booking.getService().getId() == serviceId) {
 				Calendar TwoDaysInFuture = Calendar.getInstance();

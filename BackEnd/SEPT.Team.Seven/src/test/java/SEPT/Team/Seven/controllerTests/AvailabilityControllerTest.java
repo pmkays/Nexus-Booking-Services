@@ -61,7 +61,7 @@ public class AvailabilityControllerTest {
 	@BeforeAll
 	public static void setUp()
 	{
-		employee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "placeholder");
+		employee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "some img url", "some description");
 		employee.setId(4);
 		
 		start = Calendar.getInstance();
