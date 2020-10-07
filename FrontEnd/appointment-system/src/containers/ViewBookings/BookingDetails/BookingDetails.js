@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import * as actions from '../../store/actions/actions';
-// import { NavLink } from 'react-router-dom';
+import * as actions from '../../../store/actions/profile';
 import axios from '../../../axios-sept';
 import moment from 'moment';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import {uppercaseFirstCharacter, timeDiff} from '../../../utility/utility';
 import classes from './BookingDetails.module.css';
+import { withRouter} from 'react-router-dom';
 
 export class BookingDetails extends Component {
     state = {
@@ -27,10 +27,7 @@ export class BookingDetails extends Component {
       this.setState({ ...this.state, loading: true });
 
     //url is booking/{id}
-      console.log(this.props);
-      let indexOfId = this.props.location.pathname.length-1;
-      let bookingId = this.props.location.pathname.substring(indexOfId);
-      
+      let bookingId = this.props.match.params.id;
       axios.get(`/api/booking/${bookingId}`, config)
         .then((response) => {
           this.setState({
@@ -232,9 +229,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
-//   };
+  return {
+    onFetchProfile: (token) => dispatch(actions.fetchProfile(token)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookingDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BookingDetails));
+
