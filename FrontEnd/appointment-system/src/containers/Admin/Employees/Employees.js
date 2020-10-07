@@ -49,6 +49,10 @@ export class Employees extends Component {
     this.props.history.push('/addservice');
   };
 
+  editEmployee = (employeeId) => {
+    this.props.history.push('editemployee/' + employeeId);
+  };
+
   render() {
     let employees = null;
     let tbody = null;
@@ -72,6 +76,14 @@ export class Employees extends Component {
                 Add Service(s)
               </Button>
             </td>
+            <td>
+              <Button
+                clicked={() => this.editEmployee(employee.id)}
+                classes='btn btn-primary'
+              >
+                Edit Details
+              </Button>
+            </td>
           </tr>
         );
       });
@@ -89,6 +101,7 @@ export class Employees extends Component {
             <th scope='col'>Phone No.</th>
             <th scope='col'>Address</th>
             <th scope='col'>Add Service</th>
+            <th scope='col'>Edit Service</th>
           </tr>
         </thead>
         {tbody}

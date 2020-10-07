@@ -14,6 +14,7 @@ import profileReducer from './store/reducers/profile';
 import serviceReducer from './store/reducers/service';
 import bookingReducer from './store/reducers/booking';
 import redirectReducer from './store/reducers/redirect';
+import employeeReducer from './store/reducers/employee';
 
 const composeEnhancers =
   process.env.NODE_ENV === 'development'
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   service: serviceReducer,
   booking: bookingReducer,
   redirect: redirectReducer,
+  employee: employeeReducer,
 });
 
 const store = createStore(

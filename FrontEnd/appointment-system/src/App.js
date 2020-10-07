@@ -39,6 +39,10 @@ class App extends Component {
             component={() => <Dashboard content='addemployee' />}
           />
           <Route
+            path='/editemployee/:id'
+            component={() => <Dashboard content='editemployee' />}
+          />
+          <Route
             path='/addservice'
             component={() => <Dashboard content='addservice' />}
           />
@@ -66,7 +70,7 @@ class App extends Component {
           />
           <Route
             path='/success'
-            component={() => <Dashboard content='success' {...this.props} />}
+            component={() => <Dashboard content='success' />}
           />
 
           <Route path='/logout' component={Logout} />

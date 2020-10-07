@@ -11,6 +11,7 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Employees from '../Admin/Employees/Employees';
 import AddEmployee from '../Admin/AddEmployee/AddEmployee';
+import EditEmployee from '../Admin/EditEmployee/EditEmployee';
 import AddService from '../Admin/AddService/AddService';
 import WorkingTimes from '../WorkingTimes/WorkingTimes';
 import Availabilities from '../../containers/Availabilities/Availabilities';
@@ -53,6 +54,13 @@ export class Dashboard extends Component {
         content = (
           <Animated animationIn='zoomIn' animationInDuration={200}>
             <AddEmployee />
+          </Animated>
+        );
+        break;
+      case 'editemployee':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <EditEmployee />
           </Animated>
         );
         break;
