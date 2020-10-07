@@ -13,7 +13,7 @@ export class ViewBookings extends Component {
     defaultBookings:null,
     loading: false,
     error: null,
-    filters: {'complete': false, 'pending': false, 'cancelled': false, 'date':false, 'sort':'default'} ,
+    filters: {'complete': false, 'pending': false, 'cancelled': false, 'date':false, 'sort':'descending'} ,
     from: null,
     to: null,
   };
@@ -48,8 +48,8 @@ export class ViewBookings extends Component {
       .then((response) => {
         this.setState({
           ...this.state,
-          defaultBookings: response.data,
-          bookings: response.data,
+          defaultBookings: response.data.sort((a,b)=>moment(b.startTime).diff(moment(a.startTime))),
+          bookings: response.data.sort((a,b)=>moment(b.startTime).diff(moment(a.startTime))),
           loading: false,
         });
       })
@@ -289,9 +289,8 @@ export class ViewBookings extends Component {
                             <div className="form-group">
                                 <label htmlFor="sort">Date:</label>
                                 <select className ="form-control" name="sort" onChange = {handleSorting}>
-                                    <option value = "default" defaultValue> Default</option>
+                                    <option value = "descending" selected> Descending</option>
                                     <option value = "ascending" > Ascending </option>
-                                    <option value = "descending"> Descending</option>
                                 </select>
                             </div>
                         </div>
