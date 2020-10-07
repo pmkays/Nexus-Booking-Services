@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router";
 import moment from "moment";
 import axios from "../../axios-sept";
 
@@ -184,11 +184,12 @@ export class Booking extends Component {
     event.preventDefault();
 
     const newStart = `${this.state.bookingDate}T${this.state.bookingTime}`;
-    // adding 30 minutes to the end, as every booking is 30 minutes
-    // so, simply changing the end of the string to 30 instead of 00
-    const newEnd = `${
-      this.state.bookingDate
-    }T${this.state.bookingTime.substring(0, 6)}30`;
+    // adding 60 minutes to the end, as every booking is 60 minutes
+
+    let oneHour = moment(this.state.bookingTime, "HH:mm:ss")
+      .add(1, "hours")
+      .format("HH:mm:ss");
+    const newEnd = `${this.state.bookingDate}T${oneHour}`;
 
     console.log(newStart);
     console.log(newEnd);
@@ -216,26 +217,6 @@ export class Booking extends Component {
         </option>
       ));
     };
-
-    // Adding times to time drop down, does all 24, no validation
-    // const populateTimes = () => {
-    //   const times = [];
-    //   for (let i = 0; i <= 24; i++) {
-    //     // console.log(i);
-    //     let str = null;
-    //     if (i < 10) {
-    //       str = `0${i}:00`;
-    //     } else {
-    //       str = `${i}:00`;
-    //     }
-    //     times.push(str);
-    //   }
-    //   return times.map((time) => (
-    //     <option value={`${time}:00`} key={time}>
-    //       {time}
-    //     </option>
-    //   ));
-    // };
 
     // adding services to service drop down
     let services = null;
@@ -272,8 +253,6 @@ export class Booking extends Component {
     }
 
     let form = null;
-
-    // console.log("SERVICESSSS =========== " + this.state.services);
 
     if (this.props.loading) {
       form = <Spinner />;
@@ -380,4 +359,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Booking));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Booking));
