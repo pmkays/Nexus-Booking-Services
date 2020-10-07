@@ -192,8 +192,8 @@ INSERT INTO `customer` VALUES
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg', 'is an employee'),
-    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg', 'is an employee');
+    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg', 'Hey! My name is Yuri. I love working in design and construction and have a Bachelor\'s Degree in Design and practical construction experience as a project manager. You can trust me to get your next passion project running!'),
+    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg', 'Hey there! My name is Joe. I love being a jack of all trades so I\'m comfortable with providing the best construction, repair and make up services. You can reach me any time through my phone number and I\'m always happy to help!');
     
 --
 -- Data for table `admin`
@@ -265,10 +265,10 @@ INSERT INTO `working_time` VALUES
 --
 
 INSERT INTO `service` VALUES
-	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg', 'Is a service for Design'),
-    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg', 'dis is da service for da Construction'),
-    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg', 'hair repairs becuz im going bald'),
-    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg', 'time to make up with my ex-wife Karen');
+	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg', 'We specialise in graphic and web design; it\'s our jam. With over 1000+ satisfied clients and 5 star reviews, we\'ll be able to spruce up your visuals in no time! Cost can be supplied upon initial consultation.'),
+    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg', 'We have over 50 years of construction and architecture experience within Australia. Our highly qualified project managers, architects and builders will ensure that you receive the best quality constructions that money can buy!'),
+    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg', 'We\'re Australia\'s top electronics repair shop and can fix all your phone, laptop and PC issues! Broken screens? Dead batteries? Water Damage? No problem! Give us a call now on 123456789 or visit us in store today for a quote.'),
+    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg', 'We\'ve collaborated with Australia\'s most high-profile celebrities to deliver on the freshest makeup looks. With mentions in top fashion and beauty magazines like Vogue, GQ and InStyle, you can trust us for your next big event.');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
