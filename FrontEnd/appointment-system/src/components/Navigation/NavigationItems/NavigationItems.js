@@ -12,6 +12,7 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/' exact>
           HOME
         </NavigationItem>
+
         <NavigationItem link='/about'>ABOUT</NavigationItem>
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
@@ -20,6 +21,7 @@ export const NavigationItems = (props) => {
             <span>MY DASHBOARD</span>
           </div>
         </NavigationItem>
+
       </ul>
     );
   } else if (props.isEmployee && props.isAuthenticated) {
@@ -36,6 +38,7 @@ export const NavigationItems = (props) => {
             <span>MY DASHBOARD</span>
           </div>
         </NavigationItem>
+
       </ul>
     );
   } else if (props.isCustomer && props.isAuthenticated) {
@@ -44,6 +47,7 @@ export const NavigationItems = (props) => {
         <NavigationItem link='/' exact>
           HOME
         </NavigationItem>
+
         <NavigationItem link='/about'>ABOUT</NavigationItem>
         <NavigationItem link='/howitworks'>HOW IT WORKS</NavigationItem>
         <NavigationItem link='/contact'>CONTACT</NavigationItem>
@@ -52,6 +56,7 @@ export const NavigationItems = (props) => {
             <span>MY DASHBOARD</span>
           </div>
         </NavigationItem>
+
       </ul>
     );
   } else {

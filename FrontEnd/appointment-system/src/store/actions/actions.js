@@ -1,4 +1,4 @@
-export { auth, logout, setAuthRedirectPath, authCheckState } from "./auth";
+export { auth, logout, setAuthRedirectPath, authCheckState } from './auth';
 export {
   fetchProfile,
   editProfile,
@@ -8,6 +8,8 @@ export {
   fetchWorkingTime,
   addWorkingTime,
   clearProfileUponLogout,
-} from "./profile";
-export { updateEmployeeId, addService } from "./service";
-export { addBooking } from "./booking";
+} from './profile';
+export { updateEmployeeId, addService } from './service';
+export { addBooking } from './booking';
+export { updateRedirect, resetRedirect } from './redirect';
+export { fetchEmployee } from './employee';

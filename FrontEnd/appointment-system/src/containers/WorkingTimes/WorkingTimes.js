@@ -99,8 +99,17 @@ class WorkingTimes extends Component {
       }
     };
     const listAvailabilities = () => {
-      return <ul className="list-group">{this.state.availabilities.map((availability) => <li key={availability.id} className="list-group-item">{moment(availability.startTime).format('LLLL')} - {moment(availability.endTime).format('LLLL')}</li>)}</ul>;
-    }
+      return (
+        <ul className='list-group'>
+          {this.state.availabilities.map((availability) => (
+            <li key={availability.id} className='list-group-item'>
+              {moment(availability.startTime).format('LLLL')} -{' '}
+              {moment(availability.endTime).format('LLLL')}
+            </li>
+          ))}
+        </ul>
+      );
+    };
     const addWorkingTime = (e) => {
       e.preventDefault();
       const errors = [];
@@ -136,7 +145,8 @@ class WorkingTimes extends Component {
             startTime,
             endTime,
             this.state.employeeId,
-            this.props.token
+            this.props.token,
+            this.props.history
           )
         );
         errors.push('Working time added successfully');
@@ -218,8 +228,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addWorkingTime: (startTime, endTime, employeeId, token) =>
-      dispatch(actions.addWorkingTime(startTime, endTime, employeeId, token)),
+    addWorkingTime: (startTime, endTime, employeeId, token, history) =>
+      dispatch(
+        actions.addWorkingTime(startTime, endTime, employeeId, token, history)
+      ),
   };
 };
 

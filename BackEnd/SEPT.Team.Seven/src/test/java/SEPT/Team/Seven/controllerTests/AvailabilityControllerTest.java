@@ -2,9 +2,14 @@ package SEPT.Team.Seven.controllerTests;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +61,7 @@ public class AvailabilityControllerTest {
 	@BeforeAll
 	public static void setUp()
 	{
-		employee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "placeholder");
+		employee = new Employee("Yuri", "Detrov", "yuri@hotmail.com", "1234567891", "some address", "some img url", "some description");
 		employee.setId(4);
 		
 		start = Calendar.getInstance();
@@ -124,11 +129,18 @@ public class AvailabilityControllerTest {
 	@Test
 	 public void addAvailability_ValidAvailability_ReturnsAvailability() throws Exception
 	 {
-	 	//Arrange
-	 	Calendar availStart = Calendar.getInstance();
-	 	Calendar availEnd = Calendar.getInstance(); 
-	 	availStart.add(Calendar.DATE, 1);
-	 	availEnd.add(Calendar.DATE, 2);
+		//Arrange
+		// get 12am 2 days from today    
+		Calendar availStart = new GregorianCalendar();
+		availStart.set(Calendar.HOUR_OF_DAY, 0);
+		availStart.set(Calendar.MINUTE, 0);
+		availStart.set(Calendar.SECOND, 0);
+		availStart.set(Calendar.MILLISECOND, 0);
+		availStart.add(Calendar.DAY_OF_MONTH, 2);
+		 
+	 	//make their availability 3 hours
+	 	Calendar availEnd = (Calendar)availStart.clone(); 
+	 	availEnd.add(Calendar.HOUR_OF_DAY, 3);
 				
 	 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
 	 	String startStr = dateFormat.format(availStart.getTime());  
@@ -140,8 +152,18 @@ public class AvailabilityControllerTest {
 	 	json.put("endTime", endStr);
 		
 	 	//need to use the string to the date values when mocking since precision will be different
-	 	Date date1 = dateFormat.parse(startStr);
-	 	Date date2 = dateFormat.parse(endStr);
+	 	//Parse to iso local date time, i.e. yyyy-MM-ddThh:mm:ss
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+	 	TemporalAccessor format1 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(startStr);
+	 	TemporalAccessor format2 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(endStr);
+		
+		//need to use localdatetime to get both date and time, which can be retrieved from temporal accessor
+        LocalDateTime localDate1 = LocalDateTime.from(format1);
+        LocalDateTime localDate2 = LocalDateTime.from(format2);
+
+        //convert the local date time to date to pass into the method params
+        Date date1 = Date.from(localDate1.atZone(defaultZoneId).toInstant());
+        Date date2 = Date.from(localDate2.atZone(defaultZoneId).toInstant());
 	 	Availability toAdd = new Availability(employee, date1, date2);
 		
 	 	when(availabilityService.addAvailability(4, date1, date2)).thenReturn(Optional.of(toAdd));

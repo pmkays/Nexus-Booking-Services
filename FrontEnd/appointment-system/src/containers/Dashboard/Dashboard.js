@@ -11,6 +11,7 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import DashboardWelcome from '../../containers/DashboardWelcome/DashBoardWelcome';
 import Employees from '../Admin/Employees/Employees';
 import AddEmployee from '../Admin/AddEmployee/AddEmployee';
+import EditEmployee from '../Admin/EditEmployee/EditEmployee';
 import AddService from '../Admin/AddService/AddService';
 import WorkingTimes from '../WorkingTimes/WorkingTimes';
 import Availabilities from '../../containers/Availabilities/Availabilities';
@@ -19,6 +20,9 @@ import Profile from '../../containers/Profile/Profile';
 import EditProfile from '../../containers/Profile/EditProfile/EditProfile';
 import Booking from '../Booking/Booking';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ViewBookings from '../ViewBookings/ViewBookings';
+import BookingDetails from '../ViewBookings/BookingDetails/BookingDetails';
+import Success from '../../components/Success/Success';
 
 export class Dashboard extends Component {
   state = {
@@ -50,6 +54,13 @@ export class Dashboard extends Component {
         content = (
           <Animated animationIn='zoomIn' animationInDuration={200}>
             <AddEmployee />
+          </Animated>
+        );
+        break;
+      case 'editemployee':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <EditEmployee />
           </Animated>
         );
         break;
@@ -98,6 +109,28 @@ export class Dashboard extends Component {
           </Animated>
         );
         break;
+      case 'viewbookings':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <ViewBookings />
+          </Animated>
+        );
+        break;
+      case 'bookingdetails':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <BookingDetails {...this.props} />
+          </Animated>
+        );
+        break;
+      case 'success':
+        content = (
+          <Animated animationIn='zoomIn' animationInDuration={200}>
+            <Success />
+          </Animated>
+        );
+        console.log('wtf');
+        break;
       default:
         break;
     }
@@ -140,6 +173,15 @@ export class Dashboard extends Component {
                 to='dashboard'
               />
               <br />
+
+              <DashboardIcon
+                name='Bookings'
+                id='ViewBookings'
+                classes='fas fa-book'
+                to='viewbookings'
+              />
+
+              <br />
               {this.props.authority === 'ROLE_ADMIN' ? (
                 <React.Fragment>
                   <DashboardIcon
@@ -150,7 +192,7 @@ export class Dashboard extends Component {
                   />
                   <br />
                   <DashboardIcon
-                    name='Workhours'
+                    name='Work&nbsp;Hours'
                     id='Workhours'
                     classes='fas fa-hourglass-half'
                     to='workingtimes'
@@ -161,9 +203,9 @@ export class Dashboard extends Component {
               {this.props.authority === 'ROLE_CUSTOMER' ? (
                 <React.Fragment>
                   <DashboardIcon
-                    name='Bookings'
-                    id='Bookings'
-                    classes='fas fa-book'
+                    name='New&nbsp;Booking'
+                    id='NewBooking'
+                    classes='fas fa-edit'
                     to='bookings'
                   />
                   <br />

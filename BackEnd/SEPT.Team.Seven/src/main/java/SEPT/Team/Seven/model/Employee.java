@@ -1,5 +1,6 @@
 package SEPT.Team.Seven.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,6 +29,9 @@ public class Employee extends Account {
 	@Column(name="img")
 	private String img;
 	
+	@Column(name="description")
+	private String description;
+	
 	// used to fix infinite recursion issue
 	@JsonBackReference
 	@ManyToMany()
@@ -40,9 +44,11 @@ public class Employee extends Account {
 	
 	public Employee() {};
 	
-	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String img) {
+	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String img, String description) {
 		super(firstName,lastName,email,phoneNo, address);
 		this.img = img;
+		services = new ArrayList<Service>();
+		this.description = description;
 	}
 	
 	public List<Service> getServices() {
@@ -51,6 +57,10 @@ public class Employee extends Account {
 
 	public void addToServices(Service service) {
 		services.add(service);
+	}
+	
+	public void deleteFromServices(Service service) {
+		services.remove(service);
 	}
 	
 	public void addToWorkingTime(WorkingTime time) {
@@ -71,6 +81,14 @@ public class Employee extends Account {
 	
 	public String getImg() {
 		return this.img;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getDescription() {
+		return this.description;
 	}
 	
 }

@@ -49,6 +49,10 @@ export class Employees extends Component {
     this.props.history.push('/addservice');
   };
 
+  editEmployee = (employeeId) => {
+    this.props.history.push('editemployee/' + employeeId);
+  };
+
   render() {
     let employees = null;
     let tbody = null;
@@ -57,7 +61,7 @@ export class Employees extends Component {
     if (this.state.employees !== null) {
       employees = this.state.employees.map((employee) => {
         return (
-          <tr scope='row' key={employee.id}>
+          <tr key={employee.id}>
             <td>{employee.id}</td>
             <td>{employee.firstName}</td>
             <td>{employee.lastName}</td>
@@ -70,6 +74,14 @@ export class Employees extends Component {
                 classes='btn btn-primary'
               >
                 Add Service(s)
+              </Button>
+            </td>
+            <td>
+              <Button
+                clicked={() => this.editEmployee(employee.id)}
+                classes='btn btn-primary'
+              >
+                Edit Details
               </Button>
             </td>
           </tr>
@@ -89,6 +101,7 @@ export class Employees extends Component {
             <th scope='col'>Phone No.</th>
             <th scope='col'>Address</th>
             <th scope='col'>Add Service</th>
+            <th scope='col'>Edit Service</th>
           </tr>
         </thead>
         {tbody}

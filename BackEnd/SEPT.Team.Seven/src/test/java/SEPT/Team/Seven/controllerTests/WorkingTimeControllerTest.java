@@ -5,9 +5,14 @@ import static org.mockito.Mockito.when;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +59,7 @@ public class WorkingTimeControllerTest {
 	
 	@BeforeAll
 	public static void setUp() {
-		employee = new Employee("Paula", "Kurniawan", "iannguyen@hotmail.yeet", "0123456789", "4 yeet court", "fake img url");
+		employee = new Employee("Paula", "Kurniawan", "iannguyen@hotmail.yeet", "0123456789", "4 yeet court", "fake img url", "some description");
 		employee.setId(4);
 		
 		start = Calendar.getInstance();
@@ -75,8 +80,8 @@ public class WorkingTimeControllerTest {
 		
 		//set up 2 availabilities
 		availabilities = new ArrayList<Availability>();
-		availabilities.add(new Availability(employee, start.getTime(), start.getTime()));	
-		availabilities.add(new Availability(employee, startNextWeek.getTime(), endNextWeek.getTime()));				
+		availabilities.add(new Availability(employee, start.getTime(), end.getTime()));	
+		availabilities.add(new Availability(employee, startNextWeek.getTime(), endNextWeek.getTime()));	
 
 	}
 	
@@ -121,16 +126,20 @@ public class WorkingTimeControllerTest {
 	 @Test
 	 public void addWorkingTime_ValidWorkingTime_ReturnsWorkingTime() throws Exception
 	 {
-	 	//Arrange
-	 	//working time within the availability
-	 	Calendar workStart = Calendar.getInstance();
-	 	Calendar workEnd = Calendar.getInstance(); 
-	 	workStart.add(Calendar.DATE, 7);
-	 	workStart.add(Calendar.MINUTE, 1);
-	 	workEnd.add(Calendar.DATE, 8);
-	 	workEnd.add(Calendar.MINUTE, -1);
+		//Arrange
+		// get 12am 2 days from today    
+		Calendar workStart = new GregorianCalendar();
+		workStart.set(Calendar.HOUR_OF_DAY, 0);
+		workStart.set(Calendar.MINUTE, 0);
+		workStart.set(Calendar.SECOND, 0);
+		workStart.set(Calendar.MILLISECOND, 0);
+		workStart.add(Calendar.DAY_OF_MONTH, 2);
+		 
+	 	//make their shift 3 hours
+	 	Calendar workEnd = (Calendar)workStart.clone(); 
+	 	workEnd.add(Calendar.HOUR_OF_DAY, 3);
 
-				
+	 	//format dates into iso format to pass into json
 	 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
 	 	String startStr = dateFormat.format(workStart.getTime());  
 	 	String endStr = dateFormat.format(workEnd.getTime());  
@@ -140,9 +149,19 @@ public class WorkingTimeControllerTest {
 	 	json.put("startTime", startStr);
 	 	json.put("endTime", endStr);
 		
-	 	//need to use the string to the date values when mocking since precision will be different
-	 	Date date1 = dateFormat.parse(startStr);
-	 	Date date2 = dateFormat.parse(endStr);
+	 	//Parse to iso local date time, i.e. yyyy-MM-ddThh:mm:ss
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+	 	TemporalAccessor format1 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(startStr);
+	 	TemporalAccessor format2 = DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(endStr);
+		
+		//need to use localdatetime to get both date and time, which can be retrieved from temporal accessor
+        LocalDateTime localDate1 = LocalDateTime.from(format1);
+        LocalDateTime localDate2 = LocalDateTime.from(format2);
+
+        //convert the local date time to date to pass into the method params
+        Date date1 = Date.from(localDate1.atZone(defaultZoneId).toInstant());
+        Date date2 = Date.from(localDate2.atZone(defaultZoneId).toInstant());
+
 	 	WorkingTime toAdd = new WorkingTime(employee, date1, date2);
 		
 	 	when(workingTimeService.addWorkingTime(4, date1, date2)).thenReturn(Optional.of(toAdd));

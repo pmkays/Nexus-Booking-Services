@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import * as actions from './actions';
 import axios from '../../axios-sept';
 import jwtDecode from 'jwt-decode';
 
@@ -50,14 +51,23 @@ export const addBooking = (formData, token, history) => {
     axios
       .post('/api/booking', bookingData, config)
       .then((response) => {
-        console.log(response);
         dispatch(addBookingSuccess(token));
       })
       .then(() => {
-        history.push('/');
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully booked the service.',
+            '/bookings'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
-        dispatch(addBookingFail('Error adding Booking.'));
+        dispatch(
+          addBookingFail(
+            'Error adding Booking. You may already have a booking at this time with another employee.'
+          )
+        );
       });
   };
 };

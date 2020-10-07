@@ -103,7 +103,7 @@ public class UserService {
 			}
 			if (type.equals("employees")) {
 				role = roleRepository.findByRoleName("ROLE_EMPLOYEE");
-				Employee employee = employeeRepository.save(new Employee("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder", "placeholder"));
+				Employee employee = employeeRepository.save(new Employee("placeholder","placeholder","placeholder@placeholder.placeholder","0123456789","placeholder", "placeholder", "placeholder"));
 				return Optional.of(userRepository
 						.save(new User(username, this.passwordEncoder.encode(password), null, employee, null, role.get())));
 			}
