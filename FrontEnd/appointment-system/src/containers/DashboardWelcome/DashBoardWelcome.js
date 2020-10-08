@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/actions';
-import classes from './DashboardWelcome.module.css';
-import welcomeImage from './images/welcome.svg';
-import axios from '../../axios-sept';
-import { withRouter } from 'react-router';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/actions";
+import classes from "./DashboardWelcome.module.css";
+import welcomeImage from "./images/welcome.svg";
+import axios from "../../axios-sept";
+import { withRouter } from "react-router";
 
-import Spinner from '../../components/UI/Spinner/Spinner';
-import Button from '../../components/UI/Button/Button';
-import PreviousBooking from '../../components/UI/PreviousBooking/PreviousBooking';
-import Card from '../../components/UI/Card/Card';
-import { Animated } from 'react-animated-css';
+import Spinner from "../../components/UI/Spinner/Spinner";
+import Button from "../../components/UI/Button/Button";
+import PreviousBooking from "../../components/UI/PreviousBooking/PreviousBooking";
+import Card from "../../components/UI/Card/Card";
+import { Animated } from "react-animated-css";
+import moment from "moment";
 
 export class DashboardWelcome extends Component {
   state = {
@@ -19,7 +20,7 @@ export class DashboardWelcome extends Component {
   };
 
   goToBooking = () => {
-    this.props.history.push('/bookings');
+    this.props.history.push("/bookings");
   };
 
   //As soon as this component loads it will attempt to grab the current profile
@@ -30,11 +31,11 @@ export class DashboardWelcome extends Component {
   fetchBookings() {
     const config = {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     };
 
-    const url = '/api/booking/customer/' + this.props.userId;
+    const url = "/api/booking/customer/" + this.props.userId;
 
     axios
       .get(url, config)
@@ -49,7 +50,7 @@ export class DashboardWelcome extends Component {
         this.setState({
           ...this.state,
           error:
-            'Error retrieving the services. Possibly no services available on this date.',
+            "Error retrieving the services. Possibly no services available on this date.",
           services: [],
           loading: false,
         });
@@ -64,15 +65,19 @@ export class DashboardWelcome extends Component {
     if (this.state.bookings) {
       previousBookings = this.state.bookings.map((booking, index) => {
         let card = null;
-        if (count !== 3 && booking.status === 'complete') {
+        if (count !== 3 && booking.status === "complete") {
           card = (
             <PreviousBooking
               key={index}
               serviceName={booking.service.name}
               employeeName={
-                booking.employee.firstName + ' ' + booking.employee.lastName
+                booking.employee.firstName + " " + booking.employee.lastName
               }
-              startTime={booking.startTime}
+              startTime={
+                moment(booking.startTime).format("DD/MM/yyyy") +
+                ", " +
+                moment(booking.startTime).format("HH:mm")
+              }
             />
           );
           count++;
@@ -82,7 +87,7 @@ export class DashboardWelcome extends Component {
     }
 
     if (count === 0) {
-      previousBookings = 'No previous bookings.';
+      previousBookings = "No previous bookings.";
     }
 
     let upcomingBookings = null;
@@ -90,16 +95,20 @@ export class DashboardWelcome extends Component {
       count = 0;
       upcomingBookings = this.state.bookings.map((booking, index) => {
         let card = null;
-        if (count !== 5 && booking.status === 'pending') {
+        if (count !== 5 && booking.status === "pending") {
           card = (
             <Card
               key={index}
               imgUrl={booking.service.img}
               serviceName={booking.service.name}
               employeeName={
-                booking.employee.firstName + ' ' + booking.employee.lastName
+                booking.employee.firstName + " " + booking.employee.lastName
               }
-              startTime={booking.startTime}
+              startTime={
+                moment(booking.startTime).format("DD/MM/yyyy") +
+                ", " +
+                moment(booking.startTime).format("HH:mm")
+              }
             />
           );
           count++;
@@ -109,21 +118,21 @@ export class DashboardWelcome extends Component {
     }
 
     if (count === 0) {
-      upcomingBookings = 'No upcoming bookings.';
+      upcomingBookings = "No upcoming bookings.";
     }
 
     // If not loading and the profile is present, it will render the details
     if (!this.props.loading && this.props.profileDetails !== null) {
       profile = (
         <React.Fragment>
-          <div className='row'>
-            <div className='col col-sm-12 col-md-6'>
-              <Animated animationIn='zoomIn' animationInDuration={400}>
-                <div className={classes.WelcomeBox + ' row'}>
-                  <div className='col-sm-6'>
+          <div className="row">
+            <div className="col col-sm-12 col-md-6">
+              <Animated animationIn="zoomIn" animationInDuration={400}>
+                <div className={classes.WelcomeBox + " row"}>
+                  <div className="col-sm-6">
                     <div className={classes.WelcomeBoxText}>
                       <h1>
-                        Welcome{' '}
+                        Welcome{" "}
                         <span className={classes.BoldedText}>
                           {this.props.profileDetails.firstName}!
                         </span>
@@ -140,20 +149,20 @@ export class DashboardWelcome extends Component {
                       </Button>
                     </div>
                   </div>
-                  <div className='col-sm-6'>
+                  <div className="col-sm-6">
                     <img
                       className={classes.WelcomeImage}
                       src={welcomeImage}
-                      alt='computer'
+                      alt="computer"
                     />
                   </div>
                 </div>
               </Animated>
             </div>
-            <div className='col col-sm-12 col-md-6'>
-              <Animated animationIn='zoomIn' animationInDuration={400}>
-                <div className={classes.PrevBookings + ' row'}>
-                  <div className='col-sm-12'>
+            <div className="col col-sm-12 col-md-6">
+              <Animated animationIn="zoomIn" animationInDuration={400}>
+                <div className={classes.PrevBookings + " row"}>
+                  <div className="col-sm-12">
                     <div className={classes.PrevBookingsText}>
                       <h3>Previous Bookings</h3>
                       {previousBookings}
@@ -163,14 +172,14 @@ export class DashboardWelcome extends Component {
               </Animated>
             </div>
           </div>
-          <div className='row'>
+          <div className="row">
             <div className={classes.UpcomingBookingsText}>
               <Animated
                 animationInDelay={400}
-                animationIn='fadeInRight'
+                animationIn="fadeInRight"
                 animationInDuration={600}
               >
-                <h4 style={{ fontWeight: 'bold' }}>Upcoming Bookings</h4>
+                <h4 style={{ fontWeight: "bold" }}>Upcoming Bookings</h4>
                 <div className={classes.Flex}>{upcomingBookings}</div>
               </Animated>
             </div>
