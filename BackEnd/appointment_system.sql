@@ -183,24 +183,24 @@ CREATE TABLE `working_time` (
 --
 
 INSERT INTO `customer` VALUES
-    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road', 'https://i.imgur.com/VXnG3tg.jpg'),
-    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street', 'https://i.imgur.com/t6EJkdF.jpg'),
-    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court', 'https://i.imgur.com/vmFc3lX.jpg');
+    (1,'Leslie','Uzumaki','leslie@hotmail.com', '0410101010', '4 Poornima Road', 'https://i.imgur.com/VXnG3tg.jpg'),
+    (2,'Emma','Gaumbarten','emma@gmail.com', '0423101563', '3 Buttersworth Street', 'https://i.imgur.com/t6EJkdF.jpg'),
+    (3,'Avani','Yupta','avani@hotmail.com', '0445231020', '9 King Court', 'https://i.imgur.com/vmFc3lX.jpg');
     
 --
 -- Data for table `employee`
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg', 'Hey! My name is Yuri. I love working in design and construction and have a Bachelor\'s Degree in Design and practical construction experience as a project manager. You can trust me to get your next passion project running!'),
-    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg', 'Hey there! My name is Joe. I love being a jack of all trades so I\'m comfortable with providing the best construction, repair and make up services. You can reach me any time through my phone number and I\'m always happy to help!');
+    (4,'Yuri','Detrov','yuri@gmail.com', '0410164823', '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg', 'Hey! My name is Yuri. I love working in design and construction and have a Bachelor\'s Degree in Design and practical construction experience as a project manager. You can trust me to get your next passion project running!'),
+    (5,'Joe','Cool','yasdasdsri@gmail.com', '0410164823', '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg', 'Hey there! My name is Joe. I love being a jack of all trades so I\'m comfortable with providing the best construction, repair and make up services. You can reach me any time through my phone number and I\'m always happy to help!');
     
 --
 -- Data for table `admin`
 --
 
 INSERT INTO `admin` VALUES
-    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road', 'https://i.imgur.com/hCEQVy0.jpg');
+    (5,'Juan','Yega','juan@hotmail.com', '0410567343', '1 Digger Road', 'https://i.imgur.com/hCEQVy0.jpg');
 
 --
 -- Data for table `security_role`
