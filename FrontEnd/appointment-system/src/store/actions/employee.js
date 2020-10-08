@@ -1,5 +1,5 @@
-import * as actionTypes from './actionTypes';
-import axios from '../../axios-sept';
+import * as actionTypes from "./actionTypes";
+import axios from "../../axios-sept";
 
 export const fetchEmployeeStart = () => {
   return {
@@ -21,23 +21,24 @@ export const fetchEmployeeFail = (error) => {
   };
 };
 
-export const fetchEmployee = (id, token) => {
+export const fetchEmployee = (id, token, history) => {
   return (dispatch) => {
     const config = {
       headers: {
-        Authorization: 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     };
 
     axios
-      .get('/api/employees/' + id, config)
+      .get("/api/employees/" + id, config)
       .then((response) => {
         dispatch(fetchEmployeeSuccess(response.data));
       })
+      .then(() => {
+        history.push("editemployee/" + id);
+      })
       .catch((error) => {
-        dispatch(
-          fetchEmployeeFail('Error reaching server. Please try again later.')
-        );
+        dispatch(fetchEmployeeFail("Error reaching server. Please try again later."));
       });
   };
 };
