@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./ViewBookings.module.css";
 
-import * as actions from "../../store/actions/profile";
 export class ViewBookings extends Component {
   state = {
     bookings: null,
