@@ -23,6 +23,10 @@ export class DashboardWelcome extends Component {
     this.props.history.push("/bookings");
   };
 
+  goToSchedule = () => {
+    this.props.history.push("/schedule");
+  };
+
   //As soon as this component loads it will attempt to grab the current profile
   componentDidMount() {
     this.fetchBookings();
@@ -35,7 +39,11 @@ export class DashboardWelcome extends Component {
       },
     };
 
-    const url = "/api/booking/customer/" + this.props.userId;
+    let userType = null;
+    if (this.props.authority === "ROLE_CUSTOMER") userType = "customer";
+    if (this.props.authority === "ROLE_EMPLOYEE") userType = "employee";
+
+    const url = "/api/booking/" + userType + "/" + this.props.userId;
 
     axios
       .get(url, config)
@@ -49,8 +57,7 @@ export class DashboardWelcome extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error:
-            "Error retrieving the services. Possibly no services available on this date.",
+          error: "Error retrieving the services. Possibly no services available on this date.",
           services: [],
           loading: false,
         });
@@ -71,12 +78,12 @@ export class DashboardWelcome extends Component {
               key={index}
               serviceName={booking.service.name}
               employeeName={
-                booking.employee.firstName + " " + booking.employee.lastName
+                this.props.authority === "ROLE_CUSTOMER"
+                  ? booking.employee.firstName + " " + booking.employee.lastName
+                  : booking.customer.firstName + " " + booking.customer.lastName
               }
               startTime={
-                moment(booking.startTime).format("DD/MM/yyyy") +
-                ", " +
-                moment(booking.startTime).format("HH:mm")
+                moment(booking.startTime).format("DD/MM/yyyy") + ", " + moment(booking.startTime).format("HH:mm")
               }
             />
           );
@@ -102,12 +109,12 @@ export class DashboardWelcome extends Component {
               imgUrl={booking.service.img}
               serviceName={booking.service.name}
               employeeName={
-                booking.employee.firstName + " " + booking.employee.lastName
+                this.props.authority === "ROLE_CUSTOMER"
+                  ? booking.employee.firstName + " " + booking.employee.lastName
+                  : booking.customer.firstName + " " + booking.customer.lastName
               }
               startTime={
-                moment(booking.startTime).format("DD/MM/yyyy") +
-                ", " +
-                moment(booking.startTime).format("HH:mm")
+                moment(booking.startTime).format("DD/MM/yyyy") + ", " + moment(booking.startTime).format("HH:mm")
               }
             />
           );
@@ -121,6 +128,31 @@ export class DashboardWelcome extends Component {
       upcomingBookings = "No upcoming bookings.";
     }
 
+    let welcomeText = null;
+
+    if (this.props.authority === "ROLE_CUSTOMER") {
+      welcomeText = (
+        <React.Fragment>
+          <p className={classes.Slogan}>
+            Many new services added daily.
+            <br /> Have a look!
+          </p>
+          <Button clicked={this.goToBooking} classes={classes.Button}>
+            BOOK NOW
+          </Button>
+        </React.Fragment>
+      );
+    } else {
+      welcomeText = (
+        <React.Fragment>
+          <p className={classes.Slogan}>Please make sure you check your schedule and update if needed!</p>
+          <Button clicked={this.goToSchedule} classes={classes.Button}>
+            Schedule
+          </Button>
+        </React.Fragment>
+      );
+    }
+
     // If not loading and the profile is present, it will render the details
     if (!this.props.loading && this.props.profileDetails !== null) {
       profile = (
@@ -132,29 +164,13 @@ export class DashboardWelcome extends Component {
                   <div className="col-sm-6">
                     <div className={classes.WelcomeBoxText}>
                       <h1>
-                        Welcome{" "}
-                        <span className={classes.BoldedText}>
-                          {this.props.profileDetails.firstName}!
-                        </span>
+                        Welcome <span className={classes.BoldedText}>{this.props.profileDetails.firstName}!</span>
                       </h1>
-                      <p className={classes.Slogan}>
-                        Many new services added daily.
-                        <br /> Have a look!
-                      </p>
-                      <Button
-                        clicked={this.goToBooking}
-                        classes={classes.Button}
-                      >
-                        BOOK NOW
-                      </Button>
+                      {welcomeText}
                     </div>
                   </div>
                   <div className="col-sm-6">
-                    <img
-                      className={classes.WelcomeImage}
-                      src={welcomeImage}
-                      alt="computer"
-                    />
+                    <img className={classes.WelcomeImage} src={welcomeImage} alt="computer" />
                   </div>
                 </div>
               </Animated>
@@ -174,11 +190,7 @@ export class DashboardWelcome extends Component {
           </div>
           <div className="row">
             <div className={classes.UpcomingBookingsText}>
-              <Animated
-                animationInDelay={400}
-                animationIn="fadeInRight"
-                animationInDuration={600}
-              >
+              <Animated animationInDelay={400} animationIn="fadeInRight" animationInDuration={600}>
                 <h4 style={{ fontWeight: "bold" }}>Upcoming Bookings</h4>
                 <div className={classes.Flex}>{upcomingBookings}</div>
               </Animated>
@@ -200,6 +212,7 @@ const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     userId: state.auth.userId,
+    authority: state.auth.authority,
     profileDetails: state.profile.profileDetails,
     loading: state.profile.loading,
     error: state.profile.error,
@@ -212,7 +225,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(DashboardWelcome));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DashboardWelcome));
