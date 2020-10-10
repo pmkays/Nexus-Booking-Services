@@ -26,50 +26,17 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
-          <Route
-            path="/dashboard"
-            component={() => <Dashboard content="welcome" />}
-          />
-          <Route
-            path="/employees"
-            component={() => <Dashboard content="employees" />}
-          />
-          <Route
-            path="/addemployee"
-            component={() => <Dashboard content="addemployee" />}
-          />
-          <Route
-            path="/editemployee/:id"
-            component={() => <Dashboard content="editemployee" />}
-          />
-          <Route
-            path="/addservice"
-            component={() => <Dashboard content="addservice" />}
-          />
-          <Route
-            path="/profile"
-            component={() => <Dashboard content="profile" />}
-          />
-          <Route
-            path="/workingtimes"
-            component={() => <Dashboard content="workingtimes" />}
-          />
-          <Route
-            path="/editprofile"
-            component={() => <Dashboard content="editprofile" />}
-          />
-          <Route
-            path="/viewbookings"
-            component={() => <Dashboard content="viewbookings" />}
-          />
-          <Route
-            path="/booking/:id"
-            component={() => <Dashboard content="bookingdetails" />}
-          />
-          <Route
-            path="/success"
-            component={() => <Dashboard content="success" />}
-          />
+          <Route path="/dashboard" component={() => <Dashboard content="welcome" />} />
+          <Route path="/employees" component={() => <Dashboard content="employees" />} />
+          <Route path="/addemployee" component={() => <Dashboard content="addemployee" />} />
+          <Route path="/editemployee/:id" component={() => <Dashboard content="editemployee" />} />
+          <Route path="/addservice" component={() => <Dashboard content="addservice" />} />
+          <Route path="/profile" component={() => <Dashboard content="profile" />} />
+          <Route path="/workingtimes" component={() => <Dashboard content="workingtimes" />} />
+          <Route path="/editprofile" component={() => <Dashboard content="editprofile" />} />
+          <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
+          <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
+          <Route path="/success" component={() => <Dashboard content="success" />} />
 
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
@@ -82,34 +49,14 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
-          <Route
-            path="/dashboard"
-            component={() => <Dashboard content="welcome" />}
-          />
-          <Route
-            path="/profile"
-            component={() => <Dashboard content="profile" />}
-          />
-          <Route
-            path="/editprofile"
-            component={() => <Dashboard content="editprofile" />}
-          />
-          <Route
-            path="/availabilities"
-            component={() => <Dashboard content="availabilities" />}
-          />
-          <Route
-            path="/viewbookings"
-            component={() => <Dashboard content="viewbookings" />}
-          />
-          <Route
-            path="/booking/:id"
-            component={() => <Dashboard content="bookingdetails" />}
-          />
-          <Route
-            path="/success"
-            component={() => <Dashboard content="success" />}
-          />
+          <Route path="/dashboard" component={() => <Dashboard content="welcome" />} />
+          <Route path="/profile" component={() => <Dashboard content="profile" />} />
+          <Route path="/editprofile" component={() => <Dashboard content="editprofile" />} />
+          <Route path="/availabilities" component={() => <Dashboard content="availabilities" />} />
+          <Route path="/schedule" component={() => <Dashboard content="schedule" />} />
+          <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
+          <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
+          <Route path="/success" component={() => <Dashboard content="success" />} />
 
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
@@ -121,38 +68,14 @@ class App extends Component {
     } else if (this.props.isCustomer && this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route
-            path="/login"
-            component={() => <Dashboard content="login" />}
-          />
-          <Route
-            path="/dashboard"
-            component={() => <Dashboard content="welcome" />}
-          />
-          <Route
-            path="/profile"
-            component={() => <Dashboard content="profile" />}
-          />
-          <Route
-            path="/editprofile"
-            component={() => <Dashboard content="editprofile" />}
-          />
-          <Route
-            path="/bookings"
-            component={() => <Dashboard content="booking" />}
-          />
-          <Route
-            path="/viewbookings"
-            component={() => <Dashboard content="viewbookings" />}
-          />
-          <Route
-            path="/booking/:id"
-            component={() => <Dashboard content="bookingdetails" />}
-          />
-          <Route
-            path="/success"
-            component={() => <Dashboard content="success" />}
-          />
+          <Route path="/login" component={() => <Dashboard content="login" />} />
+          <Route path="/dashboard" component={() => <Dashboard content="welcome" />} />
+          <Route path="/profile" component={() => <Dashboard content="profile" />} />
+          <Route path="/editprofile" component={() => <Dashboard content="editprofile" />} />
+          <Route path="/bookings" component={() => <Dashboard content="booking" />} />
+          <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
+          <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
+          <Route path="/success" component={() => <Dashboard content="success" />} />
 
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />

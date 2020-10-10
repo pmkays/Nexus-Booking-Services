@@ -25,67 +25,41 @@ const sideDrawer = (props) => {
           </div>
         </div>
         <nav className={classes.FlexDown}>
-          <DashboardIcon
-            name='Dashboard'
-            id='dashboard-sd'
-            classes='fas fa-home'
-            to='dashboard'
-          />
+          <DashboardIcon name="Dashboard" id="dashboard-sd" classes="fas fa-home" to="dashboard" />
+          <br />
+          <DashboardIcon name="Bookings" id="ViewBookings-sd" classes="fas fa-book" to="viewbookings" />
           <br />
           {props.authority === 'ROLE_ADMIN' ? (
             <React.Fragment>
-              <DashboardIcon
-                name='Employees'
-                id='Employees-sd'
-                classes='fas fa-users'
-                to='employees'
-              />
+              <DashboardIcon name="Employees" id="Employees-sd" classes="fas fa-users" to="employees" />
               <br />
-              <DashboardIcon
-                name='Workhours'
-                id='Workhours-sd'
-                classes='fas fa-hourglass-half'
-                to='workingtimes'
-              />
+              <DashboardIcon name="Workhours" id="Workhours-sd" classes="fas fa-hourglass-half" to="workingtimes" />
               <br />
             </React.Fragment>
           ) : null}
           {props.authority === 'ROLE_CUSTOMER' ? (
             <React.Fragment>
-              <DashboardIcon
-                name='Booking'
-                id='Bookings-sd'
-                classes='fas fa-book'
-                to='bookings'
-              />
+              <DashboardIcon name="Booking" id="Bookings-sd" classes="fas fa-book" to="bookings" />
               <br />
             </React.Fragment>
           ) : null}
 
           {props.authority === 'ROLE_EMPLOYEE' ? (
             <React.Fragment>
+              <DashboardIcon name="Schedule" id="Schedule-sd" classes="fas fa-calendar-alt" to="schedule" />
+              <br />
               <DashboardIcon
-                name='Availabilities'
-                id='Availabilities-sd'
-                classes='fas fa-calendar-check'
-                to='availabilities'
+                name="Availabilities"
+                id="Availabilities-sd"
+                classes="fas fa-calendar-check"
+                to="availabilities"
               />
               <br />
             </React.Fragment>
           ) : null}
-          <DashboardIcon
-            name='Settings'
-            id='Settings-sd'
-            classes='fas fa-cog'
-            to='profile'
-          />
+          <DashboardIcon name="Settings" id="Settings-sd" classes="fas fa-cog" to="profile" />
           <br />
-          <DashboardIcon
-            name='Logout'
-            id='Logout-sd'
-            classes='fas fa-sign-out-alt'
-            to='logout'
-          />
+          <DashboardIcon name="Logout" id="Logout-sd" classes="fas fa-sign-out-alt" to="logout" />
         </nav>
       </div>
     </React.Fragment>

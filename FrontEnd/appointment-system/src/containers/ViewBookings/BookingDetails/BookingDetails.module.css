@@ -54,15 +54,14 @@ dt {
   text-align: center;
 }
 
-
-.cancelBtn[disabled]{
-   background-color: #4A5B5C;
-   opacity: 0.3;
+.cancelBtn[disabled] {
+  background-color: #4a5b5c;
+  opacity: 0.3;
 }
 
-.note{
-   align-items:center;
-   text-align:center;
+.note {
+  align-items: center;
+  text-align: center;
 }
 
 .bookingDetails .whiteContainer {
@@ -111,6 +110,8 @@ dt {
 .extraDetails .whiteContainer {
   background-color: #f4f4f4;
   border-radius: 0px 15px 15px 0px;
+  overflow-y: scroll;
+  max-height: -webkit-fill-available;
 }
 
 .extraDetails .name {
