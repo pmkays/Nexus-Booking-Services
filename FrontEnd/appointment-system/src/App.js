@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Login from "./containers/Login/Login";
-import Logout from "./containers/Login/Logout/Logout";
-import Home from "./containers/Home/Home";
-import RegisterProfile from "./containers/Register/Register";
-import SuccessRegister from "./components/Success/SuccessRegister/SuccessRegister";
+import Login from './containers/Login/Login';
+import Logout from './containers/Login/Logout/Logout';
+import Home from './containers/Home/Home';
+import RegisterProfile from './containers/Register/Register';
+import SuccessRegister from './components/Success/SuccessRegister/SuccessRegister';
 
-import AboutUs from "./containers/AboutUs/AboutUs";
-import ContactUs from "./containers/ContactUs/ContactUs";
-import * as actions from "./store/actions/actions";
-import HowItWorks from "./containers/HowItWorks/HowItWorks";
-import Dashboard from "./containers/Dashboard/Dashboard";
+import AboutUs from './containers/AboutUs/AboutUs';
+import ContactUs from './containers/ContactUs/ContactUs';
+import * as actions from './store/actions/actions';
+import HowItWorks from './containers/HowItWorks/HowItWorks';
+import Dashboard from './containers/Dashboard/Dashboard';
 
 class App extends Component {
   // Upon loading the app check if local storage has user details
@@ -37,6 +37,7 @@ class App extends Component {
           <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
           <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
           <Route path="/success" component={() => <Dashboard content="success" />} />
+          <Route path="/error" component={() => <Dashboard content="error" />} />
 
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
@@ -57,6 +58,7 @@ class App extends Component {
           <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
           <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
           <Route path="/success" component={() => <Dashboard content="success" />} />
+          <Route path="/error" component={() => <Dashboard content="error" />} />
 
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
@@ -76,6 +78,7 @@ class App extends Component {
           <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
           <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
           <Route path="/success" component={() => <Dashboard content="success" />} />
+          <Route path="/error" component={() => <Dashboard content="error" />} />
 
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
@@ -106,9 +109,9 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    isAdmin: state.auth.authority === "ROLE_ADMIN",
-    isEmployee: state.auth.authority === "ROLE_EMPLOYEE",
-    isCustomer: state.auth.authority === "ROLE_CUSTOMER",
+    isAdmin: state.auth.authority === 'ROLE_ADMIN',
+    isEmployee: state.auth.authority === 'ROLE_EMPLOYEE',
+    isCustomer: state.auth.authority === 'ROLE_CUSTOMER',
     content: state.redirect.content,
     redirect: state.redirect.redirect,
   };

@@ -24,6 +24,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import ViewBookings from '../ViewBookings/ViewBookings';
 import BookingDetails from '../ViewBookings/BookingDetails/BookingDetails';
 import Success from '../../components/Success/Success';
+import Error from '../../components/Error/Error';
 
 export class Dashboard extends Component {
   state = {
@@ -137,7 +138,13 @@ export class Dashboard extends Component {
             <Success />
           </Animated>
         );
-        console.log('wtf');
+        break;
+      case 'error':
+        content = (
+          <Animated animationIn="zoomIn" animationInDuration={200}>
+            <Error />
+          </Animated>
+        );
         break;
       default:
         break;
@@ -172,9 +179,7 @@ export class Dashboard extends Component {
 
               <DashboardIcon name="Dashboard" id="Dashboard" classes="fas fa-home" to="dashboard" />
               <br />
-
               <DashboardIcon name="Bookings" id="ViewBookings" classes="fas fa-book" to="viewbookings" />
-
               <br />
               {this.props.authority === 'ROLE_ADMIN' ? (
                 <React.Fragment>
@@ -220,7 +225,7 @@ export class Dashboard extends Component {
     }
 
     if (this.props.error) {
-      profile = this.props.error;
+      profile = <Error content={this.props.error} />;
     }
 
     return (
