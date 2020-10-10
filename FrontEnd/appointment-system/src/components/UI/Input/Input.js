@@ -54,19 +54,6 @@ const input = (props) => {
         <small className='text-danger col-sm-3'>{props.errorMessage}</small>
       );
       break;
-    case 'textarea':
-      inputElement = (
-        <textarea
-          className='form-control'
-          name={props.label}
-          onChange={props.changed}
-          rows='4'
-          cols='50'
-        >
-          {props.value}
-        </textarea>
-      );
-      break;
     default:
       inputElement = (
         <input

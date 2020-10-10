@@ -103,16 +103,6 @@ export class DashboardWelcome extends Component {
         }
         return card;
       });
-      if (count < 3) {
-        previousBookings.push(
-          <p>
-            <br />
-            <br />
-            <br />
-            <br />
-          </p>
-        );
-      }
     }
 
     if (count === 0) {
@@ -163,7 +153,7 @@ export class DashboardWelcome extends Component {
             <br /> Have a look!
           </p>
           <Button clicked={this.goToBooking} classes={classes.Button}>
-            BOOK NOW
+            BOOK
           </Button>
         </React.Fragment>
       );
@@ -184,53 +174,51 @@ export class DashboardWelcome extends Component {
     if (!this.props.loading && this.props.profileDetails !== null) {
       profile = (
         <React.Fragment>
-          <div className='row'>
-            <div className='col col-sm-12 col-md-6'>
-              <Animated animationIn='zoomIn' animationInDuration={400}>
-                <div className={classes.WelcomeBox + ' row'}>
-                  <div className='col-sm-6'>
-                    <div className={classes.WelcomeBoxText}>
-                      <h1>
-                        Welcome{' '}
-                        <span className={classes.BoldedText}>
-                          {this.props.profileDetails.firstName}!
-                        </span>
-                      </h1>
-                      {welcomeText}
-                    </div>
-                  </div>
-                  <div className='col-sm-6'>
-                    <img
-                      className={classes.WelcomeImage}
-                      src={welcomeImage}
-                      alt='computer'
-                    />
-                  </div>
+          <div className={'row ' + classes.NoMargin}>
+            <Animated
+              className={classes.WelcomeBox + ' col-sm-12 col-md-5 '}
+              animationIn='zoomIn'
+              animationInDuration={400}
+            >
+              <div className={classes.Margin}>
+                <div className={classes.WelcomeBoxText}>
+                  <h1>
+                    Welcome{' '}
+                    <span className={classes.BoldedText}>
+                      {this.props.profileDetails.firstName}!
+                    </span>
+                  </h1>
+                  {welcomeText}
                 </div>
-              </Animated>
-            </div>
-            <div className='col col-sm-12 col-md-6'>
-              <Animated animationIn='zoomIn' animationInDuration={400}>
-                <div className={classes.PrevBookings + ' row'}>
-                  <div className='col-sm-12'>
-                    <div className={classes.PrevBookingsText}>
-                      <h3
-                        className={classes.Clickable}
-                        onClick={this.viewBookingHandler}
-                      >
-                        Previous Bookings{' '}
-                        <i
-                          className={
-                            classes.MoreIcon + ' fas fa-chevron-circle-right'
-                          }
-                        ></i>
-                      </h3>
-                      {previousBookings}
-                    </div>
-                  </div>
-                </div>
-              </Animated>
-            </div>
+              </div>
+              <div>
+                <img
+                  className={classes.WelcomeImage}
+                  src={welcomeImage}
+                  alt='computer'
+                />
+              </div>
+            </Animated>
+            <Animated
+              className={classes.PrevBookings + ' col-sm-12 col-md-5'}
+              animationIn='zoomIn'
+              animationInDuration={400}
+            >
+              <div className={classes.PrevBookingsText}>
+                <h3
+                  className={classes.Clickable}
+                  onClick={this.viewBookingHandler}
+                >
+                  Previous Bookings{' '}
+                  <i
+                    className={
+                      classes.MoreIcon + ' fas fa-chevron-circle-right'
+                    }
+                  ></i>
+                </h3>
+                {previousBookings}
+              </div>
+            </Animated>
           </div>
           <div className='row'>
             <div className={classes.UpcomingBookingsText}>

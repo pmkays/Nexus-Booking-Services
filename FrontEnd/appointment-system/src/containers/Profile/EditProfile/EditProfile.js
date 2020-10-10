@@ -207,8 +207,8 @@ export class EditProfile extends Component {
     // Creates an input element with configurations from state
     let formElements = formElementsArray.map((formElement) => {
       if (
-        formElement.config.elementType == 'textarea' &&
-        this.props.authority == 'ROLE_CUSTOMER'
+        formElement.config.elementType === 'textarea' &&
+        this.props.authority === 'ROLE_CUSTOMER'
       ) {
         return null;
       }
