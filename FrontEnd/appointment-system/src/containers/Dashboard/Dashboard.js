@@ -23,6 +23,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import ViewBookings from '../ViewBookings/ViewBookings';
 import BookingDetails from '../ViewBookings/BookingDetails/BookingDetails';
 import Success from '../../components/Success/Success';
+import AdminDashboard from '../DashboardWelcome/AdminDashboard';
 
 export class Dashboard extends Component {
   state = {
@@ -42,6 +43,9 @@ export class Dashboard extends Component {
     switch (this.props.content) {
       case 'welcome':
         content = <DashboardWelcome />;
+        break;
+      case 'adminwelcome':
+        content = <AdminDashboard />;
         break;
       case 'employees':
         content = (

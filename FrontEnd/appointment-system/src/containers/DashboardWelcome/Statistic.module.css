@@ -1,0 +1,17 @@
+
+.title{
+    /* font-weight:bold; */
+    color: white;
+}
+
+.desc{
+    color: white;
+}
+
+.greenBody{
+    background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%);
+    width: 55%;
+    padding: 3% 3% 3% 5%;
+    border-radius: 15px;
+    margin: 0 auto;
+}

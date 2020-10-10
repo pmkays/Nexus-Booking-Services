@@ -28,7 +28,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route
             path="/dashboard"
-            component={() => <Dashboard content="welcome" />}
+            component={() => <Dashboard content="adminwelcome" />}
           />
           <Route
             path="/employees"
