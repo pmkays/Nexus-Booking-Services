@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../../store/actions/actions";
-import classes from "./DashboardWelcome.module.css";
-import welcomeImage from "./images/welcome.svg";
-import axios from "../../axios-sept";
-import { withRouter } from "react-router";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/actions';
+import classes from './DashboardWelcome.module.css';
+import welcomeImage from './images/welcome.svg';
+import axios from '../../axios-sept';
+import { withRouter } from 'react-router';
 
-import Spinner from "../../components/UI/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
-import PreviousBooking from "../../components/UI/PreviousBooking/PreviousBooking";
-import Card from "../../components/UI/Card/Card";
-import { Animated } from "react-animated-css";
-import moment from "moment";
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Button from '../../components/UI/Button/Button';
+import PreviousBooking from '../../components/UI/PreviousBooking/PreviousBooking';
+import Card from '../../components/UI/Card/Card';
+import { Animated } from 'react-animated-css';
+import moment from 'moment';
 
 export class DashboardWelcome extends Component {
   state = {
@@ -20,11 +20,11 @@ export class DashboardWelcome extends Component {
   };
 
   goToBooking = () => {
-    this.props.history.push("/bookings");
+    this.props.history.push('/bookings');
   };
 
   goToSchedule = () => {
-    this.props.history.push("/schedule");
+    this.props.history.push('/schedule');
   };
 
   //As soon as this component loads it will attempt to grab the current profile
@@ -35,15 +35,15 @@ export class DashboardWelcome extends Component {
   fetchBookings() {
     const config = {
       headers: {
-        Authorization: "Bearer " + this.props.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     };
 
     let userType = null;
-    if (this.props.authority === "ROLE_CUSTOMER") userType = "customer";
-    if (this.props.authority === "ROLE_EMPLOYEE") userType = "employee";
+    if (this.props.authority === 'ROLE_CUSTOMER') userType = 'customer';
+    if (this.props.authority === 'ROLE_EMPLOYEE') userType = 'employee';
 
-    const url = "/api/booking/" + userType + "/" + this.props.userId;
+    const url = '/api/booking/' + userType + '/' + this.props.userId;
 
     axios
       .get(url, config)
@@ -57,12 +57,21 @@ export class DashboardWelcome extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error retrieving the services. Possibly no services available on this date.",
+          error:
+            'Error retrieving the services. Possibly no services available on this date.',
           services: [],
           loading: false,
         });
       });
   }
+
+  onClickHandler = (id) => {
+    this.props.history.push('/booking/' + id);
+  };
+
+  viewBookingHandler = () => {
+    this.props.history.push('/viewbookings');
+  };
 
   render() {
     let profile = <Spinner />;
@@ -72,18 +81,21 @@ export class DashboardWelcome extends Component {
     if (this.state.bookings) {
       previousBookings = this.state.bookings.map((booking, index) => {
         let card = null;
-        if (count !== 3 && booking.status === "complete") {
+        if (count !== 3 && booking.status === 'complete') {
           card = (
             <PreviousBooking
               key={index}
+              clicked={() => this.onClickHandler(booking.id)}
               serviceName={booking.service.name}
               employeeName={
-                this.props.authority === "ROLE_CUSTOMER"
-                  ? booking.employee.firstName + " " + booking.employee.lastName
-                  : booking.customer.firstName + " " + booking.customer.lastName
+                this.props.authority === 'ROLE_CUSTOMER'
+                  ? booking.employee.firstName + ' ' + booking.employee.lastName
+                  : booking.customer.firstName + ' ' + booking.customer.lastName
               }
               startTime={
-                moment(booking.startTime).format("DD/MM/yyyy") + ", " + moment(booking.startTime).format("HH:mm")
+                moment(booking.startTime).format('DD/MM/yyyy') +
+                ', ' +
+                moment(booking.startTime).format('HH:mm')
               }
             />
           );
@@ -91,10 +103,20 @@ export class DashboardWelcome extends Component {
         }
         return card;
       });
+      if (count < 3) {
+        previousBookings.push(
+          <p>
+            <br />
+            <br />
+            <br />
+            <br />
+          </p>
+        );
+      }
     }
 
     if (count === 0) {
-      previousBookings = "No previous bookings.";
+      previousBookings = 'No previous bookings.';
     }
 
     let upcomingBookings = null;
@@ -102,19 +124,22 @@ export class DashboardWelcome extends Component {
       count = 0;
       upcomingBookings = this.state.bookings.map((booking, index) => {
         let card = null;
-        if (count !== 5 && booking.status === "pending") {
+        if (count !== 5 && booking.status === 'pending') {
           card = (
             <Card
               key={index}
+              clicked={() => this.onClickHandler(booking.id)}
               imgUrl={booking.service.img}
               serviceName={booking.service.name}
               employeeName={
-                this.props.authority === "ROLE_CUSTOMER"
-                  ? booking.employee.firstName + " " + booking.employee.lastName
-                  : booking.customer.firstName + " " + booking.customer.lastName
+                this.props.authority === 'ROLE_CUSTOMER'
+                  ? booking.employee.firstName + ' ' + booking.employee.lastName
+                  : booking.customer.firstName + ' ' + booking.customer.lastName
               }
               startTime={
-                moment(booking.startTime).format("DD/MM/yyyy") + ", " + moment(booking.startTime).format("HH:mm")
+                moment(booking.startTime).format('DD/MM/yyyy') +
+                ', ' +
+                moment(booking.startTime).format('HH:mm')
               }
             />
           );
@@ -125,12 +150,12 @@ export class DashboardWelcome extends Component {
     }
 
     if (count === 0) {
-      upcomingBookings = "No upcoming bookings.";
+      upcomingBookings = 'No upcoming bookings.';
     }
 
     let welcomeText = null;
 
-    if (this.props.authority === "ROLE_CUSTOMER") {
+    if (this.props.authority === 'ROLE_CUSTOMER') {
       welcomeText = (
         <React.Fragment>
           <p className={classes.Slogan}>
@@ -145,7 +170,9 @@ export class DashboardWelcome extends Component {
     } else {
       welcomeText = (
         <React.Fragment>
-          <p className={classes.Slogan}>Please make sure you check your schedule and update if needed!</p>
+          <p className={classes.Slogan}>
+            Please make sure you check your schedule and update if needed!
+          </p>
           <Button clicked={this.goToSchedule} classes={classes.Button}>
             Schedule
           </Button>
@@ -157,30 +184,47 @@ export class DashboardWelcome extends Component {
     if (!this.props.loading && this.props.profileDetails !== null) {
       profile = (
         <React.Fragment>
-          <div className="row">
-            <div className="col col-sm-12 col-md-6">
-              <Animated animationIn="zoomIn" animationInDuration={400}>
-                <div className={classes.WelcomeBox + " row"}>
-                  <div className="col-sm-6">
+          <div className='row'>
+            <div className='col col-sm-12 col-md-6'>
+              <Animated animationIn='zoomIn' animationInDuration={400}>
+                <div className={classes.WelcomeBox + ' row'}>
+                  <div className='col-sm-6'>
                     <div className={classes.WelcomeBoxText}>
                       <h1>
-                        Welcome <span className={classes.BoldedText}>{this.props.profileDetails.firstName}!</span>
+                        Welcome{' '}
+                        <span className={classes.BoldedText}>
+                          {this.props.profileDetails.firstName}!
+                        </span>
                       </h1>
                       {welcomeText}
                     </div>
                   </div>
-                  <div className="col-sm-6">
-                    <img className={classes.WelcomeImage} src={welcomeImage} alt="computer" />
+                  <div className='col-sm-6'>
+                    <img
+                      className={classes.WelcomeImage}
+                      src={welcomeImage}
+                      alt='computer'
+                    />
                   </div>
                 </div>
               </Animated>
             </div>
-            <div className="col col-sm-12 col-md-6">
-              <Animated animationIn="zoomIn" animationInDuration={400}>
-                <div className={classes.PrevBookings + " row"}>
-                  <div className="col-sm-12">
+            <div className='col col-sm-12 col-md-6'>
+              <Animated animationIn='zoomIn' animationInDuration={400}>
+                <div className={classes.PrevBookings + ' row'}>
+                  <div className='col-sm-12'>
                     <div className={classes.PrevBookingsText}>
-                      <h3>Previous Bookings</h3>
+                      <h3
+                        className={classes.Clickable}
+                        onClick={this.viewBookingHandler}
+                      >
+                        Previous Bookings{' '}
+                        <i
+                          className={
+                            classes.MoreIcon + ' fas fa-chevron-circle-right'
+                          }
+                        ></i>
+                      </h3>
                       {previousBookings}
                     </div>
                   </div>
@@ -188,10 +232,24 @@ export class DashboardWelcome extends Component {
               </Animated>
             </div>
           </div>
-          <div className="row">
+          <div className='row'>
             <div className={classes.UpcomingBookingsText}>
-              <Animated animationInDelay={400} animationIn="fadeInRight" animationInDuration={600}>
-                <h4 style={{ fontWeight: "bold" }}>Upcoming Bookings</h4>
+              <Animated
+                animationInDelay={400}
+                animationIn='fadeInRight'
+                animationInDuration={600}
+              >
+                <h4
+                  className={classes.Clickable}
+                  onClick={this.viewBookingHandler}
+                >
+                  Upcoming Bookings{' '}
+                  <i
+                    className={
+                      classes.MoreIcon + ' fas fa-chevron-circle-right'
+                    }
+                  ></i>
+                </h4>
                 <div className={classes.Flex}>{upcomingBookings}</div>
               </Animated>
             </div>
@@ -225,4 +283,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DashboardWelcome));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(DashboardWelcome));

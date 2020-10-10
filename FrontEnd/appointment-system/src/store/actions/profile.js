@@ -63,7 +63,9 @@ export const fetchProfile = (token) => {
         dispatch(fetchProfileSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(fetchProfileFail('Error reaching server. Please try again later.'));
+        dispatch(
+          fetchProfileFail('Error reaching server. Please try again later.')
+        );
       });
   };
 };
@@ -115,17 +117,26 @@ export const editProfile = (formData, token, history) => {
       },
     };
 
+    console.log(formData);
+
     axios
       .put('/api/' + url + '/' + userId, formData, config)
       .then((response) => {
         dispatch(editProfileSuccess(response.data));
       })
       .then(() => {
-        dispatch(actions.updateRedirect('You have succesfully updated your profile.', '/profile'));
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully updated your profile.',
+            '/profile'
+          )
+        );
         history.push('/success');
       })
       .catch((error) => {
-        dispatch(editProfileFail('Error reaching server. Please try again later.'));
+        dispatch(
+          editProfileFail('Error reaching server. Please try again later.')
+        );
       });
   };
 };
@@ -174,7 +185,9 @@ export const addProfile = (formData, history, type, token) => {
         dispatch(fetchAccountNo(formData, history, type, token));
       })
       .catch((error) => {
-        dispatch(addProfileFail('Error reaching server. Please try again later.'));
+        dispatch(
+          addProfileFail('Error reaching server. Please try again later.')
+        );
       });
   };
 };
@@ -189,10 +202,14 @@ export const fetchAccountNo = (formData, history, type, token) => {
       .post('/users/accountno', profileData)
       .then((response) => {
         let updatedProfileData = { ...formData, accountNo: response.data };
-        dispatch(addProfileDetailsToUser(updatedProfileData, history, type, token));
+        dispatch(
+          addProfileDetailsToUser(updatedProfileData, history, type, token)
+        );
       })
       .catch((error) => {
-        dispatch(addProfileFail('Error reaching server. Please try again later.'));
+        dispatch(
+          addProfileFail('Error reaching server. Please try again later.')
+        );
       });
   };
 };
@@ -234,14 +251,21 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
       })
       .then(() => {
         if (type === 'employees') {
-          dispatch(actions.updateRedirect('You have succesfully updated your profile.', '/employees'));
+          dispatch(
+            actions.updateRedirect(
+              'You have succesfully updated your profile.',
+              '/employees'
+            )
+          );
           history.push('/success');
         } else {
           history.push('/registersuccess');
         }
       })
       .catch((error) => {
-        dispatch(addProfileFail('Error reaching server. Please try again later.'));
+        dispatch(
+          addProfileFail('Error reaching server. Please try again later.')
+        );
       });
   };
 };
@@ -284,7 +308,11 @@ export const fetchAvailabilities = (token) => {
         dispatch(fetchAvailabilitiesSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(fetchAvailabilitiesFail('Error reaching server. Please try again later.'));
+        dispatch(
+          fetchAvailabilitiesFail(
+            'Error reaching server. Please try again later.'
+          )
+        );
       });
   };
 };
@@ -331,12 +359,19 @@ export const addAvailabilities = (startTime, endTime, token, history) => {
         dispatch(addAvailabilitiesSuccess(response.data));
       })
       .then(() => {
-        dispatch(actions.updateRedirect('You have succesfully added your availabilities.', '/availabilities'));
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully added your availabilities.',
+            '/availabilities'
+          )
+        );
         history.push('/success');
       })
       .catch((error) => {
         //"Error adding availability. You must not already have an availability on the day(s) you have chosen."
-        const reason = error.response.data + ' You already have an availability on this day.';
+        const reason =
+          error.response.data +
+          ' You already have an availability on this day.';
         dispatch(addAvailabilitiesFail(reason));
       });
   };
@@ -380,7 +415,9 @@ export const fetchWorkingTime = (startTime, endTime, token) => {
         dispatch(fetchWorkingTimeSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(fetchWorkingTimeFail('Error reaching server. Please try again later.'));
+        dispatch(
+          fetchWorkingTimeFail('Error reaching server. Please try again later.')
+        );
       });
   };
 };
@@ -405,7 +442,13 @@ export const addWorkingTimeFail = (error) => {
   };
 };
 
-export const addWorkingTime = (startTime, endTime, employeeId, token, history) => {
+export const addWorkingTime = (
+  startTime,
+  endTime,
+  employeeId,
+  token,
+  history
+) => {
   return (dispatch) => {
     const data = {
       employeeId,
@@ -425,11 +468,18 @@ export const addWorkingTime = (startTime, endTime, employeeId, token, history) =
         dispatch(addWorkingTimeSuccess(response.data));
       })
       .then(() => {
-        dispatch(actions.updateRedirect('You have succesfully added working hours to the employee.', '/workingtimes'));
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully added working hours to the employee.',
+            '/workingtimes'
+          )
+        );
         history.push('/success');
       })
       .catch((error) => {
-        dispatch(addWorkingTimeFail('Error reaching server. Please try again later.'));
+        dispatch(
+          addWorkingTimeFail('Error reaching server. Please try again later.')
+        );
       });
   };
 };
