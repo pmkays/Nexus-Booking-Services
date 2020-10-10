@@ -22,6 +22,7 @@ export class AdminDashboard extends Component {
     employees: null,
     profit: null,
     error: null,
+    dates: null
   };
 
     componentDidMount() {
@@ -92,6 +93,48 @@ export class AdminDashboard extends Component {
 
     render(){
         let dashboard = <Spinner/>;
+        
+        const getDatesWithinRange = (date1, date2) =>{
+            let dates = [];
+            while(!date1.isSame(date2, 'day'))
+            {
+                let clone = date1.clone();
+                dates.push(clone)
+                date1.add(1, 'days');
+            }
+            dates.push(date2);
+            return dates;
+        }
+
+        const handleFilter = (event) =>{
+            let today = moment();
+            let week = moment().add(-7, 'days');
+            let fortnight = moment().add(-14, 'days');
+            let month = moment().add(-1, 'M');
+
+            var value = event.target.value;
+
+            var dates = [];
+            switch(value){
+                case "week":
+                    dates = getDatesWithinRange(week, today);
+                    break;
+                case "month":
+                    dates = getDatesWithinRange(month, today);
+                    break;
+                case "fortnight":
+                    dates = getDatesWithinRange(fortnight, today);
+                    break;
+                case "all":
+                    dates = null;
+                    break;
+            }
+
+            this.setState({
+                ...this.state,
+                dates: dates
+            });
+        }
         if(this.state.bookings != null && !this.state.loading){
             dashboard = (
                 <div className={"container-fluid " + classes.body}>
@@ -99,24 +142,19 @@ export class AdminDashboard extends Component {
                         <div className="col-sm-8">
                             <h1 className={classes.title}>Welcome, {this.props.profileDetails.firstName}</h1><br/>
                         </div>
-                        {/* <div className="col-sm-1" style={{textAlign:'right'}}>
-                            <p>Show</p>
-                        </div> */}
                         <div className="col-sm-3">
                             <div class="form-group row">
                                 <label for="filter" class={"col-sm-3 col-form-label " + classes.label}>View:</label>
                                 <div class="col-sm-9">
                                     <div class= {"col-xs-2 " + classes.select}>
-                                        <select name ="filter" className="form-control">
-                                            <option value = "today">Today</option>
-                                            <option value =" week">This Week</option>
+                                        <select name ="filter" className="form-control" onChange = {handleFilter}>
+                                            <option value = "all" defaultValue>All</option>
+                                            <option value = "week">This Week</option>
                                             <option value = "fortnight">This Fortnight</option>
                                             <option value = "month">This Month</option>
                                         </select>
                                     </div> 
-                                </div>
-                                {/* <label htmlFor="filter">Show: </label>*/}
-                                
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -137,16 +175,16 @@ export class AdminDashboard extends Component {
                     <div className="row">
                         <div className={"col-sm-7 " + classes.bar}> {/*total bookings bar graph*/}
                             <h2 className = {classes.centerText}>Bookings per Day</h2>
-                            <Graph type ="bar" bookings={this.state.bookings} width="100%" height= "750%"/>
+                            <Graph type ="bar" bookings={this.state.bookings} width="100%" height= "750%" dates={this.state.dates}/>
                         </div>
                         <div className="col-sm-5"> {/*column of smaller graphs*/}
                             <div> {/* pie graph */}
                                 <h2 className = {classes.centerText}>Bookings per Employee </h2>
-                                <Graph type ="pie" bookings={this.state.bookings} width="100%" height="325%"/>
+                                <Graph type ="pie" bookings={this.state.bookings} width="100%" height="325%" dates= {this.state.dates}/>
                             </div><br/><br/>
                             <div> {/* line graph */}
                                 <h2 className = {classes.centerText}>Services Booked per Day</h2>
-                                <Graph type ="line" bookings={this.state.bookings} width="100%" height="325%"/>
+                                <Graph type ="line" bookings={this.state.bookings} width="100%" height="325%" dates= {this.state.dates}/>
                             </div>
                         </div>
                     </div>

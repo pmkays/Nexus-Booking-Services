@@ -61,15 +61,21 @@ export class Graph extends Component {
         filteredData.sort((a, b) =>
           moment(a.startTime).diff(moment(b.startTime))
         );
-        // filteredData = filteredData.filter( x =>
-        //     moment(x.startTime).isSameOrAfter(moment(this.props.from), "day") &&
-        //     moment(x.startTime).isSameOrBefore(moment(this.props.to), "day")
-        // );
 
         let dataSet= new Map();
+
+        if(this.props.dates != null){
+            var lastDate = this.props.dates[this.props.dates.length - 1];
+            filteredData = this.state.bookings.filter( x =>{
+                moment(x.startTime).isSameOrAfter(this.props.dates[0], "day") &&
+                moment(x.startTime).isSameOrBefore(lastDate, "day")
+            });
+            this.props.dates.map(x=> dataSet.set(x.format("DD/MM/yyyy"), 0));
+        } else{
+            filteredData.map(x=> dataSet.set(moment(x.startTime).format("DD/MM/yyyy"), 0));
+        }
     
         //populate the keys with the date
-        filteredData.map(x=> dataSet.set(moment(x.startTime).format("DD/MM/yyyy"), 0));
         filteredData.forEach(x=>{
             var count = dataSet.get(moment(x.startTime).format("DD/MM/yyyy"));
             dataSet.set(moment(x.startTime).format("DD/MM/yyyy"), ++count);
@@ -117,10 +123,14 @@ export class Graph extends Component {
     const getPieData = () =>{
         let filteredData = [];
         filteredData = this.state.bookings;
-        // filteredData = filteredData.filter( x =>
-        //     moment(x.startTime).isSameOrAfter(moment(this.props.from), "day") &&
-        //     moment(x.startTime).isSameOrBefore(moment(this.props.to), "day")
-        // );
+
+        if(this.props.dates != null){
+            var lastDate = this.props.dates[this.props.dates.length - 1];
+            filteredData = this.state.bookings.filter( x =>{
+                moment(x.startTime).isSameOrAfter(this.props.dates[0], "day") &&
+                moment(x.startTime).isSameOrBefore(lastDate, "day")
+            });
+        }
 
         let dataSet= new Map();
         
@@ -171,23 +181,38 @@ export class Graph extends Component {
     const getLineData = () =>{
         let filteredData = [];
         filteredData = this.state.bookings;
-        // filteredData = filteredData.filter( x =>
-        //     moment(x.startTime).isSameOrAfter(moment(this.props.from), "day") &&
-        //     moment(x.startTime).isSameOrBefore(moment(this.props.to), "day")
-        // );
+
+        filteredData.sort((a, b) =>
+            moment(a.startTime).diff(moment(b.startTime))
+        );
+
 
         let service1 = new Map();
         let service2 =  new Map();
         let service3 = new Map(); 
         let service4 = new Map(); 
 
-        filteredData.map(x=> {
-            service1.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
-            service2.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
-            service3.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
-            service4.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
-        });
-    
+
+        if(this.props.dates != null){
+            var lastDate = this.props.dates[this.props.dates.length - 1];
+            filteredData = this.state.bookings.filter( x =>{
+                moment(x.startTime).isSameOrAfter(this.props.dates[0], "day") &&
+                moment(x.startTime).isSameOrBefore(lastDate, "day")
+            });
+            this.props.dates.map(x=> {
+                service1.set(x.format("DD/MM/yyyy"), 0);
+                service2.set(x.format("DD/MM/yyyy"), 0);
+                service3.set(x.format("DD/MM/yyyy"), 0);
+                service4.set(x.format("DD/MM/yyyy"), 0);
+            });
+        } else{
+            filteredData.map(x=> {
+                service1.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
+                service2.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
+                service3.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
+                service4.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
+            });
+        }
     
         filteredData.forEach(x=>{
             if(x.service.id === 1){
