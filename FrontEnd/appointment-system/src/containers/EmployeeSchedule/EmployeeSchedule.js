@@ -19,6 +19,8 @@ export class EmployeeSchedule extends Component {
   componentDidMount() {
     this.setState({ ...this.state, loading: true });
     this.fetchWorkingTimes();
+
+    this.setState({ ...this.state, loading: true });
     this.fetchAvailabilities();
   }
 
@@ -214,10 +216,12 @@ export class EmployeeSchedule extends Component {
 
     if (this.state.loading) {
       workingTimes = <Spinner />;
+      avilabilities = <Spinner />;
     }
 
     if (this.state.error) {
       workingTimes = this.state.error;
+      avilabilities = null;
     }
 
     return (
