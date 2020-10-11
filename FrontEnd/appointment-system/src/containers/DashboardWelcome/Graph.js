@@ -1,16 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/actions";
-import classes from "./DashboardWelcome.module.css";
-import welcomeImage from "./images/welcome.svg";
-import axios from "../../axios-sept";
 import { withRouter } from "react-router";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
-import PreviousBooking from "../../components/UI/PreviousBooking/PreviousBooking";
-import Card from "../../components/UI/Card/Card";
-import { Animated } from "react-animated-css";
 import moment from "moment";
 import {Bar, Line, Pie} from "react-chartjs-2";
 
@@ -27,55 +20,32 @@ export class Graph extends Component {
         bookings: this.props.bookings,
         loading: false
     });
-    //   const config = {
-    //     headers: {
-    //       Authorization: "Bearer " + this.props.token,
-    //     },
-    //   };
-  
-    //   axios
-    //     .get(`/api/booking/admin`, config)
-    //     .then((response) => {
-    //       this.setState({
-    //         ...this.state,
-    //         bookings: response.data,
-    //         loading: false,
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       this.setState({
-    //         ...this.state,
-    //         error: "Error retrieving the services. Possibly no services available on this date.",
-    //         loading: false,
-    //       });
-    //     });
-
-    console.log("State:" + this.state.bookings);
   }
 
   render() {
 
     const getBarData = () =>{
+
+        //organise initial booking data
         let filteredData = [];
         filteredData = this.state.bookings;
         filteredData.sort((a, b) =>
           moment(a.startTime).diff(moment(b.startTime))
         );
 
-
         let dataSet= new Map();
 
         if(this.props.dates != null){
+            //get only the relevant bookings
             var lastDate = this.props.dates[this.props.dates.length - 1];
-            console.log(this.props.dates[0]);
-            console.log(lastDate);
             filteredData = filteredData.filter( x =>
                 moment(x.startTime).isSameOrAfter(this.props.dates[0], "day") &&
                 moment(x.startTime).isSameOrBefore(lastDate, "day")
             );
-            console.log(filteredData);
+            //set up x-axis
             this.props.dates.map(x=> dataSet.set(x.format("DD/MM/yyyy"), 0));
         } else{
+            //all means we won't show days that have no bookings
             filteredData.map(x=> dataSet.set(moment(x.startTime).format("DD/MM/yyyy"), 0));
         }
         
@@ -84,7 +54,6 @@ export class Graph extends Component {
             var count = dataSet.get(moment(x.startTime).format("DD/MM/yyyy"));
             dataSet.set(moment(x.startTime).format("DD/MM/yyyy"), ++count);
         })
-        // console.log(filteredData);
     
         const data = {
             labels: [...dataSet.keys()],
@@ -105,6 +74,9 @@ export class Graph extends Component {
                       display: true,
                       labelString: 'Date',
                       fontSize: 18
+                    },
+                    gridLines: {
+                        display:false
                     }
                   }],
                 yAxes: [{
@@ -115,7 +87,7 @@ export class Graph extends Component {
                     },
                     ticks: {
                         min: 0
-                    }
+                    },
                 }]
             },
             legend: {
@@ -159,41 +131,19 @@ export class Graph extends Component {
               }
             ]
           };
-
-        const options = {
-            maintainAspectRatio: false,
-            title: {
-                display: true,
-                text: "Amount of bookings this",
-                position: "top"
-            },
-            scales: {
-                xAxes: [
-                    {
-                        type:'time'
-                    }
-
-                ],
-                yAxes:[
-                    {
-                        type:'amount'
-                    }
-
-                ]
-            }
-        };
         return data;
     }
 
     const getLineData = () =>{
+
+        //organise initial data
         let filteredData = [];
         filteredData = this.state.bookings;
-
         filteredData.sort((a, b) =>
             moment(a.startTime).diff(moment(b.startTime))
         );
 
-
+        //each service will be its own data set so it's better we separate them
         let service1 = new Map();
         let service2 =  new Map();
         let service3 = new Map(); 
@@ -201,38 +151,42 @@ export class Graph extends Component {
 
 
         if(this.props.dates != null){
+
+            //filter only relevant dates and set up our x-axis dates
             var lastDate = this.props.dates[this.props.dates.length - 1];
             filteredData = this.state.bookings.filter( x =>
                 moment(x.startTime).isSameOrAfter(this.props.dates[0], "day") &&
                 moment(x.startTime).isSameOrBefore(lastDate, "day")
             );
-            this.props.dates.map(x=> {
+            this.props.dates.forEach(x=> {
                 service1.set(x.format("DD/MM/yyyy"), 0);
                 service2.set(x.format("DD/MM/yyyy"), 0);
                 service3.set(x.format("DD/MM/yyyy"), 0);
                 service4.set(x.format("DD/MM/yyyy"), 0);
             });
         } else{
-            filteredData.map(x=> {
+            //all has been selected so we don't care about the days that have no bookings
+            filteredData.forEach(x=> {
                 service1.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
                 service2.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
                 service3.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
                 service4.set(moment(x.startTime).format("DD/MM/yyyy"), 0);
             });
         }
-    
+        
+        //group the services and count
         filteredData.forEach(x=>{
             if(x.service.id === 1){
-                var count = service1.get(moment(x.startTime).format("DD/MM/yyyy"));
+                let count = service1.get(moment(x.startTime).format("DD/MM/yyyy"));
                 service1.set(moment(x.startTime).format("DD/MM/yyyy"), ++count);
             }else if(x.service.id === 2){
-                var count = service2.get(moment(x.startTime).format("DD/MM/yyyy"));
+                let count = service2.get(moment(x.startTime).format("DD/MM/yyyy"));
                 service2.set(moment(x.startTime).format("DD/MM/yyyy"), ++count);
             }else if(x.service.id === 3){
-                var count = service3.get(moment(x.startTime).format("DD/MM/yyyy"));
+                let count = service3.get(moment(x.startTime).format("DD/MM/yyyy"));
                 service3.set(moment(x.startTime).format("DD/MM/yyyy"), ++count);
             } else if(x.service.id === 4){
-                var count = service4.get(moment(x.startTime).format("DD/MM/yyyy"));
+                let count = service4.get(moment(x.startTime).format("DD/MM/yyyy"));
                 service4.set(moment(x.startTime).format("DD/MM/yyyy"), ++count);
             }
         })
@@ -244,24 +198,28 @@ export class Graph extends Component {
                 label: "Design",
                 data: [...service1.values()],
                 fill: false,
+                lineTension: 0,           
                 borderColor: "#F7B2AD"
               },
               {
                 label: "Construction",
                 data: [...service2.values()],
                 fill: false,
+                lineTension: 0,           
                 borderColor: "#bcdee5"
               },
               {
                 label: "Repair",
                 data: [...service3.values()],
                 fill: false,
+                lineTension: 0,           
                 borderColor: "#49a8cc"
               },
               {
                 label: "Makeup",
                 data: [...service4.values()],
                 fill: false,
+                lineTension: 0,           
                 borderColor: "#d1cbc6"
               }
             ]
@@ -275,6 +233,9 @@ export class Graph extends Component {
                       display: true,
                       labelString: 'Date',
                       fontSize: 18
+                    },
+                    gridLines: {
+                        display:false
                     }
                   }],
                 yAxes: [{

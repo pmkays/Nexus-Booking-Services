@@ -2,6 +2,13 @@
     font-weight: bold;
 }
 
+.subtitle{
+    font-weight: bold;
+    margin-left: 2%
+
+}
+
+
 .body{
     background-color: white;
     width: 90%;
@@ -19,10 +26,23 @@
     font-size: 18px;
 }
 
-.bar{
-    height: 750px;
+.graph{
+    background-color: #edfaff;
+    padding-bottom: 5%;
+    padding-top: 5%;
+    border-radius: 15px;
 }
 
 .centerText{
     text-align:center;
+    font-weight: 600;
+}
+
+.statsBackground{
+    background-color: #edfaff;
+    margin-left: 0.5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-radius: 15px;
+    margin-right: 0.5%;
 }

@@ -12,9 +12,13 @@
 }
 
 .greenBody{
-    background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%);
+    /* background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%); */
+    background: #1d99a0;
     width: 55%;
     padding: 5% 5% 5% 7%;
     border-radius: 15px;
-    margin: 0 auto
+    margin: 0 auto;
+    -webkit-box-shadow: 5px 3px 7px 0px rgba(50, 50, 50, 0.18);
+    -moz-box-shadow:    5px 3px 7px 0px rgba(50, 50, 50, 0.18);
+    box-shadow:         5px 3px 7px 0px rgba(50, 50, 50, 0.18);
 }

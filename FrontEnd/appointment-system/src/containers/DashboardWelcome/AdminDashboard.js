@@ -1,19 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/actions";
-import welcomeImage from "./images/welcome.svg";
 import axios from "../../axios-sept";
 import { withRouter } from "react-router";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
-import PreviousBooking from "../../components/UI/PreviousBooking/PreviousBooking";
-import Card from "../../components/UI/Card/Card";
-import { Animated } from "react-animated-css";
 import moment from "moment";
 import Graph from "./Graph"
 import Statistic from "./Statistic"
 import classes from "./AdminDashboard.module.css"
+import { Animated } from "react-animated-css";
 
 export class AdminDashboard extends Component {
   state = {
@@ -27,69 +23,35 @@ export class AdminDashboard extends Component {
   };
 
     componentDidMount() {
+        let profit =  Math.floor(Math.random() * (50000 - 30000 + 1) ) + 30000;
+
         const config = {
             headers: {
                 Authorization: "Bearer " + this.props.token,
             },
         };
 
-        axios
-        .get(`/api/booking/admin`, config)
-        .then((response) => {
-            this.setState({
-            ...this.state,
-            bookings: response.data,
-            totalBookings: response.data.length,
-            loading: false,
-            });
-        })
-        .catch((error) => {
-            this.setState({
-            ...this.state,
-            error: "Error retrieving the services. Possibly no services available on this date.",
-            loading: false,
-            });
-        });
+        const fetchBookings = axios.get(`/api/booking/admin`, config);
+        const fetchEmployees = axios.get(`/api/employees`, config);
+        const fetchCustomers = axios.get(`/api/customers`, config);
 
-        axios
-        .get(`/api/employees`, config)
-        .then((response) => {
+        Promise.all([fetchBookings, fetchEmployees, fetchCustomers]).then(([bookings, employees, customers]) => {
             this.setState({
-            ...this.state,
-            employees: response.data._embedded.employees.length,
-            loading: false,
+                ...this.state,
+                bookings: bookings.data,
+                totalBookings: bookings.data.length,
+                employees: employees.data._embedded.employees.length,
+                customers: customers.data._embedded.customers.length,
+                loading: false,
+                profit: profit
+            })
+          }).catch(error => {
+                this.setState({
+                ...this.state,
+                error: "Error retrieving some information. Please try again later",
+                loading: false,
             });
-        })
-        .catch((error) => {
-            this.setState({
-            ...this.state,
-            error: "Error retrieving the services. Possibly no services available on this date.",
-            loading: false,
-            });
-        });
-
-        axios
-        .get(`/api/customers`, config)
-        .then((response) => {
-            this.setState({
-            ...this.state,
-            customers: response.data._embedded.customers.length,
-            loading: false,
-            });
-        })
-        .catch((error) => {
-            this.setState({
-            ...this.state,
-            error: "Error retrieving the services. Possibly no services available on this date.",
-            loading: false,
-            });
-        });
-        
-        let profit =  Math.floor(Math.random() * (50000 - 30000 + 1) ) + 30000;
-        this.setState({
-            ...this.state,
-            profit: profit
-        });
+          })
 
     }
 
@@ -135,19 +97,19 @@ export class AdminDashboard extends Component {
                     filteredBookings = this.state.bookings.filter( x =>
                         moment(x.startTime).isSameOrAfter(dates[0], "day") &&
                         moment(x.startTime).isSameOrBefore(dates[dates.length-1], "day"));
-                        profit =  Math.floor(Math.random() * (4000 - 2000 + 1) ) + 2000;
+                        profit =  Math.floor(Math.random() * (4000 - 2000 + 1) ) + 2000; //profit between 2k-4k
                     break;
                 case "month":
                     dates = getDatesWithinRange(month, today);
                     filteredBookings = this.state.bookings.filter( x =>
                         moment(x.startTime).isSameOrAfter(dates[0], "day") &&
                         moment(x.startTime).isSameOrBefore(dates[dates.length-1], "day"));
-                        profit =  Math.floor(Math.random() * (7000 - 5000 + 1) ) + 5000;
+                        profit =  Math.floor(Math.random() * (7000 - 5000 + 1) ) + 5000; //profit between 5k-7k
                     break;
-                case "all":
+                default: //also all
                     dates = null;
                     filteredBookings = this.state.bookings;
-                    profit =  Math.floor(Math.random() * (50000 - 30000 + 1) ) + 30000;
+                    profit =  Math.floor(Math.random() * (50000 - 30000 + 1) ) + 30000; //profit betweeen 30k-50k
                     break;
             }
 
@@ -164,7 +126,7 @@ export class AdminDashboard extends Component {
                 <div className={"container-fluid " + classes.body}>
                     <div className="row">
                         <div className="col-sm-8">
-                            <h1 className={classes.title}>Welcome, {this.props.profileDetails.firstName}</h1><br/>
+                            <h1 className={classes.title}>Welcome, {this.props.profileDetails.firstName}</h1> <br/><br/>
                         </div>
                         <div className="col-sm-3">
                             <div class="form-group row">
@@ -182,31 +144,41 @@ export class AdminDashboard extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row justify-content-md-center">
-                        <div className={"col-sm-3 "}> {/*stats*/}
-                            <Statistic data= {this.state.totalBookings} description = 'Total bookings'/>
-                        </div>
-                        <div className={"col-sm-3 "}> {/*stats*/}
-                            <Statistic data= {'$' + this.state.profit} description = 'Profit'/>
-                        </div>
-                        <div className={"col-sm-3 "}> {/*stats*/}
-                            <Statistic data= {this.state.customers} description = 'Customers'/>
-                        </div>
-                        <div className={"col-sm-3 "}> {/*stats*/}
-                            <Statistic data= {this.state.employees} description = 'Employees'/>
-                        </div>
-                    </div><br/><br/>
+                    <div className="row">
+                        <h2 className={classes.subtitle}>Statistics</h2>
+                    </div>
+                    <Animated animationIn="slideInLeft" animationInDuration={400}>
+                        <div className={"row justify-content-md-center " + classes.statsBackground}>
+                            <div className={"col-sm-3 "}> {/*stats*/}
+                                <Statistic data= {this.state.totalBookings} description = 'Bookings'/>
+                            </div>
+                            <div className={"col-sm-3 "}> {/*stats*/}
+                                <Statistic data= {'$' + this.state.profit} description = 'Profit'/>
+                            </div>
+                            <div className={"col-sm-3 "}> {/*stats*/}
+                                <Statistic data= {this.state.customers} description = 'Customers'/>
+                            </div>
+                            <div className={"col-sm-3 "}> {/*stats*/}
+                                <Statistic data= {this.state.employees} description = 'Employees'/>
+                            </div>
+                        </div><br/><br/><br/>
+                    </Animated>
+                    <div className="row">
+                        <h2 className={classes.subtitle}>Graphs</h2>
+                    </div>
                     <div className="row">
                         <div className={"col-sm-7 " + classes.bar}> {/*total bookings bar graph*/}
-                            <h2 className = {classes.centerText}>Bookings per Day</h2>
-                            <Graph type ="bar" bookings={this.state.bookings} width="100%" height= "750%" dates={this.state.dates}/>
+                            <div className ={classes.graph}>
+                                <h2 className = {classes.centerText}>Bookings per Day</h2>
+                                <Graph type ="bar" bookings={this.state.bookings} width="100%" height= "780%" dates={this.state.dates}/>
+                            </div>
                         </div>
                         <div className="col-sm-5"> {/*column of smaller graphs*/}
-                            <div> {/* pie graph */}
+                            <div className={classes.graph}> {/* pie graph */}
                                 <h2 className = {classes.centerText}>Bookings per Employee </h2>
                                 <Graph type ="pie" bookings={this.state.bookings} width="100%" height="325%" dates= {this.state.dates}/>
                             </div><br/><br/>
-                            <div> {/* line graph */}
+                            <div className={classes.graph}> {/* line graph */}
                                 <h2 className = {classes.centerText}>Services Booked per Day</h2>
                                 <Graph type ="line" bookings={this.state.bookings} width="100%" height="325%" dates= {this.state.dates}/>
                             </div>
