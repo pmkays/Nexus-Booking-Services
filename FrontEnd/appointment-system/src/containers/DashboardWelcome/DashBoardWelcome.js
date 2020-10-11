@@ -57,8 +57,7 @@ export class DashboardWelcome extends Component {
       .catch((error) => {
         this.setState({
           ...this.state,
-          error:
-            'Error retrieving the services. Possibly no services available on this date.',
+          error: 'Error retrieving the services. Possibly no services available on this date.',
           services: [],
           loading: false,
         });
@@ -93,9 +92,7 @@ export class DashboardWelcome extends Component {
                   : booking.customer.firstName + ' ' + booking.customer.lastName
               }
               startTime={
-                moment(booking.startTime).format('DD/MM/yyyy') +
-                ', ' +
-                moment(booking.startTime).format('HH:mm')
+                moment(booking.startTime).format('DD/MM/yyyy') + ', ' + moment(booking.startTime).format('HH:mm')
               }
             />
           );
@@ -127,9 +124,7 @@ export class DashboardWelcome extends Component {
                   : booking.customer.firstName + ' ' + booking.customer.lastName
               }
               startTime={
-                moment(booking.startTime).format('DD/MM/yyyy') +
-                ', ' +
-                moment(booking.startTime).format('HH:mm')
+                moment(booking.startTime).format('DD/MM/yyyy') + ', ' + moment(booking.startTime).format('HH:mm')
               }
             />
           );
@@ -148,10 +143,7 @@ export class DashboardWelcome extends Component {
     if (this.props.authority === 'ROLE_CUSTOMER') {
       welcomeText = (
         <React.Fragment>
-          <p className={classes.Slogan}>
-            Many new services added daily.
-            <br /> Have a look!
-          </p>
+          <p className={classes.Slogan}>Many new services added daily. Have a look!</p>
           <Button clicked={this.goToBooking} classes={classes.Button}>
             BOOK
           </Button>
@@ -160,9 +152,7 @@ export class DashboardWelcome extends Component {
     } else {
       welcomeText = (
         <React.Fragment>
-          <p className={classes.Slogan}>
-            Please make sure you check your schedule and update if needed!
-          </p>
+          <p className={classes.Slogan}>Please make sure you check your schedule and update if needed!</p>
           <Button clicked={this.goToSchedule} classes={classes.Button}>
             Schedule
           </Button>
@@ -177,66 +167,39 @@ export class DashboardWelcome extends Component {
           <div className={'row ' + classes.NoMargin}>
             <Animated
               className={classes.WelcomeBox + ' col-sm-12 col-md-5 '}
-              animationIn='zoomIn'
+              animationIn="zoomIn"
               animationInDuration={400}
             >
               <div className={classes.Margin}>
                 <div className={classes.WelcomeBoxText}>
                   <h1>
-                    Welcome{' '}
-                    <span className={classes.BoldedText}>
-                      {this.props.profileDetails.firstName}!
-                    </span>
+                    Welcome <span className={classes.BoldedText}>{this.props.profileDetails.firstName}!</span>
                   </h1>
                   {welcomeText}
                 </div>
               </div>
               <div>
-                <img
-                  className={classes.WelcomeImage}
-                  src={welcomeImage}
-                  alt='computer'
-                />
+                <img className={classes.WelcomeImage} src={welcomeImage} alt="computer" />
               </div>
             </Animated>
             <Animated
               className={classes.PrevBookings + ' col-sm-12 col-md-5'}
-              animationIn='zoomIn'
+              animationIn="zoomIn"
               animationInDuration={400}
             >
               <div className={classes.PrevBookingsText}>
-                <h3
-                  className={classes.Clickable}
-                  onClick={this.viewBookingHandler}
-                >
-                  Previous Bookings{' '}
-                  <i
-                    className={
-                      classes.MoreIcon + ' fas fa-chevron-circle-right'
-                    }
-                  ></i>
+                <h3 className={classes.Clickable} onClick={this.viewBookingHandler}>
+                  Previous Bookings <i className={classes.MoreIcon + ' fas fa-chevron-circle-right'}></i>
                 </h3>
                 {previousBookings}
               </div>
             </Animated>
           </div>
-          <div className='row'>
+          <div className="row">
             <div className={classes.UpcomingBookingsText}>
-              <Animated
-                animationInDelay={400}
-                animationIn='fadeInRight'
-                animationInDuration={600}
-              >
-                <h4
-                  className={classes.Clickable}
-                  onClick={this.viewBookingHandler}
-                >
-                  Upcoming Bookings{' '}
-                  <i
-                    className={
-                      classes.MoreIcon + ' fas fa-chevron-circle-right'
-                    }
-                  ></i>
+              <Animated animationInDelay={400} animationIn="fadeInRight" animationInDuration={600}>
+                <h4 className={classes.Clickable} onClick={this.viewBookingHandler}>
+                  Upcoming Bookings <i className={classes.MoreIcon + ' fas fa-chevron-circle-right'}></i>
                 </h4>
                 <div className={classes.Flex}>{upcomingBookings}</div>
               </Animated>
@@ -271,7 +234,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(DashboardWelcome));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DashboardWelcome));
