@@ -2,16 +2,19 @@
 .title{
     /* font-weight:bold; */
     color: white;
+    font-size: 2em;
+    font-weight: 600;
 }
 
 .desc{
     color: white;
+    font-size: 1.2em;
 }
 
 .greenBody{
     background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%);
     width: 55%;
-    padding: 3% 3% 3% 5%;
+    padding: 5% 5% 5% 7%;
     border-radius: 15px;
-    margin: 0 auto;
+    margin: 0 auto
 }

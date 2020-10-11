@@ -18,6 +18,7 @@ import classes from "./AdminDashboard.module.css"
 export class AdminDashboard extends Component {
   state = {
     bookings: null,
+    totalBookings:null,
     customers: null,
     employees: null,
     profit: null,
@@ -38,6 +39,7 @@ export class AdminDashboard extends Component {
             this.setState({
             ...this.state,
             bookings: response.data,
+            totalBookings: response.data.length,
             loading: false,
             });
         })
@@ -107,34 +109,56 @@ export class AdminDashboard extends Component {
         }
 
         const handleFilter = (event) =>{
+            var value = event.target.value;
+            
+            //time related variables for filtering and getting dates
             let today = moment();
             let week = moment().add(-7, 'days');
             let fortnight = moment().add(-14, 'days');
             let month = moment().add(-1, 'M');
 
-            var value = event.target.value;
-
+            //state-related variables to update
+            let profit = 0;
             var dates = [];
+            var filteredBookings = [];
+
             switch(value){
                 case "week":
                     dates = getDatesWithinRange(week, today);
-                    break;
-                case "month":
-                    dates = getDatesWithinRange(month, today);
+                    filteredBookings = this.state.bookings.filter( x =>
+                        moment(x.startTime).isSameOrAfter(dates[0], "day") &&
+                        moment(x.startTime).isSameOrBefore(dates[dates.length-1], "day"));
+                        profit =  Math.floor(Math.random() * (2000 - 1000 + 1) ) + 1000; //profit will be between 1k-2k
                     break;
                 case "fortnight":
                     dates = getDatesWithinRange(fortnight, today);
+                    filteredBookings = this.state.bookings.filter( x =>
+                        moment(x.startTime).isSameOrAfter(dates[0], "day") &&
+                        moment(x.startTime).isSameOrBefore(dates[dates.length-1], "day"));
+                        profit =  Math.floor(Math.random() * (4000 - 2000 + 1) ) + 2000;
+                    break;
+                case "month":
+                    dates = getDatesWithinRange(month, today);
+                    filteredBookings = this.state.bookings.filter( x =>
+                        moment(x.startTime).isSameOrAfter(dates[0], "day") &&
+                        moment(x.startTime).isSameOrBefore(dates[dates.length-1], "day"));
+                        profit =  Math.floor(Math.random() * (7000 - 5000 + 1) ) + 5000;
                     break;
                 case "all":
                     dates = null;
+                    filteredBookings = this.state.bookings;
+                    profit =  Math.floor(Math.random() * (50000 - 30000 + 1) ) + 30000;
                     break;
             }
 
             this.setState({
                 ...this.state,
-                dates: dates
+                dates: dates,
+                totalBookings: filteredBookings.length,
+                profit: profit
             });
         }
+
         if(this.state.bookings != null && !this.state.loading){
             dashboard = (
                 <div className={"container-fluid " + classes.body}>
@@ -160,7 +184,7 @@ export class AdminDashboard extends Component {
                     </div>
                     <div className="row justify-content-md-center">
                         <div className={"col-sm-3 "}> {/*stats*/}
-                            <Statistic data= {this.state.bookings.length} description = 'Total bookings'/>
+                            <Statistic data= {this.state.totalBookings} description = 'Total bookings'/>
                         </div>
                         <div className={"col-sm-3 "}> {/*stats*/}
                             <Statistic data= {'$' + this.state.profit} description = 'Profit'/>
