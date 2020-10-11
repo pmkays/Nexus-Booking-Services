@@ -70,12 +70,12 @@ export class Employees extends Component {
             <td>{employee.address}</td>
             <td>
               <Button clicked={() => this.addService(employee.id)} classes="btn btn-primary">
-                Add Service(s)
+                Add
               </Button>
             </td>
             <td>
               <Button clicked={() => this.editEmployee(employee.id)} classes="btn btn-primary">
-                Edit Details
+                Edit
               </Button>
             </td>
           </tr>
@@ -95,7 +95,7 @@ export class Employees extends Component {
             <th scope="col">Phone No.</th>
             <th scope="col">Address</th>
             <th scope="col">Add Service</th>
-            <th scope="col">Edit Service</th>
+            <th scope="col">Edit</th>
           </tr>
         </thead>
         {tbody}
