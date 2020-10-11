@@ -53,6 +53,10 @@ export class Employees extends Component {
     this.props.onFetchEmployee(employeeId, this.props.token, this.props.history);
   };
 
+  viewSchedule = (employeeId) => {
+    this.props.history.push("/schedule/"+employeeId);
+  };
+
   render() {
     let employees = null;
     let tbody = null;
@@ -68,6 +72,11 @@ export class Employees extends Component {
             <td>{employee.email}</td>
             <td>{employee.phoneNo}</td>
             <td>{employee.address}</td>
+            <td>
+              <Button clicked={() => this.viewSchedule(employee.id)} classes="btn btn-primary">
+                View
+              </Button>
+            </td>
             <td>
               <Button clicked={() => this.addService(employee.id)} classes="btn btn-primary">
                 Add
@@ -94,7 +103,8 @@ export class Employees extends Component {
             <th scope="col">Email</th>
             <th scope="col">Phone No.</th>
             <th scope="col">Address</th>
-            <th scope="col">Add Service</th>
+            <th scope="col">Schedule</th>
+            <th scope="col">Service</th>
             <th scope="col">Edit</th>
           </tr>
         </thead>

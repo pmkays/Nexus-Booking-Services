@@ -42,6 +42,8 @@ class App extends Component {
             path="/editemployee/:id"
             component={() => <Dashboard content="editemployee" />}
           />
+          
+          <Route path="/schedule/:id" component={() => <Dashboard content="schedule" />} />
           <Route
             path="/addservice"
             component={() => <Dashboard content="addservice" />}

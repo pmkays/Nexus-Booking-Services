@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import axios from '../../axios-sept';
 import moment from 'moment';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Button from '../../components/UI/Button/Button'
 import classes from './EmployeeSchedule.module.css';
 import { timeDiff } from '../../utility/utility';
 
@@ -30,8 +32,16 @@ export class EmployeeSchedule extends Component {
       },
     };
 
+    let id = null;
+
+    if(this.props.userType === 'ROLE_ADMIN'){
+      id = this.props.match.params.id;
+    }else{
+      id = this.props.userId;
+    }
+
     axios
-      .get(`/api/workingTime/employee/${this.props.userId}`, config)
+      .get(`/api/workingTime/employee/${id}`, config)
       .then((response) => {
         let workingTimes = [];
 
@@ -77,8 +87,16 @@ export class EmployeeSchedule extends Component {
       },
     };
 
+    let id = null;
+
+    if(this.props.userType === 'ROLE_ADMIN'){
+      id = this.props.match.params.id;
+    }else{
+      id = this.props.userId;
+    }
+
     axios
-      .get(`/api/availability/employee/${this.props.userId}`, config)
+      .get(`/api/availability/employee/${id}`, config)
       .then((response) => {
         let availabilitiesTimes = [];
 
@@ -222,9 +240,24 @@ export class EmployeeSchedule extends Component {
       avilabilities = null;
     }
 
+    let adminExtra = null;
+    if(this.props.userType === 'ROLE_ADMIN'){
+      adminExtra = (
+        <div> 
+        <Button classes={classes.MarginRight + ' btn btn-primary'}  clicked={() => {this.props.history.push("/workingTimes")}} >
+        Add Working Times
+      </Button>
+      <Button clicked={() => {this.props.history.goBack()}} classes="btn btn-primary">
+        Return
+      </Button>
+      </div>
+      );
+    }
+
     return (
       <div className={classes.EmployeeScheduleBox}>
         <h1>Schedule</h1>
+        
         {this.state.next7DaysSet ? null : (
           <p className={classes.Warning}>
             Note: It seems you have no availabilities next week! Please add your times in if this is not correct.
@@ -240,6 +273,7 @@ export class EmployeeSchedule extends Component {
             {avilabilities}
           </div>
         </div>
+        {adminExtra}
       </div>
     );
   }
@@ -252,4 +286,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EmployeeSchedule);
+export default connect(mapStateToProps)(withRouter(EmployeeSchedule));

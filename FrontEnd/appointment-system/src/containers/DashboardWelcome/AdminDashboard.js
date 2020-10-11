@@ -126,7 +126,7 @@ export class AdminDashboard extends Component {
                 <div className={"container-fluid " + classes.body}>
                     <div className="row">
                         <div className="col-sm-8">
-                            <h1 className={classes.title}>Welcome, {this.props.profileDetails.firstName}</h1> <br/><br/>
+                            <h1 className={classes.title}>Welcome, {this.props.profileDetails.firstName}</h1> <hr/>
                         </div>
                         <div className="col-sm-3">
                             <div class="form-group row">
@@ -161,7 +161,7 @@ export class AdminDashboard extends Component {
                             <div className={"col-sm-3 "}> {/*stats*/}
                                 <Statistic data= {this.state.employees} description = 'Employees'/>
                             </div>
-                        </div><br/><br/><br/>
+                        </div><br/>
                     </Animated>
                     <div className="row">
                         <h2 className={classes.subtitle}>Graphs</h2>
