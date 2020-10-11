@@ -41,18 +41,15 @@ export class EmployeeSchedule extends Component {
           let added = false;
           response.data.forEach((workingTime, index) => {
             if (
-              moment(workingTime.startTime)
-                .startOf('day')
-                .format('YYYY-MM-DDTHH:mm:ss') ===
+              moment(workingTime.startTime).startOf('day').format('YYYY-MM-DDTHH:mm:ss') ===
               currentDate.format('YYYY-MM-DDTHH:mm:ss')
             ) {
-              console.log('true');
               workingTimes.push(workingTime);
               added = true;
             }
           });
           if (!added) {
-            workingTimes.push({ startTime: 'Not Available' });
+            workingTimes.push({ startTime: 'Not Set' });
           }
           currentDate.add('1', 'day');
         }
@@ -91,9 +88,7 @@ export class EmployeeSchedule extends Component {
           let added = false;
           response.data.forEach((availability, index) => {
             if (
-              moment(availability.startTime)
-                .startOf('day')
-                .format('YYYY-MM-DDTHH:mm:ss') ===
+              moment(availability.startTime).startOf('day').format('YYYY-MM-DDTHH:mm:ss') ===
               currentDate.format('YYYY-MM-DDTHH:mm:ss')
             ) {
               availabilitiesTimes.push(availability);
@@ -110,9 +105,7 @@ export class EmployeeSchedule extends Component {
         for (let i = 0; i < 7; ++i) {
           response.data.forEach((availability, index) => {
             if (
-              moment(availability.startTime)
-                .startOf('day')
-                .format('YYYY-MM-DDTHH:mm:ss') ===
+              moment(availability.startTime).startOf('day').format('YYYY-MM-DDTHH:mm:ss') ===
               currentDate.format('YYYY-MM-DDTHH:mm:ss')
             ) {
               found = true;
@@ -145,9 +138,9 @@ export class EmployeeSchedule extends Component {
       workingTimesData = this.state.workingTimes.map((workingTime, index) => {
         return (
           <tr key={index}>
-            {workingTime.startTime === 'Not Available' ? (
+            {workingTime.startTime === 'Not Set' ? (
               <React.Fragment>
-                <td>Not Available</td>
+                <td>Not Set</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -166,7 +159,7 @@ export class EmployeeSchedule extends Component {
     }
 
     let workingTimes = (
-      <table className='table'>
+      <table className="table">
         <thead>
           <tr>
             <th>Date</th>
@@ -183,32 +176,30 @@ export class EmployeeSchedule extends Component {
     let availabilitiesTimesData = null;
 
     if (this.state.availabilitiesTimes !== null) {
-      availabilitiesTimesData = this.state.availabilitiesTimes.map(
-        (availability, index) => {
-          return (
-            <tr key={index}>
-              {availability.startTime === 'Not Available' ? (
-                <React.Fragment>
-                  <td>Not Available</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <td>{moment(availability.startTime).format('DD/MM/yyyy')}</td>
-                  <td>{moment(availability.startTime).format('HH:mm')}</td>
-                  <td>{moment(availability.endTime).format('HH:mm')}</td>
-                </React.Fragment>
-              )}
-            </tr>
-          );
-        }
-      );
+      availabilitiesTimesData = this.state.availabilitiesTimes.map((availability, index) => {
+        return (
+          <tr key={index}>
+            {availability.startTime === 'Not Available' ? (
+              <React.Fragment>
+                <td>Not Available</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <td>{moment(availability.startTime).format('DD/MM/yyyy')}</td>
+                <td>{moment(availability.startTime).format('HH:mm')}</td>
+                <td>{moment(availability.endTime).format('HH:mm')}</td>
+              </React.Fragment>
+            )}
+          </tr>
+        );
+      });
     }
 
     let avilabilities = (
-      <table className='table'>
+      <table className="table">
         <thead>
           <tr>
             <th>Date</th>
@@ -236,16 +227,15 @@ export class EmployeeSchedule extends Component {
         <h1>Schedule</h1>
         {this.state.next7DaysSet ? null : (
           <p className={classes.Warning}>
-            Note: It seems you have no availabilities next week! Please add your
-            times in if this is not correct.
+            Note: It seems you have no availabilities next week! Please add your times in if this is not correct.
           </p>
         )}
-        <div className='row'>
-          <div className='col-lg-6'>
+        <div className="row">
+          <div className="col-lg-6">
             <h3>Work Time Next 7 Days</h3>
             {workingTimes}
           </div>
-          <div className='col-lg-6'>
+          <div className="col-lg-6">
             <h3>Availability Next 7 Days</h3>
             {avilabilities}
           </div>
