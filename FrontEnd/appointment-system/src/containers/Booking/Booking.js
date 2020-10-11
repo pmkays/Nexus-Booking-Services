@@ -82,6 +82,10 @@ export class Booking extends Component {
           loading: false,
         });
       });
+
+      // resetting service after choosing new date
+      let x = document.getElementById("serviceDropdown");
+      x.selectedIndex = 0;
   };
 
   // Runs when new service is selected

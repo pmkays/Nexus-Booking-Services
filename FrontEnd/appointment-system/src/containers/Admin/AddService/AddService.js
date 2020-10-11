@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import axios from '../../../axios-sept';
 import classes from './AddService.module.css';
 
@@ -233,4 +233,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddService);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddService));
