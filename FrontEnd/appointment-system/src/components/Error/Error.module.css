@@ -1,0 +1,10 @@
+.ErrorBox {
+  border-radius: 15px;
+  margin: 5% 10%;
+  padding: 5% 10%;
+  background-color: white;
+}
+
+.ErrorBox h1 {
+  font-weight: bold;
+}

@@ -117,6 +117,8 @@ export const editProfile = (formData, token, history) => {
       },
     };
 
+    console.log(formData);
+
     axios
       .put('/api/' + url + '/' + userId, formData, config)
       .then((response) => {

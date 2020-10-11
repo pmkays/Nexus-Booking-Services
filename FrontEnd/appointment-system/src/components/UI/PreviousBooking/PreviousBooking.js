@@ -5,7 +5,7 @@ import classes from './PreviousBooking.module.css';
 const previousBooking = (props) => (
   <div className='row'>
     <hr />
-    <div className='col-sm-2'>
+    <div className={classes.Icon + ' col-sm-2'} onClick={props.clicked}>
       <img src={Icon} alt='icon' />
     </div>
     <div className={' col-sm-5'}>

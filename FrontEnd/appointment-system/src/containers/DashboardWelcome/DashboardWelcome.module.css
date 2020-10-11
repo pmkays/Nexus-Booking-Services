@@ -14,6 +14,19 @@
   margin: 35% 30% 0;
 }
 
+.MoreIcon {
+  opacity: 50%;
+}
+
+.Clickable:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.Margin {
+  padding: 10% 0 0;
+}
+
 .MainContent {
   margin-top: 2%;
   background: #e3f2f3;
@@ -26,13 +39,12 @@
   color: white;
   background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%);
   border-radius: 15px;
-  margin: 2% 2%;
-  height: 35vh;
-  padding: 5%;
+  margin: 2% 0 2% 2%;
+  padding: 1%;
+  display: flex;
 }
 
 .WelcomeBoxText {
-  margin-top: 20%;
   color: white;
 }
 
@@ -56,8 +68,7 @@
   background-color: #ffffff;
   border-radius: 15px;
   margin: 2% 2%;
-  height: 35vh;
-  padding: 5%;
+  padding: 2%;
 }
 
 .PrevBookingsText {
@@ -69,8 +80,8 @@
 }
 
 .NoMargin {
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: inherit !important;
+  margin-right: inherit !important;
 }
 
 .Center {

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../../store/actions/actions";
-import { NavLink } from "react-router-dom";
-import classes from "./Profile.module.css";
-import axios from "../../axios-sept";
-import Spinner from "../../components/UI/Spinner/Spinner";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/actions';
+import { NavLink } from 'react-router-dom';
+import classes from './Profile.module.css';
+import axios from '../../axios-sept';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 export class Profile extends Component {
   state = {
@@ -15,11 +15,11 @@ export class Profile extends Component {
     this.props.onFetchProfile(this.props.token);
     const config = {
       headers: {
-        Authorization: "Bearer " + this.props.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     };
 
-    if (this.props.userType === "ROLE_EMPLOYEE") {
+    if (this.props.userType === 'ROLE_EMPLOYEE') {
       axios
         .get(`/api/employees/${this.props.userId}/services`, config)
         .then((response) => {
@@ -31,7 +31,7 @@ export class Profile extends Component {
         .catch((error) => {
           this.setState({
             ...this.state,
-            error: "Error retrieving service for employee",
+            error: 'Error retrieving service for employee',
             loading: false,
           });
         });
@@ -41,7 +41,7 @@ export class Profile extends Component {
   render() {
     const extractServiceNames = () => {
       let services = this.state.service._embedded.services;
-      let names = "";
+      let names = '';
       services.map((x) => (names += `${x.name}, `));
 
       //cut out the , and space at the end
@@ -61,6 +61,16 @@ export class Profile extends Component {
       }
     };
 
+    let description = null;
+    if (this.props.userType === 'ROLE_EMPLOYEE') {
+      description = (
+        <React.Fragment>
+          <dt className="col-sm-12 col-md-4">Description</dt>
+          <dd className="col-sm-12 col-md-8">{this.props.profileDetails.description}</dd>
+        </React.Fragment>
+      );
+    }
+
     let profile = <Spinner />;
 
     // If not loading and the profile is present, it will render the details
@@ -75,26 +85,17 @@ export class Profile extends Component {
           <div className={classes.ProfileDetails}>
             <dl className="row">
               <dt className="col-sm-12 col-md-4">First Name</dt>
-              <dd className="col-sm-12 col-md-8">
-                {this.props.profileDetails.firstName}
-              </dd>
+              <dd className="col-sm-12 col-md-8">{this.props.profileDetails.firstName}</dd>
               <dt className="col-sm-12 col-md-4">Last Name</dt>
-              <dd className="col-sm-12 col-md-8">
-                {this.props.profileDetails.lastName}
-              </dd>
+              <dd className="col-sm-12 col-md-8">{this.props.profileDetails.lastName}</dd>
               <dt className="col-sm-12 col-md-4">Address</dt>
-              <dd className="col-sm-12 col-md-8">
-                {this.props.profileDetails.address}
-              </dd>
+              <dd className="col-sm-12 col-md-8">{this.props.profileDetails.address}</dd>
               <dt className="col-sm-12 col-md-4">Email</dt>
-              <dd className="col-sm-12 col-md-8">
-                {this.props.profileDetails.email}
-              </dd>
+              <dd className="col-sm-12 col-md-8">{this.props.profileDetails.email}</dd>
               <dt className="col-sm-12 col-md-4">Phone Number</dt>
-              <dd className="col-sm-12 col-md-8">
-                {this.props.profileDetails.phoneNo}
-              </dd>
+              <dd className="col-sm-12 col-md-8">{this.props.profileDetails.phoneNo}</dd>
               {service()}
+              {description}
             </dl>
             <div>
               <img
