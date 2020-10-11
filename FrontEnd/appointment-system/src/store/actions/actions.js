@@ -9,7 +9,7 @@ export {
   addWorkingTime,
   clearProfileUponLogout,
 } from './profile';
-export { updateEmployeeId, addService } from './service';
+export { updateEmployeeId, addService, removeService } from './service';
 export { addBooking } from './booking';
 export { updateRedirect, resetRedirect } from './redirect';
 export { fetchEmployee } from './employee';
