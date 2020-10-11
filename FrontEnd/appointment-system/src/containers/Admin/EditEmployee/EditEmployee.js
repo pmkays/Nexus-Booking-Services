@@ -1,27 +1,30 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter, Redirect } from "react-router-dom";
-import classes from "./EditEmployee.module.css";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Redirect } from 'react-router-dom';
+import classes from './EditEmployee.module.css';
 
-import * as actions from "../../../store/actions/actions";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Button from "../../../components/UI/Button/Button";
-import Input from "../../../components/UI/Input/Input";
-import ErrorMessage from "../../../components/UI/Input/ErrorMessage";
-import axios from "../../../axios-sept";
-import { checkValidity, errorMessageToDisplay } from "../../../utility/utility";
+import * as actions from '../../../store/actions/actions';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Button from '../../../components/UI/Button/Button';
+import Input from '../../../components/UI/Input/Input';
+import ErrorMessage from '../../../components/UI/Input/ErrorMessage';
+import axios from '../../../axios-sept';
+import { checkValidity, errorMessageToDisplay } from '../../../utility/utility';
 
 export class EditEmployee extends Component {
   state = {
     controls: {
       firstName: {
-        labelName: "First Name",
-        elementType: "input",
+        labelName: 'First Name',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Firstname",
+          type: 'text',
+          placeholder: 'Firstname',
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.firstName,
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.firstName,
         validation: {
           required: true,
           isLetters: true,
@@ -30,13 +33,16 @@ export class EditEmployee extends Component {
         touched: false,
       },
       lastName: {
-        labelName: "Last Name",
-        elementType: "input",
+        labelName: 'Last Name',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Lastname",
+          type: 'text',
+          placeholder: 'Lastname',
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.lastName,
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.lastName,
         validation: {
           required: true,
           isLetters: true,
@@ -45,13 +51,16 @@ export class EditEmployee extends Component {
         touched: false,
       },
       email: {
-        labelName: "Email",
-        elementType: "input",
+        labelName: 'Email',
+        elementType: 'input',
         elementConfig: {
-          type: "email",
-          placeholder: "Email",
+          type: 'email',
+          placeholder: 'Email',
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.email,
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.email,
         validation: {
           required: true,
           isEmail: true,
@@ -60,13 +69,16 @@ export class EditEmployee extends Component {
         touched: false,
       },
       address: {
-        labelName: "Address",
-        elementType: "input",
+        labelName: 'Address',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Address",
+          type: 'text',
+          placeholder: 'Address',
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.address,
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.address,
         validation: {
           required: true,
         },
@@ -74,13 +86,16 @@ export class EditEmployee extends Component {
         touched: false,
       },
       phoneNumber: {
-        labelName: "Phone number",
-        elementType: "input",
+        labelName: 'Phone number',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Phonenumber",
+          type: 'text',
+          placeholder: 'Phonenumber',
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.phoneNo,
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.phoneNo,
         validation: {
           required: true,
           isNumeric: true,
@@ -90,13 +105,33 @@ export class EditEmployee extends Component {
         touched: false,
       },
       avatar: {
-        labelName: "Avatar",
-        elementType: "input",
+        labelName: 'Avatar',
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Paste image url here",
+          type: 'text',
+          placeholder: 'Paste image url here',
         },
-        value: this.props.profileDetails == null ? "" : this.props.profileDetails.img,
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.img,
+        validation: {
+          required: false,
+        },
+        valid: true,
+        touched: false,
+      },
+      description: {
+        labelName: 'Description',
+        elementType: 'textarea',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Type your description here.',
+        },
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.description,
         validation: {
           required: false,
         },
@@ -117,7 +152,10 @@ export class EditEmployee extends Component {
       [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
-        valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
+        valid: checkValidity(
+          event.target.value,
+          this.state.controls[controlName].validation
+        ),
         touched: true,
       },
     };
@@ -145,7 +183,10 @@ export class EditEmployee extends Component {
       phoneNo: this.state.controls.phoneNumber.value,
       address: this.state.controls.address.value,
       img:
-        this.state.controls.avatar.value === "" ? "https://i.imgur.com/Eie9ARV.png" : this.state.controls.avatar.value,
+        this.state.controls.avatar.value === ''
+          ? 'https://i.imgur.com/Eie9ARV.png'
+          : this.state.controls.avatar.value,
+      description: this.state.controls.description.value,
     };
 
     this.updateProfile(formData);
@@ -154,23 +195,24 @@ export class EditEmployee extends Component {
   updateProfile(formData) {
     const config = {
       headers: {
-        Authorization: "Bearer " + this.props.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     };
 
-    console.log(formData);
-
     console.log(this.props.match.params.id);
     axios
-      .put("/api/employees/" + this.props.match.params.id, formData, config)
+      .put('/api/employees/' + this.props.match.params.id, formData, config)
       .then((response) => {
-        this.props.updateRedirect("You have succesfully updated the employee's details.", "/employees");
-        this.props.history.push("/success");
+        this.props.updateRedirect(
+          "You have succesfully updated the employee's details.",
+          '/employees'
+        );
+        this.props.history.push('/success');
       })
       .catch((error) => {
         this.setState({
           ...this.state,
-          error: "Error editing employee data.",
+          error: 'Error editing employee data.',
         });
       });
   }
@@ -201,7 +243,10 @@ export class EditEmployee extends Component {
           touched={formElement.config.touched}
         />
         {formElement.config.valid ? null : (
-          <ErrorMessage key={formElement.id + "Error"} message={errorMessageToDisplay(formElement.id)} />
+          <ErrorMessage
+            key={formElement.id + 'Error'}
+            message={errorMessageToDisplay(formElement.id)}
+          />
         )}
       </React.Fragment>
     ));
@@ -221,15 +266,19 @@ export class EditEmployee extends Component {
     //displays error message beneath the submit button
     let errorMsg = null;
     if (!this.state.isFormValid) {
-      errorMsg = <p className="text-danger">Please make sure all fields are filled and valid.</p>;
+      errorMsg = (
+        <p className='text-danger'>
+          Please make sure all fields are filled and valid.
+        </p>
+      );
     }
 
     form = (
       <form onSubmit={this.editProfileHandler}>
-        <div className="form-group">
+        <div className='form-group'>
           {formElements}
           {errorMessage}
-          <Button disabled={!this.state.isFormValid} classes="btn btn-primary">
+          <Button disabled={!this.state.isFormValid} classes='btn btn-primary'>
             Submit
           </Button>
           {errorMsg}
@@ -264,8 +313,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchEmployee: (id, token) => dispatch(actions.fetchEmployee(id, token)),
-    updateRedirect: (content, redirect) => dispatch(actions.updateRedirect(content, redirect)),
+    updateRedirect: (content, redirect) =>
+      dispatch(actions.updateRedirect(content, redirect)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditEmployee));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditEmployee));
