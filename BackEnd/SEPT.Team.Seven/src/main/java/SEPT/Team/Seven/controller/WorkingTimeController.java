@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
 import SEPT.Team.Seven.model.WorkingTime;
-import SEPT.Team.Seven.model.DTO.EmployeeTimeDTO;
+import SEPT.Team.Seven.model.DTO.EditWorkingTimeDTO;
+import SEPT.Team.Seven.model.DTO.TimeDto;
 import SEPT.Team.Seven.service.WorkingTimeService;
 
 @RestController
@@ -36,6 +38,13 @@ public class WorkingTimeController {
     public WorkingTime addWorkingTime(@RequestBody EmployeeTimeDTO timeDto) {
        return workingTimeService.addWorkingTime(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding working time."));
+    }
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping()
+    public WorkingTime editWorkingTime(@RequestBody EditWorkingTimeDTO editWorkingTimeDTO) {
+       return workingTimeService.editWorkingTime(editWorkingTimeDTO.getWorkingTimeId(), editWorkingTimeDTO.getStartTime(), editWorkingTimeDTO.getEndTime()).orElseThrow(()->
+       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error editing working time."));
     }
 
 }
