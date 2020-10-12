@@ -1,6 +1,7 @@
 package SEPT.Team.Seven.controllerTests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.text.DateFormat;
@@ -186,5 +187,37 @@ public class WorkingTimeControllerTest {
 							  .andExpect(MockMvcResultMatchers.content().string("403 Error adding working time."));
 		
 	}
+	
+	@Test
+	public void editWorkingTime_InvalidWorkingTime_ReturnsError() throws Exception
+	{
+		//Arrange
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");  
+		String startStr = dateFormat.format(start.getTime());  
+		String endStr = dateFormat.format(end.getTime());  
+
+		
+		JSONObject json = new JSONObject(); 
+		json.put("workingTimeId", 4);
+		json.put("startTime", startStr);
+		json.put("endTime", endStr);
+		
+		//need to use the string to the date values when mocking since precision will be different
+		Date date1 = dateFormat.parse(startStr);
+		Date date2 = dateFormat.parse(endStr);
+
+		when(workingTimeService.addWorkingTime(0, null, null)).thenReturn(Optional.empty());
+		
+		//Act and Assert
+		this.mockMvc.perform(MockMvcRequestBuilders
+						      .post("/api/workingTime")
+						      .content(json.toString())
+						      .contentType(MediaType.APPLICATION_JSON))
+							  .andDo(MockMvcResultHandlers.print())
+							  .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+							  .andExpect(MockMvcResultMatchers.content().string("403 Error adding working time."));
+		
+	}
+	
 
 }
