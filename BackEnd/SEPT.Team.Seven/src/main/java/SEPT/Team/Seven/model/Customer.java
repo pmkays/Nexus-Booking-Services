@@ -14,9 +14,6 @@ public class Customer extends Account {
 	@OneToMany(mappedBy="customer")
 	private List<Booking> bookings;
 	
-	@Column(name="img")
-	private String img;
-	
 	public Customer(String firstName, String lastName, String email, String phoneNo, String address, String img) {
 		super(firstName,lastName,email,phoneNo, address, img);
 	}

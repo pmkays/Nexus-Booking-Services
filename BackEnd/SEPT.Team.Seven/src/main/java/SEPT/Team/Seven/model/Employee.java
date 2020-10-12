@@ -26,9 +26,6 @@ public class Employee extends Account {
 	@OneToMany(mappedBy="employee")
 	private List<Booking> bookings;
 	
-	@Column(name="img")
-	private String img;
-	
 	@Column(name="description")
 	private String description;
 	
@@ -44,7 +41,7 @@ public class Employee extends Account {
 	
 	public Employee() {};
 	
-	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String img, String description) {
+	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String description, String img) {
 		super(firstName,lastName,email,phoneNo, address, img);
 		services = new ArrayList<Service>();
 		this.description = description;

@@ -369,10 +369,10 @@ export const addAvailabilities = (startTime, endTime, token, history) => {
       })
       .catch((error) => {
         //"Error adding availability. You must not already have an availability on the day(s) you have chosen."
-        const reason =
+          const reason =
           error.response.data +
           ' You already have an availability on this day.';
-        dispatch(addAvailabilitiesFail(reason));
+          dispatch(addAvailabilitiesFail(reason));
       });
   };
 };
