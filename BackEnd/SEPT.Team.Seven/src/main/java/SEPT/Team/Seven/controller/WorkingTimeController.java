@@ -16,7 +16,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import SEPT.Team.Seven.model.WorkingTime;
 import SEPT.Team.Seven.model.DTO.EditWorkingTimeDTO;
-import SEPT.Team.Seven.model.DTO.TimeDto;
+import SEPT.Team.Seven.model.DTO.EmployeeTimeDTO;
 import SEPT.Team.Seven.service.WorkingTimeService;
 
 @RestController
