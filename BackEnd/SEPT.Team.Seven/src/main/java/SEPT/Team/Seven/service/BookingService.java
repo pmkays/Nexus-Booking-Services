@@ -140,12 +140,8 @@ public class BookingService {
 					if (newStartCal.before(newEndCal)) {
 
 						// Check that the booking is actually within the working time
-						boolean startValid = newStartCal.compareTo(workingTimeStart) >= 0
-								&& newStartCal.compareTo(workingTimeEnd) <= 0;
-						boolean endValid = newEndCal.compareTo(workingTimeStart) >= 0
-								&& newEndCal.compareTo(workingTimeEnd) <= 0;
-
-						if (startValid && endValid) {
+						if (ServiceUTIL.checkTimeWithin(workingTimeStart.getTime(), newStartCal.getTime(),
+								newEndCal.getTime(), workingTimeEnd.getTime())) {
 							return Optional.of(
 									bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
 											employeeRepository.findById(employeeId).get(), startTime, endTime, PENDING,
@@ -169,11 +165,7 @@ public class BookingService {
 		List<Booking> bookings = bookingRepository.findAllByEmployeeId(employeeId);
 
 		for (Booking booking : bookings) {
-			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
-					&& booking.getStartTime().compareTo(endTime) <= 0;
-			boolean endValid = booking.getEndTime().compareTo(startTime) >= 0
-					&& booking.getEndTime().compareTo(endTime) <= 0;
-			if (startValid && endValid) {
+			if (ServiceUTIL.checkTimeWithin(startTime, booking.getStartTime(), booking.getEndTime(), endTime)) {
 				toReturn.add(booking);
 			}
 		}
@@ -189,11 +181,7 @@ public class BookingService {
 		List<Booking> bookings = bookingRepository.findAllByCustomerId(customerId);
 
 		for (Booking booking : bookings) {
-			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
-					&& booking.getStartTime().compareTo(endTime) <= 0;
-			boolean endValid = booking.getEndTime().compareTo(startTime) >= 0
-					&& booking.getEndTime().compareTo(endTime) <= 0;
-			if (startValid && endValid) {
+			if (ServiceUTIL.checkTimeWithin(startTime, booking.getStartTime(), booking.getEndTime(), endTime)) {
 				toReturn.add(booking);
 			}
 		}
@@ -207,11 +195,7 @@ public class BookingService {
 		List<Booking> bookings = bookingRepository.findAll();
 
 		for (Booking booking : bookings) {
-			boolean startValid = booking.getStartTime().compareTo(startTime) >= 0
-					&& booking.getStartTime().compareTo(endTime) <= 0;
-			boolean endValid = booking.getEndTime().compareTo(startTime) >= 0
-					&& booking.getEndTime().compareTo(endTime) <= 0;
-			if (startValid && endValid) {
+			if (ServiceUTIL.checkTimeWithin(startTime, booking.getStartTime(), booking.getEndTime(), endTime)) {
 				toReturn.add(booking);
 			}
 		}
@@ -254,7 +238,6 @@ public class BookingService {
 		List<String> times = new ArrayList<String>();
 
 		if (employeeRepository.findById(employeeId).isPresent()) {
-			Employee employee = employeeRepository.findById(employeeId).get();
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
@@ -271,12 +254,12 @@ public class BookingService {
 //					System.out.println(workingTimeStart.get(Calendar.HOUR_OF_DAY));
 
 					int start = workingTimeStart.get(Calendar.HOUR_OF_DAY);
-					
+
 					Calendar workingTimeEnd = Calendar.getInstance();
 					workingTimeEnd.setTime(workingTime.getEndTime());
-					
+
 					int end = workingTimeEnd.get(Calendar.HOUR_OF_DAY);
-					
+
 //					System.out.println("End: " + end);
 
 					boolean hourIsAvailable = true;
@@ -285,7 +268,7 @@ public class BookingService {
 					// hour and ensure they do not already have a booking on that hour.
 					// bookings are only allowed every hour which is why we can do it this way.
 					for (int i = start; i < end; ++i) {
-						
+
 						hourIsAvailable = true;
 
 						Calendar hourCalendar = Calendar.getInstance();

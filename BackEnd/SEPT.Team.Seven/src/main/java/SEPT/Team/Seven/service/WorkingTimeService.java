@@ -99,11 +99,7 @@ public class WorkingTimeService {
 						// ensures that the endTime is within a day of the start time.
 						if (endTime.compareTo(after24Hours.getTime()) <= 0) {
 							// Check that the working time is actually within the availability
-							boolean startValid = startTime.compareTo(startCal.getTime()) >= 0
-									&& startTime.compareTo(endCal.getTime()) <= 0;
-							boolean endValid = endTime.compareTo(startCal.getTime()) >= 0
-									&& endTime.compareTo(endCal.getTime()) <= 0;
-							if (startValid && endValid) {
+							if (ServiceUTIL.checkTimeWithin(startCal.getTime(), startTime, endTime, endCal.getTime())) {
 								return Optional.of(workingTimeRepository.save(new WorkingTime(
 										employeeRepository.findById(employeeId).get(), startTime, endTime)));
 							}
@@ -161,11 +157,8 @@ public class WorkingTimeService {
 							if (endTime.compareTo(after24Hours.getTime()) <= 0) {
 
 								// Check that the working time is actually within the availability
-								boolean startValid = startTime.compareTo(availabilityStartCal.getTime()) >= 0
-										&& startTime.compareTo(availabilityEndCal.getTime()) <= 0;
-								boolean endValid = endTime.compareTo(availabilityStartCal.getTime()) >= 0
-										&& endTime.compareTo(availabilityEndCal.getTime()) <= 0;
-								if (startValid && endValid) {
+								if (ServiceUTIL.checkTimeWithin(availabilityStartCal.getTime(), startTime, endTime,
+										availabilityEndCal.getTime())) {
 
 									// Now we have to check that this change won't mess up any bookings.
 									// ie, make them go over a working time.
@@ -182,9 +175,11 @@ public class WorkingTimeService {
 												&& newStartCalendar.get(Calendar.MONTH) == bookingStartCal
 														.get(Calendar.MONTH)
 												&& newStartCalendar.get(Calendar.YEAR) == bookingStartCal
-														.get(Calendar.YEAR) && booking.getStatus().equals("pending")) {
-											
-											System.out.println("Booking being checked against new working time: " + booking.getId());
+														.get(Calendar.YEAR)
+												&& booking.getStatus().equals("pending")) {
+
+											System.out.println("Booking being checked against new working time: "
+													+ booking.getId());
 
 											boolean bookingStartValid = booking.getStartTime().compareTo(startTime) >= 0
 													&& booking.getStartTime().compareTo(endTime) <= 0;
@@ -192,6 +187,7 @@ public class WorkingTimeService {
 													&& booking.getEndTime().compareTo(endTime) <= 0;
 
 											if (!bookingStartValid || !bookingEndValid) {
+
 												System.out.println(
 														"One of the bookings are affected by the new working times");
 												System.out.println("That is, booking with ID: " + booking.getId());

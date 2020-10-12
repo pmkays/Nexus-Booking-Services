@@ -20,15 +20,10 @@ import SEPT.Team.Seven.repo.WorkingTimeRepository;
 public class ServiceService {
 
 	private EmployeeRepository employeeRepository;
-	private AvailabilityRepository availabilityRepository;
-	private ServiceRepository serviceRepository;
 	private WorkingTimeRepository workingTimeRepository;
 
-	public ServiceService(EmployeeRepository employeeRepository, AvailabilityRepository availabilityRepository,
-			ServiceRepository serviceRepository, WorkingTimeRepository workingTimeRepository) {
+	public ServiceService(EmployeeRepository employeeRepository, WorkingTimeRepository workingTimeRepository) {
 		this.employeeRepository = employeeRepository;
-		this.availabilityRepository = availabilityRepository;
-		this.serviceRepository = serviceRepository;
 		this.workingTimeRepository = workingTimeRepository;
 	}
 
