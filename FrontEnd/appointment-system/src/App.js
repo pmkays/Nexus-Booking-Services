@@ -72,6 +72,14 @@ class App extends Component {
             path="/success"
             component={() => <Dashboard content="success" />}
           />
+          <Route
+            path="/viewworkingtimes"
+            component={() => <Dashboard content="viewworkingtimes" />}
+          />
+          <Route
+            path="/editworkingtimes"
+            component={() => <Dashboard content="editworkingtimes" />}
+          />
 
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />

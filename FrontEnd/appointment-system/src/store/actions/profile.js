@@ -410,7 +410,7 @@ export const fetchWorkingTime = (startTime, endTime, token) => {
     };
 
     axios
-      .get('/api/workingTIme/employee/' + userId, config)
+      .get('/api/workingTime/employee/' + userId, config)
       .then((response) => {
         dispatch(fetchWorkingTimeSuccess(response.data));
       })

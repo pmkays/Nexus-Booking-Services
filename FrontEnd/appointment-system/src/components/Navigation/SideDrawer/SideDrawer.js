@@ -35,6 +35,8 @@ const sideDrawer = (props) => {
               <br />
               <DashboardIcon name="Workhours" id="Workhours-sd" classes="fas fa-hourglass-half" to="workingtimes" />
               <br />
+              <DashboardIcon name="View Working Times" id="ViewWorkingTimes-sd" classes="fas fa-briefcase" to="viewworkingtimes" />
+              <br />
             </React.Fragment>
           ) : null}
           {props.authority === 'ROLE_CUSTOMER' ? (

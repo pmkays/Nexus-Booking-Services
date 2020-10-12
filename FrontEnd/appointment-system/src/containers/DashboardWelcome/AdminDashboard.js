@@ -129,9 +129,9 @@ export class AdminDashboard extends Component {
                             <h1 className={classes.title}>Welcome, {this.props.profileDetails.firstName}</h1> <hr/>
                         </div>
                         <div className="col-sm-3">
-                            <div class="form-group row">
-                                <label for="filter" class={"col-sm-3 col-form-label " + classes.label}>View:</label>
-                                <div class="col-sm-9">
+                            <div className="form-group row">
+                                <label htmlFor="filter" class={"col-sm-3 col-form-label " + classes.label}>View:</label>
+                                <div className="col-sm-9">
                                     <div class= {"col-xs-2 " + classes.select}>
                                         <select name ="filter" className="form-control" onChange = {handleFilter}>
                                             <option value = "all" defaultValue>All</option>
