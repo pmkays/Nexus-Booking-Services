@@ -67,3 +67,62 @@ export const addService = (formData, token, history) => {
       });
   };
 };
+
+export const removeServiceStart = () => {
+  return {
+    type: actionTypes.REMOVE_SERVICES_START,
+  };
+};
+
+export const removeServiceSuccess = (token) => {
+  return {
+    type: actionTypes.REMOVE_SERVICES_SUCCESS,
+    token: token,
+  };
+};
+
+export const removeServiceFail = (error) => {
+  return {
+    type: actionTypes.REMOVE_SERVICES_FAIL,
+    error: error,
+  };
+};
+
+export const removeService = (formData, token, history) => {
+  return (dispatch) => {
+    dispatch(removeServiceStart);
+
+    let serviceData = {
+      employeeId: formData.employeeId,
+      serviceName: formData.serviceName,
+    };
+
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+
+    axios
+      .post('/api/employee/services/remove', serviceData, config)
+      .then((response) => {
+        dispatch(removeServiceSuccess(token));
+      })
+      .then(() => {
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully removed a service to the employee.',
+            '/employees'
+          )
+        );
+        history.push('/success');
+      })
+      .catch((error) => {
+        dispatch(
+          removeServiceFail(
+            'Error removing Service. Cannot remove a service from employee if they dont have it.'
+          )
+        );
+      });
+  };
+};

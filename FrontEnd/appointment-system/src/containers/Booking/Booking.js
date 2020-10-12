@@ -27,7 +27,7 @@ export class Booking extends Component {
 
   // Runs when new date is selected
   updateDateHandler = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (event.target.value === "Choose Date") {
       this.setState({
         ...this.props.state,
@@ -35,6 +35,8 @@ export class Booking extends Component {
         service: null,
         employeeId: null,
         employees: null,
+        times: null,
+        bookingTime: null,
       });
     } else {
       this.setState({
@@ -43,6 +45,8 @@ export class Booking extends Component {
         service: null,
         employeeId: null,
         employees: null,
+        times: null,
+        bookingTime: null,
       });
     }
 
@@ -78,6 +82,10 @@ export class Booking extends Component {
           loading: false,
         });
       });
+
+      // resetting service after choosing new date
+      let x = document.getElementById("serviceDropdown");
+      x.selectedIndex = 0;
   };
 
   // Runs when new service is selected
