@@ -84,6 +84,20 @@ dt {
   margin: 20px 0px 15px 20%;
 }
 
+.completeBtn {
+  display: inline-block;
+  width: 110px;
+  height: 40px;
+  color: white;
+  background-color: #4a5b5c;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 5px;
+  margin: 5px 0px 15px 20%;
+}
+
 .note {
   align-items: center;
   text-align: center;

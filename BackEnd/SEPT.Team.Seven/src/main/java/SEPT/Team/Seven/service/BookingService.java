@@ -330,5 +330,26 @@ public class BookingService {
 
 		return times;
 	}
+	
+	public Optional<Booking> completeBooking(int employeeId, int customerId, Date startTime, Date endTime,
+			int serviceId) {
+
+		Optional<Booking> toReturn = Optional.empty();
+		List<Booking> bookings = bookingRepository.findAllByEmployeeId(employeeId);
+		for (Booking booking : bookings) {
+			if (booking.getCustomer().getId() == customerId && booking.getStartTime().compareTo(startTime) == 0
+					&& booking.getEndTime().compareTo(endTime) == 0 && booking.getService().getId() == serviceId) {
+				Calendar present = Calendar.getInstance();
+				// check that the booking is in the past
+				if (present.getTime().compareTo(endTime) >= 0) {
+					booking.setStatus("completed");
+					bookingRepository.save(booking);
+					toReturn = Optional.of(booking);
+					break;
+				}
+			}
+		}
+		return toReturn;
+	}
 
 }

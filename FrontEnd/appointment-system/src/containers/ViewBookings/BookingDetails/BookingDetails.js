@@ -132,7 +132,7 @@ export class BookingDetails extends Component {
       }
     };
 
-    const handleCancelBooking = (event) => {
+    const handleStatusChange = (event) => {
       let booking = this.state.bookingDetails;
       let bookingToSend = {
         startTime: booking.startTime,
@@ -148,8 +148,10 @@ export class BookingDetails extends Component {
         },
       };
 
+      let url = `/api/booking/${event.target.id}`;
+
       axios
-        .post(`/api/booking/cancel`, bookingToSend, config)
+        .post(url, bookingToSend, config)
         .then((response) => {
           console.log(response.data);
           this.setState({
@@ -178,7 +180,25 @@ export class BookingDetails extends Component {
       return time.isBetween(beforeTime, afterTime, "hours");
     };
 
-    let cancelBtn = () => {
+    const isInThePast = () => {
+      var time = moment(this.state.bookingDetails.endTime),
+        currentTime = moment();
+
+      console.log("CHECKING TIME");
+      console.log(currentTime.isAfter(time));
+      return currentTime.isAfter(time);
+    };
+
+    let showBtns = () => {
+
+      let completeBtn = isInThePast() ? (<button
+        id="complete"
+        type="button"
+        className={classes.completeBtn}
+        onClick={handleStatusChange}
+      > Complete
+      </button>) : null;
+
       if (
         this.state.bookingDetails.status !== "pending" ||
         this.props.userType === "ROLE_ADMIN"
@@ -190,6 +210,8 @@ export class BookingDetails extends Component {
             <button type="button" className={classes.cancelBtn} disabled>
               Cancel
             </button>
+            <br/>
+            {completeBtn}
             <div className={classes.note}>
               <p>
                 Note you cannot cancel a booking within 48 hours of the booking
@@ -202,12 +224,15 @@ export class BookingDetails extends Component {
         return (
           <React.Fragment>
             <button
+              id="cancel"
               type="button"
               className={classes.cancelBtn}
-              onClick={handleCancelBooking}
+              onClick={handleStatusChange}
             >
               Cancel
             </button>
+            <br/>
+            {completeBtn}
             <div className={classes.note}>
               <p>
                 Note you cannot cancel a booking within 48 hours of the booking
@@ -260,7 +285,9 @@ export class BookingDetails extends Component {
                     {uppercaseFirstCharacter(this.state.bookingDetails.status)}
                   </dd>
                   {customerDetailsForAdmin()}
-                  {cancelBtn()}
+                  <div>
+                    {showBtns()}
+                  </div>
                   <br />
                 </dl>
               </div>

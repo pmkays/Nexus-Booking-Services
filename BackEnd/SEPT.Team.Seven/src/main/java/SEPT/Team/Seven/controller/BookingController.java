@@ -75,6 +75,15 @@ public class BookingController {
     }
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/complete")
+    public Booking completeBooking(@RequestBody BookingDTO bookingDto) {
+		System.out.println("completing booking");
+       return bookingService.completeBooking(bookingDto.getEmployeeId(), bookingDto.getCustomerId(),
+    		   bookingDto.getStartTime(), bookingDto.getEndTime(), bookingDto.getServiceId()).orElseThrow(()->
+       new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error completing booking."));
+    }
+	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/employee/findAllByDate")
 	public List<Booking> findBookingsByEmployeeAndDate(@RequestBody EmployeeTimeDTO employeeTimeDTO) {
 		return bookingService.findBookingsByEmployeeAndDate(employeeTimeDTO.getEmployeeId(),
