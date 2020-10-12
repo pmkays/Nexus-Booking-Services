@@ -251,7 +251,7 @@ public class BookingService {
 						&& workingTimeStart.get(Calendar.MONTH) == cal.get(Calendar.MONTH)
 						&& workingTimeStart.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
 
-//					System.out.println(workingTimeStart.get(Calendar.HOUR_OF_DAY));
+					System.out.println(workingTimeStart.get(Calendar.HOUR_OF_DAY));
 
 					int start = workingTimeStart.get(Calendar.HOUR_OF_DAY);
 
@@ -259,8 +259,12 @@ public class BookingService {
 					workingTimeEnd.setTime(workingTime.getEndTime());
 
 					int end = workingTimeEnd.get(Calendar.HOUR_OF_DAY);
+					
+					if (end == 0) {
+						end = 24;
+					}
 
-//					System.out.println("End: " + end);
+					System.out.println("End: " + end);
 
 					boolean hourIsAvailable = true;
 
@@ -293,7 +297,7 @@ public class BookingService {
 								// end time.
 								if (hourCalendar.getTime().compareTo(bookingStart.getTime()) >= 0
 										&& hourCalendar.getTime().compareTo(bookingEnd.getTime()) < 0) {
-//									System.out.println("Hour is not available due to booking ID: " + booking.getId());
+									System.out.println("Hour is not available due to booking ID: " + booking.getId());
 									hourIsAvailable = false;
 									break;
 								}
