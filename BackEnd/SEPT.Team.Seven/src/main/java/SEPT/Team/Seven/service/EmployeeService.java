@@ -72,6 +72,24 @@ public class EmployeeService {
 
 		return Optional.empty();
 	}
+	
+	public Optional<SEPT.Team.Seven.model.Service> removeServiceByName(int employeeId, String name) {
+		// check that the service is actually a service offered in the database
+		if (serviceRepository.findByName(name).isPresent()) {
+			SEPT.Team.Seven.model.Service serviceToRemove = serviceRepository.findByName(name).get();
+			// check that the employee exists
+			if (employeeRepository.findById(employeeId).isPresent()) {
+				Employee employee = employeeRepository.findById(employeeId).get();
+				employee.deleteFromServices(serviceToRemove);
+
+				// Saving the updated employee
+				employeeRepository.save(employee);
+				return Optional.of(serviceToRemove);
+			}
+		}
+
+		return Optional.empty();
+	}
 
 	public List<Employee> findEmployeeByDate(Date startTime) {
 		Calendar cal = Calendar.getInstance();

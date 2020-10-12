@@ -35,7 +35,7 @@ public class WorkingTimeController {
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
-    public WorkingTime addWorkingTime(@RequestBody TimeDto timeDto) {
+    public WorkingTime addWorkingTime(@RequestBody EmployeeTimeDTO timeDto) {
        return workingTimeService.addWorkingTime(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding working time."));
     }

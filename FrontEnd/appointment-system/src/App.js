@@ -6,7 +6,7 @@ import Login from './containers/Login/Login';
 import Logout from './containers/Login/Logout/Logout';
 import Home from './containers/Home/Home';
 import RegisterProfile from './containers/Register/Register';
-import AddService from './containers/Admin/AddService/AddService';
+import SuccessRegister from './components/Success/SuccessRegister/SuccessRegister';
 
 import AboutUs from './containers/AboutUs/AboutUs';
 import ContactUs from './containers/ContactUs/ContactUs';
@@ -25,112 +25,114 @@ class App extends Component {
     if (this.props.isAdmin && this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path='/login' component={Login} />
+          <Route path="/login" component={Login} />
           <Route
-            path='/dashboard'
-            component={() => <Dashboard content='welcome' />}
+            path="/dashboard"
+            component={() => <Dashboard content="adminwelcome" />}
           />
           <Route
-            path='/employees'
-            component={() => <Dashboard content='employees' />}
+            path="/employees"
+            component={() => <Dashboard content="employees" />}
           />
           <Route
-            path='/addemployee'
-            component={() => <Dashboard content='addemployee' />}
+            path="/addemployee"
+            component={() => <Dashboard content="addemployee" />}
           />
           <Route
-            path='/addservice'
-            component={() => <Dashboard content='addservice' />}
+            path="/editemployee/:id"
+            component={() => <Dashboard content="editemployee" />}
+          />
+          
+          <Route path="/schedule/:id" component={() => <Dashboard content="schedule" />} />
+          <Route
+            path="/addservice"
+            component={() => <Dashboard content="addservice" />}
           />
           <Route
-            path='/profile'
-            component={() => <Dashboard content='profile' />}
+            path="/profile"
+            component={() => <Dashboard content="profile" />}
           />
           <Route
-            path='/workingtimes'
-            component={() => <Dashboard content='workingtimes' />}
+            path="/workingtimes"
+            component={() => <Dashboard content="workingtimes" />}
           />
           <Route
-            path='/editprofile'
-            component={() => <Dashboard content='editprofile' />}
+            path="/editprofile"
+            component={() => <Dashboard content="editprofile" />}
           />
-          <Route path='/logout' component={Logout} />
-          <Route path='/about' component={AboutUs} />
-          <Route path='/contact' component={ContactUs} />
-          <Route path='/howitworks' component={HowItWorks} />
-          <Route path='/' component={Home} />
+          <Route
+            path="/viewbookings"
+            component={() => <Dashboard content="viewbookings" />}
+          />
+          <Route
+            path="/booking/:id"
+            component={() => <Dashboard content="bookingdetails" />}
+          />
+          <Route
+            path="/success"
+            component={() => <Dashboard content="success" />}
+          />
+
+          <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/contact" component={ContactUs} />
+          <Route path="/howitworks" component={HowItWorks} />
+          <Route path="/" component={Home} />
         </Switch>
       );
     } else if (this.props.isEmployee && this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path='/login' component={Login} />
-          <Route
-            path='/dashboard'
-            component={() => <Dashboard content='welcome' />}
-          />
-          <Route
-            path='/profile'
-            component={() => <Dashboard content='profile' />}
-          />
-          <Route
-            path='/editprofile'
-            component={() => <Dashboard content='editprofile' />}
-          />
-          <Route
-            path='/availabilities'
-            component={() => <Dashboard content='availabilities' />}
-          />
-          <Route path='/logout' component={Logout} />
-          <Route path='/about' component={AboutUs} />
-          <Route path='/contact' component={ContactUs} />
-          <Route path='/howitworks' component={HowItWorks} />
+          <Route path="/login" component={Login} />
+          <Route path="/dashboard" component={() => <Dashboard content="welcome" />} />
+          <Route path="/profile" component={() => <Dashboard content="profile" />} />
+          <Route path="/editprofile" component={() => <Dashboard content="editprofile" />} />
+          <Route path="/availabilities" component={() => <Dashboard content="availabilities" />} />
+          <Route path="/schedule" component={() => <Dashboard content="schedule" />} />
+          <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
+          <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
+          <Route path="/success" component={() => <Dashboard content="success" />} />
+          <Route path="/error" component={() => <Dashboard content="error" />} />
 
-          <Route path='/' component={Home} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/contact" component={ContactUs} />
+          <Route path="/howitworks" component={HowItWorks} />
+          <Route path="/" component={Home} />
         </Switch>
       );
     } else if (this.props.isCustomer && this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route
-            path='/login'
-            component={() => <Dashboard content='login' />}
-          />
-          <Route
-            path='/dashboard'
-            component={() => <Dashboard content='welcome' />}
-          />
-          <Route
-            path='/profile'
-            component={() => <Dashboard content='profile' />}
-          />
-          <Route
-            path='/editprofile'
-            component={() => <Dashboard content='editprofile' />}
-          />
-          <Route path='/logout' component={Logout} />
-          <Route path='/about' component={AboutUs} />
-          <Route path='/contact' component={ContactUs} />
-          <Route path='/howitworks' component={HowItWorks} />
-          <Route
-            path='/bookings'
-            component={() => <Dashboard content='booking' />}
-          />
+          <Route path="/login" component={() => <Dashboard content="login" />} />
+          <Route path="/dashboard" component={() => <Dashboard content="welcome" />} />
+          <Route path="/profile" component={() => <Dashboard content="profile" />} />
+          <Route path="/editprofile" component={() => <Dashboard content="editprofile" />} />
+          <Route path="/bookings" component={() => <Dashboard content="booking" />} />
+          <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
+          <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
+          <Route path="/success" component={() => <Dashboard content="success" />} />
+          <Route path="/error" component={() => <Dashboard content="error" />} />
 
-          <Route path='/' component={Home} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/contact" component={ContactUs} />
+          <Route path="/howitworks" component={HowItWorks} />
+          <Route path="/" component={Home} />
         </Switch>
       );
     } else {
       routes = (
         <Switch>
-          <Route path='/login' component={Login} />
-          <Route path='/bookings' component={RegisterProfile} />
-          <Route path='/register' component={RegisterProfile} />
-          <Route path='/logout' component={Logout} />
-          <Route path='/about' component={AboutUs} />
-          <Route path='/contact' component={ContactUs} />
-          <Route path='/howitworks' component={HowItWorks} />
-          <Route path='/' component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/bookings" component={RegisterProfile} />
+          <Route path="/register" component={RegisterProfile} />
+          <Route path="/registersuccess" component={SuccessRegister} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/contact" component={ContactUs} />
+          <Route path="/howitworks" component={HowItWorks} />
+          <Route path="/" component={Home} />
         </Switch>
       );
     }
@@ -144,6 +146,8 @@ const mapStateToProps = (state) => {
     isAdmin: state.auth.authority === 'ROLE_ADMIN',
     isEmployee: state.auth.authority === 'ROLE_EMPLOYEE',
     isCustomer: state.auth.authority === 'ROLE_CUSTOMER',
+    content: state.redirect.content,
+    redirect: state.redirect.redirect,
   };
 };
 

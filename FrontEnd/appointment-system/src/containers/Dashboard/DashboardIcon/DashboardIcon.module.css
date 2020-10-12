@@ -57,7 +57,7 @@
 
 @media (max-width: 768px) {
   .Hide {
-    display: initial;
+    display: block;
   }
 
   .IconMargin {

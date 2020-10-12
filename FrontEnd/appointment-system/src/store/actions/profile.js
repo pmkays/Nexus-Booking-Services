@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-sept';
 import jwtDecode from 'jwt-decode';
+import * as actions from './actions';
 
 export const clearProfileUponLogout = () => {
   return {
@@ -116,14 +117,21 @@ export const editProfile = (formData, token, history) => {
       },
     };
 
+    console.log(formData);
+
     axios
       .put('/api/' + url + '/' + userId, formData, config)
       .then((response) => {
         dispatch(editProfileSuccess(response.data));
       })
       .then(() => {
-        //link them back to profile page
-        history.push('/profile');
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully updated your profile.',
+            '/profile'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
         dispatch(
@@ -243,9 +251,15 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
       })
       .then(() => {
         if (type === 'employees') {
-          history.push('/employees');
+          dispatch(
+            actions.updateRedirect(
+              'You have succesfully updated your profile.',
+              '/employees'
+            )
+          );
+          history.push('/success');
         } else {
-          history.push('/login');
+          history.push('/registersuccess');
         }
       })
       .catch((error) => {
@@ -345,7 +359,13 @@ export const addAvailabilities = (startTime, endTime, token, history) => {
         dispatch(addAvailabilitiesSuccess(response.data));
       })
       .then(() => {
-        history.push('/');
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully added your availabilities.',
+            '/availabilities'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
         //"Error adding availability. You must not already have an availability on the day(s) you have chosen."
@@ -422,7 +442,13 @@ export const addWorkingTimeFail = (error) => {
   };
 };
 
-export const addWorkingTime = (startTime, endTime, employeeId, token) => {
+export const addWorkingTime = (
+  startTime,
+  endTime,
+  employeeId,
+  token,
+  history
+) => {
   return (dispatch) => {
     const data = {
       employeeId,
@@ -440,6 +466,15 @@ export const addWorkingTime = (startTime, endTime, employeeId, token) => {
       .post('/api/workingTime', data, config)
       .then((response) => {
         dispatch(addWorkingTimeSuccess(response.data));
+      })
+      .then(() => {
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully added working hours to the employee.',
+            '/workingtimes'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
         dispatch(

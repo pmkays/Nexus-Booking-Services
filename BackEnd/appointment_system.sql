@@ -58,6 +58,7 @@ CREATE TABLE `employee` (
   `phone_no` varchar(11) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `img` varchar(200) DEFAULT NULL,
+  `description` varchar(232) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -109,6 +110,7 @@ CREATE TABLE `service` (
   `id` int(11) NOT NULL AUTO_INCREMENT, 
   `name` varchar(20) NOT NULL,
   `img` varchar(200) DEFAULT NULL,
+  `description` varchar(232) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -181,24 +183,24 @@ CREATE TABLE `working_time` (
 --
 
 INSERT INTO `customer` VALUES
-    (1,'Leslie','Uzumaki','leslie@hotmail.com', 0410101010, '4 Poornima Road', 'https://i.imgur.com/VXnG3tg.jpg'),
-    (2,'Emma','Gaumbarten','emma@gmail.com', 0423101563, '3 Buttersworth Street', 'https://i.imgur.com/t6EJkdF.jpg'),
-    (3,'Avani','Yupta','avani@hotmail.com', 0445231020, '9 King Court', 'https://i.imgur.com/vmFc3lX.jpg');
+    (1,'Leslie','Uzumaki','leslie@hotmail.com', '0410101010', '4 Poornima Road', 'https://i.imgur.com/VXnG3tg.jpg'),
+    (2,'Emma','Gaumbarten','emma@gmail.com', '0423101563', '3 Buttersworth Street', 'https://i.imgur.com/t6EJkdF.jpg'),
+    (3,'Avani','Yupta','avani@hotmail.com', '0445231020', '9 King Court', 'https://i.imgur.com/vmFc3lX.jpg');
     
 --
 -- Data for table `employee`
 --
 
 INSERT INTO `employee` VALUES
-    (4,'Yuri','Detrov','yuri@gmail.com', 0410164823, '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg'),
-    (5,'Joe','Cool','yasdasdsri@gmail.com', 0410164823, '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg');
+    (4,'Yuri','Detrov','yuri@gmail.com', '0410164823', '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg', 'Hey! My name is Yuri. I love working in design and construction and have a Bachelor\'s Degree in Design and practical construction experience as a project manager. You can trust me to get your next passion project running!'),
+    (5,'Joe','Cool','yasdasdsri@gmail.com', '0410164823', '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg', 'Hey there! My name is Joe. I love being a jack of all trades so I\'m comfortable with providing the best construction, repair and make up services. You can reach me any time through my phone number and I\'m always happy to help!');
     
 --
 -- Data for table `admin`
 --
 
 INSERT INTO `admin` VALUES
-    (5,'Juan','Yega','juan@hotmail.com', 0410567343, '1 Digger Road', 'https://i.imgur.com/hCEQVy0.jpg');
+    (5,'Juan','Yega','juan@hotmail.com', '0410567343', '1 Digger Road', 'https://i.imgur.com/hCEQVy0.jpg');
 
 --
 -- Data for table `security_role`
@@ -228,15 +230,23 @@ INSERT INTO `security_user` VALUES
 --
 
 INSERT INTO `availability` VALUES
-	(1, 4, '2020-09-028 00:00:00', '2020-09-28 9:00:00'),
-    (2, 4, '2020-09-28 9:00:00', '2020-09-28 17:00:00'),
-    (3, 4, '2020-09-28 17:00:00', '2020-09-29 00:00:00'),
-	(4, 4, '2020-09-29 00:00:00', '2020-09-29 9:00:00'),
-    (5, 4, '2020-09-29 9:00:00', '2020-09-29 17:00:00'),
-    (6, 4, '2020-09-29 17:00:00', '2020-09-30 00:00:00'),
-    (7, 5, '2020-09-29 17:00:00', '2020-09-29 23:00:00'),
-    (8, 5, '2020-09-30 17:00:00', '2020-09-30 23:00:00'),
-    (9, 4, '2020-09-27 17:00:00', '2020-09-27 23:00:00');
+    
+    (1, 4, '2020-10-06 00:00:00', '2020-10-06 09:00:00'),
+    (2, 4, '2020-10-07 00:00:00', '2020-10-07 09:00:00'),
+    (3, 4, '2020-10-08 00:00:00', '2020-10-08 09:00:00'),
+    (4, 4, '2020-10-09 00:00:00', '2020-10-09 09:00:00'),
+    (5, 4, '2020-10-10 00:00:00', '2020-10-10 09:00:00'),
+    (6, 5, '2020-10-06 00:00:00', '2020-10-06 09:00:00'),
+    (7, 5, '2020-10-07 00:00:00', '2020-10-07 09:00:00'),
+    (8, 5, '2020-10-08 00:00:00', '2020-10-08 09:00:00'),
+    (9, 5, '2020-10-09 00:00:00', '2020-10-09 09:00:00'),
+    (10, 5, '2020-10-10 00:00:00', '2020-10-10 09:00:00'),
+    (11, 5, '2020-10-14 00:00:00', '2020-10-14 09:00:00'),
+    (12, 5, '2020-10-15 00:00:00', '2020-10-15 09:00:00'),
+    (13, 5, '2020-10-16 00:00:00', '2020-10-16 09:00:00'),
+    (14, 4, '2020-10-14 00:00:00', '2020-10-14 09:00:00'),
+    (15, 4, '2020-10-15 00:00:00', '2020-10-15 09:00:00'),
+    (16, 4, '2020-10-16 00:00:00', '2020-10-16 09:00:00');
 
     
 --
@@ -244,21 +254,33 @@ INSERT INTO `availability` VALUES
 --
 
 INSERT INTO `working_time` VALUES
-	(1, 4, '2020-10-28 12:00:00', '2020-10-28 17:00:00'),
-    (2, 4, '2020-10-29 12:00:00', '2020-10-29 17:00:00'),
-    (3, 5, '2020-10-29 18:00:00', '2020-10-29 20:00:00'),
-    (4, 5, '2020-10-30 18:00:00', '2020-10-30 20:00:00'),
-    (5, 4, '2020-10-27 16:00:00', '2020-10-27 20:00:00');
+    (1, 4, '2020-10-06 02:00:00', '2020-10-06 09:00:00'),
+    (2, 4, '2020-10-07 02:00:00', '2020-10-07 09:00:00'),
+    (3, 4, '2020-10-08 02:00:00', '2020-10-08 09:00:00'),
+    (4, 4, '2020-10-09 02:00:00', '2020-10-09 09:00:00'),
+    (5, 4, '2020-10-10 02:00:00', '2020-10-10 09:00:00'),
+    (6, 5, '2020-10-06 02:00:00', '2020-10-06 09:00:00'),
+    (7, 5, '2020-10-07 02:00:00', '2020-10-07 09:00:00'),
+    (8, 5, '2020-10-08 02:00:00', '2020-10-08 09:00:00'),
+    (9, 5, '2020-10-09 02:00:00', '2020-10-09 09:00:00'),
+    (10, 5, '2020-10-10 02:00:00', '2020-10-10 09:00:00'),
+    (11, 4, '2020-11-01 13:00:00', '2020-11-01 18:00:00'),
+	(12, 5, '2020-10-14 01:00:00', '2020-10-14 08:00:00'),
+    (13, 5, '2020-10-15 01:00:00', '2020-10-15 08:00:00'),
+    (14, 5, '2020-10-16 01:00:00', '2020-10-16 08:00:00'),
+	(15, 4, '2020-10-14 00:00:00', '2020-10-14 09:00:00'),
+    (16, 4, '2020-10-15 00:00:00', '2020-10-15 09:00:00'),
+    (17, 4, '2020-10-16 00:00:00', '2020-10-16 09:00:00');
 
 --
--- Data for table `working_time`
+-- Data for table `services`
 --
 
 INSERT INTO `service` VALUES
-	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg'),
-    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg'),
-    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg'),
-    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg');
+	(1, 'Design', 'https://i.imgur.com/z53yLmm.jpg', 'We specialise in graphic and web design; it\'s our jam. With over 1000+ satisfied clients and 5 star reviews, we\'ll be able to spruce up your visuals in no time! Cost can be supplied upon initial consultation.'),
+    (2, 'Construction', 'https://i.imgur.com/gzi5Nmu.jpg', 'We have over 50 years of construction and architecture experience within Australia. Our highly qualified project managers, architects and builders will ensure that you receive the best quality constructions that money can buy!'),
+    (3, 'Repair', 'https://i.imgur.com/NfYcrHt.jpg', 'We\'re Australia\'s top electronics repair shop and can fix all your phone, laptop and PC issues! Broken screens? Dead batteries? Water Damage? No problem! Give us a call now on 123456789 or visit us in store today for a quote.'),
+    (4, 'Make Up', 'https://i.imgur.com/eD7gQ7N.jpg', 'We\'ve collaborated with Australia\'s most high-profile celebrities to deliver on the freshest makeup looks. With mentions in top fashion and beauty magazines like Vogue, GQ and InStyle, you can trust us for your next big event.');
     
 INSERT INTO `employee_service` VALUES
 	(4, 1),
@@ -267,13 +289,20 @@ INSERT INTO `employee_service` VALUES
     (5, 3),
     (5, 4);
     
+--
+-- Data for table `booking`
+--
+
 INSERT INTO `booking` VALUES
-    (1, 1, 4, '2020-05-28 15:00:00', '2020-10-28 17:00:00','complete',1),
-    (2, 1, 4, '2020-07-29 15:00:00', '2020-10-29 17:00:00','complete',2),
-    (3, 1, 5, '2020-08-30 18:00:00', '2020-10-30 19:00:00','complete',3),
-    (4, 1, 5, '2020-10-27 16:00:00', '2020-10-27 17:00:00','pending',4),
-    (5, 1, 5, '2020-10-27 18:30:00', '2020-10-27 19:00:00','pending',4),
-    (6, 1, 4, '2020-10-28 15:00:00', '2020-10-28 17:00:00','pending',1),
-    (7, 1, 4, '2020-10-29 15:00:00', '2020-10-29 17:00:00','pending',2),
-    (8, 1, 5, '2020-10-30 18:00:00', '2020-10-30 19:00:00','pending',3);
+
+    (1, 1, 4, '2020-05-28 15:00:00', '2020-05-28 17:00:00','complete',1),
+    (2, 1, 4, '2020-07-29 15:00:00', '2020-07-29 17:00:00','complete',2),
+    (3, 1, 5, '2020-08-30 18:00:00', '2020-08-30 19:00:00','complete',3),
+    (4, 1, 4, '2020-10-28 15:00:00', '2020-10-28 17:00:00','pending',1),
+    (5, 1, 4, '2020-10-29 15:00:00', '2020-10-29 17:00:00','pending',2),
+	  (6, 1, 4, '2020-11-01 15:00:00', '2020-11-01 17:00:00','pending',2),
+    (7, 1, 5, '2020-06-25 18:00:00', '2020-06-25 19:00:00','cancelled',1),
+    (8, 1, 5, '2020-06-26 18:00:00', '2020-06-26 19:00:00','cancelled',2),
+    (9, 1, 5, '2020-06-27 18:00:00', '2020-06-27 19:00:00','cancelled',3);
+
 

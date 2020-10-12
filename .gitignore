@@ -5,4 +5,5 @@ terraform.tfstate
 terraform.tfstate.backup
 tmp/
 .history/
-/node_modules
+FrontEnd/node_modules
+node_modules

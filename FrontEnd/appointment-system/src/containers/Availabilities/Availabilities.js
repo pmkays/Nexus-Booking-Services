@@ -29,7 +29,6 @@ class Availabilites extends Component {
     },
     error: [],
   };
-
   render() {
     const shiftTimes = () => {
       const times = ['Not Available'];

@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import moment from 'moment';
-import axios from '../../axios-sept';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
+import moment from "moment";
+import axios from "../../axios-sept";
 
-import * as actions from '../../store/actions/actions';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import Button from '../../components/UI/Button/Button';
-import classes from './Booking.module.css';
+import * as actions from "../../store/actions/actions";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import Button from "../../components/UI/Button/Button";
+import classes from "./Booking.module.css";
 
 export class Booking extends Component {
   state = {
@@ -18,6 +19,7 @@ export class Booking extends Component {
     bookingTime: null,
     employees: null,
     employeeId: null,
+    times: null,
     loading: false,
     error: null,
     dates: null,
@@ -25,14 +27,16 @@ export class Booking extends Component {
 
   // Runs when new date is selected
   updateDateHandler = (event) => {
-    event.preventDefault();
-    if (event.target.value === 'Choose Date') {
+    // event.preventDefault();
+    if (event.target.value === "Choose Date") {
       this.setState({
         ...this.props.state,
         bookingDate: null,
         service: null,
         employeeId: null,
         employees: null,
+        times: null,
+        bookingTime: null,
       });
     } else {
       this.setState({
@@ -41,22 +45,24 @@ export class Booking extends Component {
         service: null,
         employeeId: null,
         employees: null,
+        times: null,
+        bookingTime: null,
       });
     }
 
     // update dropdown box for services
     const config = {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     };
-    const url = '/api/service/findAllByDate';
+    const url = "/api/service/findAllByDate";
 
     let formData = {
       startTime: `${event.target.value}T00:00:00`,
     };
 
-    console.log('Start time: ' + formData.startTime);
+    console.log("Start time: " + formData.startTime);
 
     axios
       .post(url, formData, config)
@@ -71,17 +77,21 @@ export class Booking extends Component {
         this.setState({
           ...this.state,
           error:
-            'Error retrieving the services. Possibly no services available on this date.',
+            "Error retrieving the services. Possibly no services available on this date.",
           services: [],
           loading: false,
         });
       });
+
+      // resetting service after choosing new date
+      let x = document.getElementById("serviceDropdown");
+      x.selectedIndex = 0;
   };
 
   // Runs when new service is selected
   updateServiceAndEmployeeDropDownHandler = (event) => {
     event.preventDefault();
-    if (event.target.value === 'Choose Service') {
+    if (event.target.value === "Choose Service") {
       this.setState({ ...this.props.state, service: null });
     } else {
       this.setState({ ...this.props.state, service: event.target.value });
@@ -90,10 +100,10 @@ export class Booking extends Component {
     // update dropdown box for employees
     const config = {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     };
-    const url = '/api/employee/services/findAllByDate';
+    const url = "/api/employee/services/findAllByDate";
     console.log(url);
 
     let formData = {
@@ -101,7 +111,7 @@ export class Booking extends Component {
       serviceId: event.target.value,
     };
 
-    console.log('FOOOOOOORM');
+    console.log("FOOOOOOORM");
     console.log(formData.startTime);
     console.log(formData.serviceId);
 
@@ -118,7 +128,7 @@ export class Booking extends Component {
         this.setState({
           ...this.state,
           error:
-            'Error retrieving the employees. Possibly no employees with this service available on this date.',
+            "Error retrieving the employees. Possibly no employees with this service available on this date.",
           employees: [],
           loading: false,
         });
@@ -128,17 +138,49 @@ export class Booking extends Component {
   // Runs when new service is selected
   updateEmployeeHandler = (event) => {
     event.preventDefault();
-    if (event.target.value === 'Choose Employee') {
+    if (event.target.value === "Choose Employee") {
       this.setState({ ...this.props.state, employeeId: null });
     } else {
       this.setState({ ...this.props.state, employeeId: event.target.value });
     }
+
+    // update dropdown box for times
+    const config = {
+      headers: {
+        Authorization: "Bearer " + this.props.token,
+      },
+    };
+    const url = "/api/booking/findAvailable";
+
+    let formData = {
+      employeeId: event.target.value,
+      date: `${this.state.bookingDate}T00:00:00`,
+    };
+
+    axios
+      .post(url, formData, config)
+      .then((response) => {
+        this.setState({
+          ...this.state,
+          times: response.data,
+          loading: false,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          ...this.state,
+          error:
+            "Error retrieving the times. It's possible this employee is fully booked on this date.",
+          times: [],
+          loading: false,
+        });
+      });
   };
 
   // Runs when new service is selected
   updateBookingTimeHandler = (event) => {
     event.preventDefault();
-    if (event.target.value === 'Choose Time') {
+    if (event.target.value === "Choose Time") {
       this.setState({ ...this.props.state, bookingTime: null });
     } else {
       this.setState({ ...this.props.state, bookingTime: event.target.value });
@@ -150,11 +192,12 @@ export class Booking extends Component {
     event.preventDefault();
 
     const newStart = `${this.state.bookingDate}T${this.state.bookingTime}`;
-    // adding 30 minutes to the end, as every booking is 30 minutes
-    // so, simply changing the end of the string to 30 instead of 00
-    const newEnd = `${
-      this.state.bookingDate
-    }T${this.state.bookingTime.substring(0, 6)}30`;
+    // adding 60 minutes to the end, as every booking is 60 minutes
+
+    let oneHour = moment(this.state.bookingTime, "HH:mm:ss")
+      .add(1, "hours")
+      .format("HH:mm:ss");
+    const newEnd = `${this.state.bookingDate}T${oneHour}`;
 
     console.log(newStart);
     console.log(newEnd);
@@ -171,34 +214,14 @@ export class Booking extends Component {
 
   render() {
     const populateDates = () => {
-      const dates = ['Choose Date'];
+      const dates = ["Choose Date"];
       for (let i = 0; i <= 7; i++) {
-        let date = moment(this.state.time).add(i, 'days').format('YYYY-MM-DD');
+        let date = moment(this.state.time).add(i, "days").format("YYYY-MM-DD");
         dates.push(date);
       }
       return dates.map((date) => (
         <option value={date} key={date}>
           {date}
-        </option>
-      ));
-    };
-
-    // Adding times to time drop down
-    const populateTimes = () => {
-      const times = [];
-      for (let i = 0; i <= 24; i++) {
-        // console.log(i);
-        let str = null;
-        if (i < 10) {
-          str = `0${i}:00`;
-        } else {
-          str = `${i}:00`;
-        }
-        times.push(str);
-      }
-      return times.map((time) => (
-        <option value={`${time}:00`} key={time}>
-          {time}
         </option>
       ));
     };
@@ -219,7 +242,19 @@ export class Booking extends Component {
       employees = this.state.employees.map((employee) => {
         return (
           <option value={employee.id}>
-            {employee.firstName + ' ' + employee.lastName}
+            {employee.firstName + " " + employee.lastName}
+          </option>
+        );
+      });
+    }
+
+    let times = null;
+
+    if (this.state.times !== null) {
+      times = this.state.times.map((time) => {
+        return (
+          <option value={`${time}:00`} key={time}>
+            {time}
           </option>
         );
       });
@@ -227,54 +262,52 @@ export class Booking extends Component {
 
     let form = null;
 
-    // console.log("SERVICESSSS =========== " + this.state.services);
-
     if (this.props.loading) {
       form = <Spinner />;
     } else {
       form = (
         <form onSubmit={this.addBookingHandler}>
-          <div className='form-group'>
+          <div className="form-group">
             <label>Pick a day for the booking:</label>
             <select
-              className='custom-select'
-              id='dateDropdown'
+              className="custom-select"
+              id="dateDropdown"
               onChange={this.updateDateHandler}
             >
               {populateDates()}
             </select>
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <label>What service you require:</label>
             <select
-              className='custom-select'
-              id='serviceDropdown'
+              className="custom-select"
+              id="serviceDropdown"
               onChange={this.updateServiceAndEmployeeDropDownHandler}
             >
               <option>Choose Service</option>
               {services}
             </select>
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <label>Who do you require:</label>
             <select
-              className='custom-select'
-              id='employeeDropdown'
+              className="custom-select"
+              id="employeeDropdown"
               onChange={this.updateEmployeeHandler}
             >
               <option>Choose Employee</option>
               {employees}
             </select>
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <label>What time suits you:</label>
             <select
-              className='custom-select'
-              id='timeDropdown'
+              className="custom-select"
+              id="timeDropdown"
               onChange={this.updateBookingTimeHandler}
             >
               <option>Choose Time</option>
-              {populateTimes()}
+              {times}
             </select>
           </div>
           <Button
@@ -286,7 +319,7 @@ export class Booking extends Component {
                 this.state.bookingTime
               )
             }
-            classes='btn btn-primary'
+            classes="btn btn-primary"
           >
             Add Booking
           </Button>
@@ -334,4 +367,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Booking);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Booking));

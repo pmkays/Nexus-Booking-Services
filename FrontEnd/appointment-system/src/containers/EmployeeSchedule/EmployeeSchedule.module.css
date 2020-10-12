@@ -1,0 +1,19 @@
+.EmployeeScheduleBox {
+  border-radius: 15px;
+  margin: 5% 10%;
+  padding: 5% 10%;
+  background-color: white;
+}
+
+.EmployeeScheduleBox h1 {
+  font-weight: bold;
+}
+
+.Warning {
+  font-weight: bold;
+  color: red;
+}
+
+.MarginRight {
+  margin-right: 1%;
+}

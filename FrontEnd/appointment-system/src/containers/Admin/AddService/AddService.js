@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import axios from '../../../axios-sept';
 import classes from './AddService.module.css';
 
@@ -14,7 +14,8 @@ export class AddService extends Component {
     employeeServices: null,
     loading: false,
     error: null,
-    selected: null,
+    addSelected: null,
+    removeSelected: null,
   };
 
   componentDidMount() {
@@ -67,26 +68,50 @@ export class AddService extends Component {
 
     let formData = {
       employeeId: this.props.employeeId,
-      serviceName: this.state.selected,
+      serviceName: this.state.addSelected,
     };
 
     this.props.onAddService(formData, this.props.token, this.props.history);
   };
 
-  // Runs when new service is selected
-  updateSelectedHandler = (event) => {
+  // Runs when submitted and calls the redux action
+  removeServiceHandler = (event) => {
+    event.preventDefault();
+
+    let formData = {
+      employeeId: this.props.employeeId,
+      serviceName: this.state.removeSelected,
+    };
+
+    this.props.onRemoveService(formData, this.props.token, this.props.history);
+  };
+
+  // Runs when new service is selected to be added
+  updateAddSelectedHandler = (event) => {
     event.preventDefault();
     if (event.target.value === 'Choose Service') {
       this.setState({ ...this.props.state, selected: null });
     } else {
-      this.setState({ ...this.props.state, selected: event.target.value });
+      this.setState({ ...this.props.state, addSelected: event.target.value });
+    }
+  };
+
+  // Runs when new service is selected to be removed
+  updateRemoveSelectedHandler = (event) => {
+    event.preventDefault();
+    if (event.target.value === 'Choose Service') {
+      this.setState({ ...this.props.state, selected: null });
+    } else {
+      this.setState({ ...this.props.state, removeSelected: event.target.value });
     }
   };
 
   render() {
     let form = null;
+    let removeForm = null;
 
     let services = null;
+    let servicesToRemove = null;
 
     if (this.state.services !== null) {
       services = this.state.services.map((service) => {
@@ -98,6 +123,19 @@ export class AddService extends Component {
           }
         }
         return <option>{service.name}</option>;
+      });
+    }
+
+    if (this.state.services !== null) {
+      servicesToRemove = this.state.services.map((service) => {
+        for (let employeeService in this.state.employeeServices) {
+          if (
+            service.name === this.state.employeeServices[employeeService].name
+          ) {
+            return <option>{service.name}</option>;
+          }
+        }
+        return null;
       });
     }
 
@@ -117,19 +155,40 @@ export class AddService extends Component {
               <select
                 className='form-control'
                 id='dropdown'
-                onChange={this.updateSelectedHandler}
+                onChange={this.updateAddSelectedHandler}
               >
                 <option>Choose Service</option>
                 {services}
               </select>
             </div>
             <div className='form-group'>
-              <Button disabled={!this.state.selected} classes='btn btn-primary'>
+              <Button disabled={!this.state.addSelected} classes='btn btn-primary'>
                 Add Service
               </Button>
             </div>
           </form>
-          {errorMessage}
+        </React.Fragment>
+      );
+
+      removeForm = (
+        <React.Fragment>
+          <form onSubmit={this.removeServiceHandler}>
+            <div className='form-group'>
+              <select
+                className='form-control'
+                id='dropdown'
+                onChange={this.updateRemoveSelectedHandler}
+              >
+                <option>Choose Service</option>
+                {servicesToRemove}
+              </select>
+            </div>
+            <div className='form-group'>
+              <Button disabled={!this.state.removeSelected} classes='btn btn-primary'>
+                Remove Service
+              </Button>
+            </div>
+          </form>
         </React.Fragment>
       );
     }
@@ -141,10 +200,16 @@ export class AddService extends Component {
     }
 
     return (
-      <div className={classes.AddServiceBox}>
-        <h1>Add Service</h1>
-        {authRedirect}
-        {form}
+      <div className={classes.AddServiceBox}> 
+      <h1>Edit Services</h1>
+      {authRedirect}
+        <div>
+          {form}
+        </div>
+        <div>
+          {removeForm}
+        </div>
+        {errorMessage}
       </div>
     );
   }
@@ -163,7 +228,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAddService: (formData, token, history) =>
       dispatch(actions.addService(formData, token, history)),
+    onRemoveService: (formData, token, history) =>
+    dispatch(actions.removeService(formData, token, history)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddService);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddService));
