@@ -103,8 +103,8 @@ class WorkingTimes extends Component {
         <ul className='list-group'>
           {this.state.availabilities.map((availability) => (
             <li key={availability.id} className='list-group-item'>
-              {moment(availability.startTime).format('LLLL')} -{' '}
-              {moment(availability.endTime).format('LLLL')}
+              {moment(availability.startTime).format('LLL')} -{' '}
+              {moment(availability.endTime).format('LLL')}
             </li>
           ))}
         </ul>
