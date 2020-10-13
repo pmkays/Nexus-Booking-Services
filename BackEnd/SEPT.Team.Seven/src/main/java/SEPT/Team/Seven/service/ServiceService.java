@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.WorkingTime;
-import SEPT.Team.Seven.repo.AvailabilityRepository;
 import SEPT.Team.Seven.repo.EmployeeRepository;
-import SEPT.Team.Seven.repo.ServiceRepository;
 import SEPT.Team.Seven.repo.WorkingTimeRepository;
 
 @Service

@@ -3,9 +3,10 @@ package SEPT.Team.Seven;
 import java.util.Calendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import SEPT.Team.Seven.model.Availability;
@@ -21,6 +22,9 @@ import SEPT.Team.Seven.repo.WorkingTimeRepository;
 // just using this class to seed data based on when the backend is deployed
 @Component
 public class CommandLineAppStartupRunner implements CommandLineRunner {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(CommandLineAppStartupRunner.class);
+	
 	@Autowired
 	private AvailabilityRepository availabilityRepository;
 
@@ -41,9 +45,9 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Filling seeded data");
+		LOGGER.info("Filling seeded data");
 		fillSeededData();
-		System.out.println("Finished");
+		LOGGER.info("Finished");
 
 	}
 
@@ -54,7 +58,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 		List<Availability> availabilities = availabilityRepository.findAllByEmployeeId(4);
 
 		if (!availabilities.isEmpty()) {
-			System.out.println("Data already seeded. Will not seed any more data.");
+			LOGGER.info("Data already seeded. Will not seed any more data.");
 			return;
 		}
 
@@ -76,8 +80,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
 		end.setTime(start.getTime());
 		end.add(Calendar.HOUR_OF_DAY, 9);
-
-		System.out.println(employeeRepository.findById(4).get().getFirstName());
 
 		// for alternating customer and employee ids
 		int serviceId = 1;
@@ -160,8 +162,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
 		end.setTime(start.getTime());
 		end.add(Calendar.HOUR_OF_DAY, 22);
-
-		System.out.println(employeeRepository.findById(4).get().getFirstName());
 
 		// for alternating customer and employee ids
 		int serviceId = 1;

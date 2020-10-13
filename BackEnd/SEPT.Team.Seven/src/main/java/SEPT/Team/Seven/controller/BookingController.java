@@ -59,7 +59,6 @@ public class BookingController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
     public Booking addBooking(@RequestBody BookingDTO bookingDto) {
-		System.out.println("yeet");
        return bookingService.addBooking(bookingDto.getEmployeeId(), bookingDto.getCustomerId(),
     		   bookingDto.getStartTime(), bookingDto.getEndTime(), bookingDto.getServiceId()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding booking."));
@@ -68,7 +67,6 @@ public class BookingController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/cancel")
     public Booking cancelBooking(@RequestBody BookingDTO bookingDto) {
-		System.out.println("cancelling booking");
        return bookingService.cancelBooking(bookingDto.getEmployeeId(), bookingDto.getCustomerId(),
     		   bookingDto.getStartTime(), bookingDto.getEndTime(), bookingDto.getServiceId()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error cancelling booking."));
@@ -77,7 +75,6 @@ public class BookingController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/complete")
     public Booking completeBooking(@RequestBody BookingDTO bookingDto) {
-		System.out.println("completing booking");
        return bookingService.completeBooking(bookingDto.getEmployeeId(), bookingDto.getCustomerId(),
     		   bookingDto.getStartTime(), bookingDto.getEndTime(), bookingDto.getServiceId()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error completing booking."));

@@ -9,7 +9,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import SEPT.Team.Seven.model.Booking;
-import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.WorkingTime;
 import SEPT.Team.Seven.repo.BookingRepository;
 import SEPT.Team.Seven.repo.CustomerRepository;
@@ -50,9 +49,6 @@ public class BookingService {
 
 	public Optional<Booking> addBooking(int employeeId, int customerId, Date startTime, Date endTime, int serviceId) {
 
-		System.out.println(startTime);
-		System.out.println(endTime);
-
 		if (startTime == null || endTime == null) {
 			return Optional.empty();
 		}
@@ -88,9 +84,6 @@ public class BookingService {
 					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0)
 							&& booking.getStatus().equals(PENDING)) {
 						// so if these conditions are not meant, we'll return empty.
-						System.out.println("IS ACCEPTED: " + booking.getStatus().equals(PENDING));
-						System.out.println("BOOKING ID: " + booking.getId());
-						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
 						return Optional.empty();
 					}
 				}
@@ -117,7 +110,6 @@ public class BookingService {
 					if (!(newStartCal.compareTo(endCal) >= 0 || newEndCal.compareTo(cal) <= 0)
 							&& booking.getStatus().equals(PENDING)) {
 						// so if these conditions are not meant, we'll return empty.
-						System.out.println("OVERLAPS WITH ANOTHER BOOKING");
 						return Optional.empty();
 					}
 				}
@@ -251,8 +243,6 @@ public class BookingService {
 						&& workingTimeStart.get(Calendar.MONTH) == cal.get(Calendar.MONTH)
 						&& workingTimeStart.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
 
-					System.out.println(workingTimeStart.get(Calendar.HOUR_OF_DAY));
-
 					int start = workingTimeStart.get(Calendar.HOUR_OF_DAY);
 
 					Calendar workingTimeEnd = Calendar.getInstance();
@@ -263,8 +253,6 @@ public class BookingService {
 					if (end == 0) {
 						end = 24;
 					}
-
-					System.out.println("End: " + end);
 
 					boolean hourIsAvailable = true;
 
@@ -297,7 +285,6 @@ public class BookingService {
 								// end time.
 								if (hourCalendar.getTime().compareTo(bookingStart.getTime()) >= 0
 										&& hourCalendar.getTime().compareTo(bookingEnd.getTime()) < 0) {
-									System.out.println("Hour is not available due to booking ID: " + booking.getId());
 									hourIsAvailable = false;
 									break;
 								}
@@ -314,7 +301,6 @@ public class BookingService {
 
 							String time = hour + i + ":00";
 
-//							System.out.println("Hour is available, so getting added to list of strings as: " + time);
 							times.add(time);
 
 						}
@@ -324,7 +310,6 @@ public class BookingService {
 				}
 			}
 
-			System.out.println("There is no working time for this employee on this date.");
 			return times;
 		}
 
