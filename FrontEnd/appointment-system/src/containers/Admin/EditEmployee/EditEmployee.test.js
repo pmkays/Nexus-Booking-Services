@@ -15,7 +15,7 @@ describe('<EditEmployee/>', () => {
     />
   );
 
-  it('should render 6 Input fields', () => {
-    expect(wrapper.find(Input)).toHaveLength(6);
+  it('should render 7 Input fields', () => {
+    expect(wrapper.find(Input)).toHaveLength(7);
   });
 });

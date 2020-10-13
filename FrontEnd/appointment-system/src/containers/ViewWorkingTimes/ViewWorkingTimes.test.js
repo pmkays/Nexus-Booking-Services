@@ -8,11 +8,11 @@ configure({ adapter: new Adapter() });
 describe('<ViewWorkingTimes/>', () => {
   let wrapper = shallow(<ViewWorkingTimes />);
 
-  it('should render 2 columns', () => {
-    expect(wrapper.find('.col')).toHaveLength(4);
+  it("should render ViewWorkingTimes page", () => {
+    expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render 4 rows', () => {
-    expect(wrapper.find('.row')).toHaveLength(4);
+  it('should render select for employee', () => {
+    expect(wrapper.find('.custom-select')).toHaveLength(1);
   });
 });

@@ -201,8 +201,6 @@ export class Dashboard extends Component {
               <br />
               <DashboardIcon name="Bookings" id="ViewBookings" classes="fas fa-book" to="viewbookings" />
               <br />
-              <DashboardIcon name="Working Times" id="ViewWorkingTimes" className="fas fa-briefcase" to="viewworkingtimes" />
-              <br />
               {this.props.authority === 'ROLE_ADMIN' ? (
                 <React.Fragment>
                   <DashboardIcon name="Employees" id="Employees" classes="fas fa-users" to="employees" />
@@ -213,6 +211,8 @@ export class Dashboard extends Component {
                     classes="fas fa-hourglass-half"
                     to="workingtimes"
                   />
+                  <br />
+                  <DashboardIcon name="Working Times" id="ViewWorkingTimes" classes="fas fa-business-time" to="viewworkingtimes" />
                   <br />
                 </React.Fragment>
               ) : null}

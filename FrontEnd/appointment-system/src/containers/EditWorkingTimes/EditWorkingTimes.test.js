@@ -8,8 +8,12 @@ configure({ adapter: new Adapter() });
 describe('<EditWorkingTimes/>', () => {
   let wrapper = shallow(<EditWorkingTimes />);
 
-  it('should render 2 columns', () => {
-    expect(wrapper.find('.col')).toHaveLength(4);
+  it("should render EditWorkingTimes page", () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render 6 columns', () => {
+    expect(wrapper.find('.col')).toHaveLength(6);
   });
 
   it('should render 4 rows', () => {

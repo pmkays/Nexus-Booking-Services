@@ -179,7 +179,7 @@ export class ViewWorkingTimes extends Component {
             <td>{moment(workingTime.endTime).format("HH:mm")}</td>
             <td>{timeDiff(workingTime.endTime, workingTime.startTime)}</td>
             <td>
-              <NavLink to={`/editworkingtimes?employeeId=${this.state.employeeId}&workingTimeId=${workingTime.id}`}>
+              <NavLink to={`/editworkingtimes?employeeId=${this.state.employeeId}&workingTimeId=${workingTime.id}&startTime=${workingTime.startTime}&endTime=${workingTime.endTime}`}>
                 Edit
                 <i
                   className={"fas fa-arrow-right "}

@@ -92,8 +92,8 @@ describe('<EditProfile/>', () => {
     wrapper = shallow(<EditProfile onFetchProfile={(token) => {}} />);
   });
 
-  it('should render 5 Input fields', () => {
-    expect(wrapper.find(Input)).toHaveLength(6);
+  it('should render 7 Input fields', () => {
+    expect(wrapper.find(Input)).toHaveLength(7);
   });
 
   it('should render no error messages at the start', () => {
