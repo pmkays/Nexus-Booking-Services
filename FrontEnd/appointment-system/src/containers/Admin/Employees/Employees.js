@@ -79,7 +79,7 @@ export class Employees extends Component {
             </td>
             <td>
               <Button clicked={() => this.addService(employee.id)} classes="btn btn-primary">
-                Add
+                Edit
               </Button>
             </td>
             <td>

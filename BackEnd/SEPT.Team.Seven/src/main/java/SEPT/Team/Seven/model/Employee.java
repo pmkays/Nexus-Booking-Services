@@ -26,9 +26,6 @@ public class Employee extends Account {
 	@OneToMany(mappedBy="employee")
 	private List<Booking> bookings;
 	
-	@Column(name="img")
-	private String img;
-	
 	@Column(name="description")
 	private String description;
 	
@@ -44,9 +41,8 @@ public class Employee extends Account {
 	
 	public Employee() {};
 	
-	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String img, String description) {
-		super(firstName,lastName,email,phoneNo, address);
-		this.img = img;
+	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String description, String img) {
+		super(firstName,lastName,email,phoneNo, address, img);
 		services = new ArrayList<Service>();
 		this.description = description;
 	}
@@ -73,14 +69,6 @@ public class Employee extends Account {
 	
 	public void addToBookings(Booking booking) {
 		bookings.add(booking);
-	}
-	
-	public void setImg(String img) {
-		this.img = img;
-	}
-	
-	public String getImg() {
-		return this.img;
 	}
 	
 	public void setDescription(String description) {

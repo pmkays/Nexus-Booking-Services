@@ -71,7 +71,6 @@ export class EmployeeSchedule extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
         this.setState({
           ...this.state,
           error: 'Error retrieving bookings.',
@@ -141,7 +140,6 @@ export class EmployeeSchedule extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
         this.setState({
           ...this.state,
           error: 'Error retrieving availabilities.',

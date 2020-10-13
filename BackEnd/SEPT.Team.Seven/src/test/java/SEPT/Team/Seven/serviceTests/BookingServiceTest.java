@@ -3,8 +3,8 @@ package SEPT.Team.Seven.serviceTests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import SEPT.Team.Seven.model.Booking;
 import SEPT.Team.Seven.model.Customer;
@@ -227,8 +228,8 @@ public class BookingServiceTest {
 		//Arrange
 		Calendar workStartTime = Calendar.getInstance();
 		Calendar workEndTime = Calendar.getInstance(); 
-		workStartTime.add(Calendar.DATE, 5);
-		workEndTime.add(Calendar.DATE, 6);
+		workStartTime.add(Calendar.DATE, 100);
+		workEndTime.add(Calendar.DATE, 101);
 		
 		List<Booking> bookings = new ArrayList<Booking>();
 		
@@ -238,7 +239,7 @@ public class BookingServiceTest {
 		workStartTime.add(Calendar.HOUR_OF_DAY, 1);
 		workEndTime.add(Calendar.HOUR_OF_DAY, -1);
 		Booking bookingMade = new Booking(existingCustomer, existingEmployee, workStartTime.getTime(), workEndTime.getTime(),
-				"accepted", service);
+				"pending", service);
 
 		when(serviceRepository.findById(1)).thenReturn(Optional.of(service));
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(existingEmployee));

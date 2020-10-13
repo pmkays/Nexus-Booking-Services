@@ -27,7 +27,7 @@ export class Booking extends Component {
 
   // Runs when new date is selected
   updateDateHandler = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (event.target.value === "Choose Date") {
       this.setState({
         ...this.props.state,
@@ -35,6 +35,8 @@ export class Booking extends Component {
         service: null,
         employeeId: null,
         employees: null,
+        times: null,
+        bookingTime: null,
       });
     } else {
       this.setState({
@@ -43,6 +45,8 @@ export class Booking extends Component {
         service: null,
         employeeId: null,
         employees: null,
+        times: null,
+        bookingTime: null,
       });
     }
 
@@ -58,7 +62,6 @@ export class Booking extends Component {
       startTime: `${event.target.value}T00:00:00`,
     };
 
-    console.log("Start time: " + formData.startTime);
 
     axios
       .post(url, formData, config)
@@ -78,6 +81,10 @@ export class Booking extends Component {
           loading: false,
         });
       });
+
+      // resetting service after choosing new date
+      let x = document.getElementById("serviceDropdown");
+      x.selectedIndex = 0;
   };
 
   // Runs when new service is selected
@@ -96,16 +103,11 @@ export class Booking extends Component {
       },
     };
     const url = "/api/employee/services/findAllByDate";
-    console.log(url);
 
     let formData = {
       startTime: `${this.state.bookingDate}T00:00:00`,
       serviceId: event.target.value,
     };
-
-    console.log("FOOOOOOORM");
-    console.log(formData.startTime);
-    console.log(formData.serviceId);
 
     axios
       .post(url, formData, config)
@@ -190,9 +192,6 @@ export class Booking extends Component {
       .add(1, "hours")
       .format("HH:mm:ss");
     const newEnd = `${this.state.bookingDate}T${oneHour}`;
-
-    console.log(newStart);
-    console.log(newEnd);
 
     let formData = {
       employeeId: this.state.employeeId,
