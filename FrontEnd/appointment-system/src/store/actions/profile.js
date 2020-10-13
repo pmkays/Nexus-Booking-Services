@@ -117,7 +117,6 @@ export const editProfile = (formData, token, history) => {
       },
     };
 
-    console.log(formData);
 
     axios
       .put('/api/' + url + '/' + userId, formData, config)
@@ -216,7 +215,6 @@ export const fetchAccountNo = (formData, history, type, token) => {
 
 export const addProfileDetailsToUser = (formData, history, type, token) => {
   return (dispatch) => {
-    console.log('data coming in', formData);
 
     if (formData.avatar === '') {
       formData.avatar = 'https://i.imgur.com/Eie9ARV.png';
@@ -231,8 +229,6 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
       img: formData.avatar,
     };
 
-    console.log(profileData);
-
     let config = null;
 
     if (type === 'employees') {
@@ -246,7 +242,6 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
     axios
       .put('/api/' + type + '/' + formData.accountNo, profileData, config)
       .then((response) => {
-        console.log(response);
         dispatch(addProfileSuccess(response.data, type));
       })
       .then(() => {

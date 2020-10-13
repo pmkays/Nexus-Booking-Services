@@ -199,7 +199,6 @@ export class EditEmployee extends Component {
       },
     };
 
-    console.log(this.props.match.params.id);
     axios
       .put('/api/employees/' + this.props.match.params.id, formData, config)
       .then((response) => {

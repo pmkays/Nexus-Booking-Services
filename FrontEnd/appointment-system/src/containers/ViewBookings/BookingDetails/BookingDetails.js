@@ -37,7 +37,6 @@ export class BookingDetails extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
         this.setState({
           ...this.state,
           error: "Error retrieving bookings.",
@@ -45,7 +44,6 @@ export class BookingDetails extends Component {
         });
       });
 
-    console.log(this.state.bookingDetails);
   }
 
   render() {
@@ -153,14 +151,12 @@ export class BookingDetails extends Component {
       axios
         .post(url, bookingToSend, config)
         .then((response) => {
-          console.log(response.data);
           this.setState({
             ...this.state,
             bookingDetails: response.data,
           });
         })
         .catch((error) => {
-          console.log(error);
           this.setState({
             ...this.state,
             error: "Error retrieving bookings.",
@@ -176,7 +172,6 @@ export class BookingDetails extends Component {
         beforeTime = moment(),
         afterTime = moment().add(48, "hours");
 
-      console.log(time.isBetween(beforeTime, afterTime, "hours"));
       return time.isBetween(beforeTime, afterTime, "hours");
     };
 
@@ -184,8 +179,6 @@ export class BookingDetails extends Component {
       var time = moment(this.state.bookingDetails.endTime),
         currentTime = moment();
 
-      console.log("CHECKING TIME");
-      console.log(currentTime.isAfter(time));
       return currentTime.isAfter(time);
     };
 
