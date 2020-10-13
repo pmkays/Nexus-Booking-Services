@@ -6,7 +6,7 @@ import { BookingDetails } from './BookingDetails';
 configure({ adapter: new Adapter() });
 
 describe('<BookingDetails/>', () => {
-  let wrapper = shallow(<BookingDetails location={{ pathname: 'asdasd' }} />);
+  let wrapper = shallow(<BookingDetails location={{ pathname: 'asdasd' }} match={{ params: { id: '' } }} />);
 
   it('should render 0 columns on no data', () => {
     expect(wrapper.find('.col')).toHaveLength(0);

@@ -26,6 +26,8 @@ import BookingDetails from '../ViewBookings/BookingDetails/BookingDetails';
 import Success from '../../components/Success/Success';
 import AdminDashboard from '../DashboardWelcome/AdminDashboard';
 import Error from '../../components/Error/Error';
+import ViewWorkingTimes from '../ViewWorkingTimes/ViewWorkingTimes';
+import { EditWorkingTimes } from '../EditWorkingTimes/EditWorkingTimes';
 
 export class Dashboard extends Component {
   state = {
@@ -150,6 +152,20 @@ export class Dashboard extends Component {
           </Animated>
         );
         break;
+      case 'viewworkingtimes':
+        content = (
+          <Animated animationIn="zoomIn" animationOutDuration={200}>
+            <ViewWorkingTimes />
+          </Animated>
+        );
+        break;
+      case 'editworkingtimes':
+        content = (
+          <Animated animationIn="zoomIn" animationOutDuration={200}>
+            <EditWorkingTimes />
+          </Animated>
+        );
+        break;
       default:
         break;
     }
@@ -195,6 +211,8 @@ export class Dashboard extends Component {
                     classes="fas fa-hourglass-half"
                     to="workingtimes"
                   />
+                  <br />
+                  <DashboardIcon name="Working Times" id="ViewWorkingTimes" classes="fas fa-business-time" to="viewworkingtimes" />
                   <br />
                 </React.Fragment>
               ) : null}

@@ -120,6 +120,7 @@ export class EmployeeSchedule extends Component {
 
         let found = false;
         for (let i = 0; i < 7; ++i) {
+          // eslint-disable-next-line
           response.data.forEach((availability, index) => {
             if (
               moment(availability.startTime).startOf('day').format('YYYY-MM-DDTHH:mm:ss') ===
