@@ -90,7 +90,7 @@ export class AddService extends Component {
   updateAddSelectedHandler = (event) => {
     event.preventDefault();
     if (event.target.value === 'Choose Service') {
-      this.setState({ ...this.props.state, selected: null });
+      this.setState({ ...this.props.state, addSelected: null });
     } else {
       this.setState({ ...this.props.state, addSelected: event.target.value });
     }
@@ -100,7 +100,7 @@ export class AddService extends Component {
   updateRemoveSelectedHandler = (event) => {
     event.preventDefault();
     if (event.target.value === 'Choose Service') {
-      this.setState({ ...this.props.state, selected: null });
+      this.setState({ ...this.props.state, removeSelected: null });
     } else {
       this.setState({ ...this.props.state, removeSelected: event.target.value });
     }

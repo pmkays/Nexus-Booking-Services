@@ -60,9 +60,10 @@ class WorkingTimes extends Component {
       );
       this.setState({
         employeeId,
-        availabilities: availabilities.data,
+        availabilities: availabilities.data.sort((a, b) => moment(a.startTime).diff(moment(b.startTime))),
       });
     };
+
     const setTime = (e) => {
       e.preventDefault();
       this.setState({

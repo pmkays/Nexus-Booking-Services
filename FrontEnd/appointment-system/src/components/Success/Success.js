@@ -19,7 +19,7 @@ const success = (props) => {
       {redirect}
       <h1>Success</h1>
       <p>{props.content}</p>
-      <Link to={props.redirect} onclick={resetSuccessHandler}>
+      <Link to={props.redirect} onClick={resetSuccessHandler}>
         Return
       </Link>
     </div>

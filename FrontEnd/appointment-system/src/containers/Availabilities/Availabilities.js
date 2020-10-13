@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { withRouter } from 'react-router';
 
 import * as actions from '../../store/actions/actions';
 import classes from './Availabilities.module.css';
@@ -230,4 +231,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Availabilites);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Availabilites));

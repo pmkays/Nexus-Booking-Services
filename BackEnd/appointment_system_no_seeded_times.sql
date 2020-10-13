@@ -185,7 +185,9 @@ CREATE TABLE `working_time` (
 INSERT INTO `customer` VALUES
     (1,'Leslie','Uzumaki','leslie@hotmail.com', '0410101010', '4 Poornima Road', 'https://i.imgur.com/VXnG3tg.jpg'),
     (2,'Emma','Gaumbarten','emma@gmail.com', '0423101563', '3 Buttersworth Street', 'https://i.imgur.com/t6EJkdF.jpg'),
-    (3,'Avani','Yupta','avani@hotmail.com', '0445231020', '9 King Court', 'https://i.imgur.com/vmFc3lX.jpg');
+    (3,'Hinata','Hyuga','ilovenaruto@email.com', '0432123450', 'Hopefully Narutos Heart', 'https://vignette.wikia.nocookie.net/naruto/images/7/79/Hinata_Part_II.png/revision/latest?cb=20160916060747'),
+    (4,'Naruto','Uzumaki','ilovesasuke@hotmail.com', '0293847212', 'Village of the Hidden Leaf', 'https://giantbomb1.cbsistatic.com/uploads/scale_small/3/33873/1700999-naruto.png'),
+    (5,'Sasuke','Uchiha','screwsakura@gmail.com', '0987654323', 'Orochimarus Den', 'https://vignette.wikia.nocookie.net/shipping/images/2/25/Sasuke_Uchiha.png/revision/latest?cb=20160422160842');
     
 --
 -- Data for table `employee`
@@ -217,60 +219,15 @@ INSERT INTO `security_role` VALUES
 --
 
 INSERT INTO `security_user` VALUES
-    (1,'sasuke1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 1, null, null, 1),
+    (1,'tsunade1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 1, null, null, 1),
     (2,'sakura1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 2, null, null, 1),
-    (3,'naruto1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 3, null, null, 1),
-    (4,'employee1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, 4, null, 2),
-    (5,'employee2', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, 5, null, 2),
-    (6,'admin', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, null, 5, 3);
+    (3,'hinata1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 3, null, null, 1),
+    (4,'naruto1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 4, null, null, 1),
+    (5,'sasuke1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', 5, null, null, 1),
+    (6,'employee1', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, 4, null, 2),
+    (7,'employee2', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, 5, null, 2),
+    (8,'admin', '$2a$10$C/8xsj.CiUBaCJIYPpjLg.25k3RZASgu37zHD6K6CltmAvb9Z2wLa', null, null, 5, 3);
     
-    
---
--- Data for table `availability`
---
-
-INSERT INTO `availability` VALUES
-    
-    (1, 4, '2020-10-06 00:00:00', '2020-10-06 09:00:00'),
-    (2, 4, '2020-10-07 00:00:00', '2020-10-07 09:00:00'),
-    (3, 4, '2020-10-08 00:00:00', '2020-10-08 09:00:00'),
-    (4, 4, '2020-10-09 00:00:00', '2020-10-09 09:00:00'),
-    (5, 4, '2020-10-10 00:00:00', '2020-10-10 09:00:00'),
-    (6, 5, '2020-10-06 00:00:00', '2020-10-06 09:00:00'),
-    (7, 5, '2020-10-07 00:00:00', '2020-10-07 09:00:00'),
-    (8, 5, '2020-10-08 00:00:00', '2020-10-08 09:00:00'),
-    (9, 5, '2020-10-09 00:00:00', '2020-10-09 09:00:00'),
-    (10, 5, '2020-10-10 00:00:00', '2020-10-10 09:00:00'),
-    (11, 5, '2020-10-14 00:00:00', '2020-10-14 09:00:00'),
-    (12, 5, '2020-10-15 00:00:00', '2020-10-15 09:00:00'),
-    (13, 5, '2020-10-16 00:00:00', '2020-10-16 09:00:00'),
-    (14, 4, '2020-10-14 00:00:00', '2020-10-14 09:00:00'),
-    (15, 4, '2020-10-15 00:00:00', '2020-10-15 09:00:00'),
-    (16, 4, '2020-10-16 00:00:00', '2020-10-16 09:00:00');
-
-    
---
--- Data for table `working_time`
---
-
-INSERT INTO `working_time` VALUES
-    (1, 4, '2020-10-06 02:00:00', '2020-10-06 09:00:00'),
-    (2, 4, '2020-10-07 02:00:00', '2020-10-07 09:00:00'),
-    (3, 4, '2020-10-08 02:00:00', '2020-10-08 09:00:00'),
-    (4, 4, '2020-10-09 02:00:00', '2020-10-09 09:00:00'),
-    (5, 4, '2020-10-10 02:00:00', '2020-10-10 09:00:00'),
-    (6, 5, '2020-10-06 02:00:00', '2020-10-06 09:00:00'),
-    (7, 5, '2020-10-07 02:00:00', '2020-10-07 09:00:00'),
-    (8, 5, '2020-10-08 02:00:00', '2020-10-08 09:00:00'),
-    (9, 5, '2020-10-09 02:00:00', '2020-10-09 09:00:00'),
-    (10, 5, '2020-10-10 02:00:00', '2020-10-10 09:00:00'),
-    (11, 4, '2020-11-01 13:00:00', '2020-11-01 18:00:00'),
-	(12, 5, '2020-10-14 01:00:00', '2020-10-14 08:00:00'),
-    (13, 5, '2020-10-15 01:00:00', '2020-10-15 08:00:00'),
-    (14, 5, '2020-10-16 01:00:00', '2020-10-16 08:00:00'),
-	(15, 4, '2020-10-14 00:00:00', '2020-10-14 09:00:00'),
-    (16, 4, '2020-10-15 00:00:00', '2020-10-15 09:00:00'),
-    (17, 4, '2020-10-16 00:00:00', '2020-10-16 09:00:00');
 
 --
 -- Data for table `services`
@@ -289,20 +246,5 @@ INSERT INTO `employee_service` VALUES
     (5, 3),
     (5, 4);
     
---
--- Data for table `booking`
---
-
-INSERT INTO `booking` VALUES
-
-    (1, 1, 4, '2020-05-28 15:00:00', '2020-05-28 17:00:00','pending',1),
-    (2, 1, 4, '2020-07-29 15:00:00', '2020-07-29 17:00:00','complete',2),
-    (3, 1, 5, '2020-08-30 18:00:00', '2020-08-30 19:00:00','complete',3),
-    (4, 1, 4, '2020-10-28 15:00:00', '2020-10-28 17:00:00','pending',1),
-    (5, 1, 4, '2020-10-29 15:00:00', '2020-10-29 17:00:00','pending',2),
-	  (6, 1, 4, '2020-11-01 15:00:00', '2020-11-01 17:00:00','pending',2),
-    (7, 1, 5, '2020-06-25 18:00:00', '2020-06-25 19:00:00','cancelled',1),
-    (8, 1, 5, '2020-06-26 18:00:00', '2020-06-26 19:00:00','cancelled',2),
-    (9, 1, 5, '2020-06-27 18:00:00', '2020-06-27 19:00:00','cancelled',3);
 
 

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import SEPT.Team.Seven.repo.WorkingTimeRepository;
 
 @Service
 public class WorkingTimeService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(WorkingTimeService.class);
 
 	private WorkingTimeRepository workingTimeRepository;
 
@@ -43,10 +47,6 @@ public class WorkingTimeService {
 
 	public Optional<WorkingTime> addWorkingTime(int employeeId, Date startTime, Date endTime) {
 
-		System.out.println("Employee ID: " + employeeId);
-		System.out.println("Start Time: " + startTime);
-		System.out.println("End Time: " + endTime);
-
 		if (startTime == null || endTime == null) {
 			return Optional.empty();
 		}
@@ -54,7 +54,7 @@ public class WorkingTimeService {
 		if (employeeRepository.findById(employeeId).isPresent()) {
 
 			// First checking if the employee already has a working time on this day.
-			System.out.println("employee is present");
+			LOGGER.info("Employee is present");
 
 			List<WorkingTime> employeesWorkingTimes = workingTimeRepository.findAllByEmployeeId(employeeId);
 			Calendar newStartCalendar = Calendar.getInstance();
@@ -71,8 +71,8 @@ public class WorkingTimeService {
 				if (cal.get(Calendar.DATE) == newStartCalendar.get(Calendar.DATE)
 						&& cal.get(Calendar.MONTH) == newStartCalendar.get(Calendar.MONTH)
 						&& cal.get(Calendar.YEAR) == newStartCalendar.get(Calendar.YEAR)) {
-					System.out.println("Already has a working time on this day.");
-					System.out.println("Working Time ID: " + workingTime.getId());
+					LOGGER.info("Already has a working time on this day.");
+					LOGGER.info("Working Time ID: " + workingTime.getId());
 					return Optional.empty();
 				}
 			}
@@ -99,11 +99,7 @@ public class WorkingTimeService {
 						// ensures that the endTime is within a day of the start time.
 						if (endTime.compareTo(after24Hours.getTime()) <= 0) {
 							// Check that the working time is actually within the availability
-							boolean startValid = startTime.compareTo(startCal.getTime()) >= 0
-									&& startTime.compareTo(endCal.getTime()) <= 0;
-							boolean endValid = endTime.compareTo(startCal.getTime()) >= 0
-									&& endTime.compareTo(endCal.getTime()) <= 0;
-							if (startValid && endValid) {
+							if (ServiceUTIL.checkTimeWithin(startCal.getTime(), startTime, endTime, endCal.getTime())) {
 								return Optional.of(workingTimeRepository.save(new WorkingTime(
 										employeeRepository.findById(employeeId).get(), startTime, endTime)));
 							}
@@ -112,7 +108,7 @@ public class WorkingTimeService {
 					}
 				}
 			}
-			System.out.println("No availability");
+			LOGGER.info("No availability");
 		}
 		return Optional.empty();
 	}
@@ -161,11 +157,8 @@ public class WorkingTimeService {
 							if (endTime.compareTo(after24Hours.getTime()) <= 0) {
 
 								// Check that the working time is actually within the availability
-								boolean startValid = startTime.compareTo(availabilityStartCal.getTime()) >= 0
-										&& startTime.compareTo(availabilityEndCal.getTime()) <= 0;
-								boolean endValid = endTime.compareTo(availabilityStartCal.getTime()) >= 0
-										&& endTime.compareTo(availabilityEndCal.getTime()) <= 0;
-								if (startValid && endValid) {
+								if (ServiceUTIL.checkTimeWithin(availabilityStartCal.getTime(), startTime, endTime,
+										availabilityEndCal.getTime())) {
 
 									// Now we have to check that this change won't mess up any bookings.
 									// ie, make them go over a working time.
@@ -182,9 +175,11 @@ public class WorkingTimeService {
 												&& newStartCalendar.get(Calendar.MONTH) == bookingStartCal
 														.get(Calendar.MONTH)
 												&& newStartCalendar.get(Calendar.YEAR) == bookingStartCal
-														.get(Calendar.YEAR) && booking.getStatus().equals("pending")) {
-											
-											System.out.println("Booking being checked against new working time: " + booking.getId());
+														.get(Calendar.YEAR)
+												&& booking.getStatus().equals("pending")) {
+
+											LOGGER.info("Booking being checked against new working time: "
+													+ booking.getId());
 
 											boolean bookingStartValid = booking.getStartTime().compareTo(startTime) >= 0
 													&& booking.getStartTime().compareTo(endTime) <= 0;
@@ -192,9 +187,10 @@ public class WorkingTimeService {
 													&& booking.getEndTime().compareTo(endTime) <= 0;
 
 											if (!bookingStartValid || !bookingEndValid) {
-												System.out.println(
+
+												LOGGER.info(
 														"One of the bookings are affected by the new working times");
-												System.out.println("That is, booking with ID: " + booking.getId());
+												LOGGER.info("That is, booking with ID: " + booking.getId());
 												return Optional.empty();
 											}
 
@@ -209,12 +205,12 @@ public class WorkingTimeService {
 									return Optional.of(workingTime);
 
 								} else {
-									System.out.println("The new working times are not within the availabilities");
+									LOGGER.info("The new working times are not within the availabilities");
 									return Optional.empty();
 								}
 
 							} else {
-								System.out.println("Start time is not at most 24 hours before the end time");
+								LOGGER.info("Start time is not at most 24 hours before the end time");
 								return Optional.empty();
 							}
 						}
@@ -223,7 +219,7 @@ public class WorkingTimeService {
 				}
 
 			} else {
-				System.out.println("The edited date is different to the old one. This is not allowed.");
+				LOGGER.info("The edited date is different to the old one. This is not allowed.");
 				return Optional.empty();
 			}
 

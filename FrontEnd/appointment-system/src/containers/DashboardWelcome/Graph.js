@@ -254,7 +254,6 @@ export class Graph extends Component {
 
     const getBar = () => {
         let configs = getBarData(); 
-        console.log(configs);
         return(
             <Bar data = {configs[0]} width={this.props.width} height={this.props.height} options={configs[1]}/>
         );

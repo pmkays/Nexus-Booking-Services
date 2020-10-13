@@ -48,14 +48,18 @@ public abstract class Account {
 	@Column(name="address")
 	private String address;
 	
+	@Column(name="img")
+	private String img;
+	
 	public Account(){}
 	
-	public Account(String firstName, String lastName, String email, String phoneNo, String address) {
+	public Account(String firstName, String lastName, String email, String phoneNo, String address, String img) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phoneNo = phoneNo;
 		this.address = address;
+		this.img = img;
 	}
 
 	public int getId() {
@@ -106,7 +110,13 @@ public abstract class Account {
 		this.address = address;
 	}
 	
+	public void setImg(String img) {
+		this.img = img;
+	}
 	
+	public String getImg() {
+		return this.img;
+	}
 	
 	
 }

@@ -13,6 +13,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import SEPT.Team.Seven.model.Booking;
@@ -24,26 +25,6 @@ private static Validator validator;
 	public static void setUp() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	    validator = factory.getValidator();
-	}
-	
-	@Test
-	public void startTime_InPast_ReturnsConstraintViolation(){
-		 
-		//Arrange
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -1);
-		Date dateInPast = cal.getTime();
-		
-		//Act
-		Set<ConstraintViolation<Booking>> constraintViolations =
-			      validator.validateValue(Booking.class, "startTime", dateInPast);
-		
-		//Assert
-		assertEquals(constraintViolations.size(), 1);
-
-		assertTrue(constraintViolations.stream().anyMatch
-				(c-> c.getMessage().equals("Start time must not be in the past")));
-	
 	}
 	
 	@Test
@@ -75,26 +56,6 @@ private static Validator validator;
 		
 		//Assert
 		assertEquals(constraintViolations.size(), 0);
-	
-	}
-	
-	@Test
-	public void endTime_InPast_ReturnsConstraintViolation(){
-		 
-		//Arrange
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -1);
-		Date dateInPast = cal.getTime();
-		
-		//Act
-		Set<ConstraintViolation<Booking>> constraintViolations =
-			      validator.validateValue(Booking.class, "endTime", dateInPast);
-		
-		//Assert
-		assertEquals(constraintViolations.size(), 1);
-
-		assertTrue(constraintViolations.stream().anyMatch
-				(c-> c.getMessage().equals("End time must not be in the past")));
 	
 	}
 	
