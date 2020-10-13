@@ -21,7 +21,7 @@ class EditWorkingTimes extends Component {
 
   render() {
 
-    const updateWorkingTimes = () => {
+    const updateWorkingTimes = async () => {
       this.setState({...this.state, loading: true, error: null });
       const config = {
         headers: {
@@ -49,11 +49,10 @@ class EditWorkingTimes extends Component {
             startTime: `${baseTime}T${startTimeText}:00:00`,
             endTime: `${baseTime}T${endTimeText}:00:00`,
           };
-          axios.put(`/api/workingTime`, data, config)
+          await axios.put(`/api/workingTime`, data, config)
           .then(()=>{this.props.history.push("/viewworkingtimes")});
         }
       } catch (error) {
-        console.log(error);
         this.setState({
           error: "Error updating workingTimes. Either this updated time conflicts with the employee's availabilities, or one of their bookings.",
           loading: false,
