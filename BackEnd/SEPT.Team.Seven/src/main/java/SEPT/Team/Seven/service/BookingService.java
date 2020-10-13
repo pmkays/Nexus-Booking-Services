@@ -327,7 +327,7 @@ public class BookingService {
 				Calendar present = Calendar.getInstance();
 				// check that the booking is in the past
 				if (present.getTime().compareTo(endTime) >= 0) {
-					booking.setStatus("completed");
+					booking.setStatus("complete");
 					bookingRepository.save(booking);
 					toReturn = Optional.of(booking);
 					break;

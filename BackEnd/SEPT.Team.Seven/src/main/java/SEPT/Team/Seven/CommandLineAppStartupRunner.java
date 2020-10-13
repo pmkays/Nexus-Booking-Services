@@ -81,7 +81,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 		end.setTime(start.getTime());
 		end.add(Calendar.HOUR_OF_DAY, 9);
 
-		// for alternating customer and employee ids
+		// for alternating customer and employee id
 		int serviceId = 1;
 		int employeeId = 4;
 		int customerId = 1;
@@ -99,7 +99,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
 			bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
 					employeeRepository.findById(employeeId).get(), bookingTimeStart.getTime(), bookingTimeEnd.getTime(),
-					"pending", serviceRepository.findById(serviceId).get()));
+					"complete", serviceRepository.findById(serviceId).get()));
 
 			if (i % 2 == 0) {
 
@@ -108,26 +108,26 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
 				bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
 						employeeRepository.findById(employeeId).get(), bookingTimeStart.getTime(),
-						bookingTimeEnd.getTime(), "completed", serviceRepository.findById(serviceId).get()));
+						bookingTimeEnd.getTime(), "complete", serviceRepository.findById(serviceId).get()));
 			} else if (i % 3 == 0) {
 
 				bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
 						employeeRepository.findById(employeeId).get(), bookingTimeStart.getTime(),
-						bookingTimeEnd.getTime(), "completed", serviceRepository.findById(serviceId).get()));
+						bookingTimeEnd.getTime(), "complete", serviceRepository.findById(serviceId).get()));
 
 				bookingTimeStart.add(Calendar.HOUR_OF_DAY, 1);
 				bookingTimeEnd.add(Calendar.HOUR_OF_DAY, 2);
 
 				bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
 						employeeRepository.findById(employeeId).get(), bookingTimeStart.getTime(),
-						bookingTimeEnd.getTime(), "completed", serviceRepository.findById(serviceId).get()));
+						bookingTimeEnd.getTime(), "complete", serviceRepository.findById(serviceId).get()));
 
 				bookingTimeStart.add(Calendar.HOUR_OF_DAY, 1);
 				bookingTimeEnd.add(Calendar.HOUR_OF_DAY, 2);
 
 				bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
 						employeeRepository.findById(employeeId).get(), bookingTimeStart.getTime(),
-						bookingTimeEnd.getTime(), "completed", serviceRepository.findById(serviceId).get()));
+						bookingTimeEnd.getTime(), "complete", serviceRepository.findById(serviceId).get()));
 
 			}
 

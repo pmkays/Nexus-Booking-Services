@@ -80,7 +80,7 @@ export class DashboardWelcome extends Component {
     if (this.state.bookings) {
       previousBookings = this.state.bookings.map((booking, index) => {
         let card = null;
-        if (count !== 3 && booking.status === 'completed') {
+        if (count !== 3 && booking.status === 'complete') {
           card = (
             <PreviousBooking
               key={index}
