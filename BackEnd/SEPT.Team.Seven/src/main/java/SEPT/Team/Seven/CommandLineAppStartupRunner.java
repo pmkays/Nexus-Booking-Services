@@ -75,6 +75,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 		start.set(Calendar.HOUR_OF_DAY, 0);
 		start.set(Calendar.MINUTE, 0);
 		start.set(Calendar.SECOND, 0);
+		start.set(Calendar.MILLISECOND, 0);
 
 		start.add(Calendar.MONTH, -1);
 
@@ -159,6 +160,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 		start.set(Calendar.HOUR_OF_DAY, 0);
 		start.set(Calendar.MINUTE, 0);
 		start.set(Calendar.SECOND, 0);
+		start.set(Calendar.MILLISECOND, 0);
 
 		end.setTime(start.getTime());
 		end.add(Calendar.HOUR_OF_DAY, 22);
