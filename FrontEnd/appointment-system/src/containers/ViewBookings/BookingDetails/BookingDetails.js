@@ -167,12 +167,12 @@ export class BookingDetails extends Component {
 
     let booking = <Spinner />;
 
-    const isWithin48Hrs = () => {
+    const shouldBeDisabled = () => {
       var time = moment(this.state.bookingDetails.startTime),
         beforeTime = moment(),
         afterTime = moment().add(48, "hours");
 
-      return time.isBetween(beforeTime, afterTime, "hours");
+      return time.isBetween(beforeTime, afterTime, "hours") || time.isBefore(moment());
     };
 
     const isInThePast = () => {
@@ -197,7 +197,7 @@ export class BookingDetails extends Component {
         this.props.userType === "ROLE_ADMIN"
       ) {
         return null;
-      } else if (isWithin48Hrs()) {
+      } else if (shouldBeDisabled()) {
         return (
           <React.Fragment>
             <button type="button" className={classes.cancelBtn} disabled>

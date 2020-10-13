@@ -195,7 +195,7 @@ INSERT INTO `customer` VALUES
 
 INSERT INTO `employee` VALUES
     (4,'Yuri','Detrov','yuri@gmail.com', '0410164823', '2 Salamander Way', 'https://i.imgur.com/ZauQ8MZ.jpg', 'Hey! My name is Yuri. I love working in design and construction and have a Bachelor\'s Degree in Design and practical construction experience as a project manager. You can trust me to get your next passion project running!'),
-    (5,'Joe','Cool','yasdasdsri@gmail.com', '0410164823', '2 Salasdasder Way', 'https://i.imgur.com/RRSQ7uh.jpg', 'Hey there! My name is Joe. I love being a jack of all trades so I\'m comfortable with providing the best construction, repair and make up services. You can reach me any time through my phone number and I\'m always happy to help!');
+    (5,'Joe','Cool','joemama@gmail.com', '0410164823', '4 Cool Court', 'https://i.imgur.com/RRSQ7uh.jpg', 'Hey there! My name is Joe. I love being a jack of all trades so I\'m comfortable with providing the best construction, repair and make up services. You can reach me any time through my phone number and I\'m always happy to help!');
     
 --
 -- Data for table `admin`

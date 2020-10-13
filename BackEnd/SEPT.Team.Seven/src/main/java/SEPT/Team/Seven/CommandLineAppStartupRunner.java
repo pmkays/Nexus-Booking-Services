@@ -99,7 +99,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
 			bookingRepository.save(new Booking(customerRepository.findById(customerId).get(),
 					employeeRepository.findById(employeeId).get(), bookingTimeStart.getTime(), bookingTimeEnd.getTime(),
-					"completed", serviceRepository.findById(serviceId).get()));
+					"pending", serviceRepository.findById(serviceId).get()));
 
 			if (i % 2 == 0) {
 
