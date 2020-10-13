@@ -29,9 +29,6 @@ class EditWorkingTimes extends Component {
         },
       };
   
-      console.log("SHIIIIIIIIIIIIIIIIt");
-      console.log(this.props);
-      console.log(config.Authorization);
       try {
         if (
           parseInt(this.state.startTime, 10) > parseInt(this.state.endTime, 10)
@@ -52,7 +49,6 @@ class EditWorkingTimes extends Component {
             startTime: `${baseTime}T${startTimeText}:00:00`,
             endTime: `${baseTime}T${endTimeText}:00:00`,
           };
-          console.log(data);
           axios.put(`/api/workingTime`, data, config)
           .then(()=>{this.props.history.push("/viewworkingtimes")});
         }
