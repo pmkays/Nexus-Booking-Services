@@ -117,7 +117,6 @@ export const editProfile = (formData, token, history) => {
       },
     };
 
-    console.log(formData);
 
     axios
       .put('/api/' + url + '/' + userId, formData, config)
@@ -216,7 +215,6 @@ export const fetchAccountNo = (formData, history, type, token) => {
 
 export const addProfileDetailsToUser = (formData, history, type, token) => {
   return (dispatch) => {
-    console.log('data coming in', formData);
 
     if (formData.avatar === '') {
       formData.avatar = 'https://i.imgur.com/Eie9ARV.png';
@@ -231,8 +229,6 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
       img: formData.avatar,
     };
 
-    console.log(profileData);
-
     let config = null;
 
     if (type === 'employees') {
@@ -246,7 +242,6 @@ export const addProfileDetailsToUser = (formData, history, type, token) => {
     axios
       .put('/api/' + type + '/' + formData.accountNo, profileData, config)
       .then((response) => {
-        console.log(response);
         dispatch(addProfileSuccess(response.data, type));
       })
       .then(() => {
@@ -369,10 +364,10 @@ export const addAvailabilities = (startTime, endTime, token, history) => {
       })
       .catch((error) => {
         //"Error adding availability. You must not already have an availability on the day(s) you have chosen."
-        const reason =
+          const reason =
           error.response.data +
           ' You already have an availability on this day.';
-        dispatch(addAvailabilitiesFail(reason));
+          dispatch(addAvailabilitiesFail(reason));
       });
   };
 };

@@ -60,9 +60,10 @@ class WorkingTimes extends Component {
       );
       this.setState({
         employeeId,
-        availabilities: availabilities.data,
+        availabilities: availabilities.data.sort((a, b) => moment(a.startTime).diff(moment(b.startTime))),
       });
     };
+
     const setTime = (e) => {
       e.preventDefault();
       this.setState({
@@ -99,16 +100,20 @@ class WorkingTimes extends Component {
       }
     };
     const listAvailabilities = () => {
-      return (
-        <ul className='list-group'>
-          {this.state.availabilities.map((availability) => (
-            <li key={availability.id} className='list-group-item'>
-              {moment(availability.startTime).format('LLL')} -{' '}
-              {moment(availability.endTime).format('LLL')}
-            </li>
-          ))}
-        </ul>
-      );
+      if (this.state.employeeId == -1) {
+        return <p>When you select an employee and date, their availabilities will be shown here for that day.</p>;
+      } else {
+          return (
+            <ul className='list-group'>
+              {this.state.availabilities.map((availability) => (
+                <li key={availability.id} className='list-group-item'>
+                  {moment(availability.startTime).format('LLLL')} -{' '}
+                  {moment(availability.endTime).format('LLLL')}
+                </li>
+              ))}
+            </ul>
+          );
+      }
     };
     const addWorkingTime = (e) => {
       e.preventDefault();
@@ -191,6 +196,8 @@ class WorkingTimes extends Component {
               </select>
             </div>
           </div>
+          <br/>
+          <h1 className='text-center'> Availabilities </h1>
           <div className='row flex justify-content-center'>
             {listAvailabilities()}
           </div>

@@ -64,7 +64,6 @@ export class ViewBookings extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
         this.setState({
           ...this.state,
           error: "Error retrieving bookings.",

@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
 import SEPT.Team.Seven.model.Availability;
-import SEPT.Team.Seven.model.Booking;
 import SEPT.Team.Seven.model.Employee;
 import SEPT.Team.Seven.model.Service;
 import SEPT.Team.Seven.model.DTO.BookingDateAndServiceDTO;
 import SEPT.Team.Seven.model.DTO.BookingDateDTO;
-import SEPT.Team.Seven.model.DTO.EmployeeTimeDTO;
 import SEPT.Team.Seven.model.DTO.ServiceDTO;
 import SEPT.Team.Seven.service.EmployeeService;
 

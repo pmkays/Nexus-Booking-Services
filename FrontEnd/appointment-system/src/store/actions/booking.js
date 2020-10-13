@@ -43,11 +43,6 @@ export const addBooking = (formData, token, history) => {
       },
     };
 
-    console.log(bookingData.startTime);
-    console.log(bookingData.endTime);
-    console.log('customerid' + bookingData.customerId);
-    console.log('employeeid' + bookingData.employeeId);
-
     axios
       .post('/api/booking', bookingData, config)
       .then((response) => {
