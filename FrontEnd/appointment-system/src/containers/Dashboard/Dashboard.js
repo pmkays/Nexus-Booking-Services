@@ -27,7 +27,7 @@ import Success from '../../components/Success/Success';
 import AdminDashboard from '../DashboardWelcome/AdminDashboard';
 import Error from '../../components/Error/Error';
 import ViewWorkingTimes from '../ViewWorkingTimes/ViewWorkingTimes';
-import { EditWorkingTimes } from '../EditWorkingTimes/EditWorkingTimes';
+import EditWorkingTimes from '../EditWorkingTimes/EditWorkingTimes';
 
 export class Dashboard extends Component {
   state = {

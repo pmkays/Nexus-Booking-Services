@@ -11,7 +11,7 @@ class WorkingTimes extends Component {
     time: moment(),
     incrementDays: 0,
     error: [],
-    employeeId: -1,
+    employeeId: "-1",
     employees: [],
     startTime: null,
     endTime: null,
@@ -100,7 +100,7 @@ class WorkingTimes extends Component {
       }
     };
     const listAvailabilities = () => {
-      if (this.state.employeeId == -1) {
+      if (this.state.employeeId === "-1") {
         return <p>When you select an employee and date, their availabilities will be shown here for that day.</p>;
       } else {
           return (

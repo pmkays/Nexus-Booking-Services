@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import axios from "../../axios-sept";
 import moment from "moment";
 import classes from "./EditWorkingTimes.module.css";
+import { withRouter } from "react-router-dom";
 
-export class EditWorkingTimes extends Component {
+class EditWorkingTimes extends Component {
   state = {
     loading: false,
     error: null,
@@ -14,15 +15,20 @@ export class EditWorkingTimes extends Component {
     defaultEndTime: (new URLSearchParams(window.location.search)).get('endTime'),
     employeeId: (new URLSearchParams(window.location.search)).get('employeeId'),
     workingTimeId: (new URLSearchParams(window.location.search)).get('workingTimeId'),
-  };
+  }
+
+ 
+
   render() {
+
     const updateWorkingTimes = async () => {
-      this.setState({ loading: true, error: null });
+      this.setState({...this.state, loading: true, error: null });
       const config = {
         headers: {
           Authorization: `Bearer ${this.props.token}`,
         },
       };
+  
       try {
         if (
           parseInt(this.state.startTime, 10) > parseInt(this.state.endTime, 10)
@@ -43,17 +49,17 @@ export class EditWorkingTimes extends Component {
             startTime: `${baseTime}T${startTimeText}:00:00`,
             endTime: `${baseTime}T${endTimeText}:00:00`,
           };
-          await axios.put(`/api/workingTime`, data, config);
-          this.props.history.push("/viewworkingtimes");
+          await axios.put(`/api/workingTime`, data, config)
+          .then(()=>{this.props.history.push("/viewworkingtimes")});
         }
       } catch (error) {
-        console.log(error);
         this.setState({
-          error: "Error updating workingTimes.",
+          error: "Error updating workingTimes. Either this updated time conflicts with the employee's availabilities, or one of their bookings.",
           loading: false,
         });
       }
     };
+    
 
     const shiftTimes = () => {
       const times = [];
@@ -120,6 +126,7 @@ export class EditWorkingTimes extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
@@ -128,4 +135,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditWorkingTimes);
+export default connect(mapStateToProps)(withRouter(EditWorkingTimes));
