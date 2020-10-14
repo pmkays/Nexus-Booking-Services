@@ -18,13 +18,7 @@ const ContactUs = (props) => {
               <i className='fas fa-phone'></i> Phone
             </h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Prefer to talk directly to someone? Contact us via the phone on XXXX-XXX-XXX.
             </p>
           </div>
           <div className='d-flex flex-column'>
@@ -35,13 +29,7 @@ const ContactUs = (props) => {
               <i className='fas fa-envelope'></i> Email
             </h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Or, email us at XXXX@XXXXXXXX.XXX for other enquiries.
             </p>
           </div>
         </div>

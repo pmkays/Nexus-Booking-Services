@@ -9,7 +9,7 @@ const AboutUs = (props) => {
     <Layout>
       <div>
         <br />
-        <h2 className='text-center'>Appointment Bookings done correctly</h2>
+        <h2 className='text-center'>Appointment Bookings Done Correctly</h2>
         <hr />
         <br />
         <div className='container'>
@@ -21,13 +21,7 @@ const AboutUs = (props) => {
             </div>
             <div className='col'>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Manage your company's employees and customers with ease.
               </p>
             </div>
           </div>
@@ -39,13 +33,7 @@ const AboutUs = (props) => {
             </div>
             <div className='col'>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Use our charts and graphs to view detailed statistics about your company's performance.
               </p>
             </div>
           </div>
@@ -57,13 +45,7 @@ const AboutUs = (props) => {
             </div>
             <div className='col'>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Simple user interface that makes using the website fun and intuitive.
               </p>
             </div>
           </div>
@@ -75,13 +57,7 @@ const AboutUs = (props) => {
             </div>
             <div className='col'>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Easily keep track of all your company's bookings, both in the past and future.
               </p>
             </div>
           </div>

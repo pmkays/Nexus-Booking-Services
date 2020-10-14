@@ -15,10 +15,10 @@ const Home = (props) => {
         <div className={classes.Cta}>
           <div className='row justify-content-md-center'>
             <div className='col col-lg-6 col-md-12 col-sm-12'>
-              <div className={classes.CtaBig}>EGO BOOSTING SERVICES</div>
+              <div className={classes.CtaBig}>NEXUS BOOKING SERVICES</div>
 
               <div className={classes.CtaSmall}>
-                Getting a big head has never been easier.
+                Booking For Services Made Easy
               </div>
               <Button clicked={goToBooking} classes={classes.Button}>
                 BOOK NOW
