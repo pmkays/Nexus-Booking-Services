@@ -18,8 +18,10 @@ import java.util.List;
 
 import SEPT.Team.Seven.model.Availability;
 import SEPT.Team.Seven.model.Employee;
+import SEPT.Team.Seven.model.WorkingTime;
 import SEPT.Team.Seven.repo.AvailabilityRepository;
 import SEPT.Team.Seven.repo.EmployeeRepository;
+import SEPT.Team.Seven.repo.WorkingTimeRepository;
 import SEPT.Team.Seven.service.EmployeeService;
 
 @SpringBootTest
@@ -30,6 +32,9 @@ public class EmployeeServiceTest {
 	
 	@Mock
 	private AvailabilityRepository availabilityRepository;
+	
+	@Mock
+	private WorkingTimeRepository workingTimeRepository;
 	
 	@InjectMocks
 	private EmployeeService service; 
@@ -62,9 +67,10 @@ public class EmployeeServiceTest {
 	public void getNext7DaysAvailabilitiesById_ValidEmployeeId_ReturnsAvailabilities()
 	{		
 		//Arrange
+		List<WorkingTime> times = new ArrayList<WorkingTime>();
 		when(employeeRepository.findById(4)).thenReturn(Optional.of(employee));
 		when(availabilityRepository.findAllByEmployeeId(4)).thenReturn(availabilities);
-		
+		when(workingTimeRepository.findAllByEmployeeId(4)).thenReturn(times);
 		//Act
 		List<Availability> avails = service.getNext7DaysAvailabilitiesById(4);
 		
