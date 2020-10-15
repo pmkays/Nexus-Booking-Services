@@ -13,8 +13,8 @@ class WorkingTimes extends Component {
     error: [],
     employeeId: "-1",
     employees: [],
-    startTime: null,
-    endTime: null,
+    startTime: "0",
+    endTime: "0",
     availabilities: [],
   };
 
@@ -55,7 +55,7 @@ class WorkingTimes extends Component {
         },
       };
       const availabilities = await axios.get(
-        '/api/availability/employee/' + e.target.value,
+        '/api/employee/next7DaysAvai/' + e.target.value,
         config
       );
       this.setState({
