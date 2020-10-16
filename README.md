@@ -20,6 +20,7 @@
 
 * Milestone 1 (Sprint 0) Submission: https://trello.com/b/aKRzhu38
 * Milestone 2 (Sprint 1 & 2) Submission: https://trello.com/b/xMW6yWIs
+* Milestone 3 (Sprint 3 & 4) Submission (original Trello board): https://trello.com/b/W1EKuEZ6
   
 ***  
 
@@ -67,7 +68,43 @@ Major functionality implemented includes:
 * Implementation of a services page for admins to add to employees.
 
 
+***
 
+
+# Milestone 3 Submission
+## Documentation
+* For milestone 3, all associated documentation (sprint artifacts, tests, etc...) is on google drive in the Milestone_3 folder and NOT in this repo's docs folder (as discussed in class). It can be accessed here: https://drive.google.com/drive/u/1/folders/1XQSW4Ve7yDwlwNQFHPjNtaaDQb3a7Yxn
+* The project report can be found here: https://docs.google.com/document/d/16H5tKs98ccUKQgWc_BbpdwB4pzBvMP1_JO42-nyZcaM/edit
+* The project presentation slides can be found here: https://docs.google.com/presentation/d/1ULgZRi7RFEHKIBV8roWCog2Bj-B-sQq_c6zj6S9m9EE/edit
+* The project presentation video can be found in the associated Canvas link and here: 
+* For general documentation that was also used in Milestone 1, e.g. diagrams, API documentation, please check the root google drive folder here: https://drive.google.com/drive/folders/1cklphZt4S_oX1kbOpaKISPzBxNlitVgx?usp=sharing 
+* Test coverage spreadsheet is also on google drive, but to see the coverage bars, please download and open the document in Microsoft Excel rather than google sheets. 
+* Final state of the Trello board before submission can be found here (original Trello board): https://trello.com/b/W1EKuEZ6
+  
+
+## Circle CI, Docker, AWS deployment
+* The deployment details can be found here in the root folder: https://docs.google.com/document/d/1bX2ZMHe_n6VK1sY2uvMSb5v0MnhYCdk68FIbaxzzrMs/edit
+
+
+## Release notes  (3.0.0)
+
+Major functionality implemented includes:
+
+**Sprint 3:**
+* Implementation of customer dashboard that shows pending/past bookings.
+* Implementation of employee adding working times.
+* Implementation of admin being able to see employee availabilities when adding working times.
+* Implementation of admin being able to edit employee profile. 
+
+
+**Sprint 4:**
+* Implementation of employee dashboard that shows pending/past bookings, working times and availabilities. 
+* Implementation of admin dashboard that shows summary of data.
+* Implementation of employee editing working times.
+* Implementation of styling being finalised. 
+* Implementation of various sorting filters for view bookings page. 
+* Refactoring.
+* Major bug fixes.
 
 
 
