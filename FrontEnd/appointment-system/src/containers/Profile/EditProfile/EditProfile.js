@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
+import classes from './EditProfile.module.css';
 
 import * as actions from '../../../store/actions/actions';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -102,6 +104,40 @@ export class EditProfile extends Component {
         valid: true,
         touched: false,
       },
+      avatar: {
+        labelName: 'Avatar',
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Paste image url here',
+        },
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.img,
+        validation: {
+          required: false,
+        },
+        valid: true,
+        touched: false,
+      },
+      description: {
+        labelName: 'Description',
+        elementType: 'textarea',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Type your description here.',
+        },
+        value:
+          this.props.profileDetails == null
+            ? ''
+            : this.props.profileDetails.description,
+        validation: {
+          required: false,
+        },
+        valid: true,
+        touched: false,
+      },
     },
     isFormValid: true,
   };
@@ -147,12 +183,19 @@ export class EditProfile extends Component {
       email: this.state.controls.email.value,
       phoneNo: this.state.controls.phoneNumber.value,
       address: this.state.controls.address.value,
+      img:
+        this.state.controls.avatar.value === ''
+          ? 'https://i.imgur.com/Eie9ARV.png'
+          : this.state.controls.avatar.value,
+      description: this.state.controls.description.value,
     };
 
     this.props.onEditProfile(formData, this.props.token, this.props.history);
   };
 
   render() {
+    let form = null;
+
     const formElementsArray = [];
     for (let key in this.state.controls) {
       formElementsArray.push({
@@ -162,32 +205,35 @@ export class EditProfile extends Component {
     }
 
     // Creates an input element with configurations from state
-    let form = formElementsArray.map((formElement) => (
-      <React.Fragment key={formElement.id}>
-        <Input
-          key={formElement.id}
-          label={formElement.config.labelName}
-          elementType={formElement.config.elementType}
-          elementConfig={formElement.config.elementConfig}
-          value={formElement.config.value}
-          changed={(event) => this.inputChangedHandler(event, formElement.id)}
-          invalid={!formElement.config.valid}
-          shouldValidate={formElement.config.validation}
-          touched={formElement.config.touched}
-        />
-        {formElement.config.valid ? null : (
-          <ErrorMessage
-            key={formElement.id + 'Error'}
-            message={errorMessageToDisplay(formElement.id)}
+    let formElements = formElementsArray.map((formElement) => {
+      if (
+        formElement.config.elementType === 'textarea' &&
+        this.props.authority === 'ROLE_CUSTOMER'
+      ) {
+        return null;
+      }
+      return (
+        <React.Fragment key={formElement.id}>
+          <Input
+            key={formElement.id}
+            label={formElement.config.labelName}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
+            invalid={!formElement.config.valid}
+            shouldValidate={formElement.config.validation}
+            touched={formElement.config.touched}
           />
-        )}
-      </React.Fragment>
-    ));
-
-    // Renders a spinning icon if loading
-    if (this.props.loading) {
-      form = <Spinner />;
-    }
+          {formElement.config.valid ? null : (
+            <ErrorMessage
+              key={formElement.id + 'Error'}
+              message={errorMessageToDisplay(formElement.id)}
+            />
+          )}
+        </React.Fragment>
+      );
+    });
 
     // Renders error message if there is any errors
     let errorMessage = null;
@@ -211,22 +257,29 @@ export class EditProfile extends Component {
       );
     }
 
+    form = (
+      <form onSubmit={this.editProfileHandler}>
+        <div className='form-group'>
+          {formElements}
+          {errorMessage}
+          <Button disabled={!this.state.isFormValid} classes='btn btn-primary'>
+            Submit
+          </Button>
+          {errorMsg}
+        </div>
+      </form>
+    );
+
+    // Renders a spinning icon if loading
+    if (this.props.loading) {
+      form = <Spinner />;
+    }
+
     return (
-      <div>
+      <div className={classes.EditProfileBox}>
         {authRedirect}
-        <form onSubmit={this.editProfileHandler}>
-          <div className='form-group container'>
-            {form}
-            {errorMessage}
-            <Button
-              disabled={!this.state.isFormValid}
-              classes='btn btn-primary'
-            >
-              Submit
-            </Button>
-            {errorMsg}
-          </div>
-        </form>
+        <h1>Edit Profile</h1>
+        {form}
       </div>
     );
   }
@@ -236,6 +289,7 @@ const mapStateToProps = (state) => {
   return {
     loading: state.profile.loading,
     error: state.profile.error,
+    authority: state.auth.authority,
     profileDetails: state.profile.profileDetails,
     token: state.auth.token,
   };
@@ -249,4 +303,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditProfile));

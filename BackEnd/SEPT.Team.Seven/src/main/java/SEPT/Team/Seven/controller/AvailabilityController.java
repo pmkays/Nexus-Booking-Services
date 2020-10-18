@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 
 import SEPT.Team.Seven.model.Availability;
-import SEPT.Team.Seven.model.DTO.TimeDto;
+import SEPT.Team.Seven.model.DTO.EmployeeTimeDTO;
 import SEPT.Team.Seven.service.AvailabilityService;
 
 @RestController
@@ -24,16 +24,16 @@ public class AvailabilityController {
 	@Autowired
 	private AvailabilityService availabilityService;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/employee/{id}")
 	public List<Availability> getAvailabilitiesForEmployee(@PathVariable("id") int id) {
 		List<Availability> availabilities = availabilityService.getAvailabilitiesForEmployee(id);
 		return availabilities;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping()
-    public Availability addAvailability(@RequestBody TimeDto timeDto) {
+    public Availability addAvailability(@RequestBody EmployeeTimeDTO timeDto) {
        return availabilityService.addAvailability(timeDto.getEmployeeId(), timeDto.getStartTime(), timeDto.getEndTime()).orElseThrow(()->
        new HttpServerErrorException(HttpStatus.FORBIDDEN, "Error adding availability."));
     }

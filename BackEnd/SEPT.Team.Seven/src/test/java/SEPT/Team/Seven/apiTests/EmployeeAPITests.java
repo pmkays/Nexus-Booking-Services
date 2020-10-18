@@ -124,8 +124,9 @@ public class EmployeeAPITests
 		requestBody.put("firstName", "Yuri");
 		requestBody.put("lastName", "Detrov");
 		requestBody.put("email", "yuri@gmail.com");
-		requestBody.put("phoneNo", "1234567891");
-		requestBody.put("address", "updated address");
+		requestBody.put("phoneNo", "0410164823");
+		requestBody.put("address", "3 Salamander Way");
+		requestBody.put("img", "https://i.imgur.com/ZauQ8MZ.jpg");
 		
 		//Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders

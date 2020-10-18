@@ -1,0 +1,36 @@
+.filter {
+  float: left;
+  width: 15%;
+  margin-right: 20px;
+}
+
+.Display a[aria-controls] {
+  color: #4873a6;
+  font-weight: bold;
+}
+
+.Display button[type='submit'] {
+  margin: 5px;
+}
+
+.Display {
+  margin-top: 3%;
+  background-color: white;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 2.5%;
+  border-radius: 15px;
+  background-color: white;
+  margin-bottom: 3%;
+}
+
+.Display h1 {
+  margin-bottom: 5%;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .Display {
+    overflow-x: scroll;
+  }
+}

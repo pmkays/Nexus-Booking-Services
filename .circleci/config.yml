@@ -1,0 +1,138 @@
+version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.2
+  aws-ecs: circleci/aws-ecs@1.3.0
+
+jobs:
+  build_backend:
+    working_directory: ~/BackEnd/SEPT.Team.Seven
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout:
+          path: ~/BackEnd/SEPT.Team.Seven
+      - setup_remote_docker
+      - run: mv ./BackEnd/SEPT.Team.Seven/* ./
+      - run:
+          name: Setup common environment variables
+          command: |
+            echo 'export ECR_REPOSITORY_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"' >> $BASH_ENV
+      - restore_cache:
+          key: circleci-sept-team-seven-{{ checksum "pom.xml" }}
+      - run: mvn install -DskipTests
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: circleci-sept-team-seven-{{ checksum "pom.xml" }}
+      - run: mvn test
+      - store_test_results:
+          path: target/surefire-reports
+      - store_artifacts:
+          path: target/sept-team-seven-0.0.1-SNAPSHOT.jar
+      - run:
+          name: Install dependencies for AWS
+          command: |
+            sudo apt-get update
+            sudo apt-get -y -qq install awscli
+            sudo apt-get install python3-pip
+            sudo pip3 install --upgrade awscli
+      - run:
+          name: Build docker image
+          command: docker build -t $AWS_RESOURCE_NAME_PREFIX . -f Dockerfile --rm=false
+      - run:
+          name: Docker tag
+          command: docker tag sept-team-seven:latest 934111436846.dkr.ecr.us-east-1.amazonaws.com/sept-team-seven:latest
+      - run:
+          name: Push Docker image
+          command: |
+            eval $(aws ecr get-login --region us-east-1 --no-include-email)
+            docker push 934111436846.dkr.ecr.us-east-1.amazonaws.com/sept-team-seven:latest
+      - run:
+          name: ECS update
+          command: aws ecs update-service --cluster sept-team-seven --service sept-team-seven --force-new-deployment
+  test_backend:
+    working_directory: ~/BackEnd/SEPT.Team.Seven
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+    steps:
+      - checkout:
+          path: ~/BackEnd/SEPT.Team.Seven
+      - run: mv ./BackEnd/SEPT.Team.Seven/* ./
+      - restore_cache:
+          key: circleci-sept-team-seven-{{ checksum "pom.xml" }}
+      - run: mvn install -DskipTests
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: circleci-sept-team-seven-{{ checksum "pom.xml" }}
+      - run: mvn test
+  build_frontend:
+    working_directory: ~/FrontEnd/appointment-system
+    docker:
+      - image: circleci/node:10.15.0-jessie
+    steps:
+      - checkout:
+          path: ~/FrontEnd/appointment-system
+      - run: mv ./FrontEnd/appointment-system/* ./
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm
+          command: npm ci
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: test
+          command: npm run test
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: Install dependencies for AWS
+          command: |
+            sudo apt-get update
+            sudo apt-get -y -qq install awscli
+            sudo apt-get install python3-pip
+            sudo pip3 install --upgrade awscli
+      - run:
+          name: empty s3 bucket
+          command: aws s3 rm --recursive s3://sept-team-seven-frontend/
+      - run:
+          name: populate s3 bucket
+          command: aws s3 cp --recursive ./build s3://sept-team-seven-frontend/
+      - run: aws configure set preview.cloudfront true
+      - run: aws cloudfront create-invalidation --distribution-id E35KNGR5GZFSOR --paths '/*'
+  test_frontend:
+    working_directory: ~/FrontEnd/appointment-system
+    docker:
+      - image: circleci/node:10.15.0-jessie
+    steps:
+      - checkout:
+          path: ~/FrontEnd/appointment-system
+      - run: mv ./FrontEnd/appointment-system/* ./
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm
+          command: npm ci
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: test
+          command: npm run test
+workflows:
+  test:
+    jobs:
+      - test_frontend
+      - test_backend
+  build:
+    jobs:
+      - build_frontend
+      - build_backend

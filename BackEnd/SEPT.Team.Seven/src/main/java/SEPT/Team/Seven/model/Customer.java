@@ -13,8 +13,8 @@ public class Customer extends Account {
 	@OneToMany(mappedBy="customer")
 	private List<Booking> bookings;
 	
-	public Customer(String firstName, String lastName, String email, String phoneNo, String address) {
-		super(firstName,lastName,email,phoneNo, address);
+	public Customer(String firstName, String lastName, String email, String phoneNo, String address, String img) {
+		super(firstName,lastName,email,phoneNo, address, img);
 	}
 	
 	public Customer() {};
@@ -22,4 +22,5 @@ public class Customer extends Account {
 	public void addToBookings(Booking booking) {
 		bookings.add(booking);
 	}
+
 }

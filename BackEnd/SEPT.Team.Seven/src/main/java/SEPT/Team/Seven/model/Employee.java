@@ -1,7 +1,9 @@
 package SEPT.Team.Seven.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -24,6 +26,9 @@ public class Employee extends Account {
 	@OneToMany(mappedBy="employee")
 	private List<Booking> bookings;
 	
+	@Column(name="description")
+	private String description;
+	
 	// used to fix infinite recursion issue
 	@JsonBackReference
 	@ManyToMany()
@@ -36,8 +41,10 @@ public class Employee extends Account {
 	
 	public Employee() {};
 	
-	public Employee(String firstName, String lastName, String email, String phoneNo, String address) {
-		super(firstName,lastName,email,phoneNo, address);
+	public Employee(String firstName, String lastName, String email, String phoneNo, String address, String description, String img) {
+		super(firstName,lastName,email,phoneNo, address, img);
+		services = new ArrayList<Service>();
+		this.description = description;
 	}
 	
 	public List<Service> getServices() {
@@ -46,6 +53,10 @@ public class Employee extends Account {
 
 	public void addToServices(Service service) {
 		services.add(service);
+	}
+	
+	public void deleteFromServices(Service service) {
+		services.remove(service);
 	}
 	
 	public void addToWorkingTime(WorkingTime time) {
@@ -58,6 +69,14 @@ public class Employee extends Account {
 	
 	public void addToBookings(Booking booking) {
 		bookings.add(booking);
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getDescription() {
+		return this.description;
 	}
 	
 }

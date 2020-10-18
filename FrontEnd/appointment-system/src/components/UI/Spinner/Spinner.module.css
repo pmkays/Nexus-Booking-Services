@@ -4,7 +4,7 @@
   border-radius: 50%;
 }
 .Loader {
-  color: #ad0000;
+  color: #44cdd6;
   font-size: 11px;
   text-indent: -99999em;
   margin: 55px auto;
@@ -19,7 +19,7 @@
 .Loader:before,
 .Loader:after {
   position: absolute;
-  content: "";
+  content: '';
 }
 .Loader:before {
   width: 5.2em;

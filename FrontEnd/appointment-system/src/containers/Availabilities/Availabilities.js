@@ -1,70 +1,71 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import moment from "moment";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { withRouter } from 'react-router';
 
-import * as actions from "../../store/actions/actions";
+import * as actions from '../../store/actions/actions';
+import classes from './Availabilities.module.css';
 
 class Availabilites extends Component {
   state = {
     time: moment(),
     day: null,
     startTime: {
-      0: "Not Available",
-      1: "Not Available",
-      2: "Not Available",
-      3: "Not Available",
-      4: "Not Available",
-      5: "Not Available",
-      6: "Not Available",
+      0: 'Not Available',
+      1: 'Not Available',
+      2: 'Not Available',
+      3: 'Not Available',
+      4: 'Not Available',
+      5: 'Not Available',
+      6: 'Not Available',
     },
     endTime: {
-      0: "Not Available",
-      1: "Not Available",
-      2: "Not Available",
-      3: "Not Available",
-      4: "Not Available",
-      5: "Not Available",
-      6: "Not Available",
+      0: 'Not Available',
+      1: 'Not Available',
+      2: 'Not Available',
+      3: 'Not Available',
+      4: 'Not Available',
+      5: 'Not Available',
+      6: 'Not Available',
     },
     error: [],
   };
-
   render() {
     const shiftTimes = () => {
-      const times = ["Not Available"];
+      const times = ['Not Available'];
       for (let i = 0; i <= 24; i++) {
         times.push(i);
       }
       return times.map((time) => (
         <option value={time} key={time}>
           {time}
-          {time === "Not Available" ? "" : ":00"}
+          {time === 'Not Available' ? '' : ':00'}
         </option>
       ));
     };
     const shifts = () => {
       return [
-        [0, "Monday"],
-        [1, "Tuesday"],
-        [2, "Wednesday"],
-        [3, "Thursday"],
-        [4, "Friday"],
-        [5, "Saturday"],
-        [6, "Sunday"],
+        [0, 'Monday'],
+        [1, 'Tuesday'],
+        [2, 'Wednesday'],
+        [3, 'Thursday'],
+        [4, 'Friday'],
+        [5, 'Saturday'],
+        [6, 'Sunday'],
       ].map((day) => {
         const isDisabled = moment(this.state.time)
-          .startOf("isoWeek")
-          .add(day[0], "days")
+          .startOf('isoWeek')
+          .add(day[0], 'days')
           .isBefore(moment())
           ? true
           : false;
         return (
           <tr key={day[1]}>
-            <th scope="row">{day[1]}</th>
+            <th scope='row'>{day[1]}</th>
             <td>
               <select
-                className="custom-select"
-                id="startTime"
+                className='custom-select'
+                id='startTime'
                 data-index={day[0]}
                 onChange={setTime}
                 disabled={isDisabled}
@@ -74,8 +75,8 @@ class Availabilites extends Component {
             </td>
             <td>
               <select
-                className="custom-select"
-                id="endTime"
+                className='custom-select'
+                id='endTime'
                 data-index={day[0]}
                 onChange={setTime}
                 disabled={isDisabled}
@@ -99,32 +100,32 @@ class Availabilites extends Component {
     const previousWeek = (e) => {
       e.preventDefault();
       this.setState({
-        time: moment(this.state.time).subtract("7", "days"),
+        time: moment(this.state.time).subtract('7', 'days'),
       });
     };
     const nextWeek = (e) => {
       e.preventDefault();
       this.setState({
-        time: moment(this.state.time).add("7", "days"),
+        time: moment(this.state.time).add('7', 'days'),
       });
     };
     const submitAvailabilities = (e) => {
       e.preventDefault();
       const days = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
       ];
       const errors = [];
       const addAvailabilitiesPromise = [];
       for (let i = 0; i < 7; i++) {
         if (
-          this.state.startTime[i] !== "Not Available" &&
-          this.state.endTime[i] !== "Not Available"
+          this.state.startTime[i] !== 'Not Available' &&
+          this.state.endTime[i] !== 'Not Available'
         ) {
           if (
             parseInt(this.state.startTime[i], 10) >
@@ -143,9 +144,9 @@ class Availabilites extends Component {
               endTimeText = `0${this.state.endTime[i]}`;
             }
             const baseTime = moment(this.state.time)
-              .startOf("isoWeek")
-              .add(i, "days")
-              .format("YYYY-MM-DD");
+              .startOf('isoWeek')
+              .add(i, 'days')
+              .format('YYYY-MM-DD');
             const startTime = `${baseTime}T${startTimeText}:00:00`;
             const endTime = `${baseTime}T${endTimeText}:00:00`;
             addAvailabilitiesPromise.push(
@@ -170,40 +171,40 @@ class Availabilites extends Component {
     }
 
     return (
-      <React.Fragment>
-        <h2 className="text-center">Add Availabilites</h2>
-        <div className="text-center">
-          <i className="fas fa-arrow-left btn" onClick={previousWeek}></i>
+      <div className={classes.AvailabilitiesBox}>
+        <h1 className='text-center'>Add Availabilites</h1>
+        <div className='text-center'>
+          <i className='fas fa-arrow-left btn' onClick={previousWeek}></i>
           From Monday {this.state.time
-            .startOf("isoWeek")
-            .format("DD/MM/YYYY")}{" "}
-          to Sunday {this.state.time.endOf("isoWeek").format("DD/MM/YYYY")}
-          <i className="fas fa-arrow-right btn" onClick={nextWeek}></i>
+            .startOf('isoWeek')
+            .format('DD/MM/YYYY')}{' '}
+          to Sunday {this.state.time.endOf('isoWeek').format('DD/MM/YYYY')}
+          <i className='fas fa-arrow-right btn' onClick={nextWeek}></i>
         </div>
-        <table className="table">
+        <table className='table'>
           <thead>
             <tr>
-              <th scope="col">Day</th>
-              <th scope="col">Start Time</th>
-              <th scope="col">Finish Time</th>
+              <th scope='col'>Day</th>
+              <th scope='col'>Start Time</th>
+              <th scope='col'>Finish Time</th>
             </tr>
           </thead>
           <tbody>{shifts()}</tbody>
         </table>
 
-        <div className="text-center">
-          <button className="btn btn-primary" onClick={submitAvailabilities}>
+        <div className='text-center'>
+          <button className='btn btn-primary' onClick={submitAvailabilities}>
             Submit
           </button>
         </div>
-        <div className="text-center">
+        <div className='text-center'>
           {errorMessage}
           {this.state.error.length > 0 && (
-            <ul className="list-group">
+            <ul className='list-group'>
               {this.state.error.map((error) => (
                 <li
                   key={Math.random().toString(36)}
-                  className="list-group-item"
+                  className='list-group-item'
                 >
                   {error}
                 </li>
@@ -211,7 +212,7 @@ class Availabilites extends Component {
             </ul>
           )}
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -230,4 +231,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Availabilites);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Availabilites));

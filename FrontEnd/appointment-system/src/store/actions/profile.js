@@ -1,8 +1,7 @@
-import * as actionTypes from "./actionTypes";
-import axios from "axios";
-import jwtDecode from "jwt-decode";
-import { isCompositeComponent } from "react-dom/test-utils";
-import { compose } from "redux";
+import * as actionTypes from './actionTypes';
+import axios from '../../axios-sept';
+import jwtDecode from 'jwt-decode';
+import * as actions from './actions';
 
 export const clearProfileUponLogout = () => {
   return {
@@ -34,38 +33,38 @@ export const fetchProfile = (token) => {
   return (dispatch) => {
     let decodedJwt = jwtDecode(token);
 
-    let url = "";
+    let url = '';
     switch (decodedJwt.roles[0].authority) {
-      case "ROLE_ADMIN":
-        url = "admins";
+      case 'ROLE_ADMIN':
+        url = 'admins';
         break;
-      case "ROLE_EMPLOYEE":
-        url = "employees";
+      case 'ROLE_EMPLOYEE':
+        url = 'employees';
         break;
-      case "ROLE_CUSTOMER":
-        url = "customers";
+      case 'ROLE_CUSTOMER':
+        url = 'customers';
         break;
       default:
-        return "";
+        return '';
     }
 
     const userId = decodedJwt.userId;
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
     axios
-      .get("http://localhost:8080/api/" + url + "/" + userId, config)
+      .get('/api/' + url + '/' + userId, config)
       .then((response) => {
-        console.log(response);
+        response.data.id = userId;
         dispatch(fetchProfileSuccess(response.data));
       })
       .catch((error) => {
         dispatch(
-          fetchProfileFail("Error reaching server. Please try again later.")
+          fetchProfileFail('Error reaching server. Please try again later.')
         );
       });
   };
@@ -95,42 +94,47 @@ export const editProfile = (formData, token, history) => {
   return (dispatch) => {
     let decodedJwt = jwtDecode(token);
 
-    let url = "";
+    let url = '';
     switch (decodedJwt.roles[0].authority) {
-      case "ROLE_ADMIN":
-        url = "admins";
+      case 'ROLE_ADMIN':
+        url = 'admins';
         break;
-      case "ROLE_EMPLOYEE":
-        url = "employees";
+      case 'ROLE_EMPLOYEE':
+        url = 'employees';
         break;
-      case "ROLE_CUSTOMER":
-        url = "customers";
+      case 'ROLE_CUSTOMER':
+        url = 'customers';
         break;
       default:
-        return "";
+        return '';
     }
 
     const userId = decodedJwt.userId;
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
+
     axios
-      .put("http://localhost:8080/api/" + url + "/" + userId, formData, config)
+      .put('/api/' + url + '/' + userId, formData, config)
       .then((response) => {
-        console.log(response);
         dispatch(editProfileSuccess(response.data));
       })
       .then(() => {
-        //link them back to profile page
-        history.push("/profile");
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully updated your profile.',
+            '/profile'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
         dispatch(
-          editProfileFail("Error reaching server. Please try again later.")
+          editProfileFail('Error reaching server. Please try again later.')
         );
       });
   };
@@ -152,7 +156,7 @@ export const addProfileFail = (error) => {
 };
 
 export const addProfileSuccess = (profileDetails, type) => {
-  if (type === "employees") {
+  if (type === 'employees') {
     return {
       type: actionTypes.ADD_PROFILE_SUCCESS,
       profileDetails: null,
@@ -175,14 +179,13 @@ export const addProfile = (formData, history, type, token) => {
     };
 
     axios
-      .post("http://localhost:8080/users/signup", userData)
+      .post('/users/signup', userData)
       .then((response) => {
-        console.log(response);
         dispatch(fetchAccountNo(formData, history, type, token));
       })
       .catch((error) => {
         dispatch(
-          addProfileFail("Error reaching server. Please try again later.")
+          addProfileFail('Error reaching server. Please try again later.')
         );
       });
   };
@@ -195,9 +198,8 @@ export const fetchAccountNo = (formData, history, type, token) => {
     };
 
     axios
-      .post("http://localhost:8080/users/accountno", profileData)
+      .post('/users/accountno', profileData)
       .then((response) => {
-        console.log(response);
         let updatedProfileData = { ...formData, accountNo: response.data };
         dispatch(
           addProfileDetailsToUser(updatedProfileData, history, type, token)
@@ -205,7 +207,7 @@ export const fetchAccountNo = (formData, history, type, token) => {
       })
       .catch((error) => {
         dispatch(
-          addProfileFail("Error reaching server. Please try again later.")
+          addProfileFail('Error reaching server. Please try again later.')
         );
       });
   };
@@ -213,43 +215,51 @@ export const fetchAccountNo = (formData, history, type, token) => {
 
 export const addProfileDetailsToUser = (formData, history, type, token) => {
   return (dispatch) => {
+
+    if (formData.avatar === '') {
+      formData.avatar = 'https://i.imgur.com/Eie9ARV.png';
+    }
+
     let profileData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
       phoneNo: formData.phoneNo,
       address: formData.address,
+      img: formData.avatar,
     };
-
-    console.log(profileData);
 
     let config = null;
 
-    if (type === "employees") {
-      console.log("Employee adding...", token);
+    if (type === 'employees') {
       config = {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: 'Bearer ' + token,
         },
       };
     }
 
     axios
-      .put(
-        "http://localhost:8080/api/" + type + "/" + formData.accountNo,
-        profileData,
-        config
-      )
+      .put('/api/' + type + '/' + formData.accountNo, profileData, config)
       .then((response) => {
-        console.log(response);
         dispatch(addProfileSuccess(response.data, type));
       })
       .then(() => {
-        history.push("/login");
+        if (type === 'employees') {
+          dispatch(
+            actions.updateRedirect(
+              'You have succesfully updated your profile.',
+              '/employees'
+            )
+          );
+          history.push('/success');
+        } else {
+          history.push('/registersuccess');
+        }
       })
       .catch((error) => {
         dispatch(
-          addProfileFail("Error reaching server. Please try again later.")
+          addProfileFail('Error reaching server. Please try again later.')
         );
       });
   };
@@ -283,20 +293,19 @@ export const fetchAvailabilities = (token) => {
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
     axios
-      .get("http://localhost:8080/api/availability/employee/" + userId, config)
+      .get('/api/availability/employee/' + userId, config)
       .then((response) => {
-        console.log(response);
         dispatch(fetchAvailabilitiesSuccess(response.data));
       })
       .catch((error) => {
         dispatch(
           fetchAvailabilitiesFail(
-            "Error reaching server. Please try again later."
+            'Error reaching server. Please try again later.'
           )
         );
       });
@@ -335,30 +344,30 @@ export const addAvailabilities = (startTime, endTime, token, history) => {
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
-    console.log(
-      "employeeId" + data.employeeId + " startTime: " + data.startTime
-    );
-
     axios
-      .post("http://localhost:8080/api/availability", data, config)
+      .post('/api/availability', data, config)
       .then((response) => {
-        console.log(response);
         dispatch(addAvailabilitiesSuccess(response.data));
       })
       .then(() => {
-        history.push("/");
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully added your availabilities.',
+            '/availabilities'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
-        console.log(error.response);
         //"Error adding availability. You must not already have an availability on the day(s) you have chosen."
-        const reason =
+          const reason =
           error.response.data +
-          " You already have an availability on this day.";
-        dispatch(addAvailabilitiesFail(reason));
+          ' You already have an availability on this day.';
+          dispatch(addAvailabilitiesFail(reason));
       });
   };
 };
@@ -391,19 +400,18 @@ export const fetchWorkingTime = (startTime, endTime, token) => {
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
     axios
-      .get("http://localhost:8080/api/workingTIme/employee/" + userId, config)
+      .get('/api/workingTime/employee/' + userId, config)
       .then((response) => {
-        console.log(response);
         dispatch(fetchWorkingTimeSuccess(response.data));
       })
       .catch((error) => {
         dispatch(
-          fetchWorkingTimeFail("Error reaching server. Please try again later.")
+          fetchWorkingTimeFail('Error reaching server. Please try again later.')
         );
       });
   };
@@ -429,31 +437,43 @@ export const addWorkingTimeFail = (error) => {
   };
 };
 
-export const addWorkingTime = (startTime, endTime, token) => {
+export const addWorkingTime = (
+  startTime,
+  endTime,
+  employeeId,
+  token,
+  history
+) => {
   return (dispatch) => {
-    let decodedJwt = jwtDecode(token);
-
     const data = {
-      employeeId: decodedJwt.userId,
+      employeeId,
       startTime,
       endTime,
     };
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
     axios
-      .post("http://localhost:8080/api/workingTime", data, config)
+      .post('/api/workingTime', data, config)
       .then((response) => {
-        console.log(response);
         dispatch(addWorkingTimeSuccess(response.data));
+      })
+      .then(() => {
+        dispatch(
+          actions.updateRedirect(
+            'You have succesfully added working hours to the employee.',
+            '/workingtimes'
+          )
+        );
+        history.push('/success');
       })
       .catch((error) => {
         dispatch(
-          addWorkingTimeFail("Error reaching server. Please try again later.")
+          addWorkingTimeFail('Error reaching server. Please try again later.')
         );
       });
   };

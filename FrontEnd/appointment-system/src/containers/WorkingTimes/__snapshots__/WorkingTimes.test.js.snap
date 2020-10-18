@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WorkingTimes/> should render availabilities page 1`] = `ShallowWrapper {}`;

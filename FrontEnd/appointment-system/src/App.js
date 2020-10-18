@@ -1,24 +1,18 @@
-import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Login from "./containers/Login/Login";
-import Logout from "./containers/Login/Logout/Logout";
-import Layout from "./containers/Layout/Layout";
-import Home from "./containers/Home/Home";
-import Profile from "./containers/Profile/Profile";
-import EditProfile from "./containers/Profile/EditProfile/EditProfile";
-import RegisterProfile from "./containers/Register/Register";
-import Employees from "./containers/Admin/Employees/Employees";
-import AddEmployee from "./containers/Admin/AddEmployee/AddEmployee";
-import AddService from "./containers/Admin/AddService/AddService";
+import Login from './containers/Login/Login';
+import Logout from './containers/Login/Logout/Logout';
+import Home from './containers/Home/Home';
+import RegisterProfile from './containers/Register/Register';
+import SuccessRegister from './components/Success/SuccessRegister/SuccessRegister';
 
-import AboutUs from "./containers/AboutUs/AboutUs";
-import ContactUs from "./containers/ContactUs/ContactUs";
-import * as actions from "./store/actions/actions";
-import HowItWorks from "./containers/HowItWorks/HowItWorks";
-import Availabilites from "./containers/Availabilites/Availabilites";
-import Booking from "./containers/Booking/Booking";
+import AboutUs from './containers/AboutUs/AboutUs';
+import ContactUs from './containers/ContactUs/ContactUs';
+import * as actions from './store/actions/actions';
+import HowItWorks from './containers/HowItWorks/HowItWorks';
+import Dashboard from './containers/Dashboard/Dashboard';
 
 class App extends Component {
   // Upon loading the app check if local storage has user details
@@ -32,11 +26,61 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/employees" component={Employees} />
-          <Route path="/addEmployee" component={AddEmployee} />
-          <Route path="/addService" component={AddService} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/editProfile" component={EditProfile} />
+          <Route
+            path="/dashboard"
+            component={() => <Dashboard content="adminwelcome" />}
+          />
+          <Route
+            path="/employees"
+            component={() => <Dashboard content="employees" />}
+          />
+          <Route
+            path="/addemployee"
+            component={() => <Dashboard content="addemployee" />}
+          />
+          <Route
+            path="/editemployee/:id"
+            component={() => <Dashboard content="editemployee" />}
+          />
+          
+          <Route path="/schedule/:id" component={() => <Dashboard content="schedule" />} />
+          <Route
+            path="/addservice"
+            component={() => <Dashboard content="addservice" />}
+          />
+          <Route
+            path="/profile"
+            component={() => <Dashboard content="profile" />}
+          />
+          <Route
+            path="/workingtimes"
+            component={() => <Dashboard content="workingtimes" />}
+          />
+          <Route
+            path="/editprofile"
+            component={() => <Dashboard content="editprofile" />}
+          />
+          <Route
+            path="/viewbookings"
+            component={() => <Dashboard content="viewbookings" />}
+          />
+          <Route
+            path="/booking/:id"
+            component={() => <Dashboard content="bookingdetails" />}
+          />
+          <Route
+            path="/success"
+            component={() => <Dashboard content="success" />}
+          />
+          <Route
+            path="/viewworkingtimes"
+            component={() => <Dashboard content="viewworkingtimes" />}
+          />
+          <Route
+            path="/editworkingtimes"
+            component={() => <Dashboard content="editworkingtimes" />}
+          />
+
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
@@ -48,27 +92,40 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/editProfile" component={EditProfile} />
+          <Route path="/dashboard" component={() => <Dashboard content="welcome" />} />
+          <Route path="/profile" component={() => <Dashboard content="profile" />} />
+          <Route path="/editprofile" component={() => <Dashboard content="editprofile" />} />
+          <Route path="/availabilities" component={() => <Dashboard content="availabilities" />} />
+          <Route path="/schedule" component={() => <Dashboard content="schedule" />} />
+          <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
+          <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
+          <Route path="/success" component={() => <Dashboard content="success" />} />
+          <Route path="/error" component={() => <Dashboard content="error" />} />
+
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
           <Route path="/howitworks" component={HowItWorks} />
-          <Route path="/availabilities" component={Availabilites} />
           <Route path="/" component={Home} />
         </Switch>
       );
     } else if (this.props.isCustomer && this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/editProfile" component={EditProfile} />
+          <Route path="/login" component={() => <Dashboard content="login" />} />
+          <Route path="/dashboard" component={() => <Dashboard content="welcome" />} />
+          <Route path="/profile" component={() => <Dashboard content="profile" />} />
+          <Route path="/editprofile" component={() => <Dashboard content="editprofile" />} />
+          <Route path="/bookings" component={() => <Dashboard content="booking" />} />
+          <Route path="/viewbookings" component={() => <Dashboard content="viewbookings" />} />
+          <Route path="/booking/:id" component={() => <Dashboard content="bookingdetails" />} />
+          <Route path="/success" component={() => <Dashboard content="success" />} />
+          <Route path="/error" component={() => <Dashboard content="error" />} />
+
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
           <Route path="/howitworks" component={HowItWorks} />
-          <Route path="/bookings" component={Booking} />
           <Route path="/" component={Home} />
         </Switch>
       );
@@ -76,7 +133,9 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/bookings" component={RegisterProfile} />
           <Route path="/register" component={RegisterProfile} />
+          <Route path="/registersuccess" component={SuccessRegister} />
           <Route path="/logout" component={Logout} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
@@ -85,16 +144,18 @@ class App extends Component {
         </Switch>
       );
     }
-    return <Layout>{routes}</Layout>;
+    return <React.Fragment>{routes}</React.Fragment>;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    isAdmin: state.auth.authority === "ROLE_ADMIN",
-    isEmployee: state.auth.authority === "ROLE_EMPLOYEE",
-    isCustomer: state.auth.authority === "ROLE_CUSTOMER",
+    isAdmin: state.auth.authority === 'ROLE_ADMIN',
+    isEmployee: state.auth.authority === 'ROLE_EMPLOYEE',
+    isCustomer: state.auth.authority === 'ROLE_CUSTOMER',
+    content: state.redirect.content,
+    redirect: state.redirect.redirect,
   };
 };
 

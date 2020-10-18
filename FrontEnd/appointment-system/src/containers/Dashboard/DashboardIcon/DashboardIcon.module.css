@@ -1,0 +1,80 @@
+.Icon {
+  object-fit: cover;
+  padding-top: 35px;
+  color: white;
+  font-size: 2rem;
+}
+
+.Icon:hover {
+  color: #44cdd6;
+}
+
+.IconActive {
+  filter: drop-shadow(0px 0px 2px #fff);
+}
+
+.IconMargin {
+  margin-left: 30%;
+}
+
+.Center {
+  margin: auto;
+  text-align: center;
+}
+
+.Flex {
+  display: flex;
+}
+
+.Index {
+  z-index: -99;
+}
+
+.DashboardLabel {
+  position: relative;
+  right: 5px;
+  padding: 15%;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  background-color: #2e767a;
+  width: fit-content;
+  z-index: 10;
+}
+
+.DashboardLabelHighLight {
+  background-color: white;
+  height: auto;
+  width: 5px;
+  padding: 2px;
+  position: relative;
+  right: 5px;
+}
+
+.Hide {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .Hide {
+    display: block;
+  }
+
+  .IconMargin {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+
+  .Center {
+    margin: 0;
+    text-align: center;
+  }
+
+  .DashboardLabelHighLight {
+    display: none;
+  }
+
+  .Index {
+    z-index: 0;
+  }
+}

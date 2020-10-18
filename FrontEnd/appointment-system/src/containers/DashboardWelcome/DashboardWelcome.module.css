@@ -1,0 +1,139 @@
+.Avatar {
+  height: 8vh;
+  width: 8vh;
+  border-radius: 100%;
+  object-fit: cover;
+  margin: 35% 10% 0;
+  border: 5px solid white;
+}
+
+.Icon {
+  height: 4vh;
+  width: 4vh;
+  object-fit: cover;
+  margin: 35% 30% 0;
+}
+
+.MoreIcon {
+  opacity: 50%;
+}
+
+.Clickable:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.Margin {
+  padding: 10% 0 0;
+}
+
+.MainContent {
+  margin-top: 2%;
+  background: #e3f2f3;
+  border-radius: 25px;
+  flex: 0 0 88%;
+  height: 80vh;
+}
+
+.WelcomeBox {
+  color: white;
+  background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%);
+  border-radius: 15px;
+  margin: 2% 0 2% 2%;
+  padding: 1%;
+  display: flex;
+}
+
+.WelcomeBoxText {
+  color: white;
+}
+
+.WelcomeImage {
+  height: 30vh;
+  width: 20vw;
+  position: relative;
+  left: 0px;
+}
+
+.BoldedText {
+  font-family: 'Roboto';
+  font-weight: bold;
+}
+
+.White {
+  color: white;
+}
+
+.PrevBookings {
+  background-color: #ffffff;
+  border-radius: 15px;
+  margin: 2% 2%;
+  padding: 2%;
+}
+
+.PrevBookingsText {
+  margin-top: 2%;
+}
+
+.UpcomingBookingsText {
+  margin-left: 2%;
+}
+
+.NoMargin {
+  margin-left: inherit !important;
+  margin-right: inherit !important;
+}
+
+.Center {
+  margin: auto;
+}
+
+.Flex {
+  display: flex;
+  margin: 10px;
+}
+
+@media (max-width: 768px) {
+  .Flex {
+    display: block;
+  }
+
+  .PrevBookings {
+    height: inherit;
+  }
+
+  .WelcomeBox {
+    height: inherit;
+  }
+
+  .UpcomingBookingsText {
+    margin-left: 20px;
+    width: -webkit-fill-available;
+  }
+
+  .WelcomeImage {
+    width: 70vw;
+  }
+}
+
+.Slogan {
+  font-size: 1.2rem;
+}
+
+.Button {
+  margin-top: 3%;
+  width: 50%;
+  height: 40px;
+  color: white;
+  background-color: #1f7b81;
+  font-family: 'Roboto';
+  font-weight: bold;
+  border-style: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: #44cdd6;
+  cursor: pointer;
+}

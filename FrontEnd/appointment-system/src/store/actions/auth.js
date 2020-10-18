@@ -1,6 +1,6 @@
-import * as actionTypes from "./actionTypes";
-import axios from "axios";
-import jwtDecode from "jwt-decode";
+import * as actionTypes from './actionTypes';
+import axios from '../../axios-sept';
+import jwtDecode from 'jwt-decode';
 
 export const authStart = () => {
   return {
@@ -25,10 +25,10 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("userId");
-  localStorage.removeItem("expirationDate");
-  localStorage.removeItem("authority");
+  localStorage.removeItem('token');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('expirationDate');
+  localStorage.removeItem('authority');
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -51,12 +51,10 @@ export const auth = (username, password, isSignUp) => {
       password: password,
     };
 
-    console.log(userDetails);
-
-    let authCode = "";
+    let authCode = '';
 
     axios
-      .post("http://localhost:8080/users/signin", userDetails)
+      .post('/users/signin', userDetails)
       .then((response) => {
         authCode = response.data;
         let decodedJwt = jwtDecode(authCode);
@@ -65,18 +63,20 @@ export const auth = (username, password, isSignUp) => {
         const authority = decodedJwt.roles[0].authority;
         const expirationDate = new Date();
         const secondsToExpire = decodedJwt.exp - decodedJwt.iat;
-        expirationDate.setMinutes(expirationDate.getMinutes() + secondsToExpire / 60);
+        expirationDate.setMinutes(
+          expirationDate.getMinutes() + secondsToExpire / 60
+        );
 
-        localStorage.setItem("token", response.data);
-        localStorage.setItem("expirationDate", expirationDate);
-        localStorage.setItem("userId", decodedJwt.userId);
-        localStorage.setItem("authority", authority);
+        localStorage.setItem('token', response.data);
+        localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('userId', decodedJwt.userId);
+        localStorage.setItem('authority', authority);
 
         dispatch(authSuccess(response.data, userId, authority));
         dispatch(checkAuthTimeout(secondsToExpire));
       })
       .catch((error) => {
-        dispatch(authFail("Username or password is incorrect."));
+        dispatch(authFail('Username or password is incorrect.'));
       });
   };
 };
@@ -90,19 +90,23 @@ export const setAuthRedirectPath = (path) => {
 
 export const authCheckState = () => {
   return (dispatch) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
       dispatch(logout());
     } else {
-      const expirationDate = new Date(localStorage.getItem("expirationDate"));
+      const expirationDate = new Date(localStorage.getItem('expirationDate'));
       if (expirationDate <= new Date()) {
         dispatch(logout());
       } else {
-        const userId = localStorage.getItem("userId");
-        const authority = localStorage.getItem("authority");
+        const userId = localStorage.getItem('userId');
+        const authority = localStorage.getItem('authority');
         dispatch(authSuccess(token, userId, authority));
         // Expiry in seconds by taking the difference
-        dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+        dispatch(
+          checkAuthTimeout(
+            (expirationDate.getTime() - new Date().getTime()) / 1000
+          )
+        );
       }
     }
   };

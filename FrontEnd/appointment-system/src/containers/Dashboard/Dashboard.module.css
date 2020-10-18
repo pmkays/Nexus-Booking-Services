@@ -1,0 +1,197 @@
+.Logo {
+  color: white;
+  margin-left: 4vw;
+}
+
+.NavLogo {
+  font-size: 3rem;
+}
+
+.Blue {
+  color: #45cdd6;
+}
+
+.Slogan {
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin-left: 5px;
+}
+
+.Dashboard {
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  background: #2e767a;
+}
+
+.Toolbar {
+  width: 4vw;
+  z-index: 99;
+}
+
+.Avatar {
+  height: 5vh;
+  width: 5vh;
+  border-radius: 100%;
+  object-fit: cover;
+  margin: 35% 20% 30%;
+  border: 5px solid white;
+}
+
+.MainContent {
+  background: #e3f2f3;
+  flex: 1 1 88%;
+  height: 90vh;
+  max-width: 95vw;
+  overflow-y: scroll;
+}
+
+.WelcomeBox {
+  color: white;
+  background: linear-gradient(0deg, #1d99a0 0%, #45cdd6 101.86%);
+  border-radius: 15px;
+  margin: 2% 2%;
+  height: 30vh;
+}
+
+.WelcomeBoxText {
+  margin-top: 35%;
+}
+
+.WelcomeImage {
+  height: 30vh;
+  width: 20vw;
+  position: relative;
+  left: 10px;
+}
+
+.BoldedText {
+  font-family: 'Roboto';
+  font-weight: bold;
+}
+
+.White {
+  color: white;
+}
+
+.PrevBookings {
+  background-color: #ffffff;
+  border-radius: 15px;
+  margin: 2% 2%;
+  height: 30vh;
+}
+
+.PrevBookingsText {
+  margin-top: 2%;
+}
+
+.UpcomingBookingsText {
+  margin-left: 2%;
+}
+
+.NoMargin {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* .Icon {
+  object-fit: cover;
+  padding-top: 35px;
+  color: white;
+  font-size: 2rem;
+}
+
+.Icon:hover {
+  color: #44cdd6;
+}
+
+.IconActive {
+  filter: drop-shadow(0px 0px 2px #fff);
+}
+
+.IconMargin {
+  margin: 0 30%;
+}
+
+.Center {
+  margin: auto;
+  text-align: center;
+}
+
+.Flex {
+  display: flex;
+}
+
+.Index {
+  z-index: -99;
+}
+
+.DashboardLabel {
+  position: relative;
+  right: 5px;
+  padding: 15%;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  background-color: #2e767a;
+  width: fit-content;
+  z-index: 10;
+}
+
+.DashboardLabelHighLight {
+  background-color: white;
+  height: auto;
+  width: 5px;
+  padding: 2px;
+  position: relative;
+  right: 5px;
+}
+
+.Hide {
+  display: none;
+} */
+
+.NoDecoration a:hover {
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .Toolbar {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .MainContent {
+    overflow-y: scroll;
+    max-width: 100vw;
+  }
+
+  .Toolbar {
+    display: none;
+  }
+
+  .Logo {
+    color: white;
+    margin-left: 0;
+  }
+
+  .NavLogo {
+    font-size: 2rem;
+  }
+
+  .Slogan {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-left: 5px;
+    display: none;
+  }
+
+  .MenuLogo {
+    display: flex;
+  }
+
+  .Float {
+    float: right;
+  }
+}

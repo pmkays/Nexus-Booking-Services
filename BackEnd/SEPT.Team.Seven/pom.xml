@@ -8,10 +8,10 @@
 		<version>2.3.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>SEPT.Team.Seven</groupId>
-	<artifactId>SEPT.Team.Seven</artifactId>
+	<groupId>sept-team-seven</groupId>
+	<artifactId>sept-team-seven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SEPT.Team.Seven</name>
+	<name>sept-team-seven</name>
 	<description>Appointment Booking System</description>
 
 	<properties>

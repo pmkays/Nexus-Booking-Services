@@ -13,10 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -28,23 +26,21 @@ public class Booking {
 	@Column(name="id")
 	private int id;
 	
-	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade= CascadeType.MERGE)
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
-	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade= CascadeType.MERGE)
 	@JoinColumn(name="employee_id")
 	private Employee employee;
 	
 	@NotNull(message="Start time must not be null")
-	@Future(message="Start time must not be in the past")
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="start_time")
 	private Date startTime;
 	
 	@NotNull(message="End time must not be null")
-	@Future(message="End time must not be in the past")
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="end_time")
@@ -53,8 +49,7 @@ public class Booking {
 	@Column(name="status")
 	private String status;
 	
-	@JsonBackReference
-	@ManyToOne(cascade= {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade= CascadeType.MERGE)
 	@JoinColumn(name="service_id")
 	private Service service;
 	

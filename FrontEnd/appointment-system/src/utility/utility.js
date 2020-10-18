@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const updateObject = (oldObject, updatedProperties) => {
   return {
     ...oldObject,
@@ -56,3 +58,16 @@ export const errorMessageToDisplay = (formField) => {
           return "";
   }
 }
+
+export const uppercaseFirstCharacter = (word) => {
+  return word.substring(0,1).toUpperCase() + word.substring(1);
+}
+
+export const timeDiff = (time1, time2) => {
+  var duration = moment(time1).diff(moment(time2), 'hours'); 
+  if(duration === 1){
+      return `${duration} hour`
+  }
+  return `${duration} hours`
+}
+

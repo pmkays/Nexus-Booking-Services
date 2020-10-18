@@ -123,8 +123,9 @@ public class CustomerAPITests
 		requestBody.put("firstName", "Leslie");
 		requestBody.put("lastName", "Uzumaki");
 		requestBody.put("email", "leslie@hotmail.com");
-		requestBody.put("phoneNo", "1234567891");
-		requestBody.put("address", "updated address");
+		requestBody.put("phoneNo", "0410101010");
+		requestBody.put("address", "5 Poornima Road");
+		requestBody.put("img", "https://i.imgur.com/VXnG3tg.jpg");
 		
 		//Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders

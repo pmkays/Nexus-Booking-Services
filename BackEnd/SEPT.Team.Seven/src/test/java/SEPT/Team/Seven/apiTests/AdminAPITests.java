@@ -124,8 +124,9 @@ public class AdminAPITests
 		requestBody.put("firstName", "Juan");
 		requestBody.put("lastName", "Yega");
 		requestBody.put("email", "juan@hotmail.com");
-		requestBody.put("phoneNo", "1234567891");
-		requestBody.put("address", "updated address");
+		requestBody.put("phoneNo", "0410567343");
+		requestBody.put("address", "2 Digger Road");
+		requestBody.put("img", "https://i.imgur.com/hCEQVy0.jpg");
 		
 		//Act and Assert
 		this.mockMvc.perform(MockMvcRequestBuilders

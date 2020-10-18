@@ -1,90 +1,80 @@
-import React from "react";
+import React from 'react';
+import Layout from '../Layout/Layout';
 
 const AboutUs = (props) => {
   const redirectContact = () => {
-    props.history.push("/contact");
+    props.history.push('/contact');
   };
   return (
-    <div>
-      <br />
-      <h2 className="text-center">Appointment Bookings done correctly</h2>
-      <hr />
-      <br />
-      <div className="container">
-        <div className="row">
-          <div className="col col-md-2 h5">
-            <p>
-              <i className="fas fa-check"></i> Benifit One
-            </p>
+    <Layout>
+      <div>
+        <br />
+        <h2 className='text-center'>Appointment Bookings Done Correctly</h2>
+        <hr />
+        <br />
+        <div className='container'>
+          <div className='row'>
+            <div className='col col-md-2 h5'>
+              <p>
+                <i className='fas fa-check'></i> Benifit One
+              </p>
+            </div>
+            <div className='col'>
+              <p>
+                Manage your company's employees and customers with ease.
+              </p>
+            </div>
           </div>
-          <div className="col">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
+          <div className='row'>
+            <div className='col col-md-2 h5'>
+              <p>
+                <i className='fas fa-check'></i> Benifit Two
+              </p>
+            </div>
+            <div className='col'>
+              <p>
+                Use our charts and graphs to view detailed statistics about your company's performance.
+              </p>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col col-md-2 h5'>
+              <p>
+                <i className='fas fa-check'></i> Benifit Three
+              </p>
+            </div>
+            <div className='col'>
+              <p>
+                Simple user interface that makes using the website fun and intuitive.
+              </p>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col col-md-2 h5'>
+              <p>
+                <i className='fas fa-check'></i> Benifit Four
+              </p>
+            </div>
+            <div className='col'>
+              <p>
+                Easily keep track of all your company's bookings, both in the past and future.
+              </p>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col col-md-2 h5">
-            <p>
-              <i className="fas fa-check"></i> Benifit Two
-            </p>
-          </div>
-          <div className="col">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col col-md-2 h5">
-            <p>
-              <i className="fas fa-check"></i> Benifit Three
-            </p>
-          </div>
-          <div className="col">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col col-md-2 h5">
-            <p>
-              <i className="fas fa-check"></i> Benifit Four
-            </p>
-          </div>
-          <div className="col">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
-          </div>
+        <hr />
+        <br />
+        <p className='text-center'>Questions?</p>
+        <div className='d-flex justify-content-center'>
+          <button
+            className='btn btn-link text-center'
+            onClick={redirectContact}
+          >
+            Contact Us
+          </button>
         </div>
       </div>
-      <hr />
-      <br />
-      <p className="text-center">Questions?</p>
-      <div className="d-flex justify-content-center">
-        <button className="btn btn-link text-center" onClick={redirectContact}>
-          Contact Us
-        </button>
-      </div>
-    </div>
+    </Layout>
   );
 };
 

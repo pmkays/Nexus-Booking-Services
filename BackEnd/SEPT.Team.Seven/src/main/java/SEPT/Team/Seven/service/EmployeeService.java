@@ -46,7 +46,29 @@ public class EmployeeService {
 			for (Availability availability : availabilities) {
 				int timediff = availability.getStartTime().compareTo(weekInFuture.getTime());
 				if (timediff <= 0) {
-					toReturn.add(availability);
+					
+					//checking if working time on this date already exists for employee
+					boolean alreadyExistingWorkingTime = false;
+
+					Calendar availabilityStart = Calendar.getInstance();
+					availabilityStart.setTime(availability.getStartTime());
+
+					// check no working time already on this day
+					for (WorkingTime workingTime : workingTimeRepository.findAllByEmployeeId(employeeId)) {
+						Calendar workingTimeStart = Calendar.getInstance();
+						workingTimeStart.setTime(workingTime.getStartTime());
+						if (workingTimeStart.get(Calendar.DATE) == availabilityStart.get(Calendar.DATE)
+								&& workingTimeStart.get(Calendar.MONTH) == availabilityStart.get(Calendar.MONTH)
+								&& workingTimeStart.get(Calendar.YEAR) == availabilityStart.get(Calendar.YEAR)) {
+							alreadyExistingWorkingTime = true;
+							break;
+						}
+					}
+					
+					if (!alreadyExistingWorkingTime) {
+						toReturn.add(availability);
+					}
+
 				}
 			}
 		}
@@ -67,6 +89,24 @@ public class EmployeeService {
 				// Saving the updated employee
 				employeeRepository.save(employee);
 				return Optional.of(serviceToAdd);
+			}
+		}
+
+		return Optional.empty();
+	}
+
+	public Optional<SEPT.Team.Seven.model.Service> removeServiceByName(int employeeId, String name) {
+		// check that the service is actually a service offered in the database
+		if (serviceRepository.findByName(name).isPresent()) {
+			SEPT.Team.Seven.model.Service serviceToRemove = serviceRepository.findByName(name).get();
+			// check that the employee exists
+			if (employeeRepository.findById(employeeId).isPresent()) {
+				Employee employee = employeeRepository.findById(employeeId).get();
+				employee.deleteFromServices(serviceToRemove);
+
+				// Saving the updated employee
+				employeeRepository.save(employee);
+				return Optional.of(serviceToRemove);
 			}
 		}
 
@@ -121,7 +161,7 @@ public class EmployeeService {
 							}
 						}
 					}
-					
+
 					break;
 				}
 			}
