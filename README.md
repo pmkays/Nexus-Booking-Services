@@ -1,52 +1,24 @@
-# RMIT SEPT 2020 Major Project
+# Nexus Booking Services
 
-# Group: SEPT 3. THURS-10.30-7
+## Link 
 
-## Members
-* Nguyen, Ian (S3788210)
-* Miranda, Josiah (S3782051)
-* Rahman, Aqram (S3547091)
-* Kiork, Taouit [David] (S3815539)
-* Kurniawan, Paula (S3782041)
+* Website: http://sept-team-seven-frontend.s3-website-us-east-1.amazonaws.com/
+* Admin login `Username: admin | Password: abc123`
+* Customer login `Username: sasuke1 | Password: abc123` 
+* Employee login `Username: employee1 | Password: abc123`
 
-## Records
+## Product and Sprint Backlogs (Trello)
 
-* Github repository : https://github.com/RMIT-SEPT/majorproject-3-thurs-10-30-7
-* Trello Board/Workspace : https://trello.com/b/W1EKuEZ6
-* Google Drive folder with ALL documentation: https://drive.google.com/drive/folders/1cklphZt4S_oX1kbOpaKISPzBxNlitVgx?usp=sharing
-* Teams Channel: https://teams.microsoft.com/l/team/19%3a6345ff9305af48848fad580667d1f9d7%40thread.tacv2/conversations?groupId=c22aadee-679a-43ab-9069-f89e6e86fd52&tenantId=d1323671-cdbe-4417-b4d4-bdb24b51316b
+* Trello Board: https://trello.com/b/W1EKuEZ6/nexus-booking-services
 
-### Final statuses of Trello Board before submissions (assignees are not been copied; only columns, cards and labels copied)
+## Description
 
-* Milestone 1 (Sprint 0) Submission: https://trello.com/b/aKRzhu38
-* Milestone 2 (Sprint 1 & 2) Submission: https://trello.com/b/xMW6yWIs
-* Milestone 3 (Sprint 3 & 4) Submission (original Trello board): https://trello.com/b/W1EKuEZ6
-  
-***  
+>Our vision was to create a useful, intuitive and beautiful booking platform for everyone to use. We’ve made sure that customers can book, employees can work and business owners can take charge. But, we didn’t just want to capture your needs; we wanted to go above and beyond. With a personalised dashboard tailored to each type of user, we’re sure that Nexus Booking Services will meet all your needs AND wants.
 
-# Milestone 1 Submission
-## Code documentation
+This semester-long uni project was part of the 'Software Engineering Process & Tools' course and focused on software engineering principles, Agile methodologies, and software development tools. We worked with ReactJS, Bootstrap, and Charts.js for our front-end technologies, and used Spring Boot and a MySql database for our backend implementation. Unit tests have been written with Enzyme and Jest to work with ReactJS and JUnit was used in tandem with Spring Boot. In terms of deployment, we used CircleCI, Docker and AWS.
 
-* If not referring to linked Google Drive folder above, please check the docs folder. 
-* Note: It is much more preferrable to check the Google Drive folder.
+Throughout this project, I was primarily the Scrum Master who facilitated the team's daily stand-ups and helped clear development obstacles/hurdles. However, I took on various roles as well to aid the team the best that I could. As a developer, I worked with both the front-end and the back-end. For the front-end, I designed, prototyped and implemented various pages and UIs with a UX focus that was both aesthetic and practical. In terms of back-end development, I aided in the construction of our APIs but mostly focused on completing various comprehensive unit tests and obtaining a high level of code coverage. I was also heavily involved with our Product Owner in defining customer requirements through user stories and customer acceptance criteria, product backlog grooming, and sprint backlog prioritisations.
 
-***
-
-# Milestone 2 Submission
-## Documentation
-* For milestone 2, all associated documentation (sprint artifacts, tests, etc...) is on google drive in the Milestone_2 folder and NOT in this repo's docs folder (as discussed in class). It can be accessed here: https://drive.google.com/drive/folders/1Rojb2B0WnBYiYUAhRXHf73XZkf2ad12s?usp=sharing
-* For general documentation that was also used in Milestone 1, e.g. diagrams, API documentation, please check the root google drive folder here: https://drive.google.com/drive/folders/1cklphZt4S_oX1kbOpaKISPzBxNlitVgx?usp=sharing 
-* Test coverage spreadsheet is also on google drive, but to see the coverage bars, please download and open the document in Microsoft Excel rather than google sheets. 
-* Final state of the Trello board before submission can be found here (no assignees): https://trello.com/b/xMW6yWIs
-  
-
-## Circle CI, Docker, AWS deployment
-* As suggested by Homy in prior announcements, the private repo where you can see our CI/CD in action is here: https://github.com/davidkevork/rmit-setp
-* This has been necessary due to the Circle CI credits running out issue.  
-* Screenshots and documentation of the build working can be found directly in this document here: https://docs.google.com/document/d/1bX2ZMHe_n6VK1sY2uvMSb5v0MnhYCdk68FIbaxzzrMs/edit?usp=sharing
-* This document can be found within our Milestone_2 google drive folder.
-* To access the high-resolution screenshots, please see the files in the Deployment Screenshots folder here: https://drive.google.com/drive/u/1/folders/1Mj3nUEDXmNxyCKlM-FPsBveclqwadxCJ 
-   
 
 ## Release notes  (2.0.0)
 
@@ -71,21 +43,6 @@ Major functionality implemented includes:
 ***
 
 
-# Milestone 3 Submission
-## Documentation
-* For milestone 3, all associated documentation (sprint artifacts, tests, etc...) is on google drive in the Milestone_3 folder and NOT in this repo's docs folder (as discussed in class). It can be accessed here: https://drive.google.com/drive/u/1/folders/1XQSW4Ve7yDwlwNQFHPjNtaaDQb3a7Yxn
-* The project report can be found here: https://docs.google.com/document/d/16H5tKs98ccUKQgWc_BbpdwB4pzBvMP1_JO42-nyZcaM/edit
-* The project presentation slides can be found here: https://docs.google.com/presentation/d/1ULgZRi7RFEHKIBV8roWCog2Bj-B-sQq_c6zj6S9m9EE/edit
-* The project presentation video can be found in the associated Canvas link and here: https://drive.google.com/file/d/168j59UNbBmjVjUUW9vVTTMj9q5Tcsnpt/view
-* For general documentation that was also used in Milestone 1, e.g. diagrams, API documentation, please check the root google drive folder here: https://drive.google.com/drive/folders/1cklphZt4S_oX1kbOpaKISPzBxNlitVgx?usp=sharing 
-* Test coverage spreadsheet is also on google drive, but to see the coverage bars, please download and open the document in Microsoft Excel rather than google sheets. 
-* Final state of the Trello board before submission can be found here (original Trello board): https://trello.com/b/W1EKuEZ6
-  
-
-## Circle CI, Docker, AWS deployment
-* The deployment details can be found here in the root folder in this document: https://docs.google.com/document/d/1bX2ZMHe_n6VK1sY2uvMSb5v0MnhYCdk68FIbaxzzrMs/edit
-
-
 ## Release notes  (3.0.0)
 
 Major functionality implemented includes:
@@ -107,4 +64,9 @@ Major functionality implemented includes:
 * Completed styling. 
 
 
-
+## Authors
+* Paula Kurniawan
+* Ian Nguyen
+* Josiah Miranda
+* Taouit [David] Kiork
+* Aqram Rahman
